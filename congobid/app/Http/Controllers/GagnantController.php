@@ -162,10 +162,10 @@ class GagnantController extends Controller
                 'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
                 'id_updated_at' => Auth::user()->id,
             ]);
-            
-            Enchere::where('id', $gagnant->enchere_id)->update([
-                'finished' => '0',
-            ]);
+
+            // Enchere::where('id', $gagnant->enchere_id)->update([
+            //     'finished' => '0',
+            // ]);
 
             if ($state == 3) {
                 $action = 'Suppression d\'une nstruction';
@@ -173,15 +173,15 @@ class GagnantController extends Controller
             } else if($state == 2) {
                 $action = 'Réactivation d\'une nstruction';
 
-                Enchere::where('id', $gagnant->enchere_id)->update([
-                    'finished' => '1',
-                ]);
+                // Enchere::where('id', $gagnant->enchere_id)->update([
+                //     'finished' => '1',
+                // ]);
             }else {
                 $action = 'Activation d\'une nstruction';
 
-                Enchere::where('id', $gagnant->enchere_id)->update([
-                    'finished' => '1',
-                ]);
+                // Enchere::where('id', $gagnant->enchere_id)->update([
+                //     'finished' => '1',
+                // ]);
             }
 
             Historique::create([

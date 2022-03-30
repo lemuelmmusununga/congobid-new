@@ -24,7 +24,7 @@
                             @foreach ($historiques as $key => $historique)
                                 <tr>
                                     <td> #{{ $key + 1 }} </td>
-                                    <td> {{ $historique->action }} :
+                                    <td> {{ $historique->action }}
                                         {{-- @if ($historique->type <= 2)
                                             <a href="#"> {{ $users->where('id', $historique->destination_id)->first()->id }} </a>
                                         @elseif ($historique->type == 3)
