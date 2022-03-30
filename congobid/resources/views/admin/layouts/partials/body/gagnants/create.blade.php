@@ -26,14 +26,12 @@
                                     <label for="smallSelect">Articles</label>
                                     <select class="form-control form-control-sm" id="smallSelect" name="enchere_id">
                                         @foreach ($encheres as $enchere)
-                                            {{-- @if ($enchere->state == '1') --}}
+                                            @if ($enchere->enchere->finished == '0')
                                                 <option value="{{ $enchere->id }}">{{ $enchere->enchere->article->titre }}</option>
-                                            {{-- @endif --}}
+                                            @endif
                                         @endforeach
                                     </select>
                                 </div>
-                                {{-- {{ $encheres->groupBy('user_id') }} --}}
-
                                 <div class="form-group">
                                     <label for="smallSelect">Bideurs</label>
                                     <select class="form-control form-control-sm" id="smallSelect" name="user_id">

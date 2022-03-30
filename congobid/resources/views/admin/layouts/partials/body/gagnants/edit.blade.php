@@ -17,24 +17,24 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form action="{{ route('gagnants.update') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('gagnants.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
-                                    <label for="smallSelect">Articles {{ $myenchere->pivotbideurenchere }} </label>
+                                    <label for="smallSelect">Articles</label>
                                     <select class="form-control form-control-sm" id="smallSelect" name="enchere_id">
                                         @foreach ($encheres as $enchere)
-                                            <option value="{{ $enchere->id }}" {{ $enchere->id == $enchere->id ? 'selected' : '' }}>{{ $enchere->enchere->article->titre }}</option>
+                                            <option value="{{ $enchere->id }}" {{ $enchere->enchere->id == $myenchere->id ? 'Selected' : '' }}>{{ $enchere->enchere->article->titre }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="smallSelect">Bideurs</label>
                                     <select class="form-control form-control-sm" id="smallSelect" name="user_id">
-                                        @foreach ($encheres as $enchere)
-                                            <option value="{{ $enchere->user->id }}" {{ $enchere->user->statut_id == $enchere->user->id ? 'selected' : '' }}>{{ $enchere->user->nom }}</option>
+                                        @foreach ($encheres->groupBy('user_id') as $enchere)
+                                            <option value="{{ $enchere->first()->user->id }}" {{ $enchere->first()->user->id == $myenchere->user->id ? 'Selected' : '' }}>{{ $enchere->first()->user->nom }}</option>
                                         @endforeach
                                     </select>
                                 </div>

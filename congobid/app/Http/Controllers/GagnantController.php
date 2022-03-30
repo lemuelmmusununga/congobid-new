@@ -49,14 +49,17 @@ class GagnantController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->user_id);
-        // try{
+        try{
             $gagnant = Gagnant::create([
                 'lien' => $request->enchere_id,
                 'enchere_id' => $request->enchere_id,
                 'statut_id' => $request->statut_id,
                 'user_id' => $request->user_id,
                 'administrateur_id' => Auth::user()->id,
+            ]);
+
+            Enchere::where('id', $request->enchere_id)->update([
+                'finished' => '1',
             ]);
 
             $request->file('videos')->move(public_path('videos/gagnants/'), $request->id. '.mp4');
@@ -70,9 +73,9 @@ class GagnantController extends Controller
             ]);
 
             return redirect()->route('gagnants.index');
-        // } catch(\Exception $e){
-        //     return back()->with('');
-        // }
+        } catch(\Exception $e){
+            return back()->with('');
+        }
     }
 
     /**
@@ -153,19 +156,32 @@ class GagnantController extends Controller
     public function destroy($id, $state)
     {
         try{
-            Gagnant::where('id', $id)->update([
+            $gagnant = Gagnant::where('id', $id)->update([
                 'statut_id' => $state == '3' ? 2 : 3,
                 'deleted_at' => $state == '3' ? now() : NULL,
                 'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
                 'id_updated_at' => Auth::user()->id,
             ]);
+            
+            Enchere::where('id', $gagnant->enchere_id)->update([
+                'finished' => '0',
+            ]);
 
             if ($state == 3) {
                 $action = 'Suppression d\'une nstruction';
+
             } else if($state == 2) {
                 $action = 'Réactivation d\'une nstruction';
+
+                Enchere::where('id', $gagnant->enchere_id)->update([
+                    'finished' => '1',
+                ]);
             }else {
                 $action = 'Activation d\'une nstruction';
+
+                Enchere::where('id', $gagnant->enchere_id)->update([
+                    'finished' => '1',
+                ]);
             }
 
             Historique::create([
