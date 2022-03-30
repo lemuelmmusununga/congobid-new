@@ -101,10 +101,10 @@ class ArticleController extends Controller
             if($request->file('image') != null){
 
                 Image::create([
-                    'lien' =>  $request->titre.'_'.$request->article_id.'.webp',
+                    'lien' =>  $request->titre.'_'.$article->id.'.webp',
                     'statut_id' => $request->statut_id,
                     'user_id' => Auth::user()->id,
-                    'article_id' => $request->article_id,
+                    'article_id' => $article->id,
                 ]);
 
                 $request->file('image')->move(public_path('images/articles/'), $request->titre.'_'.$request->article_id . '.webp');
@@ -114,7 +114,7 @@ class ArticleController extends Controller
             Salon::create([
                 'libelle' => 'Salon #'.$request->article_id,
                 'statut_id' => $request->statut_id,
-                'article_id' => $request->article_id,
+                'article_id' => $article->id,
             ]);
 
             Enchere::create([
@@ -122,15 +122,16 @@ class ArticleController extends Controller
                 'date_debut' => $request->debut_enchere,
                 'heure_debut' => $request->fin_enchere,
                 'state' => 0,
+                'favoris' => 0,
                 'statut_id' => $request->statut_id,
-                'article_id' => $request->article_id,
+                'article_id' => $article->id,
                 'paquet_id' => $paquet_id,
             ]);
 
             Historique::create([
                 'action' => 'Enregistrement d\'un article',
                 'type' => '5',
-                'destination_id' => $request->article_id,
+                'destination_id' => $article->id,
                 'statut_id' => '3',
                 'user_id' => Auth::user()->id,
             ]);
