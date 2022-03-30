@@ -182,7 +182,7 @@
             <img src="{{asset('images/couronne.png')}}" alt="couronne">
             <span>X3</span>
         </a>
-        <a href="#">
+        <a  data-bs-toggle="modal" data-bs-target="#modalliste">
             <img src="{{asset('images/foudre.png')}}" alt="foudre">
             <span>X3</span>
         </a>
