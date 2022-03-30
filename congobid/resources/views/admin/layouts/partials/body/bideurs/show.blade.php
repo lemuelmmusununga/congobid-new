@@ -12,7 +12,7 @@
                     <div class="card-header" style="background-image: url('{{ asset('images/profil/'.$bideur->avatar) }}')">
                         <div class="profile-picture">
                             <div class="avatar avatar-xl">
-                                <img src="{{ asset('images/profil/'.$bideur->user->avatar) }}" alt="..." class="avatar-img rounded-circle">
+                                <img src="{{ asset('images/users/'.$bideur->user->avatar) }}" alt="..." class="avatar-img rounded-circle">
                             </div>
                         </div>
                     </div>
@@ -20,7 +20,6 @@
                         <div class="user-profile text-center">
                             <div class="name"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> {{ $bideur->user->nom }} </font></font></div>
                             <div class="job"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> {{ '@'.$bideur->user->username }} </font></font></div>
-                            <div class="desc"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> {{ $bideur->user->telephone }} {{ $bideur->user->email == null ? '' : '/ '.$bideur->user->email }} </font></font></div>
                             <div class="desc"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> {{ $bideur->user->telephone }} {{ $bideur->user->email == null ? '' : '/ '.$bideur->user->email }} </font></font></div>
                             <div class="desc"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> Ajouté par : <a href="{{ route('agents.show', $bideur->admin_id) }}"> {{ $bideur->admin->nom }} </a> </font></font></div>
                         <div class="view-profile">

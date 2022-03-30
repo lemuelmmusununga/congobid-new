@@ -9,7 +9,7 @@
         <div class="page-inner py-5">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Ajouter une catégorie de produits</h2>
+                    <h2 class="text-white pb-2 fw-bold">Ajouter une vidéo du gagnant</h2>
                 </div>
             </div>
         </div>
@@ -17,19 +17,42 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form action="{{ route('categories.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('gagnants.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
-                                    <label for="smallInput">Nom</label>
-                                    <input type="text" name="libelle" class="form-control form-control-sm" id="smallInput"
-                                        placeholder="Entrez le nom de la catégorie" required>
+                                    <label for="smallSelect">Articles</label>
+                                    <select class="form-control form-control-sm" id="smallSelect" name="enchere_id">
+                                        @foreach ($encheres as $enchere)
+                                            @if ($enchere->enchere->finished == '0')
+                                                <option value="{{ $enchere->id }}">{{ $enchere->enchere->article->titre }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="smallSelect">Bideurs</label>
+                                    <select class="form-control form-control-sm" id="smallSelect" name="user_id">
+                                        @foreach ($encheres->groupBy('user_id') as $enchere)
+                                            <option value="{{ $enchere->first()->user->id }}">{{ $enchere->first()->user->nom }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="smallSelect">Statut</label>
+                                    <select class="form-control form-control-sm" id="smallSelect" name="statut_id">
+                                        @foreach ($statuts as $statut)
+                                            <option value="{{ $statut->id }}">{{ $statut->libelle }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlFile1">Vidéos du gagnant</label>
-                                    <input type="file" name="video" class="form-control-file" id="exampleFormControlFile1">
+                                    <input type="file" name="videos" class="form-control-file" id="exampleFormControlFile1" required>
                                 </div>
                             </div>
                         </div>

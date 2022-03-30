@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:8889
--- Généré le : ven. 18 mars 2022 à 15:50
+-- Généré le : mer. 30 mars 2022 à 13:53
 -- Version du serveur :  5.7.34
 -- Version de PHP : 8.0.8
 
@@ -49,7 +49,8 @@ CREATE TABLE `administrateurs` (
 
 INSERT INTO `administrateurs` (`id`, `identification_fiscale`, `poste`, `interne`, `online`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`, `administrateur_id`) VALUES
 (1, '243818086892', 'Directeur Administratrif', 1, '0', '2022-02-16 08:27:39', '2022-03-08 14:55:51', NULL, NULL, NULL, 3, 1, NULL),
-(2, '243818086890', 'Web Designer', 1, '0', '2022-02-28 14:32:51', '2022-03-11 15:25:55', '2022-03-11 15:25:55', 1, 1, 2, 4, 1);
+(2, '243818086890', 'Web Designer', 1, '0', '2022-02-28 14:32:51', '2022-03-11 15:25:55', '2022-03-11 15:25:55', 1, 1, 2, 4, 1),
+(3, '243818086891', 'Sec Administratif Adjoint', 1, '0', '2022-03-30 11:02:56', '2022-03-30 11:03:27', NULL, 1, NULL, 3, 16, 1);
 
 -- --------------------------------------------------------
 
@@ -125,7 +126,8 @@ CREATE TABLE `bideurs` (
 --
 
 INSERT INTO `bideurs` (`id`, `balance`, `nontransferable`, `bonus`, `roi`, `foudre`, `bouclier`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`, `paquet_id`, `admin_id`) VALUES
-(2, 370, 100, 40, 2, 12, 1, '2022-03-09 09:46:01', '2022-03-15 14:06:47', NULL, 1, NULL, 3, 11, 2, 1);
+(2, 970, 100, 42, 2, 12, 1, '2022-03-09 09:46:01', '2022-03-23 14:43:25', NULL, 1, NULL, 3, 11, 2, 1),
+(7, 40, 0, 0, 0, 0, 0, '2022-03-30 11:04:49', '2022-03-30 11:05:12', NULL, 1, NULL, 3, 17, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -343,10 +345,11 @@ CREATE TABLE `departements` (
 CREATE TABLE `encheres` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `click` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `favoris` int(11) NOT NULL,
+  `favoris` int(11) NOT NULL DEFAULT '0',
   `date_debut` date DEFAULT NULL,
   `heure_debut` time DEFAULT NULL,
   `state` int(11) NOT NULL DEFAULT '0',
+  `finished` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -361,10 +364,10 @@ CREATE TABLE `encheres` (
 -- Déchargement des données de la table `encheres`
 --
 
-INSERT INTO `encheres` (`id`, `click`, `favoris`, `date_debut`, `heure_debut`, `state`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `article_id`, `paquet_id`) VALUES
-(1, '0', 6, '2022-03-18', '12:00:00', 1, '2022-02-28 14:40:28', '2022-03-15 14:32:13', NULL, NULL, NULL, 3, 1, 2),
-(2, '0', 1, '2022-03-20', '13:00:00', 1, '2022-02-28 14:41:19', '2022-03-15 14:32:09', NULL, NULL, NULL, 3, 2, 3),
-(3, '0', 0, '2022-03-18', '13:29:00', 1, '2022-03-09 11:55:55', '2022-03-09 11:55:55', NULL, NULL, NULL, 3, 3, 4);
+INSERT INTO `encheres` (`id`, `click`, `favoris`, `date_debut`, `heure_debut`, `state`, `finished`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `article_id`, `paquet_id`) VALUES
+(1, '0', 8, '2022-03-31', '12:00:00', 1, 1, '2022-02-28 14:40:28', '2022-03-30 12:36:10', NULL, NULL, NULL, 3, 1, 2),
+(2, '0', 4, '2022-03-30', '13:00:00', 1, 0, '2022-02-28 14:41:19', '2022-03-30 09:53:42', NULL, NULL, NULL, 3, 2, 3),
+(3, '0', 5, '2022-03-24', '13:29:00', 0, 0, '2022-03-09 11:55:55', '2022-03-23 13:23:59', NULL, NULL, NULL, 3, 3, 4);
 
 -- --------------------------------------------------------
 
@@ -400,6 +403,13 @@ CREATE TABLE `faqs` (
   `statut_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `faqs`
+--
+
+INSERT INTO `faqs` (`id`, `questions`, `reponses`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
+(1, 'jh', 'abahs', '2022-03-23 11:43:02', '2022-03-23 11:43:06', '2022-03-23 11:43:06', 1, 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -446,7 +456,7 @@ CREATE TABLE `gagnants` (
 --
 
 INSERT INTO `gagnants` (`id`, `lien`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`, `enchere_id`, `administrateur_id`) VALUES
-(1, 'adad', '2022-03-10 15:50:19', '2022-03-10 15:50:19', NULL, NULL, NULL, 3, 11, 1, 1);
+(1, '1', '2022-03-30 12:36:10', '2022-03-30 12:51:51', '2022-03-30 12:51:51', 1, 1, 2, 17, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -488,7 +498,25 @@ INSERT INTO `historiques` (`id`, `action`, `type`, `destination_id`, `created_at
 (13, 'Réactivation du compte agent', 1, 9, '2022-03-11 15:22:15', '2022-03-11 15:22:15', NULL, NULL, NULL, 3, 1),
 (14, 'Suppression du compte agent', 1, 4, '2022-03-11 15:25:55', '2022-03-11 15:25:55', NULL, NULL, NULL, 3, 1),
 (15, 'Modification d\'une catégorie', 3, 2, '2022-03-11 15:34:43', '2022-03-11 15:34:43', NULL, NULL, NULL, 3, 1),
-(16, 'Modification d\'une catégorie', 3, 3, '2022-03-11 15:34:53', '2022-03-11 15:34:53', NULL, NULL, NULL, 3, 1);
+(16, 'Modification d\'une catégorie', 3, 3, '2022-03-11 15:34:53', '2022-03-11 15:34:53', NULL, NULL, NULL, 3, 1),
+(17, 'Création d\'une question et réponse', 10, 1, '2022-03-23 11:43:02', '2022-03-23 11:43:02', NULL, NULL, NULL, 3, 1),
+(18, 'Suppression d\'une question et réponse', 10, 1, '2022-03-23 11:43:06', '2022-03-23 11:43:06', NULL, NULL, NULL, 3, 1),
+(19, 'Création d\'une condition d\'utilisation', 11, 1, '2022-03-23 11:43:51', '2022-03-23 11:43:51', NULL, NULL, NULL, 3, 1),
+(20, 'Enregistrement d\'une instruction', 12, 2, '2022-03-23 12:11:34', '2022-03-23 12:11:34', NULL, NULL, NULL, 3, 1),
+(21, 'Enregistrement d\'une vidéo du gagnant', 12, 2, '2022-03-23 12:35:55', '2022-03-23 12:35:55', NULL, NULL, NULL, 3, 1),
+(22, 'Enregistrement d\'un article', 5, 7, '2022-03-23 14:24:17', '2022-03-23 14:24:17', NULL, NULL, NULL, 3, 1),
+(23, 'Modificaion d\'une instruction', 12, 2, '2022-03-30 10:44:52', '2022-03-30 10:44:52', NULL, NULL, NULL, 3, 1),
+(24, 'Enregistrement d\'une instruction', 12, 3, '2022-03-30 10:46:02', '2022-03-30 10:46:02', NULL, NULL, NULL, 3, 1),
+(25, 'Création du compte agent', 1, 16, '2022-03-30 11:02:56', '2022-03-30 11:02:56', NULL, NULL, NULL, 3, 1),
+(26, 'Suppression du compte agent', 1, 16, '2022-03-30 11:03:06', '2022-03-30 11:03:06', NULL, NULL, NULL, 3, 1),
+(27, 'Réactivation du compte agent', 1, 16, '2022-03-30 11:03:08', '2022-03-30 11:03:08', NULL, NULL, NULL, 3, 1),
+(28, 'Modification du compte agent', 1, 16, '2022-03-30 11:03:27', '2022-03-30 11:03:27', NULL, NULL, NULL, 3, 1),
+(29, 'Création du compte bideur', 2, 17, '2022-03-30 11:04:49', '2022-03-30 11:04:49', NULL, NULL, NULL, 3, 1),
+(30, 'Suppression du compte bideur', 2, 17, '2022-03-30 11:04:56', '2022-03-30 11:04:56', NULL, NULL, NULL, 3, 1),
+(31, 'Modification du compte bideur', 2, 17, '2022-03-30 11:05:08', '2022-03-30 11:05:08', NULL, NULL, NULL, 3, 1),
+(32, 'Réactivation du compte bideur', 2, 17, '2022-03-30 11:05:12', '2022-03-30 11:05:12', NULL, NULL, NULL, 3, 1),
+(33, 'Enregistrement d\'une vidéo du gagnant', 12, 1, '2022-03-30 11:51:05', '2022-03-30 11:51:05', NULL, NULL, NULL, 3, 1),
+(34, 'Enregistrement d\'une vidéo du gagnant', 12, 1, '2022-03-30 12:36:10', '2022-03-30 12:36:10', NULL, NULL, NULL, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -543,7 +571,9 @@ CREATE TABLE `instructions` (
 --
 
 INSERT INTO `instructions` (`id`, `titre`, `description`, `lien`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
-(1, 'Comment bider ?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus nam nisi ducimus itaque? Exercitationem mollitia amet id similique ipsum cum corrupti incidunt. Tempore commodi a eum dolor nihil reprehenderit repellat!Animi, voluptas laboriosam. Ipsum iusto reiciendis aperiam cum explicabo vero cupiditate id animi eligendi quod. Libero, ducimus dolorum consequuntur incidunt quidem natus molestiae praesentium officia, reiciendis accusantium a, deleniti voluptatem!', 'commer', '2022-03-15 13:25:47', '2022-03-15 13:25:47', NULL, NULL, NULL, 3, 1);
+(1, 'Comment bider ?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus nam nisi ducimus itaque? Exercitationem mollitia amet id similique ipsum cum corrupti incidunt. Tempore commodi a eum dolor nihil reprehenderit repellat!Animi, voluptas laboriosam. Ipsum iusto reiciendis aperiam cum explicabo vero cupiditate id animi eligendi quod. Libero, ducimus dolorum consequuntur incidunt quidem natus molestiae praesentium officia, reiciendis accusantium a, deleniti voluptatem!', 'commer', '2022-03-15 13:25:47', '2022-03-15 13:25:47', NULL, NULL, NULL, 3, 1),
+(2, 'Comment récupérer son article remporté ?', 'Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.Vous devez venir dans nos bureaux.', '/Applications/MAMP/tmp/php/phpWTtiYv', '2022-03-23 12:11:34', '2022-03-30 10:44:52', NULL, NULL, NULL, 3, 1),
+(3, 'Vous devez venir dans nos bureaux.', 'Vous devez venir dans nos bureaux. Vous devez venir dans nos bureaux.', '3', '2022-03-30 10:46:02', '2022-03-30 10:46:02', NULL, NULL, NULL, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -595,10 +625,17 @@ CREATE TABLE `messages` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `id_updated_at` int(11) DEFAULT NULL,
   `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `salon_id` bigint(20) UNSIGNED NOT NULL,
+  `statut_id` bigint(20) UNSIGNED NOT NULL DEFAULT '3',
+  `salon_id` bigint(20) UNSIGNED DEFAULT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `messages`
+--
+
+INSERT INTO `messages` (`id`, `libelle`, `read`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `salon_id`, `user_id`) VALUES
+(1, 'Hello !', 0, '2022-03-23 14:46:47', '2022-03-23 14:46:47', NULL, NULL, NULL, 3, NULL, 11);
 
 -- --------------------------------------------------------
 
@@ -679,7 +716,8 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (61, '2022_02_21_111111_create_notifications_table', 1),
 (62, '2022_03_08_161339_create_historiques_table', 2),
 (64, '2022_03_18_132834_create_faqs_table', 3),
-(65, '2022_02_16_135301_create_pivot_bideur_encheres_table', 4);
+(65, '2022_02_16_135301_create_pivot_bideur_encheres_table', 4),
+(66, '2022_03_23_041530_create_politiques_table', 5);
 
 -- --------------------------------------------------------
 
@@ -778,6 +816,7 @@ CREATE TABLE `paquets` (
   `libelle` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nombre_enchere` int(11) NOT NULL,
   `duree` int(11) NOT NULL,
+  `temps_restant` int(11) NOT NULL DEFAULT '0',
   `prix` int(11) NOT NULL,
   `min` int(11) DEFAULT NULL,
   `max` int(11) DEFAULT NULL,
@@ -794,13 +833,13 @@ CREATE TABLE `paquets` (
 -- Déchargement des données de la table `paquets`
 --
 
-INSERT INTO `paquets` (`id`, `libelle`, `nombre_enchere`, `duree`, `prix`, `min`, `max`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
-(1, 'Simba', 10, 55, 10, 1, 200, '2022-02-14 11:45:20', '2022-03-09 11:11:52', NULL, 1, NULL, 3, 1),
-(2, 'Benda', 20, 120, 30, 201, 500, '2022-02-14 11:45:44', '2022-03-11 15:34:43', '2022-03-09 16:08:54', 1, 1, 2, 1),
-(3, 'Turbo', 30, 160, 50, 501, 1000, '2022-02-14 13:32:59', '2022-03-11 15:34:53', NULL, 1, NULL, 3, 1),
-(4, 'Beton', 40, 180, 40, 1001, 2000, '2022-02-14 13:33:28', '2022-03-09 10:59:19', NULL, 1, NULL, 3, 1),
-(5, 'Bulldozer', 50, 200, 50, 2001, 5000, '2022-02-14 13:34:14', '2022-03-09 10:59:19', NULL, 1, NULL, 3, 1),
-(6, 'Sukisa', 10, 250, 60, 5001, NULL, '2022-02-14 13:44:00', '2022-03-09 10:59:19', NULL, 1, NULL, 3, 1);
+INSERT INTO `paquets` (`id`, `libelle`, `nombre_enchere`, `duree`, `temps_restant`, `prix`, `min`, `max`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
+(1, 'Simba', 10, 55, 55, 10, 1, 200, '2022-02-14 11:45:20', '2022-03-09 11:11:52', NULL, 1, NULL, 3, 1),
+(2, 'Benda', 20, 120, 103, 30, 201, 500, '2022-02-14 11:45:44', '2022-03-23 16:14:56', '2022-03-09 16:08:54', 1, 1, 2, 1),
+(3, 'Turbo', 30, 160, 155, 50, 501, 1000, '2022-02-14 13:32:59', '2022-03-23 15:28:25', NULL, 1, NULL, 3, 1),
+(4, 'Beton', 40, 180, 180, 40, 1001, 2000, '2022-02-14 13:33:28', '2022-03-09 10:59:19', NULL, 1, NULL, 3, 1),
+(5, 'Bulldozer', 50, 200, 200, 50, 2001, 5000, '2022-02-14 13:34:14', '2022-03-09 10:59:19', NULL, 1, NULL, 3, 1),
+(6, 'Sukisa', 10, 250, 250, 60, 5001, NULL, '2022-02-14 13:44:00', '2022-03-09 10:59:19', NULL, 1, NULL, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -903,8 +942,9 @@ CREATE TABLE `pivot_bideur_encheres` (
 --
 
 INSERT INTO `pivot_bideur_encheres` (`id`, `valeur`, `roi`, `foudre`, `bouclier`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`, `enchere_id`) VALUES
-(1, 10, 0, 0, 0, '2022-03-18 13:45:42', '2022-03-18 13:45:42', NULL, NULL, NULL, 3, 11, 1),
-(2, 318, 0, 0, 0, '2022-03-18 13:48:40', '2022-03-18 13:48:40', NULL, NULL, NULL, 3, 11, 3);
+(1, 5, 3, 2, 1, '2022-03-18 13:45:42', '2022-03-23 15:43:49', NULL, NULL, NULL, 3, 11, 1),
+(2, 322, 1, 4, 0, '2022-03-18 13:48:40', '2022-03-23 14:09:13', NULL, NULL, NULL, 3, 17, 3),
+(4, 48, 0, 0, 0, '2022-03-23 14:43:23', '2022-03-23 15:23:20', NULL, NULL, NULL, 3, 11, 2);
 
 -- --------------------------------------------------------
 
@@ -923,6 +963,32 @@ CREATE TABLE `pivot_clients_salons` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `salon_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `politiques`
+--
+
+CREATE TABLE `politiques` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
+  `id_updated_at` int(11) DEFAULT NULL,
+  `id_deleted_at` int(11) DEFAULT NULL,
+  `statut_id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `politiques`
+--
+
+INSERT INTO `politiques` (`id`, `titre`, `content`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
+(1, 'dd', 'dad', '2022-03-23 11:43:51', '2022-03-23 11:43:51', NULL, NULL, NULL, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -1228,9 +1294,11 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `role_id`, `nom`, `username`, `provider_id`, `telephone`, `sexe`, `email`, `avatar`, `date_naissance`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `settings`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`) VALUES
-(1, 1, 'Roger Mutoto', 'Seymour', NULL, '243818086892', 'Masculin', 'admin@admin.com', '243818086892.webp', '2020-09-02', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, 'Is9i9SEbyKW69wl7gnzDOUuRk7CZ3eawWyJixRwM1WIkk8jwjlAAwofypvQ9', NULL, NULL, '', '2022-01-24 07:06:55', '2022-03-08 14:55:51', NULL, NULL, NULL, 3),
+(1, 1, 'Roger Mutoto', 'Seymour', NULL, '243818086892', 'Masculin', 'admin@admin.com', '243818086892.webp', '2020-09-02', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, 'DQmQ2q1dDAuUYdwD075I7ZHbwjDiWcqQWwioRhd1dtkrvVcaiEmzrjQm1NGc', NULL, NULL, '', '2022-01-24 07:06:55', '2022-03-08 14:55:51', NULL, NULL, NULL, 3),
 (4, 3, 'Pedrien Kinkani', 'Pedro', NULL, '243818086890', 'Masculin', 'pedro@congobid.com', '243818086890.webp', '2022-02-02', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, NULL, NULL, NULL, NULL, '2022-02-28 14:32:51', '2022-03-11 15:25:55', '2022-03-11 15:25:55', 1, 1, 2),
-(11, 5, 'Musunga Alex', 'LmPro', NULL, '243818086893', 'Masculin', 'alex@gmail.com', '243818086893.webp', '2010-02-10', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, NULL, NULL, NULL, NULL, '2022-03-09 09:46:01', '2022-03-10 13:56:17', NULL, 1, NULL, 3);
+(11, 5, 'Musunga Alex', 'LmPro', NULL, '243818086893', 'Masculin', 'alex@gmail.com', '243818086893.webp', '2010-02-10', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, NULL, NULL, NULL, NULL, '2022-03-09 09:46:01', '2022-03-10 13:56:17', NULL, 1, NULL, 3),
+(16, 4, 'Kabamba Jean', 'kaje', NULL, '243818086891', 'Masculin', 'kaj@gmail.com', '243818086891.webp', '2002-02-01', NULL, '$2y$10$cjT.BgeR45504JED3YZ8Eu77DkOWyUC0Mm8z54HCmQIRupO0NRNeO', NULL, NULL, NULL, NULL, NULL, NULL, '2022-03-30 11:02:56', '2022-03-30 11:03:27', NULL, 1, NULL, 3),
+(17, 5, 'Saphirah Kedika', 'saphi', NULL, '243818086894', 'Féminin', 'saphi@gmail.com', '243818086894.webp', '2000-03-20', NULL, '$2y$10$7/fcv/y3Z0.hMkQYLsQD3OJKOwtdTsE5quWR9tF0m6x/vXMe84QXy', NULL, NULL, NULL, NULL, NULL, NULL, '2022-03-30 11:04:48', '2022-03-30 11:05:12', NULL, 1, NULL, 3);
 
 -- --------------------------------------------------------
 
@@ -1548,6 +1616,14 @@ ALTER TABLE `pivot_clients_salons`
   ADD KEY `pivot_clients_salons_salon_id_foreign` (`salon_id`);
 
 --
+-- Index pour la table `politiques`
+--
+ALTER TABLE `politiques`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `politiques_statut_id_foreign` (`statut_id`),
+  ADD KEY `politiques_user_id_foreign` (`user_id`);
+
+--
 -- Index pour la table `posts`
 --
 ALTER TABLE `posts`
@@ -1672,7 +1748,7 @@ ALTER TABLE `user_roles`
 -- AUTO_INCREMENT pour la table `administrateurs`
 --
 ALTER TABLE `administrateurs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `articles`
@@ -1684,7 +1760,7 @@ ALTER TABLE `articles`
 -- AUTO_INCREMENT pour la table `bideurs`
 --
 ALTER TABLE `bideurs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `bids`
@@ -1756,7 +1832,7 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT pour la table `faqs`
 --
 ALTER TABLE `faqs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `foudres`
@@ -1774,7 +1850,7 @@ ALTER TABLE `gagnants`
 -- AUTO_INCREMENT pour la table `historiques`
 --
 ALTER TABLE `historiques`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT pour la table `images`
@@ -1786,7 +1862,7 @@ ALTER TABLE `images`
 -- AUTO_INCREMENT pour la table `instructions`
 --
 ALTER TABLE `instructions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pour la table `menus`
@@ -1804,13 +1880,13 @@ ALTER TABLE `menu_items`
 -- AUTO_INCREMENT pour la table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=66;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 
 --
 -- AUTO_INCREMENT pour la table `news`
@@ -1864,13 +1940,19 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT pour la table `pivot_bideur_encheres`
 --
 ALTER TABLE `pivot_bideur_encheres`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pour la table `pivot_clients_salons`
 --
 ALTER TABLE `pivot_clients_salons`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT pour la table `politiques`
+--
+ALTER TABLE `politiques`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT pour la table `posts`
@@ -1948,7 +2030,7 @@ ALTER TABLE `types_coupons`
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- Contraintes pour les tables déchargées
@@ -2169,6 +2251,13 @@ ALTER TABLE `pivot_clients_salons`
   ADD CONSTRAINT `pivot_clients_salons_salon_id_foreign` FOREIGN KEY (`salon_id`) REFERENCES `salons` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pivot_clients_salons_statut_id_foreign` FOREIGN KEY (`statut_id`) REFERENCES `statuts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `pivot_clients_salons_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Contraintes pour la table `politiques`
+--
+ALTER TABLE `politiques`
+  ADD CONSTRAINT `politiques_statut_id_foreign` FOREIGN KEY (`statut_id`) REFERENCES `statuts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `politiques_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Contraintes pour la table `promotions`

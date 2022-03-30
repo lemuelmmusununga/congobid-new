@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Categorie;
+use App\Models\instructuion;
 use App\Models\Statut;
 use App\Models\Chat;
+use App\Models\Historique;
+use App\Models\Instruction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommentCaMarche extends Controller
 {
@@ -16,7 +19,7 @@ class CommentCaMarche extends Controller
      */
     public function index()
     {
-        dd('How');
+        // dd('How');
         $instructions = Instruction::orderBy('id', 'desc')->get();
         $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
 
@@ -30,7 +33,10 @@ class CommentCaMarche extends Controller
      */
     public function create()
     {
-        //
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        $statuts = Statut::orderBy('id', 'desc')->get();
+
+        return view('admin.layouts.partials.body.instructions.create', compact('chats', 'statuts'));
     }
 
     /**
@@ -41,7 +47,34 @@ class CommentCaMarche extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try{
+            $count = Instruction::all()->count();
+            // dd($count);
+
+            $count = $count + 1;
+
+            $instruction = Instruction::create([
+                'titre' => $request->titre,
+                'description' => $request->description,
+                'lien' => $count,
+                'statut_id' => $request->statut_id,
+                'user_id' => Auth::user()->id,
+            ]);
+
+            $request->file('videos')->move(public_path('videos/instructions/'), $count. '.mp4');
+
+            Historique::create([
+                'action' => 'Enregistrement d\'une instruction',
+                'type' => '12',
+                'destination_id' => $instruction->id,
+                'statut_id' => '3',
+                'user_id' => Auth::user()->id,
+            ]);
+
+            return redirect()->route('commentcamarche.index');
+        } catch(\Exception $e){
+            return back()->with('');
+        }
     }
 
     /**
@@ -63,19 +96,53 @@ class CommentCaMarche extends Controller
      */
     public function edit($id)
     {
-        //
+        $instruction = Instruction::where('id', $id)->first();
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        $statuts = Statut::orderBy('id', 'desc')->get();
+
+        return view('admin.layouts.partials.body.instructions.edit', compact('chats', 'statuts', 'instruction'));
     }
 
     /**
-     * Update the specified resource in storage.
+     * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        // try{
+
+            if ($request->videos != null) {
+                Instruction::where('id', $request->instruction_id)->update([
+                    'titre' => $request->titre,
+                    'description' => $request->description,
+                    'lien' => $request->instruction_id,
+                    'statut_id' => $request->statut_id,
+                    'user_id' => Auth::user()->id,
+                ]);
+                $request->file('videos')->move(public_path('videos/instructions/'), $request->id. '.mp4');
+            } else {
+                Instruction::where('id', $request->instruction_id)->update([
+                    'titre' => $request->titre,
+                    'description' => $request->description,
+                    'statut_id' => $request->statut_id,
+                    'user_id' => Auth::user()->id,
+                ]);
+            }
+
+            Historique::create([
+                'action' => 'Modificaion d\'une instruction',
+                'type' => '12',
+                'destination_id' => $request->instruction_id,
+                'statut_id' => '3',
+                'user_id' => Auth::user()->id,
+            ]);
+
+            return redirect()->route('commentcamarche.index');
+        // } catch(\Exception $e){
+        //     return back()->with('');
+        // }
     }
 
     /**
@@ -84,8 +151,35 @@ class CommentCaMarche extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id, $state)
     {
-        //
+        try{
+            Instruction::where('id', $id)->update([
+                'statut_id' => $state == '3' ? 2 : 3,
+                'deleted_at' => $state == '3' ? now() : NULL,
+                'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
+                'id_updated_at' => Auth::user()->id,
+            ]);
+
+            if ($state == 3) {
+                $action = 'Suppression d\'une nstruction';
+            } else if($state == 2) {
+                $action = 'Réactivation d\'une nstruction';
+            }else {
+                $action = 'Activation d\'une nstruction';
+            }
+
+            Historique::create([
+                'action' => $action,
+                'type' => '12',
+                'destination_id' => $id,
+                'statut_id' => '3',
+                'user_id' => Auth::user()->id,
+            ]);
+
+            return redirect()->route('instructions.index');
+        } catch(\Exception $e){
+            return back()->with('');
+        }
     }
 }

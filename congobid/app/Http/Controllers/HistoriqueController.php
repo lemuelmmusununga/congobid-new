@@ -10,6 +10,7 @@ use App\Models\Paquet;
 use App\Models\Gagnant;
 use App\Models\Article;
 use App\Models\Bid;
+use App\Models\Faq;
 use App\Models\Newsletter;
 use Illuminate\Http\Request;
 
@@ -32,8 +33,9 @@ class HistoriqueController extends Controller
         $articles = Article::all();
         $gagnants = Gagnant::all();
         $newsletters = Newsletter::all();
+        $faqs = Faq::all();
 
-        return view('admin.historiques', compact('historiques', 'chats', 'users', 'categories', 'paquets', 'bids', 'articles', 'gagnants', 'newsletters'));
+        return view('admin.historiques', compact('historiques', 'chats', 'users', 'categories', 'paquets', 'bids', 'articles', 'gagnants', 'newsletters', 'faqs'));
     }
 
     /**

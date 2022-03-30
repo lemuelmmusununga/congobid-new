@@ -33,6 +33,16 @@ class Statut extends Model
         return $this->hasMany(Gagnant::class);
     }
 
+    public function politiques()
+    {
+        return $this->hasMany(Gagnant::class);
+    }
+
+    public function faqs()
+    {
+        return $this->hasMany(Gagnant::class);
+    }
+
     public function historiques()
     {
         return $this->hasMany(Historique::class);

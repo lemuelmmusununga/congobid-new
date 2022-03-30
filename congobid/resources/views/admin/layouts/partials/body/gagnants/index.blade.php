@@ -5,10 +5,10 @@
                 <div>
                     <h2 class="text-white pb-2 fw-bold">Liste des vidéos de gagnants</h2>
                 </div>
-                {{-- <div class="ml-md-auto py-2 py-md-0">
+                <div class="ml-md-auto py-2 py-md-0">
                     <a href="{{ route('gagnants.create') }}" class="btn btn-white btn-border btn-round mr-2">Ajouter une
                         vidéo du gagnant</a>
-                </div> --}}
+                </div>
             </div>
         </div>
     </div>
@@ -24,6 +24,7 @@
                                 <th>Gagnant</th>
                                 <th>Ajouté par</th>
                                 <th>Statut</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -34,6 +35,16 @@
                                     <td>{{ $gagnant->user->nom }}</td>
                                     <td>{{ $gagnant->administrateur->user->nom }}</td>
                                     <td>{{ $gagnant->statut->libelle }}</td>
+                                    <td>
+                                        <a href="{{ route('gagnants.edit', [$gagnant->id]) }}">Editer</a> |
+                                        @if ($gagnant->statut->id == 1)
+                                            <a href="{{ route('gagnants.destroy', [$gagnant->id, 1]) }}">Activer</a>
+                                        @elseif ($gagnant->statut->id == 2)
+                                            <a href="{{ route('gagnants.destroy', [$gagnant->id, 2]) }}">Réactiver</a>
+                                        @elseif ($gagnant->statut->id == 3)
+                                            <a href="{{ route('gagnants.destroy', [$gagnant->id, 3]) }}">Supprimer</a>
+                                        @endif
+                                    </td>
                                 </tr>
                             @endforeach
                         </tbody>

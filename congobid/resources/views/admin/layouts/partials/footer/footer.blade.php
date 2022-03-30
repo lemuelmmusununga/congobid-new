@@ -1,6 +1,6 @@
 <footer class="footer">
     <div class="container-fluid">
-        <nav class="pull-left">
+        {{-- <nav class="pull-left">
             <ul class="nav">
                 <li class="nav-item">
                     <a class="nav-link" href="https://www.newtech-rdc.net/">
@@ -18,7 +18,7 @@
                     </a>
                 </li>
             </ul>
-        </nav>
+        </nav> --}}
         <div class="copyright ml-auto">
         2022, <a href="{{ route('index') }}">Congo Bid</a> | developed by <a href="https://www.newtech-rdc.net/">NewTech Consulting</a>
         </div>

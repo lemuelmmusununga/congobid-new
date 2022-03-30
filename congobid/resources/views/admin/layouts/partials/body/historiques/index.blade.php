@@ -24,9 +24,9 @@
                             @foreach ($historiques as $key => $historique)
                                 <tr>
                                     <td> #{{ $key + 1 }} </td>
-                                    <td> {{ $historique->action }} :
-                                        @if ($historique->type <= 2)
-                                            <a href="#"> {{ $users->where('id', $historique->destination_id)->first()->nom }} </a>
+                                    <td> {{ $historique->action }}
+                                        {{-- @if ($historique->type <= 2)
+                                            <a href="#"> {{ $users->where('id', $historique->destination_id)->first()->id }} </a>
                                         @elseif ($historique->type == 3)
                                             <a href="#"> {{ $paquets->where('id', $historique->destination_id)->first()->libelle }} </a>
                                         @elseif ($historique->type == 4)
@@ -39,7 +39,9 @@
                                             <a href="#"> {{ $gagnants->where('id', $historique->destination_id)->first()->libelle }} </a>
                                         @elseif ($historique->type == 8)
                                             <a href="#"> {{ $newsletters->where('id', $historique->destination_id)->first()->email }} </a>
-                                        @endif
+                                        @elseif ($historique->type == 10)
+                                            <a href="#"> {{ $faqs->where('id', $historique->destination_id)->first()->titre }} </a>
+                                        @endif --}}
                                     </td>
                                     <td>{{ $historique->user->nom }}</td>
                                 </tr>
