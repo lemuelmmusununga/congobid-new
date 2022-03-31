@@ -66,31 +66,6 @@ class Counterbid extends Component
             'valeur'=>$this->addclick
         ]);
     }
-
-
-    // public function index($id){
-
-
-    //     $detail = Enchere::findorfail($id);
-    //     $getSalons = PivotClientsSalon::all();
-    //     foreach ($getSalons as $salon) {
-    //         if ($salon->user_id == auth()->user()->id) {
-    //             return view('pages.detail-enchere',compact('getSalons','detail'));
-    //         }else{
-
-    //             $salon = PivotClientsSalon::create([
-    //                 'valeur' =>0,
-    //                 'statut_id'=>$detail->statut_id,
-    //                 'user_id'=>Auth::user()->id,
-    //                 'salon_id'=>$detail->id
-    //             ]);
-
-    //             return view('pages.detail-enchere',compact('getSalons','detail'));
-
-    //         }
-    //     }
-
-    // }
     public function render()
     {
 
