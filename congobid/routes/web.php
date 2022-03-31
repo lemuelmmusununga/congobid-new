@@ -51,7 +51,7 @@ Route::get('/favoris', function () {
 });
 Route::get('/invite-user', function () {
     return view('pages.invite-user');
-});
+})->name('parrainage');
 Route::get('/famille', function () {
     return view('pages.famille');
 });

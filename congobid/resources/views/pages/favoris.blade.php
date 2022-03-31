@@ -29,7 +29,7 @@
                                         </div>
                                         <div class="col-6 col-lg-4">
                                             <h5 class="price">Prix Kinshasa</h5>
-                                            <span class="ammount"><strike>20000</strike></span>
+                                            <span class="ammount"><strike style="color: black;">20000</strike></span>
                                         </div>
                                     </div>
                                     <a href="#" class="btn btn-salon">Ouvrir un salon </a>
@@ -51,7 +51,7 @@
                                         </div>
                                         <div class="col-6 col-lg-4">
                                             <h5 class="price">Prix Kinshasa</h5>
-                                            <span class="ammount"><strike>20000</strike></span>
+                                            <span class="ammount"><strike style="color: black;">20000</strike></span>
                                         </div>
                                     </div>
                                     <a href="#" class="btn btn-salon">Ouvrir un salon </a>
@@ -73,7 +73,7 @@
                                         </div>
                                         <div class="col-6 col-lg-4">
                                             <h5 class="price">Prix Kinshasa</h5>
-                                            <span class="ammount"><strike>20000</strike></span>
+                                            <span class="ammount"><strike style="color: black;">20000</strike></span>
                                         </div>
                                     </div>
                                     <a href="#" class="btn btn-salon">Ouvrir un salon </a>
@@ -95,7 +95,7 @@
                                         </div>
                                         <div class="col-6 col-lg-4">
                                             <h5 class="price">Prix Kinshasa</h5>
-                                            <span class="ammount"><strike>20000</strike></span>
+                                            <span class="ammount"><strike style="color: black;">20000</strike></span>
                                         </div>
                                     </div>
                                     <a href="#" class="btn btn-salon">Ouvrir un salon </a>

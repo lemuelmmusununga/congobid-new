@@ -42,7 +42,7 @@
                                         </div>
                                         <div class="block-name-user">
                                             <h5>{{ $salon->article->titre }}</h5>
-                                            <p> Prix CongoBid : {{ $salon->article->prix }}$ | Prix Kinshasa : <strike> {{ $salon->article->prix_marche }}$ </strike> </p>
+                                            <p> Prix CongoBid : {{ $salon->article->prix }}$ | Prix Kinshasa : <strike style="color: black;"> {{ $salon->article->prix_marche }}$ </strike> </p>
                                         </div>
                                         <div class="block-notif">
                                             <div class="date">
