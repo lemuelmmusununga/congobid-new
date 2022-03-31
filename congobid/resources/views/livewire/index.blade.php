@@ -201,7 +201,7 @@
                                                     <h6>Date du début</h6>
                                                     <div id="header" class="header" >
                                                         <div class="countdown mt-2">
-                                                                <h5> {{ date('d-m-Y', strtotime($article->enchere->date_debut)) }} </h5>
+                                                            <h5> {{ date('d-m-Y', strtotime($article->enchere->date_debut)) }} à {{ date('H:m', strtotime($article->enchere->heure_debut)) }} </h5>
                                                             {{-- <span id="clock" class="text-black"> --}}
                                                                 {{-- <h1 class="text-center" id="count-down-timer_{{ $article->id }}"></h1> --}}
                                                                 {{-- @if (now()->format('d-m-Y') > $article->enchere->date_debut ? 'match' : 'not match' }}
@@ -217,7 +217,7 @@
                                                         <div class="block-price">
                                                             <h6>Catégorie : <span>{{ $article->paquet->libelle ??'' }}</span></h6>
                                                             <h6>Prix CongoBid : <span>{{ $article->prix }}$</span></h6>
-                                                            <h6> Prix Kinshasa : <span> <strike> {{ $article->prix_marche }}$ </strike> </span> </h6>
+                                                            <h6> Prix Kinshasa : <span> <strike style="color: black;"> {{ $article->prix_marche }}$ </strike> </span> </h6>
                                                         </div>
                                                     </div>
                                                     <div class="col-7">
@@ -239,15 +239,7 @@
                                             <h6 class="text-center">{{ $article->marque }}</h6>
                                             <a href="/detail-article" class="text-center d-block mb-3">Voir plus</a>
                                             @include('components.outils')
-                                            <div class="text-center mb-3">
-                                                <p class="mb-0">
-                                                    Si vous aimez, cliquez sur le coeur pour que cet article passe à la prochaine enchère.
-                                                </p>
-                                                <a href="#" class="like" wire:click.prevent="like({{ $article->id }})">
-                                                    <span class="iconify" data-icon="ant-design:heart-outlined"></span>
-                                                </a>
-                                                <span>{{$article->enchere->favoris ?? '0'}} {{$article->enchere->favoris < 2 ? 'vote' : 'votes' }}</span>
-                                            </div>
+                                            @include('components.favoris')
                                             <div class="card-footer">
                                                 <div class="text-center">
                                                     {{-- <p>
@@ -312,16 +304,19 @@
                     <div class="container">
                         <div class="row g-4 mb-4">
                             @foreach ($articles as $article)
-                                @if (date('d-m-Y', strtotime($article->enchere->date_debut)) > now()->format('d-m-Y'))
+                                @if (date('d-m-Y', strtotime($article->enchere->date_debut)) < now()->format('d-m-Y'))
                                     <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                         <div class="card" id="">
                                             <div class="timeUpdate">
                                                 <div class="text-center">
                                                     {{-- <h6>Temps restant</h6> --}}
                                                     <h6>Date du début</h6>
+                                                    {{-- <h6>
+                                                        {{ (date('d-m-Y', strtotime($article->enchere->date_debut)) < now()->format('d-m-Y')) }}
+                                                    </h6> --}}
                                                     <div id="header" class="header" >
                                                         <div class="countdown mt-2">
-                                                            <h5> {{ date('d-m-Y', strtotime($article->enchere->date_debut)) }} </h5>
+                                                            <h5> {{ date('d-m-Y', strtotime($article->enchere->date_debut)) }} à {{ date('H:m', strtotime($article->enchere->heure_debut)) }} </h5>
                                                             {{-- <span id="clock" class="text-black"> --}}
                                                                 {{-- <h1 class="text-center" id="count-down-timer_{{ $article->id }}"></h1> --}}
                                                                 {{-- @if (now()->format('d-m-Y') > $article->enchere->date_debut ? 'match' : 'not match' }}
@@ -337,7 +332,7 @@
                                                         <div class="block-price">
                                                             <h6>Catégorie : <span>{{ $article->paquet->libelle ??'' }}</span></h6>
                                                             <h6>Prix CongoBid : <span>{{ $article->prix }}$</span></h6>
-                                                            <h6> Prix Kinshasa : <span> <strike> {{ $article->prix_marche }}$ </strike> </span> </h6>
+                                                            <h6> Prix Kinshasa : <span> <strike style="color: black;"> {{ $article->prix_marche }}$ </strike> </span> </h6>
                                                         </div>
                                                     </div>
                                                     <div class="col-7">
@@ -359,15 +354,7 @@
                                             <h6 class="text-center">{{ $article->marque }}</h6>
                                             <a href="/detail-article" class="text-center d-block mb-3">Voir plus</a>
                                             @include('components.outils')
-                                            <div class="text-center mb-3">
-                                                <p class="mb-0">
-                                                    Si vous aimez, cliquez sur le coeur pour que cet article passe à la prochaine enchère.
-                                                </p>
-                                                <a href="#" class="like" wire:click.prevent="like({{ $article->id }})">
-                                                    <span class="iconify" data-icon="ant-design:heart-outlined"></span>
-                                                </a>
-                                                <span>{{$article->enchere->favoris ?? '0'}} {{$article->enchere->favoris < 2 ? 'vote' : 'votes' }}</span>
-                                            </div>
+                                            @include('components.favoris')
                                             <div class="card-footer">
                                                 <div class="text-center">
                                                     {{-- <p>
@@ -426,7 +413,7 @@
                             {{$articles->links()}}
                         </div>
                     </div>
-                    <a href="{{ route('clients.achat.bid') }}">
+                    <a href="{{ route('parrainage') }}">
                         <div class="text-center">
                             <h2>GAGNEZ DE BIDS GRATUITS</h2>
                         </div>
