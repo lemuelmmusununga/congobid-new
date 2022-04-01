@@ -61,6 +61,10 @@
 
 
                                                                 </div>
+                                                            @else
+                                                                <h5> Vous n'etes pas connecté , voulez vous vous connecter ?</h5>
+                                                                <a type="button" href="/login" class="btn btn-ok">Connexion</a>
+
                                                             @endif
                                                         </div>
                                                     </div>
