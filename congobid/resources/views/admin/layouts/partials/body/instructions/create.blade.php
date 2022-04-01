@@ -9,7 +9,7 @@
         <div class="page-inner py-5">
             <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Ajouter une catégorie de produits</h2>
+                    <h2 class="text-white pb-2 fw-bold">Ajouter une instruction</h2>
                 </div>
             </div>
         </div>
@@ -17,22 +17,27 @@
     <div class="row">
         <div class="col-md-12">
             <div class="card">
-                <form action="{{ route('categories.store') }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('commentcamarche.store') }}" method="post" enctype="multipart/form-data">
                     @csrf
                     <div class="card-body">
                         <div class="row">
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
-                                    <label for="smallInput">Nom</label>
-                                    <input type="text" name="libelle" class="form-control form-control-sm" id="smallInput"
-                                        placeholder="Entrez le nom de la catégorie" required>
+                                    <label for="smallInput">Titre</label>
+                                    <input type="text" name="titre" class="form-control form-control-sm" id="smallInput"
+                                        placeholder="Entrez le titre de l'instruction" required>
                                 </div>
                                 <div class="form-group">
-                                    <label for="exampleFormControlFile1">Images de la catégorie</label>
-                                    <input type="file" name="image" class="form-control-file" id="exampleFormControlFile1">
+                                    <label for="comment">Description</label>
+                                    <textarea class="form-control" name="description" id="comment" rows="5"
+                                        required></textarea>
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-4">
+                                <div class="form-group">
+                                    <label for="exampleFormControlFile1">Vidéos de l'instrction</label>
+                                    <input type="file" name="videos" class="form-control-file" id="exampleFormControlFile1" required>
+                                </div>
                                 <div class="form-group">
                                     <label for="smallSelect">Statut</label>
                                     <select class="form-control form-control-sm" id="smallSelect" name="statut_id">

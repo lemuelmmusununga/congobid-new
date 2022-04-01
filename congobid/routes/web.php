@@ -15,7 +15,7 @@ use App\Http\Controllers\Clients\ProfileController;
 use App\Http\Controllers\Clients\AchatController;
 use App\Http\Controllers\Clients\LanguageController;
 use App\Http\Controllers\Clients\DetailEnchereController;
-// use App\Http\Controllers\CommentCaMarcheController;
+// use App\Http\Controllers\CommentCaMarche;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -26,32 +26,32 @@ use App\Http\Controllers\Clients\DetailEnchereController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/counter',function(){
+
+Route::get('/counter', function () {
     return view('welcome');
 });
 
 // Route::get('/dashboard',[IndexController::class,'index'])->name('index');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 
 
-Route::get('lang/{lang}',[LanguageController::class,'switchLang'])->name('lang.switch');
+Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
 // ours rooutes
-
-Route::get('/invite-user', function () {
-    return view('pages.invite-user');
-});
-Route::get('/tarif', function () {
-    return view('pages.tarif');
+Route::get('/chat', function () {
+    return view('pages.chat');
 });
 Route::get('/detail-article', function () {
-    return view('pages.detail-article');
+    return view('pages.detail-produit');
 });
 Route::get('/favoris', function () {
     return view('pages.favoris');
 });
+Route::get('/invite-user', function () {
+    return view('pages.invite-user');
+})->name('parrainage');
 Route::get('/famille', function () {
     return view('pages.famille');
 });
@@ -61,6 +61,20 @@ Route::get('/checkout', function () {
     return view('pages.checkout');
 });
 
+Route::get('/valid-account', function () {
+    return view('pages.valid-account');
+});
+
+Route::get('/checkout', function () {
+    return view('pages.checkout');
+});
+
+Route::get('/valid-account', function () {
+    return view('pages.valid-account');
+});
+
+
+
 Route::get('/articles/{id}/{id_categorie}', [ArticlesController::class, 'ArticlesAll'])->name('all.articles');
 Route::get('/encheres-en-cours', [EnchersController::class, 'index'])->name('show.enchers');
 Route::get('/encheres-futures', [EnchersController::class, 'future'])->name('show.enchers-future');
@@ -68,55 +82,51 @@ Route::get('/encheres-fermees', [EnchersController::class, 'gagne'])->name('show
 Route::get('/articles', [ArticlesController::class, 'articles'])->name('show.articles');
 Route::get('/articles/categorie/{id}', [ArticlesController::class, 'ArticlesCategorie'])->name('categorie.article');
 
-    Route::get('/', [IndexController::class, 'index'])->name('index');
+Route::get('/', [IndexController::class, 'index'])->name('index');
 
-    Route::get('/salons', [SalonController::class, 'index'])->name('clients.salons.index');
+Route::get('/salons', [SalonController::class, 'index'])->name('clients.salons.index');
 
-    Route::get('/comment-ca-marche', [InstructionController::class, 'index'])->name('clients.instructions.index');
-    Route::get('/faq', [indexController::class, 'faq'])->name('faq');
-    Route::get('/politique-de-confidentialite', [indexController::class, 'politique'])->name('politique');
-    Route::get('/terme-et-condition', [indexController::class, 'condition'])->name('terme');
-    Route::get('/contact', [indexController::class, 'contact'])->name('contact');
+Route::get('/comment-ca-marche', [InstructionController::class, 'index'])->name('clients.instructions.index');
+Route::get('/faq', [indexController::class, 'faq'])->name('faq');
+Route::get('/politique-de-confidentialite', [indexController::class, 'politique'])->name('politique');
+Route::get('/terme-et-condition', [indexController::class, 'condition'])->name('terme');
+Route::get('/contact', [indexController::class, 'contact'])->name('contact');
 
-    Route::get('/nos-gagnants', [GagnantController::class, 'index'])->name('clients.gagnants.index');
+Route::get('/nos-gagnants', [GagnantController::class, 'index'])->name('clients.gagnants.index');
 
-    Route::middleware(['clients'])->group(function () {
+Route::middleware(['clients'])->group(function () {
 
-        # Socialite URLs
+    # Socialite URLs
 
-        // La page où on présente les liens de redirection vers les providers
-        // Route::get("login-register",[SocialiteController::class,'loginRegister']);
+    // La page où on présente les liens de redirection vers les providers
+    // Route::get("login-register",[SocialiteController::class,'loginRegister']);
 
-        // La redirection vers le provider
-         Route::get("login/google",[LoginController::class,'redirectTogoogle'])->name('login.google');
+    // La redirection vers le provider
+    Route::get("login/google", [LoginController::class, 'redirectTogoogle'])->name('login.google');
 
-        // Le callback du provider
-         Route::get("login/google/callback",[LoginController::class,'handleGoogleCallback'])->name('google.callback');
+    // Le callback du provider
+    Route::get("login/google/callback", [LoginController::class, 'handleGoogleCallback'])->name('google.callback');
 
-        // end
+    // end
 
-         // La redirection vers le provider
-         Route::get("login/facebook",[LoginController::class,'redirectTofacebook'])->name('login.facebook');
+    // La redirection vers le provider
+    Route::get("login/facebook", [LoginController::class, 'redirectTofacebook'])->name('login.facebook');
 
-        // Le callback du provider
-         Route::get("login/facebook/callback",[LoginController::class,'handleFacebookCallback'])->name('facebook.callback');
+    // Le callback du provider
+    Route::get("login/facebook/callback", [LoginController::class, 'handleFacebookCallback'])->name('facebook.callback');
 
-        // end
-        // profil
-        Route::get('/achat-bid', [AchatController::class, 'index'])->name('clients.achat.bid');
-        Route::get('/achat-bid/success/{id}', [AchatController::class, 'success'])->name('achat.success');
-
-    });
+    // end
+    // profil
+    Route::get('/achat-bid', [AchatController::class, 'index'])->name('clients.achat.bid');
+    Route::get('/achat-bid/success/{id}', [AchatController::class, 'success'])->name('achat.success');
+});
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::group(['middleware' => ['user']], function () {
-        Route::get('/chat', function () {
-            return view('pages.chat');
-        });
-        Route::get('/profil',[ProfileController::class,'index'])->name('profil');
-        Route::get('/detail-enchere/{id}',[DetailEnchereController::class,'index'])->name('show.detail');
+        Route::get('/profil', [ProfileController::class, 'index'])->name('profil');
+        Route::get('/detail-enchere/{id}', [DetailEnchereController::class, 'index'])->name('show.detail');
     });
 
     Route::group(['middleware' => ['admin']], function () {
@@ -191,6 +201,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/tableau-de-bord/enregistrer/gagnant', [App\Http\Controllers\GagnantController::class, 'store'])->name('gagnants.store');
         Route::get('/tableau-de-bord/editer/gagnant/{id}', [App\Http\Controllers\GagnantController::class, 'edit'])->name('gagnants.edit');
         Route::post('/tableau-de-bord/sauvegarder/gagnant', [App\Http\Controllers\GagnantController::class, 'update'])->name('gagnants.update');
+        Route::get('/tableau-de-bord/supprimer/gagnant/{id}/{state}', [App\Http\Controllers\GagnantController::class, 'destroy'])->name('gagnants.destroy');
 
         Route::get('/tableau-de-bord/newsletters', [App\Http\Controllers\NewsletterController::class, 'index'])->name('newsletters.index');
         Route::get('/tableau-de-bord/afficher/newsletters/agent/{id}', [App\Http\Controllers\NewsletterController::class, 'indexfilter'])->name('newsletters.indexfilter');
@@ -203,6 +214,24 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
         Route::get('/tableau-de-bord/historiques', [App\Http\Controllers\HistoriqueController::class, 'index'])->name('historiques.index');
 
+        Route::get('/tableau-de-bord/politiques', [App\Http\Controllers\PolitiqueController::class, 'index'])->name('politiques.index');
+        Route::get('/tableau-de-bord/afficher/politiques/agent/{id}', [App\Http\Controllers\PolitiqueController::class, 'indexfilter'])->name('politiques.indexfilter');
+        Route::get('/tableau-de-bord/creation/politique', [App\Http\Controllers\PolitiqueController::class, 'create'])->name('politiques.create');
+        Route::post('/tableau-de-bord/enregistrer/politique', [App\Http\Controllers\PolitiqueController::class, 'store'])->name('politiques.store');
+        Route::get('/tableau-de-bord/editer/politique/{id}', [App\Http\Controllers\PolitiqueController::class, 'edit'])->name('politiques.edit');
+        Route::post('/tableau-de-bord/sauvegarder/politique', [App\Http\Controllers\PolitiqueController::class, 'update'])->name('politiques.update');
+        Route::get('/tableau-de-bord/supprimer/politique/{id}', [App\Http\Controllers\PolitiqueController::class, 'delete'])->name('politiques.delete');
+        Route::get('/tableau-de-bord/supprimer/politique/{id}/{state}', [App\Http\Controllers\PolitiqueController::class, 'destroy'])->name('politiques.destroy');
+
+        Route::get('/tableau-de-bord/faqs', [App\Http\Controllers\FaqController::class, 'index'])->name('faqs.index');
+        Route::get('/tableau-de-bord/afficher/faqs/agent/{id}', [App\Http\Controllers\FaqController::class, 'indexfilter'])->name('faqs.indexfilter');
+        Route::get('/tableau-de-bord/creation/faq', [App\Http\Controllers\FaqController::class, 'create'])->name('faqs.create');
+        Route::post('/tableau-de-bord/enregistrer/faq', [App\Http\Controllers\FaqController::class, 'store'])->name('faqs.store');
+        Route::get('/tableau-de-bord/editer/faq/{id}', [App\Http\Controllers\FaqController::class, 'edit'])->name('faqs.edit');
+        Route::post('/tableau-de-bord/sauvegarder/faq', [App\Http\Controllers\FaqController::class, 'update'])->name('faqs.update');
+        Route::get('/tableau-de-bord/supprimer/faq/{id}', [App\Http\Controllers\FaqController::class, 'delete'])->name('faqs.delete');
+        Route::get('/tableau-de-bord/supprimer/faq/{id}/{state}', [App\Http\Controllers\FaqController::class, 'destroy'])->name('faqs.destroy');
+
         Route::get('/tableau-de-bord/sanctions', [App\Http\Controllers\SanctionController::class, 'index'])->name('sanctions.index');
         Route::get('/tableau-de-bord/afficher/sanctions/agent/{id}', [App\Http\Controllers\SanctionController::class, 'indexfilter'])->name('sanctions.indexfilter');
         Route::get('/tableau-de-bord/creation/sanction', [App\Http\Controllers\SanctionController::class, 'create'])->name('sanctions.create');
@@ -210,12 +239,13 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/tableau-de-bord/editer/sanction/{id}', [App\Http\Controllers\SanctionController::class, 'edit'])->name('sanctions.edit');
         Route::post('/tableau-de-bord/sauvegarder/sanctions', [App\Http\Controllers\SanctionController::class, 'update'])->name('sanctions.update');
 
-        Route::get('/tableau-de-bord/comment-ca-marche', [App\Http\Controllers\CommentController::class, 'index'])->name('commentcamarche.index');
-        Route::get('/tableau-de-bord/afficher/comment-ca-marche/{id}', [App\Http\Controllers\CommentController::class, 'show'])->name('commentcamarche.show');
-        Route::get('/tableau-de-bord/creation/comment-ca-marche', [App\Http\Controllers\CommentController::class, 'create'])->name('commentcamarche.create');
-        Route::post('/tableau-de-bord/enregistrer/comment-ca-marche', [App\Http\Controllers\CommentController::class, 'store'])->name('commentcamarche.store');
-        Route::get('/tableau-de-bord/editer/comment-ca-marche/{id}', [App\Http\Controllers\CommentController::class, 'edit'])->name('commentcamarche.edit');
-        Route::post('/tableau-de-bord/sauvegarder/comment-ca-marche', [App\Http\Controllers\CommentController::class, 'update'])->name('commentcamarche.update');
+        Route::get('/tableau-de-bord/comment-ca-marche', [App\Http\Controllers\CommentCaMarche::class, 'index'])->name('commentcamarche.index');
+        Route::get('/tableau-de-bord/afficher/comment-ca-marche/{id}', [App\Http\Controllers\CommentCaMarche::class, 'show'])->name('commentcamarche.show');
+        Route::get('/tableau-de-bord/creation/comment-ca-marche', [App\Http\Controllers\CommentCaMarche::class, 'create'])->name('commentcamarche.create');
+        Route::post('/tableau-de-bord/enregistrer/comment-ca-marche', [App\Http\Controllers\CommentCaMarche::class, 'store'])->name('commentcamarche.store');
+        Route::get('/tableau-de-bord/editer/comment-ca-marche/{id}', [App\Http\Controllers\CommentCaMarche::class, 'edit'])->name('commentcamarche.edit');
+        Route::post('/tableau-de-bord/sauvegarder/comment-ca-marche', [App\Http\Controllers\CommentCaMarche::class, 'update'])->name('commentcamarche.update');
+        Route::get('/tableau-de-bord/supprimer/comment-ca-marche/{id}/{state}', [App\Http\Controllers\CommentCaMarche::class, 'destroy'])->name('commentcamarche.destroy');
 
         Route::get('/tableau-de-bord/salons', [App\Http\Controllers\SalonController::class, 'index'])->name('salons.index');
         Route::get('/tableau-de-bord/afficher/salon/{id}', [App\Http\Controllers\SalonController::class, 'show'])->name('salons.show');
@@ -227,6 +257,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 });
 
 // end route
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
+// Route::group(['prefix' => 'admin'], function () {
+//     Voyager::routes();
+// });

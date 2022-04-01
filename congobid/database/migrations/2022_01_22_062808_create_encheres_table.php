@@ -20,6 +20,7 @@ class CreateEncheresTable extends Migration
             $table->date('date_debut')->length(25)->nullable();
             $table->time('heure_debut')->length(25)->nullable();
             $table->integer('state')->default(0);
+            $table->integer('finished')->default(0);
             $table->timestamps();
             $table->timestamp('deleted_at')->nullable();
             $table->integer('id_updated_at')->nullable();

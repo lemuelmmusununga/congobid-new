@@ -103,7 +103,7 @@
                     <div class="collapse" id="categories">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ route('categories.create') }}">
+                                <a href="{{ route('paquets.create') }}">
                                     <span class="sub-item">Ajouter une catégorie</span>
                                 </a>
                             </li>
@@ -144,19 +144,19 @@
                 <li class="nav-item">
                     <a data-toggle="collapse" href="#bids">
                         <i class="fas fa-layer-group"></i>
-                        <p>Taux de conversion</p>
+                        <p>Paquets</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="bids">
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{ route('bids.create') }}">
-                                    <span class="sub-item">Ajouter un taux de conversion</span>
+                                    <span class="sub-item">Ajouter un paquet</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('bids.index') }}">
-                                    <span class="sub-item">Voir les taux de conversion</span>
+                                    <span class="sub-item">Voir les paquets</span>
                                 </a>
                             </li>
                         </ul>
@@ -167,6 +167,54 @@
                         <i class="fas fa-home"></i>
                         <p>Gagnants</p>
                     </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('commentcamarche.index') }}">
+                        <i class="fas fa-home"></i>
+                        <p>Comment ça marche ?</p>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#politiques">
+                        <i class="fas fa-layer-group"></i>
+                        <p>Conditions d'utilisation</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="politiques">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('politiques.create') }}">
+                                    <span class="sub-item">Ajouter une condition d'utilisation</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('politiques.index') }}">
+                                    <span class="sub-item">Voir les conditions d'utilisation</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a data-toggle="collapse" href="#faqs">
+                        <i class="fas fa-layer-group"></i>
+                        <p>FAQ</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="faqs">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('faqs.create') }}">
+                                    <span class="sub-item">Ajouter une question</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('faqs.index') }}">
+                                    <span class="sub-item">Voir les questions</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a href="{{ route('newsletters.index') }}">

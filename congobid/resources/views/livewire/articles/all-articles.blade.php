@@ -39,7 +39,7 @@
                                                     <div class="block-price">
                                                         <h6>Catégorie : <span>{{ $article->paquet->libelle ??'' }}</span></h6>
                                                         <h6>Prix CongoBid : <span>{{ $article->prix }}$</span></h6>
-                                                        <h6>Prix Kinshasa : <span> <strike> {{ $article->prix_marche }}$ </strike> </h6>
+                                                        <h6>Prix Kinshasa : <span> <strike style="color: black;"> {{ $article->prix_marche }}$ </strike> </h6>
                                                     </div>
                                                 </div>
                                                 <div class="col-7">
