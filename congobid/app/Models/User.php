@@ -160,6 +160,11 @@ class User extends \TCG\Voyager\Models\User
         return $this->hasMany(PivotBideurEnchere::class);
     }
 
+    public function pivotbideurpaquet()
+    {
+        return $this->hasMany(PivotBideurPaquet::class);
+    }
+
     public function pivotclientsalon()
     {
         return $this->hasMany(PivotClientsSalon::class);

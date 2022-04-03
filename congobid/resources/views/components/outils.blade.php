@@ -10,7 +10,7 @@
             </a>
             <a href="#">
                 <img src="{{asset('images/click.png')}}" alt="click">
-                <span>X{{ $article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foudre ?? 0 }}</span>
+                <span>X{{ $article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->clicks ?? 0 }}</span>
             </a>
             <a href="#">
                 <img src="{{asset('images/bouclier.png')}}" alt="bouclier">

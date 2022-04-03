@@ -35,7 +35,7 @@
                                                                         <h6>{{ $promotion->prix }} $</h6>
                                                                         <br>
                                                                         <p>Prix marché</p>
-                                                                        <h6>{{ $promotion->prix_marche }} $</h6>
+                                                                        <h6><strike>{{ $promotion->prix_marche }} $</strike></h6>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -237,60 +237,11 @@
                                             </div>
                                             <h5 class="text-center mt-2">{{ $article->titre }}</h5>
                                             <h6 class="text-center">{{ $article->marque }}</h6>
+                                            <span class="text-center">{{ Str::substr($article->description, 0, 80) }}</span>
                                             <a href="/detail-article" class="text-center d-block mb-3">Voir plus</a>
                                             @include('components.outils')
                                             @include('components.favoris')
-                                            <div class="card-footer">
-                                                <div class="text-center">
-                                                    {{-- <p>
-                                                        Si vous aimez, cliquez sur le coeur pour que cet article passe à la prochaine
-                                                        enchère.
-                                                    </p>
-                                                    <a href="#">
-                                                        <span class="iconify" data-icon="ant-design:heart-filled"></span>
-                                                        <span class="num">210</span>
-                                                    </a> --}}
-                                                    @if (Auth::user())
-                                                        @if (Auth::user()->pivotbideurenchere->where('enchere_id', $article->enchere->id)->first() != null)
-                                                            <a href="{{route('show.detail',['id'=>$article->id])}}" class="btn-participer" ><span class="iconify" data-icon="akar-icons:plus"></span>Ouvrir l'enchere</a>
-                                                        @else
-                                                            <a href="#" class="btn-participer" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}" wire:click.prevent="cutbid({{ $article->id }})"><span class="iconify" data-icon="akar-icons:plus"></span> Participer à cette enchère</a>
-                                                        @endif
-                                                    @else
-                                                        <a href="#" class="btn-participer" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}"><span class="iconify" data-icon="akar-icons:plus"></span> Participer à cette enchère</a>
-                                                    @endif
-                                                    {{-- @else
-                                                            <a href="#" class="btn-participer" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}"><span class="iconify" data-icon="akar-icons:plus"></span> Participer à cette enchère</a>
-                                                    @endif --}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div wire:ignore.self class="modal fade" id="modalEnchere_{{ $article->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div class="icon">
-                                                        <span class="iconify" data-icon="ant-design:info-outlined"></span>
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <h5>Voulez-vous participer à cette enchère ?</h5>
-                                                        @if (Auth::user())
-                                                            {{-- @if (($articles->where('id', $article->id)->where('paquet_id', '==', Auth::user()->bideurs->first()->paquet_id)->first() == null) == 1) --}}
-                                                                <p> Pour y participer, veuillez souscrire à la catégorie "{{ $article->paquet->libelle }}" en payent {{ $article->paquet->nombre_enchere }} bids.</p>
-                                                            {{-- @endif --}}
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="modal-footer d-flex justify-content-between align-items-center">
-                                                <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
-                                                <a type="button" href="/detail-enchere/{{ $article->id }}"  class="btn btn-ok">Accepter</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            @include('components.boutons')
                                 @endif
                             @endforeach
                         </div>
@@ -304,7 +255,7 @@
                     <div class="container">
                         <div class="row g-4 mb-4">
                             @foreach ($articles as $article)
-                                @if (date('d-m-Y', strtotime($article->enchere->date_debut)) < now()->format('d-m-Y'))
+                                @if (date('d-m-Y', strtotime($article->enchere->date_debut)) >= now()->format('d-m-Y') && $article->enchere->state == 0)
                                     <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                         <div class="card" id="">
                                             <div class="timeUpdate">
@@ -355,57 +306,7 @@
                                             <a href="/detail-article" class="text-center d-block mb-3">Voir plus</a>
                                             @include('components.outils')
                                             @include('components.favoris')
-                                            <div class="card-footer">
-                                                <div class="text-center">
-                                                    {{-- <p>
-                                                        Si vous aimez, cliquez sur le coeur pour que cet article passe à la prochaine
-                                                        enchère.
-                                                    </p>
-                                                    <a href="#">
-                                                        <span class="iconify" data-icon="ant-design:heart-filled"></span>
-                                                        <span class="num">210</span>
-                                                    </a> --}}
-                                                    @if (Auth::user())
-                                                        @if (Auth::user()->pivotbideurenchere->where('enchere_id', $article->enchere->id)->first() != null)
-                                                            <a href="{{route('show.detail',['id'=>$article->id])}}" class="btn-participer" ><span class="iconify" data-icon="akar-icons:plus"></span>Ouvrir l'enchere</a>
-                                                        @else
-                                                            <a href="#" class="btn-participer" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}" wire:click.prevent="cutbid({{ $article->id }})"><span class="iconify" data-icon="akar-icons:plus"></span> Participer à cette enchère</a>
-                                                        @endif
-                                                    @else
-                                                        <a href="#" class="btn-participer" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}"><span class="iconify" data-icon="akar-icons:plus"></span> Participer à cette enchère</a>
-                                                    @endif
-                                                    {{-- @else
-                                                            <a href="#" class="btn-participer" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}"><span class="iconify" data-icon="akar-icons:plus"></span> Participer à cette enchère</a>
-                                                    @endif --}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div wire:ignore.self class="modal fade" id="modalEnchere_{{ $article->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-body">
-                                                    <div class="icon">
-                                                        <span class="iconify" data-icon="ant-design:info-outlined"></span>
-                                                    </div>
-                                                    <div class="text-center">
-                                                        <h5>Voulez-vous participer à cette enchère ?</h5>
-                                                        @if (Auth::user())
-                                                            {{-- @if (($articles->where('id', $article->id)->where('paquet_id', '==', Auth::user()->bideurs->first()->paquet_id)->first() == null) == 1) --}}
-                                                                <p> Pour y participer, veuillez souscrire à la catégorie "{{ $article->paquet->libelle }}" en payent {{ $article->paquet->nombre_enchere }} bids.</p>
-                                                            {{-- @endif --}}
-                                                        @endif
-                                                    </div>
-                                                </div>
-
-                                                <div class="modal-footer d-flex justify-content-between align-items-center">
-                                                <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
-                                                <a type="button" href="/detail-enchere/{{ $article->id }}"  class="btn btn-ok">Accepter</a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                            @include('components.boutons')
                                 @endif
                             @endforeach
                         </div>

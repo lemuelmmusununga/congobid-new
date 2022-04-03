@@ -9,7 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class PivotBideurEnchere extends Model
 {
     use HasFactory;
-    
 
     protected $guarded = [];
 
@@ -27,5 +26,4 @@ class PivotBideurEnchere extends Model
     {
         return $this->belongsTo(Enchere::class);
     }
-
 }

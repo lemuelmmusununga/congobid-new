@@ -39,28 +39,35 @@
                 </div>
                 <div class="block-items-2">
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-3">
                             <div class="item">
-                                <h4> {{ Auth::user()->pivotbideurenchere->count() }} </h4>
-                                <p class="mb-0">Enchères participées</p>
+                                <h4> {{ Auth::user()->bideurs->first()->balance }} </h4>
+                                <p class="mb-0">Bids</p>
                             </div>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
+                            <div class="item">
+                                <h4> {{ Auth::user()->bideurs->first()->bonus }} </h4>
+                                <p class="mb-0">Bids bonus</p>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="item">
+                                <h4> {{ Auth::user()->bideurs->first()->nontransferable }} </h4>
+                                <p class="mb-0">Bids non transferable</p>
+                            </div>
+                        </div>
+                        <div class="col-3">
                             <div class="item">
                                 <?php
-                                    $clicks = 0;
-                                    foreach (Auth::user()->pivotbideurenchere as $enchere) {
-                                        $clicks = $clicks + $enchere->valeur;
+                                    $favoris = 0;
+                                    foreach (Auth::user()->pivotbideurenchere as $favori) {
+                                        $favoris = $favoris + $favori->favoris;
                                     }
                                 ?>
-                                <h4> {{ $clicks }} </h4>
-                                <p class="mb-0">Clicks</p>
-                            </div>
-                        </div>
-                        <div class="col-4">
-                            <div class="item">
-                                <h4> {{ Auth::user()->chats->count() }} </h4>
-                                <p class="mb-0">Messages envoyés</p>
+                                {{-- <h4> {{ $favoris }} </h4> --}}
+                                <h4> {{ $favoris }} </h4>
+                                <p class="mb-0">Favoris</p>
                             </div>
                         </div>
                     </div>
@@ -79,7 +86,7 @@
                                         <span class="title">Modifier mon profil</span>
                                     </a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="#">
                                         <span class="iconify" data-icon="carbon:piggy-bank"></span>
                                         <span class="title">
@@ -102,7 +109,7 @@
                                             Solde de bids non transférable  : {{ Auth::user()->bideurs->first()->nontransferable }}
                                         </span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a href="#">
                                         <span class="iconify" data-icon="akar-icons:trophy"></span>
@@ -111,14 +118,14 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li>
+                                {{-- <li>
                                     <a href="#">
                                         <span class="iconify" data-icon="akar-icons:heart"></span>
                                         <span class="title">
                                             Mes articles favoris
                                         </span>
                                     </a>
-                                </li>
+                                </li> --}}
                                 <li>
                                     <a href="#">
                                         <span class="iconify" data-icon="carbon:user-follow"></span>

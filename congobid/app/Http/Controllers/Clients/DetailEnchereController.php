@@ -16,21 +16,17 @@ use Illuminate\Support\Facades\Auth;
 class DetailEnchereController extends Controller
 {
     public function index($id){
-
-
-        $paquets = Paquet::where('statut_id', '3')->get();
         $article = Article::where('id', $id)->where('statut_id', '3')->first();
-        $user = PivotBideurEnchere::where('user_id',Auth::user()->id)->where('enchere_id',$id)->first();
-        $soustraction_balance = Bideur::where('user_id',Auth::user()->id)->first();
+        $paquets = Paquet::where('statut_id', '3')->get();
 
-            // couper les nombres de bids
-        if ($user == null) {
-                // verification du balance
-            if ($soustraction_balance->balance>=$article->paquet->nombre_enchere) {
-                $reste=$soustraction_balance->balance-$article->paquet->nombre_enchere;
-                $soustraction_balance->update([
-                    'balance'=>$reste,
+        // couper les nombres de bids
+        if (Auth::user()) {
+            // verification du balance
+            if (Auth::user()->bideurs->first()->balance >= $article->paquet->nombre_enchere) {
+                Bideur::where('id', Auth::user()->id)->update([
+                    'balance' => Auth::user()->bideurs->first()->balance - $article->paquet->nombre_enchere,
                 ]);
+
                 PivotBideurEnchere::create([
                     'valeur' => '0',
                     'statut_id' => '3',
@@ -39,14 +35,11 @@ class DetailEnchereController extends Controller
                 ]);
                 return view('pages.detail-enchere', compact('article', 'paquets'));
             }else{
-                return view('pages.encheres', compact('article', 'paquets'));
+                return back();
             }
-
         }else{
             return view('pages.detail-enchere', compact('article', 'paquets'));
         }
-
-
 
         // dd($user,$article->enchere->id,$article->paquet->nombre_enchere,$reste);
         // $page = 2;

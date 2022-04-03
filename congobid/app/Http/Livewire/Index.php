@@ -11,8 +11,10 @@ use App\Models\Statut;
 use App\Models\Paquet;
 use App\Models\Communique;
 use App\Models\Enchere;
+use App\Models\PivotBideurEnchere;
 use Livewire\WithPagination;
 use App\Models\PivotClientsSalon;
+use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
 {
@@ -32,20 +34,37 @@ protected $paginationTheme = 'bootstrap';
     }
     public function edit($id){
         // envoyer id vers le modal
-        $idmodal = Article::where('id',$id)->first();
+        $idmodal = Article::where('id', $id)->first();
         $this->participer = $idmodal->id;
        }
 
-    public function like($id){
-
-
-        $find = Enchere::where('id',$id)->first();
-
-        $this->like =$find->favoris + 1;
-        $find->update([
-            'favoris' =>$this->like,
-        ]);
-        $this->counter_like = $find->favoris;
+    public function like($id, $state){
+        $find = PivotBideurEnchere::where('id', $id)->first();
+        // dd($state);
+        if ($state == 1) {
+            if ($find->favoris == 0) {
+                $this->like = 1;
+                $find->update([
+                    'favoris' => $this->like,
+                ]);
+            } else {
+                // dd('hello !');
+                $this->like = 0;
+                $find->update([
+                    'favoris' => $this->like,
+                ]);
+            }
+            $this->counter_like = $find->favoris;
+        } else {
+            $this->like = 1;
+            $find = PivotBideurEnchere::create([
+                'favoris' => $this->like,
+                'enchere_id' => $id,
+                'statut_id' => 3,
+                'user_id' => Auth::user()->id,
+            ]);
+            $this->counter_like = $find->favoris;
+        }
     }
     public function cutbid($id){
 
