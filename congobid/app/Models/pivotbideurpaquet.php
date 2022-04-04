@@ -5,11 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-
-class Paquet extends Model
+class pivotbideurpaquet extends Model
 {
     use HasFactory;
-
 
     protected $guarded = [];
 
@@ -23,18 +21,8 @@ class Paquet extends Model
         return $this->belongsTo(Statut::class);
     }
 
-    public function bideurs()
+    public function paquet()
     {
-        return $this->HasMany(Bideur::class);
-    }
-
-    public function articles()
-    {
-        return $this->HasMany(Article::class);
-    }
-
-    public function pivotbideurpaquet()
-    {
-        return $this->hasMany(PivotBideurPaquet::class);
+        return $this->belongsTo(Paquet::class);
     }
 }
