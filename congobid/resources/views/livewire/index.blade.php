@@ -249,12 +249,14 @@
                             {{$articles->links()}}
                         </div>
                     </div>
+
                     <div class="text-center">
                         <h2>Enchères futures</h2>
                     </div>
                     <div class="container">
                         <div class="row g-4 mb-4">
                             @foreach ($articles as $article)
+                            
                                 @if (date('d-m-Y', strtotime($article->enchere->date_debut)) >= now()->format('d-m-Y') && $article->enchere->state == 0)
                                     <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                         <div class="card" id="">
@@ -267,6 +269,8 @@
                                                     </h6> --}}
                                                     <div id="header" class="header" >
                                                         <div class="countdown mt-2">
+                                                            <!-- Header -->
+
                                                             <h5> {{ date('d-m-Y', strtotime($article->enchere->date_debut)) }} à {{ date('H:m', strtotime($article->enchere->heure_debut)) }} </h5>
                                                             {{-- <span id="clock" class="text-black"> --}}
                                                                 {{-- <h1 class="text-center" id="count-down-timer_{{ $article->id }}"></h1> --}}
@@ -305,7 +309,7 @@
                                             <h6 class="text-center">{{ $article->marque }}</h6>
                                             <a href="/detail-article" class="text-center d-block mb-3">Voir plus</a>
                                             @include('components.outils')
-                                            @include('components.favoris')
+                                            @livewire('encheres.favoris',['article'=>$article])
                                             @include('components.boutons')
                                 @endif
                             @endforeach
