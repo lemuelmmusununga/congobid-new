@@ -201,19 +201,13 @@
                                                     <h6>Date du début</h6>
                                                     <div id="header" class="header" >
                                                         <div class="countdown mt-2">
-                                                            <h5>
-                                                                <span id="days"></span>
-                                                                <span id="hours"></span><span id="minutes"></span><span id="seconds"></span>
-                                                            </h5>
-                                                        </div>
-                                                            {{-- <h5> {{ date('d', strtotime($article->enchere->date_debut)) }} à {{ date('H:m', strtotime($article->enchere->heure_debut)) }} </h5> --}}
+                                                            <h5> {{ date('d-m-Y', strtotime($article->enchere->date_debut)) }} à {{ date('H:m', strtotime($article->enchere->heure_debut)) }} </h5>
                                                             {{-- <span id="clock" class="text-black"> --}}
                                                                 {{-- <h1 class="text-center" id="count-down-timer_{{ $article->id }}"></h1> --}}
                                                                 {{-- @if (now()->format('d-m-Y') > $article->enchere->date_debut ? 'match' : 'not match' }}
-                                                                @endif 
+                                                                @endif --}}
                                                             </span>
                                                         </div>
-                                                        --}}
                                                     </div>
                                                 </div>
                                             </div>
@@ -262,7 +256,6 @@
                         <div class="row g-4 mb-4">
                             @foreach ($articles as $article)
                                 @if (date('d-m-Y', strtotime($article->enchere->date_debut)) >= now()->format('d-m-Y') && $article->enchere->state == 0)
-                                    @include('components.counterdown')
                                     <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                         <div class="card" id="">
                                             <div class="timeUpdate">
@@ -368,7 +361,7 @@
                       </div>
                       <div class="text-center">
                           <input type="text" wire:model="participer">
-                          <h5>Voulez-vous aimer cet article ?</h5>
+                          <h5>Vouslez-vous aimer cet article ?</h5>
                           <p> Si vous aimez cet article, il passe à la prochaine
                             enchère.</p>
                       </div>
@@ -381,8 +374,3 @@
                 </div>
             </div>
         </div>
-        
-      {{-- document.getElementById("days").innerHTML = ((days < 10 && days > 0) ? '0' + days : days) + "J" ;
-      document.getElementById("hours").innerHTML =((hours < 10 && hours > 0) ? '0' + hours : hours) + ":";
-      document.getElementById("minutes").innerHTML =((minutes < 10 && minutes > 0) ? '0' + minutes : minutes) + ":";
-      document.getElementById("seconds").innerHTML =((seconds < 10 && seconds > 0) ? '0' + seconds : seconds); --}}
