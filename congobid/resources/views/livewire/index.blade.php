@@ -5,7 +5,7 @@
                 <div class="block-content-pageHome">
                     <div class="block-videos container">
                         <div class="row g-1">
-                            <div class="col-lg-4 col-5">
+                            <div class="col-lg-4 col-4">
                                 <div class="block-banner-sm">
                                     <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                                         <div class="carousel-indicators">
@@ -82,7 +82,7 @@
                             <div class="col-lg-4 col-4">
                                 <div class="block-video-winner block-video">
                                     <div class="title">
-                                       Vidéos de Nos gagnants
+                                       Vidéos des gagnants
                                     </div>
                                     <a href="{{ route('clients.gagnants.index') }}">
                                         <div class="play-video">
@@ -93,7 +93,7 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-lg-4 col-3">
+                            <div class="col-lg-4 col-4">
                                 <div class="block-video-fonction block-video">
                                     <div class="title">
                                         Comment ça marche
@@ -210,7 +210,7 @@
                                                             {{-- <span id="clock" class="text-black"> --}}
                                                                 {{-- <h1 class="text-center" id="count-down-timer_{{ $article->id }}"></h1> --}}
                                                                 {{-- @if (now()->format('d-m-Y') > $article->enchere->date_debut ? 'match' : 'not match' }}
-                                                                @endif 
+                                                                @endif
                                                             </span>
                                                         </div>
                                                         --}}
@@ -381,7 +381,7 @@
                 </div>
             </div>
         </div>
-        
+
       {{-- document.getElementById("days").innerHTML = ((days < 10 && days > 0) ? '0' + days : days) + "J" ;
       document.getElementById("hours").innerHTML =((hours < 10 && hours > 0) ? '0' + hours : hours) + ":";
       document.getElementById("minutes").innerHTML =((minutes < 10 && minutes > 0) ? '0' + minutes : minutes) + ":";
