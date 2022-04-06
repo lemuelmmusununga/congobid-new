@@ -30,11 +30,20 @@
         <div class="block-detail-enchere">
             <div class="container-fluid">
                 <div class="row g-3 justify-content-center">
+
                     <div class="col-lg-5">
                         <div class="text-center mb-4">
                             <h3 class="name-article text-center">{{$article->titre ?? ''}}</h3>
                         </div>
-
+                        @if (Session::has('danger'))
+                                <div class="alert alert-danger">
+                                    <span>{{Session::get('danger')}}</span>
+                                </div>
+                        @elseif(Session::has('success'))
+                            <div class="alert alert-success">
+                                <span>{{Session::get('success')}}</span>
+                            </div>
+                        @endif
                         @livewire('counterbid',['article'=>$article->id])
 
                     </div>
