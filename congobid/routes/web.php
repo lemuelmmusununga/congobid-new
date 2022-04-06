@@ -15,7 +15,6 @@ use App\Http\Controllers\Clients\ProfileController;
 use App\Http\Controllers\Clients\AchatController;
 use App\Http\Controllers\Clients\LanguageController;
 use App\Http\Controllers\Clients\DetailEnchereController;
-
 // use App\Http\Controllers\CommentCaMarche;
 /*
 |--------------------------------------------------------------------------

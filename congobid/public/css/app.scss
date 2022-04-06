@@ -42,6 +42,11 @@ body{
         // border-radius: 0 0 12px 12px;
         .navbar{
             padding: 15px 0;
+            .navbar-brand{
+                img{
+                    width: 100px;
+                }
+            }
             .form-control{
                 border-radius: 12px;
                 border: none;
@@ -119,7 +124,7 @@ body{
 
                 .nav-link{
                     color: #fff;
-
+                    font-weight: 600;
                 }
             }
         }
@@ -394,13 +399,13 @@ body{
                 background: #f6f6f6;
 
                 h5{
-                    font-size: 18px;
+                    font-size: 24px;
                     color: var(--blackColor);
                     font-weight: 700;
                 }
                 h6{
                     color: var(--blackColorLight);
-                    font-size: 14px;
+                    font-size: 18px;
 
                     span{
                         color: #fb6101;
@@ -779,6 +784,7 @@ body{
                     align-items: center;
                     color: #f90703;
                     font-size: 40px;
+                    cursor: pointer;
                     background: var(--blackColor);
 
                     .iconify{
@@ -822,6 +828,18 @@ body{
                 margin-top: 50px;
                 padding: 10px 0;
                 font-size: 22px;
+            }
+            .carousel{
+                .carousel-indicators{
+                    bottom: -30px;
+                    button{
+                        width: 7px;
+                        height: 7px;
+                        border-radius: 100%;
+                        border: none;
+                        background: var(--primaryColor);
+                    }
+                }
             }
         }
     }
@@ -1520,6 +1538,28 @@ body{
                 color: #fff;
                 font-size: 24px;
                 margin-right: 20px;
+            }
+        }
+    }
+    .modal-video {
+        .modal-header{
+            border: none;
+        }
+        .btn-close{
+            background-color: var(--colorWhite);
+        }
+        .modal-content{
+            background: transparent;
+        }
+        .content-video{
+            position: relative;
+            width: 100%;
+            height: 450px;
+
+            iframe{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
             }
         }
     }
@@ -3142,6 +3182,16 @@ body{
 }
 
 @media only screen and (max-device-width: 576px){
+    body header .navbar .navbar-brand img {
+        width: 60px;
+        margin-left: 10px;
+      }
+    body header .navbar .language li a{
+        font-size: 14px;
+    }
+    body header .navbar .links a{
+        font-size: 20px;
+    }
     body .wrapper .block-content-pageHome .block-banner-sm .content-img{
         height: 120px;
     }
@@ -3156,8 +3206,8 @@ body{
         margin-bottom: 20px;
     }
     body .wrapper .block-content-pageHome .block-video .play-video{
-        width: 50px;
-        height: 50px;
+        width: 80px;
+        height: 80px;
         font-size: 22px;
 
         &::before{
@@ -3168,28 +3218,35 @@ body{
         }
     }
     body .wrapper .block-content-pageHome .text-star{
-        text-align: center!important;
+        text-align: end!important;
     }
     body .wrapper .block-content-pageHome .btn{
         padding: 10px 25px;
-        font-size: 14px;
-
+        font-size: 10px;
+        margin-top: -10px;
+        margin-right: 50px;
+        margin-bottom: 0px
+    }
+    body .wrapper .block-marquee{
+        padding: 5px 0;
     }
     body .wrapper .block-marquee .content .title{
-        font-size: 16px;
+        font-size: 14px;
     }
     body .wrapper .block-items .card a .content .block-icon{
-        font-size: 20px;
+        font-size: 14px;
+        display: none;
     }
     body .wrapper .block-items .card a .content .title{
-        font-size: 10px;
+        font-size: 14px;
     }
     body .wrapper .block-items{
-        padding-top: 20px;
+        padding: 10px 0;
     }
     body .wrapper .block-bid-home h2{
-        padding: 20px 0;
+        padding: 10px 0;
         font-size: 20px;
+        margin-top: 10px;
     }
     body .wrapper .block-bid-home .card h6{
         font-size: 10px;
@@ -3204,7 +3261,7 @@ body{
         text-align: center;
     }
     body .navbar form .form-control{
-        width: 120px;
+        width: 140px;
         font-size: 14px;
     }
     body header .navbar .btn{
@@ -3224,6 +3281,10 @@ body{
     }
     body header .navbar .links a.humber{
         display: inline-block;
+        font-size: 24px;
+    }
+    body .modal-video .content-video{
+        height: 200px;
     }
 }
 
