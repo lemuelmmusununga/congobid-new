@@ -47,6 +47,9 @@ Route::get('/chat', function () {
 Route::get('/detail-article', function () {
     return view('pages.detail-produit');
 });
+Route::get('/tarif', function () {
+    return view('pages.tarif');
+});
 Route::get('/favoris', function () {
     return view('pages.favoris');
 });

@@ -19,6 +19,7 @@ class DetailEnchereController extends Controller
     public function index($id){
         $article = Article::where('id', $id)->where('statut_id', '3')->first();
         $paquets = Paquet::where('statut_id', '3')->get();
+        $pivots = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $article->enchere->id)->where('statut_id', '3')->first();
 
         // couper les nombres de bids
         if (Auth::user()) {
@@ -28,12 +29,15 @@ class DetailEnchereController extends Controller
                     'balance' => Auth::user()->bideurs->first()->balance - $article->paquet->nombre_enchere,
                 ]);
 
-                PivotBideurEnchere::create([
-                    'valeur' => '0',
-                    'statut_id' => '3',
-                    'user_id' => Auth::user()->id,
-                    'enchere_id' => $article->enchere->id,
-                ]);
+                if ($pivots == null) {
+
+                    PivotBideurEnchere::create([
+                        'valeur' => '0',
+                        'statut_id' => '3',
+                        'user_id' => Auth::user()->id,
+                        'enchere_id' => $article->enchere->id,
+                    ]);
+                }
                 return view('pages.detail-enchere', compact('article', 'paquets'));
             }else{
                 return back();

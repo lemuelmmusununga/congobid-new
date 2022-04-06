@@ -10,7 +10,7 @@
                                 <tr>
                                 <th>#</th>
                                 <th>Pseudo</th>
-                                <th>Options</th>
+                                <th>Optionsxb</th>
                                 <th>Nbr. click</th>
                                 </tr>
                             </thead>
@@ -74,7 +74,7 @@
 
                                                                 </div>
                                                             @else
-                                                                <h5> Vous n'etes pas connecté ?</h5>
+                                                                <h5> Vous n'etes pas connecté, voulez-vous vous connecter ?</h5>
                                                                 <a type="button" href="/login" class="btn btn-ok">Connexion</a>
 
                                                             @endif
@@ -182,22 +182,6 @@
         </div>
     </div>
     </div>
-    <h5 class="mt-3 text-center">Options</h5>
-    <div class="block-power d-flex justify-content-between align-items-center">
-        <a data-bs-toggle="modal" data-bs-target="#modalliste">
-            <img src="{{asset('images/couronne.png')}}" alt="couronne">
-            <span>X3</span>
-        </a>
-        <a  data-bs-toggle="modal" data-bs-target="#modalliste">
-            <img src="{{asset('images/foudre.png')}}" alt="foudre">
-            <span>X3</span>
-        </a>
-        <a href="#">
-            <img src="{{asset('images/click.png')}}" alt="click">
-        </a>
-        <a href="#">
-            <img src="{{asset('images/bouclier.png')}}" alt="bouclier">
-            <span>X3</span>
-        </a>
-    </div>
+    <h5 class="mt-3 text-center">Options </h5>
+    {{-- @include('components.outils') --}}
 </div>
