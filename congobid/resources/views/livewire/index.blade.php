@@ -214,7 +214,7 @@
                                                                 @endif
                                                             </span>
                                                         </div>
-                                                    </div> 
+                                                    </div>
                                                         --}}
                                                 </div>
                                             </div>
@@ -263,7 +263,7 @@
                     <div class="container">
                         <div class="row g-4 mb-4">
                             @foreach ($articles as $article)
-                            
+
                                 @if (date('d-m-Y', strtotime($article->enchere->date_debut)) >= now()->format('d-m-Y') && $article->enchere->state == 0)
                                     @include('components.counterdown')
                                     <div class="col-12 col-lg-4" id="{{$article->titre}}">
@@ -319,6 +319,7 @@
                                             </div>
                                             <h5 class="text-center mt-2">{{ $article->titre }}</h5>
                                             <h6 class="text-center">{{ $article->marque }}</h6>
+                                            <span class="text-center">{{ Str::substr($article->description, 0, 80) }}</span>
                                             <a href="/detail-article" class="text-center d-block mb-3">Voir plus</a>
                                             @include('components.outils')
                                             @livewire('encheres.favoris',['article'=>$article])
