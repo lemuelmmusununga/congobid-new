@@ -2,7 +2,7 @@
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid px-lg-3 px-xl-3 px-xxl-5 px-1">
           <a class="navbar-brand" href="{{ route('index') }}">
-            <img src="{{asset('images/logo/logo.png')}}" alt="logo-congobid">
+            <img src="{{asset('images/logo.png')}}" alt="logo-congobid">
           </a>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto me-auto mb-2 mb-lg-0">
@@ -66,7 +66,7 @@
                     @endif
 
                 </ul>
-                <div class="links d-flex justify-content-end align-items-center">
+                <div class="links d-flex justify-content-end">
                     <a href="/profil">
                         <div class="icon">
                             <span class="iconify" data-icon="fa:user"></span>
