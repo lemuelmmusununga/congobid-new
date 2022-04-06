@@ -47,22 +47,25 @@
 
                                                             @if (Auth::user())
                                                                 {{-- @if (($articles->where('id', $article->id)->where('paquet_id', '==', Auth::user()->bideurs->first()->paquet_id)->first() == null) == 1) --}}
-                                                                    <h5> Quel sentence voulez vous pour "{{ $liste->user->nom  }}"</h5>
+                                                                    <h5> Quel sentence voulez vous pour "{{ $liste->user->nom  }}" <br> il vous faudra {{$liste->enchere->paquet->prix}} bids</h5>
                                                                 {{-- @endif --}}
                                                                 <div class="block-power d-flex justify-content-center" >
-                                                                    <a href="#" class="me-5">
+
+{{-- wire:click.prevent()="sanction({{ $liste->user->id}},{{$liste->enchere->id}})" --}}
+                                                                    <a href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$liste->enchere->id,'sanction'=>1])}}"  class="me-5">
                                                                         <img src="{{asset('images/couronne.png')}}" alt="couronne" class="">
                                                                         <span>X3</span>
                                                                     </a>
-                                                                    <a href="#" class="">
+                                                                    <a href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$liste->enchere->id,'sanction'=>2])}}"  class="">
                                                                         <img src="{{asset('images/foudre.png')}}" alt="foudre">
                                                                         <span>X3</span>
                                                                     </a>
 
 
+
                                                                 </div>
                                                             @else
-                                                                <h5> Vous n'etes pas connecté, voulez vous vous connecter ?</h5>
+                                                                <h5> Vous n'etes pas connecté, voulez-vous vous connecter ?</h5>
                                                                 <a type="button" href="/login" class="btn btn-ok">Connexion</a>
 
                                                             @endif
