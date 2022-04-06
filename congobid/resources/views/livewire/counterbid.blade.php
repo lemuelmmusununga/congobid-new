@@ -46,19 +46,28 @@
                                                         <div class="text-center">
 
                                                             @if (Auth::user())
-                                                                {{-- @if (($articles->where('id', $article->id)->where('paquet_id', '==', Auth::user()->bideurs->first()->paquet_id)->first() == null) == 1) --}}
+                                                                @if ($liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi == 0 || $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre == 0 )
+                                                                    <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet->prix}} bids Pour acheter les options</h5>
+                                                                    <button type="button" class="btn btn-no" data-bs-dismiss="modal" wire:click.prevent()="option({{10}})"> Acheter</button>
+                                                                @else
                                                                     <h5> Quel sentence voulez vous pour "{{ $liste->user->nom  }}" <br> il vous faudra {{$liste->enchere->paquet->prix}} bids</h5>
+                                                                @endif
+                                                                {{-- @if (($articles->where('id', $article->id)->where('paquet_id', '==', Auth::user()->bideurs->first()->paquet_id)->first() == null) == 1) --}}
                                                                 {{-- @endif --}}
                                                                 <div class="block-power d-flex justify-content-center" >
 
 {{-- wire:click.prevent()="sanction({{ $liste->user->id}},{{$liste->enchere->id}})" --}}
+
                                                                     <a href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$liste->enchere->id,'sanction'=>1])}}"  class="me-5">
                                                                         <img src="{{asset('images/couronne.png')}}" alt="couronne" class="">
-                                                                        <span>X3</span>
+                                                                        <span>X{{ $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi ?? 0 }}
+
                                                                     </a>
+
                                                                     <a href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$liste->enchere->id,'sanction'=>2])}}"  class="">
                                                                         <img src="{{asset('images/foudre.png')}}" alt="foudre">
-                                                                        <span>X3</span>
+                                                                        <span>X{{ $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre ?? 0 }}
+
                                                                     </a>
 
 

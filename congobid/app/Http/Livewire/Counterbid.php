@@ -62,7 +62,7 @@ class Counterbid extends Component
 
         // afficher tout les biddeurs sanctionner
 
-        
+
     }
     public function addclick($add){
 
@@ -72,6 +72,14 @@ class Counterbid extends Component
 
         $this->update->update([
             'valeur'=>$this->addclick
+        ]);
+    }
+    // update les options a revoir
+    public function option($option){
+        $add = PivotBideurEnchere::where('user_id',auth()->user()->id)->first();
+        $add->update([
+            'foudre'=>$option,
+            'roi'=>$option
         ]);
     }
     public function render()
