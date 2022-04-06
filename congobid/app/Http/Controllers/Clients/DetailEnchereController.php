@@ -27,12 +27,12 @@ class DetailEnchereController extends Controller
                     'balance' => Auth::user()->bideurs->first()->balance - $article->paquet->nombre_enchere,
                 ]);
 
-                PivotBideurEnchere::create([
-                    'valeur' => '0',
-                    'statut_id' => '3',
-                    'user_id' => Auth::user()->id,
-                    'enchere_id' => $article->enchere->id,
-                ]);
+                // PivotBideurEnchere::create([
+                //     'valeur' => '0',
+                //     'statut_id' => '3',
+                //     'user_id' => Auth::user()->id,
+                //     'enchere_id' => $article->enchere->id,
+                // ]);
                 return view('pages.detail-enchere', compact('article', 'paquets'));
             }else{
                 return back();

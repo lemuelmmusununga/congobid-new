@@ -202,15 +202,15 @@
                                                     <div id="header" class="header" >
                                                         <div class="countdown mt-2">
                                                             <h5>
-                                                                <span id="days"></span>
-                                                                <span id="hours"></span><span id="minutes"></span><span id="seconds"></span>
+                                                                <span id="dayssz"></span>
+                                                                <span id="hourssz"></span><span id="minutessz"></span><span id="secondssz"></span>
                                                             </h5>
                                                         </div>
                                                             {{-- <h5> {{ date('d', strtotime($article->enchere->date_debut)) }} à {{ date('H:m', strtotime($article->enchere->heure_debut)) }} </h5> --}}
                                                             {{-- <span id="clock" class="text-black"> --}}
                                                                 {{-- <h1 class="text-center" id="count-down-timer_{{ $article->id }}"></h1> --}}
                                                                 {{-- @if (now()->format('d-m-Y') > $article->enchere->date_debut ? 'match' : 'not match' }}
-                                                                @endif 
+                                                                @endif
                                                             </span>
                                                         </div>
                                                         --}}
@@ -267,21 +267,23 @@
                                         <div class="card" id="">
                                             <div class="timeUpdate">
                                                 <div class="text-center">
-                                                    {{-- <h6>Temps restant</h6> --}}
-                                                    <h6>Date du début</h6>
+                                                    <h6>Temps restant</h6>
+                                                    <div class="countdown mt-2">
+                                                        <h5>
+                                                            <span id="days"></span>
+                                                            <span id="hours"></span><span id="minutes"></span><span id="seconds"></span>
+                                                        </h5>
+                                                    </div>
+                                                    {{-- <h6>Date du début</h6> --}}
                                                     {{-- <h6>
                                                         {{ (date('d-m-Y', strtotime($article->enchere->date_debut)) < now()->format('d-m-Y')) }}
                                                     </h6> --}}
-                                                    <div id="header" class="header" >
+                                                    {{-- <div id="header" class="header" >
                                                         <div class="countdown mt-2">
                                                             <h5> {{ date('d-m-Y', strtotime($article->enchere->date_debut)) }} à {{ date('H:m', strtotime($article->enchere->heure_debut)) }} </h5>
-                                                            {{-- <span id="clock" class="text-black"> --}}
-                                                                {{-- <h1 class="text-center" id="count-down-timer_{{ $article->id }}"></h1> --}}
-                                                                {{-- @if (now()->format('d-m-Y') > $article->enchere->date_debut ? 'match' : 'not match' }}
-                                                                @endif --}}
                                                             </span>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             <div class="container-fluid px-0">
@@ -381,7 +383,7 @@
                 </div>
             </div>
         </div>
-        
+
       {{-- document.getElementById("days").innerHTML = ((days < 10 && days > 0) ? '0' + days : days) + "J" ;
       document.getElementById("hours").innerHTML =((hours < 10 && hours > 0) ? '0' + hours : hours) + ":";
       document.getElementById("minutes").innerHTML =((minutes < 10 && minutes > 0) ? '0' + minutes : minutes) + ":";
