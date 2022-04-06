@@ -195,10 +195,11 @@
                                     <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                         <div class="card" id="">
                                             <div class="timeUpdate">
-
                                                 <div class="text-center">
-                                                    {{-- <h6>Temps restant</h6> --}}
                                                     <h6>Date du début</h6>
+                                                    <h6>{{ date('d-m-Y', strtotime($article->enchere->date_debut)).' à '.date('H:m', strtotime($article->enchere->heure_debut)) }}</h6>
+                                                    {{-- <h6>Temps restant</h6> --}}
+                                                    {{-- <h6>Date du début</h6>
                                                     <div id="header" class="header" >
                                                         <div class="countdown mt-2">
                                                             <h5>
@@ -213,8 +214,8 @@
                                                                 @endif
                                                             </span>
                                                         </div>
+                                                    </div> 
                                                         --}}
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="container-fluid px-0">
@@ -267,13 +268,15 @@
                                         <div class="card" id="">
                                             <div class="timeUpdate">
                                                 <div class="text-center">
-                                                    <h6>Temps restant</h6>
+                                                    <h6>Date du début</h6>
+                                                    <h6>{{ date('d-m-Y', strtotime($article->enchere->date_debut)).' à '.date('H:m', strtotime($article->enchere->heure_debut)) }}</h6>
+                                                    {{-- <h6>Temps restant</h6>
                                                     <div class="countdown mt-2">
                                                         <h5>
                                                             <span id="days"></span>
                                                             <span id="hours"></span><span id="minutes"></span><span id="seconds"></span>
                                                         </h5>
-                                                    </div>
+                                                    </div> --}}
                                                     {{-- <h6>Date du début</h6> --}}
                                                     {{-- <h6>
                                                         {{ (date('d-m-Y', strtotime($article->enchere->date_debut)) < now()->format('d-m-Y')) }}
