@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sanction extends Model
 {
     use HasFactory;
-    
+
 
     protected $guarded = [];
 
@@ -21,5 +21,14 @@ class Sanction extends Model
     public function statut()
     {
         return $this->belongsTo(Statut::class);
+    }
+    /**
+     * Get the enchere that owns the Sanction
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function enchere()
+    {
+        return $this->belongsTo(Enchere::class, 'enchere_id');
     }
 }

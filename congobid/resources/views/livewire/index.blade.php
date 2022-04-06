@@ -195,15 +195,16 @@
                                     <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                         <div class="card" id="">
                                             <div class="timeUpdate">
-
                                                 <div class="text-center">
-                                                    {{-- <h6>Temps restant</h6> --}}
                                                     <h6>Date du début</h6>
+                                                    <h6>{{ date('d-m-Y', strtotime($article->enchere->date_debut)).' à '.date('H:m', strtotime($article->enchere->heure_debut)) }}</h6>
+                                                    {{-- <h6>Temps restant</h6> --}}
+                                                    {{-- <h6>Date du début</h6>
                                                     <div id="header" class="header" >
                                                         <div class="countdown mt-2">
                                                             <h5>
-                                                                <span id="days"></span>
-                                                                <span id="hours"></span><span id="minutes"></span><span id="seconds"></span>
+                                                                <span id="dayssz"></span>
+                                                                <span id="hourssz"></span><span id="minutessz"></span><span id="secondssz"></span>
                                                             </h5>
                                                         </div>
                                                             {{-- <h5> {{ date('d', strtotime($article->enchere->date_debut)) }} à {{ date('H:m', strtotime($article->enchere->heure_debut)) }} </h5> --}}
@@ -213,8 +214,8 @@
                                                                 @endif
                                                             </span>
                                                         </div>
+                                                    </div> 
                                                         --}}
-                                                    </div>
                                                 </div>
                                             </div>
                                             <div class="container-fluid px-0">
@@ -255,33 +256,41 @@
                             {{$articles->links()}}
                         </div>
                     </div>
+
                     <div class="text-center">
                         <h2>Enchères futures</h2>
                     </div>
                     <div class="container">
                         <div class="row g-4 mb-4">
                             @foreach ($articles as $article)
+                            
                                 @if (date('d-m-Y', strtotime($article->enchere->date_debut)) >= now()->format('d-m-Y') && $article->enchere->state == 0)
                                     @include('components.counterdown')
                                     <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                         <div class="card" id="">
                                             <div class="timeUpdate">
                                                 <div class="text-center">
-                                                    {{-- <h6>Temps restant</h6> --}}
                                                     <h6>Date du début</h6>
+                                                    <h6>{{ date('d-m-Y', strtotime($article->enchere->date_debut)).' à '.date('H:m', strtotime($article->enchere->heure_debut)) }}</h6>
+                                                    {{-- <h6>Temps restant</h6>
+                                                    <div class="countdown mt-2">
+                                                        <h5>
+                                                            <span id="days"></span>
+                                                            <span id="hours"></span><span id="minutes"></span><span id="seconds"></span>
+                                                        </h5>
+                                                    </div> --}}
+                                                    {{-- <h6>Date du début</h6> --}}
                                                     {{-- <h6>
                                                         {{ (date('d-m-Y', strtotime($article->enchere->date_debut)) < now()->format('d-m-Y')) }}
                                                     </h6> --}}
-                                                    <div id="header" class="header" >
+                                                    {{-- <div id="header" class="header" >
                                                         <div class="countdown mt-2">
+                                                            <!-- Header -->
+
                                                             <h5> {{ date('d-m-Y', strtotime($article->enchere->date_debut)) }} à {{ date('H:m', strtotime($article->enchere->heure_debut)) }} </h5>
-                                                            {{-- <span id="clock" class="text-black"> --}}
-                                                                {{-- <h1 class="text-center" id="count-down-timer_{{ $article->id }}"></h1> --}}
-                                                                {{-- @if (now()->format('d-m-Y') > $article->enchere->date_debut ? 'match' : 'not match' }}
-                                                                @endif --}}
                                                             </span>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             <div class="container-fluid px-0">
@@ -312,7 +321,7 @@
                                             <h6 class="text-center">{{ $article->marque }}</h6>
                                             <a href="/detail-article" class="text-center d-block mb-3">Voir plus</a>
                                             @include('components.outils')
-                                            @include('components.favoris')
+                                            @livewire('encheres.favoris',['article'=>$article])
                                             @include('components.boutons')
                                 @endif
                             @endforeach

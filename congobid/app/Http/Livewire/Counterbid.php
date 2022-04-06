@@ -8,6 +8,7 @@ use App\Models\PivotBideurEnchere;
 use App\Models\Bideur;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\Sanction;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\PivotClientsSalon;
@@ -24,7 +25,8 @@ class Counterbid extends Component
     public $getSalons=[];
     public $detail=[],$addclick;
     // recuperation de l'article cliquer
-    public $getart;
+    public $getart,$user_id,$etat;
+    // santion
 
     public function mount($article){
 
@@ -55,6 +57,12 @@ class Counterbid extends Component
         ]);
 
 
+    }
+    public function sanction($id,$enchere){
+
+        // afficher tout les biddeurs sanctionner
+
+        
     }
     public function addclick($add){
 
