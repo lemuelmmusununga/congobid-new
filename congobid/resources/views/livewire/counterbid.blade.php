@@ -52,11 +52,11 @@
                                                                 <div class="block-power d-flex justify-content-center" >
 
 {{-- wire:click.prevent()="sanction({{ $liste->user->id}},{{$liste->enchere->id}})" --}}
-                                                                    <a href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$liste->enchere->id])}}"  class="me-5">
+                                                                    <a href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$liste->enchere->id,'sanction'=>1])}}"  class="me-5">
                                                                         <img src="{{asset('images/couronne.png')}}" alt="couronne" class="">
                                                                         <span>X3</span>
                                                                     </a>
-                                                                    <a href="#" class="">
+                                                                    <a href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$liste->enchere->id,'sanction'=>2])}}"  class="">
                                                                         <img src="{{asset('images/foudre.png')}}" alt="foudre">
                                                                         <span>X3</span>
                                                                     </a>

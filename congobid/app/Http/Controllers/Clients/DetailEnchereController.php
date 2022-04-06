@@ -129,7 +129,7 @@ class DetailEnchereController extends Controller
         //     }
         // }
     }
-    public function sanction($id,$enchere){
+    public function sanction($id,$enchere,$sanction){
         $bideur = PivotBideurEnchere::where('user_id',$id)->first();
 
         $sanction = Sanction::where('user_id', $id)->where('enchere_id',$enchere)->where('deleted_at',null)->first();
@@ -142,6 +142,7 @@ class DetailEnchereController extends Controller
                 'statut' => 1 ,
                 'suspendu_by' => Auth::user()->id,
                 'user_id'=>$id,
+                'santance'=>$sanction
             ]);
             return redirect()->back()->with('success','le bideur est sanctionner');
         }
@@ -168,6 +169,7 @@ class DetailEnchereController extends Controller
                 'statut' => 1 ,
                 'suspendu_by' => Auth::user()->id,
                 'user_id'=>$id,
+                'santance'=>$sanction
             ]);
             return redirect()->back()->with('success','le bideur est sanctionner');
             // session()->flash('success','le bideur est sanctionner');
