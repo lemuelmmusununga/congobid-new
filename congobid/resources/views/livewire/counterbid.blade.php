@@ -46,7 +46,7 @@
                                                         <div class="text-center">
 
                                                             @if (Auth::user())
-                                                                @if ($liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi == 0 || $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre == 0 )
+                                                                @if ($liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi == 0 && $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre == 0 )
                                                                     <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet->prix}} bids Pour acheter les options</h5>
                                                                     <button type="button" class="btn btn-no" data-bs-dismiss="modal" wire:click.prevent()="option({{10}})"> Acheter</button>
                                                                 @else
