@@ -337,7 +337,7 @@ body .wrapper .block-items {
 
 body .wrapper .block-items .card {
   border: none;
-  border-radius: 20px;
+  border-radius: 12px;
   -webkit-box-shadow: 0px 5px 24px 0px rgba(0, 0, 0, 0.05);
           box-shadow: 0px 5px 24px 0px rgba(0, 0, 0, 0.05);
   background: -webkit-gradient(linear, left top, left bottom, from(#fa6000), to(#c94b01));
@@ -552,6 +552,7 @@ body .wrapper .block-bid-home .card .block-price {
   background: #fceac2;
   padding: 10px;
   border-radius: 12px;
+  margin-top: 30px;
 }
 
 body .wrapper .block-bid-home .card .block-participant {
@@ -576,7 +577,7 @@ body .wrapper .block-bid-home .card .block-participant .name-participant {
 body .wrapper .block-bid-home .card .card-footer {
   background: transparent;
   padding-bottom: 0;
-  padding-top: 20px;
+  padding: 20px 0;
 }
 
 body .wrapper .block-bid-home .card .card-footer .btn {
@@ -595,12 +596,16 @@ body .wrapper .block-bid-home .card .card-footer a.btn-participer {
   font-weight: 400;
   background: -webkit-gradient(linear, left top, left bottom, from(#fa6000), to(#c94b01));
   background: linear-gradient(to bottom, #fa6000, #c94b01);
-  padding: 10px 20px;
+  padding: 10px 15px;
   border-radius: 50px;
   color: var(--colorWhite) !important;
   display: inline-block !important;
   -webkit-box-shadow: 0 5px 10px #13131233;
           box-shadow: 0 5px 10px #13131233;
+}
+
+body .wrapper .block-bid-home .card .card-footer a.btn-participer.btn-gray {
+  background: #b7b7b7;
 }
 
 body .wrapper .block-bid-home .card .card-footer .text-center p {
@@ -3863,6 +3868,24 @@ body .detail-pro .btn-salon {
     font-size: 9px;
     margin-bottom: 20px;
   }
+  body .wrapper .block-bid-home .card {
+    padding: 0;
+    border-radius: 0;
+  }
+  body .wrapper .block-bid-home .col-lg-4 {
+    border-top: 1px solid #fb6101;
+  }
+  body .wrapper .block-bid-home .col-lg-4:first-child {
+    border-top: 1px solid transparent;
+  }
+  body .wrapper .block-bid-home .card .card-footer {
+    padding: 10px 0;
+    border: none;
+  }
+  body .wrapper .block-bid-home .card .card-footer a.btn-participer {
+    padding: 10px 15px;
+    font-size: 13px;
+  }
   body .wrapper .block-content-pageHome .block-video .play-video {
     width: 80px;
     height: 80px;
@@ -3882,13 +3905,13 @@ body .detail-pro .btn-salon {
     font-size: 10px;
     margin-top: -10px;
     margin-right: 50px;
-    margin-bottom: 0px;
+    margin-bottom: 10px;
   }
   body .wrapper .block-marquee {
-    padding: 5px 0;
+    padding: 2px 0;
   }
   body .wrapper .block-marquee .content .title {
-    font-size: 14px;
+    font-size: 10px;
   }
   body .wrapper .block-items .card a .content .block-icon {
     font-size: 14px;
@@ -3906,7 +3929,7 @@ body .detail-pro .btn-salon {
     margin-top: 10px;
   }
   body .wrapper .block-bid-home .card h6 {
-    font-size: 10px;
+    font-size: 14px;
   }
   body .wrapper .block-bid-home .card p {
     font-size: 14px;

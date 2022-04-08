@@ -1,7 +1,10 @@
             <div class="card-footer">
-                <div class="text-center">
+                <div class="text-center d-flex justify-content-between">
                     <a href="{{ route('show.detail', ['id' => $article->id]) }}" class="btn-participer"><span class="iconify"
                             data-icon="akar-icons:plus"></span>Ouvrir l'enchere</a>
+                            <a href="#" class="btn-participer btn-gray" data-bs-toggle="modal"
+                            data-bs-target="#modalEnchere_{{ $article->id }}"><span class="iconify"
+                                data-icon="akar-icons:plus"></span> Participer à l'enchère</a>
                 </div>
                 <br>
                 @if (!Auth::user() || (Auth::user() && !Auth::user()->pivotbideurenchere->where('enchere_id', $article->enchere->id)->first()))
