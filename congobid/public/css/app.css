@@ -324,6 +324,7 @@ body .wrapper .block-content-pageHome .block-video .play-video::after {
   bottom: -5px;
   right: -5px;
   z-index: -2;
+  display: none;
 }
 
 body .wrapper .block-items {
@@ -597,7 +598,7 @@ body .wrapper .block-bid-home .card .card-footer a.btn-participer {
   background: -webkit-gradient(linear, left top, left bottom, from(#fa6000), to(#c94b01));
   background: linear-gradient(to bottom, #fa6000, #c94b01);
   padding: 10px 15px;
-  border-radius: 50px;
+  border-radius: 12px;
   color: var(--colorWhite) !important;
   display: inline-block !important;
   font-size: 14px;
