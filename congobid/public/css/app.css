@@ -600,6 +600,7 @@ body .wrapper .block-bid-home .card .card-footer a.btn-participer {
   border-radius: 50px;
   color: var(--colorWhite) !important;
   display: inline-block !important;
+  font-size: 14px;
   -webkit-box-shadow: 0 5px 10px #13131233;
           box-shadow: 0 5px 10px #13131233;
 }
@@ -631,7 +632,7 @@ body .wrapper .block-bid-home .card .card-footer .text-center a {
 }
 
 body .wrapper .block-bid-home .card .card-footer .text-center a .iconify {
-  font-size: 30px;
+  font-size: 20px;
 }
 
 body .wrapper .block-bid-home .card .card-footer .text-center a .num {
@@ -3765,7 +3766,7 @@ body .card-bid h6 span {
 
 body .like {
   display: block;
-  font-size: 40px;
+  font-size: 28px;
   color: var(--grayColor);
 }
 
