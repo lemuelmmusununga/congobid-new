@@ -56,7 +56,7 @@
                                                                 {{-- @endif --}}
                                                                 <div class="block-power d-flex justify-content-center" >
 
-{{-- wire:click.prevent()="sanction({{ $liste->user->id}},{{$liste->enchere->id}})" --}}
+                                                                    {{-- wire:click.prevent()="sanction({{ $liste->user->id}},{{$liste->enchere->id}})" --}}
 
                                                                     <a href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$liste->enchere->id,'sanction'=>1])}}"  class="me-5">
                                                                         <img src="{{asset('images/couronne.png')}}" alt="couronne" class="">
@@ -97,7 +97,12 @@
             <div class="col-4">
 
                 {{-- @livewire('decrematation', ['munite' => $munite,'times' => $times,'getart'=>$getart]) --}}
-
+                {{-- <header id="header" class="header" >
+                    <div class="countdown">
+                        <span id="clock" class="text-black"></span>
+                    </div> <!-- end of countdown -->
+                    <!-- end of social links -->
+                </header> --}}
 
                 <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
                     <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>

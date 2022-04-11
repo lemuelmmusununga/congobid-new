@@ -4,7 +4,7 @@
     /* Countdown Timer - The Final Countdown */
 
 
-	$('#clock').countdown('2022/5/27 10:50:56') /* change here your "countdown to" date */
+	$('#clock').countdown('2022/5/24 10:50:56') /* change here your "countdown to" date */
 	.on('update.countdown', function(event) {
 		var format = '<span class="counter-number p-1">%D<span class="timer-text">J</span></span><span class="counter-number p-1">%H<span class="timer-text">H</span></span><span class="counter-number p-1">%M<span class="timer-text">M</span></span><span class="counter-number p-1">%S<span class="timer-text">S</span></span>';
 		$(this).html(event.strftime(format));
