@@ -45,7 +45,7 @@ Route::get('/chat', function () {
     return view('pages.chat');
 });
 Route::get('/detail-article', function () {
-    return view('pages.detail-produit');
+    return view('pages.detail-article');
 });
 Route::get('/tarif', function () {
     return view('pages.tarif');
@@ -78,6 +78,7 @@ Route::get('/valid-account', function () {
 });
 
 
+Route::get('/articles/detail/produit/{id}/{name}', [ArticlesController::class, 'detailArticle'])->name('detail.article');
 
 Route::get('/articles/{id}/{id_categorie}', [ArticlesController::class, 'ArticlesAll'])->name('all.articles');
 Route::get('/encheres-en-cours', [EnchersController::class, 'index'])->name('show.enchers');

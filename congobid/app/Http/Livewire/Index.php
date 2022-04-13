@@ -20,7 +20,7 @@ class Index extends Component
 {
 use WithPagination;
 protected $paginationTheme = 'bootstrap';
-    public $search ='';
+    public $search ='',$getart;
     public $article = '';
     public $participer ='';
     public $iids,$like=0,$counter_like;
@@ -38,7 +38,7 @@ protected $paginationTheme = 'bootstrap';
         $this->participer = $idmodal->id;
        }
 
-    
+
     public function cutbid($id){
 
 // cette consiste a couper les bid

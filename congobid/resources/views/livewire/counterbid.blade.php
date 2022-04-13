@@ -103,13 +103,23 @@
                     </div> <!-- end of countdown -->
                     <!-- end of social links -->
                 </header> --}}
+                @if (date('d-m-Y ', strtotime($this->enchere->date_debut)) > now()->format('d-m-Y ') || date('d-m-Y H:i:s', strtotime($this->enchere->date_debut)) > now()->format('d-m-Y H:i:s'))
+                    <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
+                        <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
+                        <button class="btn w-100 btn-bid" wire:click.prevent="update()" disabled="true">
+                            Bider
+                        </button>
+                    </div>
 
-                <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
-                    <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
-                    <button class="btn w-100 btn-bid" wire:click.prevent="update()">
-                        Bider
-                    </button>
-                </div>
+                @else
+                    <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
+                        <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
+                        <button class="btn w-100 btn-bid" wire:click.prevent="update()" >
+                            Bider
+                        </button>
+                    </div>
+                @endif
+
                 <div class="card-bid">
                     <h6>Solde (Bids): <span>{{$solde_bid}}</span></h6>
                     <h6>Bonus (Bids): <span>{{$solde_bonus->bonus}}</span></h6>
@@ -188,5 +198,5 @@
     </div>
     </div>
     <h5 class="mt-3 text-center">Options </h5>
-    {{-- @include('components.outils') --}}
+    @include('components.outils')
 </div>
