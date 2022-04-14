@@ -277,6 +277,7 @@ body{
                         bottom: -5px;
                         right: -5px;
                         z-index: -2;
+                        display: none;
                     }
                 }
 
@@ -291,7 +292,7 @@ body{
 
             .card{
                 border: none;
-                border-radius: 20px;
+                border-radius: 12px;
                 box-shadow: 0px 5px 24px 0px rgba(0, 0, 0, 0.05);
                 background: linear-gradient(to bottom, #fa6000, #c94b01);
 
@@ -450,6 +451,7 @@ body{
                     background: #fceac2;
                     padding: 10px;
                     border-radius: 12px;
+                    margin-top: 30px;
                 }
                 .block-participant{
                     width: 50%;
@@ -471,7 +473,7 @@ body{
                 .card-footer{
                     background: transparent;
                     padding-bottom: 0;
-                    padding-top: 20px;
+                    padding: 20px 0;
 
                     .btn{
                         background: var(--greenColor);
@@ -487,11 +489,15 @@ body{
                         text-decoration: none;
                         font-weight: 400;
                         background: linear-gradient(to bottom, #fa6000, #c94b01);
-                        padding: 10px 20px;
-                        border-radius: 50px;
+                        padding: 10px 15px;
+                        border-radius: 12px;
                         color: var(--colorWhite)!important;
                         display: inline-block!important;
+                        font-size: 14px;
                         box-shadow: 0 5px 10px #13131233;
+                    }
+                    a.btn-participer.btn-gray{
+                        background: #b7b7b7;
                     }
                     .text-center{
                         p{
@@ -506,7 +512,7 @@ body{
                             flex-direction: column;
 
                             .iconify{
-                                font-size: 30px;
+                                font-size: 20px;
                             }
                             .num{
                                 color: var(--grayColor);
@@ -3106,7 +3112,7 @@ body{
     }
     .like{
         display: block;
-        font-size: 40px;
+        font-size: 28px;
         color: var(--grayColor);
     }
 
@@ -3207,6 +3213,24 @@ body{
         font-size: 9px;
         margin-bottom: 20px;
     }
+    body .wrapper .block-bid-home .card{
+        padding: 0;
+        border-radius: 0;
+    }
+    body .wrapper .block-bid-home .col-lg-4{
+        border-top: 1px solid #fb6101;
+    }
+    body .wrapper .block-bid-home .col-lg-4:first-child{
+        border-top: 1px solid transparent;
+    }
+    body .wrapper .block-bid-home .card .card-footer{
+        padding: 10px 0;
+        border: none;
+    }
+    body .wrapper .block-bid-home .card .card-footer a.btn-participer{
+        padding: 10px 15px;
+        font-size: 13px;
+    }
     body .wrapper .block-content-pageHome .block-video .play-video{
         width: 80px;
         height: 80px;
@@ -3227,13 +3251,13 @@ body{
         font-size: 10px;
         margin-top: -10px;
         margin-right: 50px;
-        margin-bottom: 0px
+        margin-bottom: 10px
     }
     body .wrapper .block-marquee{
-        padding: 5px 0;
+        padding: 2px 0;
     }
     body .wrapper .block-marquee .content .title{
-        font-size: 14px;
+        font-size: 10px;
     }
     body .wrapper .block-items .card a .content .block-icon{
         font-size: 14px;
@@ -3251,7 +3275,7 @@ body{
         margin-top: 10px;
     }
     body .wrapper .block-bid-home .card h6{
-        font-size: 10px;
+        font-size: 14px;
     }
     body .wrapper .block-bid-home .card p{
         font-size: 14px;
