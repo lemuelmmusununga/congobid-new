@@ -20,7 +20,7 @@ class Counterbid extends Component
     public $user,$article,$update=[''];
     public $click ='';
     public $bid;
-    public $ids,$solde_bid,$solde_bonus,$bonus,$solde_non_tranferable;
+    public $ids,$solde_bid,$solde_bonus,$bonus,$solde_non_tranferable,$enchere;
     public $listes=[];
     public $getSalons=[];
     public $detail=[],$addclick;
@@ -31,6 +31,8 @@ class Counterbid extends Component
     public function mount($article){
 
         $this->getart = $article;
+        $this->enchere = Enchere::where('article_id',$this->getart)->first();
+        
         $soldebid = Bideur::where('user_id',Auth::user()->id)->first();
         $this->solde_bonus = $soldebid->bonus;
         $this->solde_bid=$soldebid->balance;
@@ -73,6 +75,7 @@ class Counterbid extends Component
         $this->update->update([
             'valeur'=>$this->addclick
         ]);
+        $this->addclick ="";
     }
     // update les options a revoir
     public function option($option){
