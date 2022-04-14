@@ -289,7 +289,9 @@
                                             @include('components.outils')
                                             @livewire('encheres.favoris',['article'=>$article])
                                             @include('components.boutons')
-                                        @endif
+                                        
+                                @endif
+
                             @endforeach
                         </div>
                         <div class="block-pagination">

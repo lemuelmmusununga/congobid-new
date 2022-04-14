@@ -2381,7 +2381,19 @@ body .navbottom .icon-nav .icon .blink {
             transform: scale(1.5);
   }
 }
-
+@keyframes pulse {
+    0%{
+        opacity: 1;
+    }
+    100%{
+        transform: scale(1.2);
+        opacity: 0;
+    }
+    /* 100%{
+        transform: scale(1.2);
+        opacity: 0;
+    } */
+}
 body .navbottom .icon-nav .title {
   font-size: 12px;
   display: none;
@@ -3647,8 +3659,8 @@ body .type-lg .title {
 
 body .block-statut {
   position: absolute;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   border-radius: 100%;
   right: 20px;
   display: -webkit-box;
@@ -3663,25 +3675,20 @@ body .block-statut {
 }
 
 body .block-statut .statut {
-  width: 20px;
-  height: 20px;
+  position: absolute;
+  top: -3px;
+  left: -3px;
+  bottom: -3px;
+  right: -3px;
+  border: 2px solid;
   border-radius: 100%;
-  background: var(--colorWhite);
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
 }
 
 body .block-statut .statut .blink {
   width: 10px;
   height: 10px;
   border-radius: 100%;
+  display: none;
 }
 
 body .block-statut.active {
@@ -3691,25 +3698,27 @@ body .block-statut.active {
 body .block-statut.active .blink {
   background: var(--greenColor);
 }
-
-body .block-statut.active.on .blink {
-  background: var(--greenColor);
-  -webkit-animation: blink .3s linear infinite;
-          animation: blink .3s linear infinite;
+body .block-statut.active .statut{
+    border-color: var(--greenColor);
+}
+body .block-statut.active.on .statut {
+  -webkit-animation: pulse 1.5s linear infinite;
+          animation: pulse 1.5s linear infinite;
 }
 
 body .block-statut.unactive {
   background: var(--grayColor);
 }
-
+body .block-statut.unactive .statut{
+    border-color: var(--grayColor);
+}
 body .block-statut.unactive .blink {
   background: var(--grayColor);
 }
 
-body .block-statut.unactive.on .blink {
-  background: var(--grayColor);
-  -webkit-animation: blink .3s linear infinite;
-          animation: blink .3s linear infinite;
+body .block-statut.unactive.on .statut {
+  -webkit-animation: pulse 1.5s linear infinite;
+          animation: pulse 1.5s linear infinite;
 }
 
 body .block-logo-paiement {
@@ -3876,9 +3885,10 @@ body .detail-pro .btn-salon {
   }
   body .wrapper .block-bid-home .col-lg-4 {
     border-top: 1px solid #fb6101;
+    padding-top: 10px;
   }
   body .wrapper .block-bid-home .col-lg-4:first-child {
-    border-top: 1px solid transparent;
+    border-top: 1px solid transparent!important;
   }
   body .wrapper .block-bid-home .card .card-footer {
     padding: 10px 0;
