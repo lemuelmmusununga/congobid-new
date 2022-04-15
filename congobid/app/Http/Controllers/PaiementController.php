@@ -56,7 +56,7 @@ class PaiementController extends Controller
         ]);
 
         // $client = New \GuzzleHttp\Client();
-        $reponse = Http::post('https://api.arakapay.com/api/v1/pay/paymentrequest/', [
+        $reponse = Http::post('https://api.arakapay.com/api/pay/paymentrequest/', [
             $jsons,
         ]);
             // dd($jsons);
