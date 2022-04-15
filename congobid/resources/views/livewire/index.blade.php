@@ -191,7 +191,8 @@
                     <div class="container">
                         <div class="row g-4 mb-4">
                             @foreach ($articles as $article)
-                                @if ((date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y')) && $article->enchere->state == 1)
+
+                                @if ((date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y')) && ($article->enchere->state == 1) && (date('H:i:s', strtotime($article->enchere->heure_debut)) >= now()->format('H:i:s')))
                                     <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                         <div class="card" id="">
                                             <div class="timeUpdate">
@@ -216,15 +217,33 @@
                                                     </div>
                                                 </div>
                                             </div>
+
                                             @if (Auth::user())
-                                                <div class="block-statut {{ $article->paquet_id == Auth::user()->bideurs->first()->paquet_id ? 'active' : 'unactive' }} {{ $article->enchere->state == '1' ? 'on' : 'off' }}">
+
+                                                @if (($article->enchere->pivotbideurenchere->first()->user_id)??'' == Auth::user()->id)
+                                                    <div class="block-statut active on">
+                                                        <div class="statut">
+                                                            <span class="blink"></span>
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <div class="block-statut unactive on">
+                                                        <div class="statut">
+                                                            <span class="blink"></span>
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+                                            @else
+                                                <div class="block-statut unactive on">
                                                     <div class="statut">
                                                         <span class="blink"></span>
                                                     </div>
-                                                @else
-                                                    <div class="block-statut">
-                                                @endif
-                                            </div>
+                                                </div>
+
+                                            @endif
+
+
                                             <h5 class="text-center mt-2">{{ $article->titre }}</h5>
                                             <h6 class="text-center">{{ $article->marque }}</h6>
                                             <span class="text-center">{{ Str::substr($article->description, 0, 80) }}...</span>
@@ -233,6 +252,45 @@
                                             @include('components.favoris')
                                             @include('components.boutons')
                                 @endif
+                                @include('components.modal-index')
+                                <div wire:ignore.self class="modal fade" id="option" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <div class="icon">
+                                                    <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                                                </div>
+                                                <div class="text-center">
+
+                                                    @if (Auth::user())
+                                                        {{-- @if ($liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi == 0 && $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre == 0 )
+                                                            <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet->prix}} bids Pour acheter les options</h5>
+                                                            <button type="button" class="btn btn-no" data-bs-dismiss="modal" wire:click.prevent()="option({{10}})"> Acheter</button>
+                                                        @else --}}
+                                                            <h5> Quel sentence voulez vous pour "" <br> il vous faudra  bids</h5>
+                                                        {{-- @endif --}}
+                                                        {{-- @if (($articles->where('id', $article->id)->where('paquet_id', '==', Auth::user()->bideurs->first()->paquet_id)->first() == null) == 1) --}}
+                                                        {{-- @endif --}}
+                                                        <div class="block-power d-flex justify-content-center" >
+
+                                                            {{-- wire:click.prevent()="sanction({{ $liste->user->id}},{{$liste->enchere->id}})" --}}
+
+                                                        </div>
+                                                    @else
+                                                        <h5> Vous n'etes pas connecté, voulez-vous vous connecter ?</h5>
+                                                        <a type="button" href="/login" class="btn btn-ok">Connexion</a>
+
+                                                    @endif
+                                                </div>
+                                            </div>
+
+                                            <div class="modal-footer d-flex justify-content-between align-items-center">
+                                            <button type="button" class="btn btn-no" data-bs-dismiss="modal"></button>
+                                            <a type="button" data-bs-dismiss="modal"  class="btn btn-ok">Annuler</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endforeach
                         </div>
                         <div class="block-pagination">
@@ -289,7 +347,7 @@
                                             @include('components.outils')
                                             @livewire('encheres.favoris',['article'=>$article])
                                             @include('components.boutons')
-                                        
+
                                 @endif
 
                             @endforeach
