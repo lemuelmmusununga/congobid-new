@@ -28,8 +28,8 @@ use App\Http\Controllers\Clients\DetailEnchereController;
 |
 */
 
-Route::get('/araka', [App\Http\Controllers\PaiementController::class, 'index']);
-Route::post('/araka/store', [App\Http\Controllers\PaiementController::class, 'store']);
+Route::get('/araka', [App\Http\Controllers\PaiementController::class, 'index'])->name('paiements.index');
+Route::post('/araka/store', [App\Http\Controllers\PaiementController::class, 'store'])->name('paiements.store');
 
 Route::get('/counter', function () {
     return view('welcome');
