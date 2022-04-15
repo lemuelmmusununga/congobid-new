@@ -95,14 +95,13 @@
                 </div>
             </div>
             <div class="col-4">
-
+                {{-- <div><span class="text-center d-block" id="time">03:00</span></div> --}}
                 {{-- @livewire('decrematation', ['munite' => $munite,'times' => $times,'getart'=>$getart]) --}}
-                {{-- <header id="header" class="header" >
+
                     <div class="countdown">
                         <span id="clock" class="text-black"></span>
                     </div> <!-- end of countdown -->
-                    <!-- end of social links -->
-                </header> --}}
+
                 @if (date('d-m-Y ', strtotime($this->enchere->date_debut)) > now()->format('d-m-Y ') || date('d-m-Y H:i:s', strtotime($this->enchere->date_debut)) > now()->format('d-m-Y H:i:s'))
                     <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
                         <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
@@ -199,4 +198,5 @@
     </div>
     <h5 class="mt-3 text-center">Options </h5>
     @include('components.outils')
+    
 </div>
