@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-// use GuzzleHttp\Exception\GuzzleHttp;
-// use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Http;
 
 class PaiementController extends Controller
@@ -55,10 +55,30 @@ class PaiementController extends Controller
             ]
         ]);
 
-        // $client = New \GuzzleHttp\Client();
-        $reponse = Http::post('https://api.arakapay.com/api/pay/paymentrequest/', [
-            $jsons,
+        $client = new Client(); //GuzzleHttp\Client
+        $reponse = $client->post('https://api.arakapay.com/api/pay/paymentrequest/', [
+            'order' => [
+                'paymentPageId' => $request->paymentPageId,
+                'customerFullName' => $request->customerFullName,
+                'customerPhoneNumber' => $request->customerPhoneNumber,
+                'customerEmailAdress' => $request->customerEmailAdress,
+                'transactionReference' => $request->transactionReference,
+                'amount' => $request->amount,
+                'currency' => $request->currency,
+                'redirectURL' => $request->redirectURL,
+            ],
+            'paymentChannel' => [
+                'channel' => 'MOBILEMONEY',
+                'provider' => 'MPESA',
+                'walletID' => 'MSISDN',
+            ]
         ]);
+
+
+        // $client = New \GuzzleHttp\Client();
+        // $reponse = Http::post('https://api.arakapay.com/api/pay/paymentrequest/', [
+        //     $jsons,
+        // ]);
             // dd($jsons);
 
         $reponse_result = json_decode($reponse->getBody());
