@@ -7,7 +7,7 @@
 
 
 
-                            <a href="#" class="btn-participer btn-gray" data-bs-toggle="modal"
+                            <a href="#" class="btn-participer btn-gray" disabled="true" data-bs-toggle="modal"
                             data-bs-target="#modalEnchere_{{ $article->id }}"><span class="iconify"
                                 data-icon="akar-icons:plus"></span> Participer à l'enchère</a>
 

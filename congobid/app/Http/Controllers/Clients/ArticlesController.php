@@ -30,7 +30,7 @@ class ArticlesController extends Controller
         $id_paquet = $id;
 
         $categories = Categorie::all();
-        
+
         // $articles  = Article::where('categorie_id',$id)->get();
         return view('pages.categorie-details',compact('categories','id_paquet'));
     }
@@ -41,4 +41,9 @@ class ArticlesController extends Controller
         $articles  = Article::where('paquet_id',$id)->get();
         return view('pages.all-articles',compact('articles','ids'));
     }
+//detail article
+public function detailArticle($id,$name){
+    $article = Article::where('id',$id)->first();
+    return view('pages.detail-article',compact('article'));
+}
 }

@@ -14,7 +14,7 @@
         <div class="block-all-videos">
             <div class="container">
                 <div class="row justify-content-center align-items-center">
-                    <div class="col-lg-8">
+                    <div class="col-lg-12">
                         <div class="detail-pro">
                             <div class="row">
 
@@ -22,13 +22,14 @@
                                         <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                                             <div class="carousel-inner">
                                                     <div class="carousel-item active">
-                                                        <div class="col-lg-6 d-flex justify-content-center">
-                                                            <img src="{{asset('images/img-6.png')}}" alt="" class="w-100">
+                                                        <div class="col-lg-8 d-flex justify-content-center">
+                                                            <img src="{{asset('images/articles/'.$article->images->first()->lien)}}" alt="" class="w-100">
                                                         </div>
                                                     </div>
                                                     <div class="carousel-item">
-                                                        <div class="col-lg-6 d-flex justify-content-center align-items-center">
-                                                            <img src="{{asset('images/img-6.png')}}" alt="" class="w-50 d-block">
+                                                        
+                                                        <div class="col-lg-8 d-flex justify-content-center align-items-center">
+                                                            <img src="{{asset('images/articles/'.$article->images->first()->lien)}}" alt="" class="w-100 d-block">
                                                         </div>
                                                     </div>
                                                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">

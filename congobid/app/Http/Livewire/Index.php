@@ -22,14 +22,16 @@ use WithPagination;
 protected $paginationTheme = 'bootstrap';
     public $search ='',$getart;
     public $article = '';
-    public $participer ='';
+    public $participer ='',$favoris;
     public $iids,$like=0,$counter_like;
 
     public $artis='';
     public $getEnchere=[];
 
     public function mount(){
+
         $this->article = Article::all();
+       
         $this->getEnchere = Enchere::all();
     }
     public function edit($id){
@@ -38,7 +40,28 @@ protected $paginationTheme = 'bootstrap';
         $this->participer = $idmodal->id;
        }
 
+    public function like($id,$rec,$enchere){
+       $like = PivotBideurEnchere::where('enchere_id',$enchere)->where('user_id',auth()->user()->id)->first();
+       $article_add_like = Enchere::where('id',$like->enchere_id)->first();
 
+       if ($rec == 1) {
+           $like->update([
+                'favoris'=> 1
+           ]);
+           $article_add_like->update([
+                'favoris'=>$article_add_like->favoris + 1
+           ]);
+
+       } else {
+            $like->update([
+                'favoris'=> 0
+            ]);
+            $article_add_like->update([
+                'favoris'=>$article_add_like->favoris -1
+           ]);
+       }
+
+    }
     public function cutbid($id){
 
 // cette consiste a couper les bid
