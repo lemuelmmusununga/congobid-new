@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+
 use Livewire\Component;
 use App\Models\Article;
 use App\Models\Bideur;
@@ -11,6 +12,7 @@ use App\Models\Statut;
 use App\Models\Paquet;
 use App\Models\Communique;
 use App\Models\Enchere;
+use App\Models\Favoris;
 use App\Models\PivotBideurEnchere;
 use Livewire\WithPagination;
 use App\Models\PivotClientsSalon;
@@ -20,18 +22,18 @@ class Index extends Component
 {
 use WithPagination;
 protected $paginationTheme = 'bootstrap';
-    public $search ='',$getart;
+    public $search ='',$getart,$favoris;
     public $article = '';
-    public $participer ='',$favoris;
-    public $iids,$like=0,$counter_like;
+    public $participer ='';
+    public $iids,$like=0,$counter_like,$favori_enchere,$favori_user,$favori_favori;
 
     public $artis='';
     public $getEnchere=[];
 
     public function mount(){
 
-        $this->article = Article::all();
-       
+        // $this->article = Article::all();
+
         $this->getEnchere = Enchere::all();
     }
     public function edit($id){
@@ -39,27 +41,96 @@ protected $paginationTheme = 'bootstrap';
         $idmodal = Article::where('id', $id)->first();
         $this->participer = $idmodal->id;
        }
-
+    public function participer($user , $enchere){
+        dd($user , $enchere);
+    }
     public function like($id,$rec,$enchere){
-       $like = PivotBideurEnchere::where('enchere_id',$enchere)->where('user_id',auth()->user()->id)->first();
-       $article_add_like = Enchere::where('id',$like->enchere_id)->first();
+        $verify = PivotBideurEnchere::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
+        $favoris = Favoris::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
 
-       if ($rec == 1) {
-           $like->update([
-                'favoris'=> 1
-           ]);
-           $article_add_like->update([
-                'favoris'=>$article_add_like->favoris + 1
-           ]);
+        if ($verify != null) {
 
-       } else {
-            $like->update([
-                'favoris'=> 0
-            ]);
-            $article_add_like->update([
-                'favoris'=>$article_add_like->favoris -1
-           ]);
-       }
+            $like = PivotBideurEnchere::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
+            $article_add_like = Enchere::where('id',$like->enchere_id)->first();
+
+            if ($like->favoris == 0) {
+                $like->update([
+                    'favoris'=> 1
+                ]);
+                if ($favoris->favoris == 0) {
+                    $favoris->update([
+                        'favoris'=> 1
+                    ]);
+                }else{
+                    $favoris->update([
+                        'favoris'=> 0
+                    ]);
+                }
+
+                $article_add_like->update([
+                    'favoris'=>$article_add_like->favoris + 1
+                ]);
+
+                if (Auth::user()->id == $this->favoris->user_id || Auth::user()->id != $this->favoris->user_id && $this->favoris->enchere_id != $enchere) {
+                    $user=Favoris::create([
+                        'favoris'=> 1,
+                        'enchere_id'=>$enchere,
+                        'user_id'=>Auth::user()->id,
+                    ]);
+
+                }
+
+            } else {
+                    $like->update([
+                        'favoris'=> 0
+                    ]);
+                    $article_add_like->update([
+                        'favoris'=>$article_add_like->favoris -1
+                ]);
+                if ($favoris->favoris == 0) {
+                    $favoris->update([
+                        'favoris'=> 1
+                    ]);
+                }else{
+                    $favoris->update([
+                        'favoris'=> 0
+                    ]);
+                }
+            }
+        }else{
+            $favoris = Favoris::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
+            $article_add_like = Enchere::where('id',$enchere)->first();
+
+            if ($favoris != null) {
+                if ($favoris->favoris == 0 ) {
+                   $favoris->update([
+                        'favoris'=> 1
+                    ]);
+                    $article_add_like->update([
+                        'favoris'=>$article_add_like->favoris + 1
+                    ]);
+                }
+                else {
+                    $favoris->update([
+                        'favoris'=> 0
+                    ]);
+                    $article_add_like->update([
+                        'favoris'=>$article_add_like->favoris -1
+                    ]);
+                }
+            }else{
+                $user=Favoris::create([
+                    'favoris'=> 1,
+                    'enchere_id'=>$enchere,
+                    'user_id'=>Auth::user()->id,
+                ]);
+                $article_add_like->update([
+                    'favoris'=>$article_add_like->favoris + 1
+                ]);
+            }
+
+        }
+
 
     }
     public function cutbid($id){
@@ -96,11 +167,14 @@ protected $paginationTheme = 'bootstrap';
         // $communique == null ? null : $communique->message;
         $promotions = Article::where('statut_id', '3')->where('promouvoir', '1')->get();
         $articles = Article::where('marque','like',"%{$this->search}%")->paginate(30);
+        $this->favoris = Favoris::where('user_id',Auth::user()->id)->first();
+
         $paquets = Paquet::where('statut_id', '3')->get();
         $communique = $communique->message ?? null;
+        $user = Pivotbideurenchere::all();
 
         $Categories = Article::where('titre','like',"%{$this->search}%")->orwhere('marque',"%{$this->search}%")->get();
 
-        return view('livewire.index', compact('promotions', 'articles', 'paquets', 'communique', 'Categories'));
+        return view('livewire.index', compact('promotions', 'articles', 'paquets', 'communique', 'Categories','user'));
     }
 }

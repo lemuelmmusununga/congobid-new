@@ -2,27 +2,18 @@
                 <div class="text-center d-flex justify-content-between">
                     <a href="{{ route('show.detail', ['id' => $article->id]) }}" class="btn-participer"><span class="iconify"
                             data-icon="akar-icons:plus"></span>Ouvrir l'enchere</a>
-
-                @if (Auth::user() || (Auth::user() && !Auth::user()->pivotbideurenchere->where('enchere_id', $article->enchere->id)->first()))
-
-
-
-                            <a href="#" class="btn-participer btn-gray" disabled="true" data-bs-toggle="modal"
-                            data-bs-target="#modalEnchere_{{ $article->id }}"><span class="iconify"
-                                data-icon="akar-icons:plus"></span> Participer à l'enchère</a>
-
+                @if ($article->enchere->pivotbideurenchere->first()->user_id == Auth::user()->id)
+                    <button href="#" class="btn-participer btn-gray " style="border-radius: 10px;" disabled = "disabled" data-bs-toggle="modal"
+                    data-bs-target="#modalEnchere_{{ $article->id }}"><span class="iconify"
+                        data-icon="akar-icons:plus"></span> Participer à l'enchère</button>
                 @else
-
                     <a href="#" class="btn-participer" data-bs-toggle="modal"
                         data-bs-target="#modalEnchere_{{ $article->id }}"><span class="iconify"
                             data-icon="akar-icons:plus"></span> Participer à l' enchère</a>
-
                 @endif
             </div>
                 <br>
-                {{-- @if (!Auth::user() || (Auth::user() && !Auth::user()->pivotbideurenchere->where('enchere_id', $article->enchere->id)->first()))
 
-                @endif --}}
             </div>
         </div>
     </div>
@@ -45,7 +36,7 @@
 
                 <div class="modal-footer d-flex justify-content-between align-items-center">
                     <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
-                    <a type="button" href="/detail-enchere/{{ $article->id }}" class="btn btn-ok">Accepter</a>
+                    <a type="button" href="/detail-enchere/{{ $article->id }}" wire:click.prevent="participer({{Auth::user()->id}},{{$article->enchere->id}})" class="btn btn-ok">Accepter</a>
                 </div>
             </div>
         </div>

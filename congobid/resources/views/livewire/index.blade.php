@@ -263,7 +263,7 @@
                                                     Si vous aimez, cliquez sur le coeur pour que cet article passe à la prochaine enchère.
                                                 </p>
                                                 @if (Auth::user())
-                                                    @if (($article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->favoris) == 1)
+                                                    @if (($article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->favoris) == 1  )
                                                         @if ($article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->favoris == 1)
                                                             <a href="#" class="like" wire:click.prevent="like({{Auth::user()->id}}, 0,{{$article->enchere->id}})">
                                                                 <span class="iconify" style="color:red;" data-icon="ant-design:heart-fill"></span>
@@ -330,7 +330,7 @@
                                                 </div>
                                             </div>
                                             @if (Auth::user())
-                                                @if (($article->enchere->pivotbideurenchere->first()->user_id)??'' == Auth::user()->id)
+                                                @if ($article->enchere->pivotbideurenchere->first()->user_id == Auth::user()->id)
                                                     <div class="block-statut active on">
                                                         <div class="statut">
                                                             <span class="blink"></span>
@@ -344,8 +344,9 @@
                                                     </div>
                                                 @endif
                                             @else
-                                                    <div class="block-statut">
-                                                    </div>
+                                                <div class="block-statut unactive on">
+                                                    <span class="blink"></span>
+                                                </div>
                                             @endif
                                             <h5 class="text-center mt-2">{{ $article->titre }}</h5>
                                             <h6 class="text-center">{{ $article->marque }}</h6>
@@ -358,34 +359,35 @@
 
                                                     Si vous aimez, cliquez sur le coeur pour que cet article passe à la prochaine enchère.
                                                 </p>
-                                                @if ( Auth::user() )
+                                                @php
 
-                                                    @if (Auth::user()->pivotbideurenchere->where('user_id',Auth::user()->id)->first()->user_id == $article->enchere->pivotbideurenchere->first()->user_id)
-                                                        @if ($article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->favoris == 1)
-                                                            @if ($article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->favoris == 1)
-                                                                <a href="#"  class="like" wire:click.prevent="like({{Auth::user()->id}}, 0,{{$article->enchere->id}})">
-                                                                    <span class="iconify" style="color:red;" data-icon="ant-design:heart-fill"></span>
-                                                                </a>
-                                                            @else
-                                                                <a href="#" class="like" data-bs-toggle="modal" data-bs-target="#favoris_{{$article->id}}" wire:click.prevent="like({{Auth::user()->id}}, 1,{{$article->enchere->id}})">
-                                                                    <span class="iconify"  data-icon="ant-design:heart-outlined"></span>
-                                                                </a>
-                                                            @endif
+                                                $favori_enchere = App\Models\Favoris::where('enchere_id',$article->enchere->pivotbideurenchere->first()->enchere_id)->first();
+
+                                                @endphp
+                                                
+                                                @if ( Auth::user() )
+                                                    @if ($favori_enchere != null && $favori_enchere->user_id == Auth::user()->id && $favori_enchere->enchere_id== $article->enchere->pivotbideurenchere->first()->enchere_id)
+                                                        @if ($favori_enchere->favoris == 1)
+                                                            <a href="#"  class="like" wire:click.prevent="like({{Auth::user()->id}}, 0,{{$article->enchere->id}})">
+                                                                <span class="iconify" style="color:red;" data-icon="ant-design:heart-fill"></span>
+                                                            </a>
                                                         @else
-                                                            <a href="#" class="like" data-bs-toggle="modal" data-bs-target="#favoris_{{$article->id}}" wire:click.prevent="like({{ $article->enchere->id }}, 1,{{$article->enchere->id}})">
-                                                                <span class="iconify" data-icon="ant-design:heart-outlined"></span>
+                                                            <a href="#" class="like" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}" wire:click.prevent="like({{Auth::user()->id}}, 1,{{$article->enchere->id}})">
+                                                                <span class="iconify"  data-icon="ant-design:heart-outlined"></span>
                                                             </a>
                                                         @endif
+
                                                     @else
-                                                        <a href="" data-bs-toggle="modal" data-bs-target="#favoris_{{$article->id}}" class="like" wire:click.prevent="like({{ $article->enchere->id }}, 1,{{$article->enchere->id}})" >
+                                                        <a href="" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}" class="like" wire:click.prevent="like({{Auth::user()->id}}, 1,{{$article->enchere->id}})" >
                                                             <span class="iconify" data-icon="ant-design:heart-outlined"></span>
                                                         </a>
                                                     @endif
                                                 @else
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#favoris_{{$article->id}}" class="like" >
+                                                    <a href="" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}" class="like" wire:click.prevent="like({{Auth::user()->id}}, 1,{{$article->enchere->id}})" >
                                                         <span class="iconify" data-icon="ant-design:heart-outlined"></span>
                                                     </a>
                                                 @endif
+
                                                 <span>{{$article->enchere->favoris}} {{ $article->enchere->favoris < 2 ? 'vote' : 'votes' }}</span>
                                             </div>
                                             @include('components.boutons')
