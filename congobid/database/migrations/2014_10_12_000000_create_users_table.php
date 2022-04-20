@@ -26,13 +26,13 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
-            $table->string('profile_photo_path', 2048)->nullable();
-            $table->timestamps();
-            $table->timestamp('deleted_at')->nullable();
-            $table->integer('id_updated_at')->nullable();
-            $table->integer('id_deleted_at')->nullable();
-            $table->foreignId('statut_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->onDelete('cascade')->onUpdate('cascade');
-        });
+                $table->string('profile_photo_path', 2048)->nullable();
+                $table->timestamps();
+                $table->timestamp('deleted_at')->nullable();
+                $table->integer('id_updated_at')->nullable();
+                $table->integer('id_deleted_at')->nullable();
+                $table->foreignId('statut_id')->constrained()->onDelete('cascade')->onUpdate('cascade')->onDelete('cascade')->onUpdate('cascade');
+            });
     }
 
     /**
