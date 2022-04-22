@@ -76,7 +76,12 @@
                     </div>
                     <div class="text-center">
                         <h5>L'enchère est bloquée !</h5>
-                        <p> Le nombre de participants n'a pas encore été atteint. </p>
+                        <p> Le nombre de participants n'a pas encore été atteint voulez-vous participer ? </p>
+
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between align-items-center">
+                        <button type="button" class="btn btn-no" data-bs-dismiss="modal">Non</button>
+                        <a type="button" data-bs-dismiss="modal"  class="btn btn-ok">Oui</a>
                     </div>
                 </div>
             </div>

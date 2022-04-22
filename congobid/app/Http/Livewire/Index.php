@@ -16,6 +16,7 @@ use App\Models\Favoris;
 use App\Models\PivotBideurEnchere;
 use Livewire\WithPagination;
 use App\Models\PivotClientsSalon;
+use App\Models\Roi;
 use Illuminate\Support\Facades\Auth;
 
 class Index extends Component
@@ -25,7 +26,7 @@ protected $paginationTheme = 'bootstrap';
     public $search ='',$getart,$favoris;
     public $article = '';
     public $participer ='';
-    public $iids,$like=0,$counter_like,$favori_enchere,$favori_user,$favori_favori;
+    public $iids,$like=0,$counter_like,$favori_enchere,$favori_user,$favori_favori,$pivot;
 
     public $artis='';
     public $getEnchere=[];
@@ -35,6 +36,9 @@ protected $paginationTheme = 'bootstrap';
         // $this->article = Article::all();
 
         $this->getEnchere = Enchere::all();
+    //    $l= $this->getEnchere->pivotbideurenchere->where('user_id',Auth::user()->id)->first();
+
+
     }
     public function edit($id){
         // envoyer id vers le modal
@@ -167,7 +171,10 @@ protected $paginationTheme = 'bootstrap';
         // $communique == null ? null : $communique->message;
         $promotions = Article::where('statut_id', '3')->where('promouvoir', '1')->get();
         $articles = Article::where('marque','like',"%{$this->search}%")->paginate(30);
-        $this->favoris = Favoris::where('user_id',Auth::user()->id)->first();
+        if (Auth::user()) {
+            # code...
+            $this->favoris = Favoris::where('user_id',Auth::user()->id)->first();
+        }
 
         $paquets = Paquet::where('statut_id', '3')->get();
         $communique = $communique->message ?? null;

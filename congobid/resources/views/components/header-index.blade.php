@@ -67,16 +67,20 @@
 
                 </ul>
                 <div class="links d-flex justify-content-end">
+                    @if (Auth::user())
+                    <a href="/profil">
+                        <div class="icon">
+                            <img src="{{ asset('images/users/' . Auth::user()->avatar ) }}" alt="" srcset="" class="rounded-pill" style="width: 30px;height:30px;">
+                        </div>
+                    </a>
+                    @else
                     <a href="/profil">
                         <div class="icon">
                             <span class="iconify" data-icon="fa:user"></span>
                         </div>
                     </a>
-                    <a href="#" class="humber click-button">
-                        <div class="icon">
-                            <span class="iconify" data-icon="eva:menu-outline"></span>
-                        </div>
-                    </a>
+                    @endif
+
                     <div class="block-dropmenu">
                         <ul>
                             <li><a href="/tarif">Tarifs</a></li>

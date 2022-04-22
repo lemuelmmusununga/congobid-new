@@ -37,4 +37,11 @@ class Paquet extends Model
     {
         return $this->hasMany(PivotBideurPaquet::class);
     }
+
+   /**
+    * Get the user that owns the Paquet
+    *
+    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+    */
+  
 }

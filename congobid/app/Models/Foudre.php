@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Foudre extends Model
 {
     use HasFactory;
-    
+
 
     protected $guarded = [];
 
@@ -21,5 +21,9 @@ class Foudre extends Model
     public function statut()
     {
         return $this->belongsTo(Statut::class);
+    }
+    public function paquet()
+    {
+        return $this->belongsTo(Paquet::class, 'paquet_id');
     }
 }

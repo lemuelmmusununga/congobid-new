@@ -81,7 +81,7 @@ Route::get('/valid-account', function () {
 });
 
 
-Route::get('/articles/detail/produit/{id}/{name}', [ArticlesController::class, 'detailArticle'])->name('detail.article');
+Route::get('/articles/detail/produit/{id}/{name}', [DetailEnchereController::class, 'index'])->name('detail.article');
 
 Route::get('/articles/{id}/{id_categorie}', [ArticlesController::class, 'ArticlesAll'])->name('all.articles');
 Route::get('/encheres-en-cours', [EnchersController::class, 'index'])->name('show.enchers');
@@ -134,7 +134,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::group(['middleware' => ['user']], function () {
         Route::get('/profil', [ProfileController::class, 'index'])->name('profil');
-        Route::get('/detail-enchere/{id}', [DetailEnchereController::class, 'index'])->name('show.detail');
+        Route::get('/detail-enchere/{id}/{name}', [DetailEnchereController::class, 'openEnchere'])->name('show.detail');
     });
 
     Route::group(['middleware' => ['admin']], function () {

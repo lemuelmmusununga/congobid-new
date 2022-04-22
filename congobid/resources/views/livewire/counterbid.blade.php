@@ -1,6 +1,9 @@
 <div>
+    @php
+        $pivot =(App\Models\PivotBideurEnchere::where('enchere_id',$article)->where('user_id',Auth::user()->id)->first());
 
-    @if (Auth::user())
+    @endphp
+    @if (Auth::user() )
         <div class="row g-3 g-lg-5">
             <div class="col-8">
                 <div class="card card-participant">
@@ -36,58 +39,7 @@
                                             </td>
                                         </tr>
 
-                                        <div wire:ignore.self class="modal fade" id="modalEnchere_{{ $liste->user->id  }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-                                                    <div class="modal-body">
-                                                        <div class="icon">
-                                                            <span class="iconify" data-icon="ant-design:info-outlined"></span>
-                                                        </div>
-                                                        <div class="text-center">
 
-                                                            @if (Auth::user())
-                                                                @if ($liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi == 0 && $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre == 0 )
-                                                                    <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet->prix}} bids Pour acheter les options</h5>
-                                                                    <button type="button" class="btn btn-no" data-bs-dismiss="modal" wire:click.prevent()="option({{10}})"> Acheter</button>
-                                                                @else
-                                                                    <h5> Quel sentence voulez vous pour "{{ $liste->user->nom  }}" <br> il vous faudra {{$liste->enchere->paquet->prix}} bids</h5>
-                                                                @endif
-                                                                {{-- @if (($articles->where('id', $article->id)->where('paquet_id', '==', Auth::user()->bideurs->first()->paquet_id)->first() == null) == 1) --}}
-                                                                {{-- @endif --}}
-                                                                <div class="block-power d-flex justify-content-center" >
-
-                                                                    {{-- wire:click.prevent()="sanction({{ $liste->user->id}},{{$liste->enchere->id}})" --}}
-
-                                                                    <a href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$liste->enchere->id,'sanction'=>1])}}"  class="me-5">
-                                                                        <img src="{{asset('images/couronne.png')}}" alt="couronne" class="">
-                                                                        <span>X{{ $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi ?? 0 }}
-
-                                                                    </a>
-
-                                                                    <a href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$liste->enchere->id,'sanction'=>2])}}"  class="">
-                                                                        <img src="{{asset('images/foudre.png')}}" alt="foudre">
-                                                                        <span>X{{ $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre ?? 0 }}
-
-                                                                    </a>
-
-
-
-                                                                </div>
-                                                            @else
-                                                                <h5> Vous n'etes pas connecté, voulez-vous vous connecter ?</h5>
-                                                                <a type="button" href="/login" class="btn btn-ok">Connexion</a>
-
-                                                            @endif
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="modal-footer d-flex justify-content-between align-items-center">
-                                                    <button type="button" class="btn btn-no" data-bs-dismiss="modal"></button>
-                                                    <a type="button" data-bs-dismiss="modal"  class="btn btn-ok">Annuler</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     @endforeach
                                 </tbody>
                         </table>
@@ -95,26 +47,36 @@
                 </div>
             </div>
             <div class="col-4">
-                {{-- <div><span class="text-center d-block" id="time">03:00</span></div> --}}
+                {{-- <div><span class="text-center d-block" id="time">03:00</span></div>--}}
                 {{-- @livewire('decrematation', ['munite' => $munite,'times' => $times,'getart'=>$getart]) --}}
 
-                    <div class="countdown">
+                    {{-- <div class="countdown">
                         <span id="clock" class="text-black"></span>
-                    </div> <!-- end of countdown -->
+                    </div> <!-- end of countdown --> --}}
 
-                @if (date('d-m-Y ', strtotime($this->enchere->date_debut)) > now()->format('d-m-Y ') || date('d-m-Y H:i:s', strtotime($this->enchere->date_debut)) > now()->format('d-m-Y H:i:s'))
-                    <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
-                        <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
-                        <button class="btn w-100 btn-bid" wire:click.prevent="update()" disabled="true">
-                            Bider
-                        </button>
-                    </div>
+                @if ($pivot != null)
+                    @if (date('d-m-Y ', strtotime($this->enchere->date_debut)) == now()->format('d-m-Y ') && date('H:i:s', strtotime($this->enchere->heure_debut)) <= now()->format('H:i:s'))
 
+                        <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
+                            <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
+                            <button class="btn w-100 btn-bid" wire:click.prevent="update()" >
+                                Bider 1
+                            </button>
+                        </div>
+                    @else
+
+                        <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
+                            <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
+                            <button class="btn w-100 btn-bid" data-bs-toggle="modal" data-bs-target="#nonenchere">
+                                Bider 2
+                            </button>
+                        </div>
+                    @endif
                 @else
                     <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
                         <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
-                        <button class="btn w-100 btn-bid" wire:click.prevent="update()" >
-                            Bider
+                        <button class="btn w-100 btn-bid" data-bs-toggle="modal" data-bs-target="#nonenchere">
+                            Bider 3
                         </button>
                     </div>
                 @endif
@@ -135,68 +97,66 @@
                 </div>
             </div>
         </div>
-
-
-    @else
-        <div class="d-flex justify-content-between align-items-center">
-            <a href="{{route('login')}}" class="btn w-100">
-                Bider
-            </a>
-        </div>
-    @endif
-    <div wire:ignore.self class="modal fade" id="modalliste" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="icon">
-                        <span class="iconify" data-icon="ant-design:info-outlined"></span>
-                    </div>
-                    <div class="text-center">
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                <th>#</th>
-                                <th>Pseudo</th>
-                                <th>Options</th>
-                                <th>Nbr. click</th>
-                                </tr>
-                            </thead>
-                                <tbody>
-
-                                    @foreach ($listes as $liste)
-                                        {{--lister les bideurs de l'enchere  --}}
-
+        @else
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{{route('login')}}" class="btn w-100">
+                    Bider
+                </a>
+            </div>
+        @endif
+        @if ( Auth::user())
+            <div wire:ignore.self class="modal fade" id="modalliste" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="icon">
+                                <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                            </div>
+                            <div class="text-center">
+                                <table class="table">
+                                    <thead>
                                         <tr>
-                                            <td>{{$loop->index+1 }}</td>
-                                            <td><a href="" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $liste->user->id }}">{{$liste->user->nom ??''}}</a></td>
-                                            <td>
-                                                {{-- <span>
-                                                    <span class="iconify" data-icon="clarity:crown-solid"></span>
-                                                </span>
-                                                <span>
-                                                    <span class="iconify" data-icon="pepicons:electricity"></span>
-                                                </span> --}}
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-primary">{{$liste->valeur ??''}}</span>
-
-                                            </td>
+                                        <th>#</th>
+                                        <th>Pseudo</th>
+                                        <th>Options</th>
+                                        <th>Nbr. click</th>
                                         </tr>
-                                    @endforeach
-                                </tbody>
-                        </table>
+                                    </thead>
+                                        <tbody>
+
+                                            @foreach ($listes_sentance as $liste)
+                                                {{--lister les bideurs de l'enchere  --}}
+                                                <tr>
+                                                    <td>{{$loop->index+1 }}</td>
+                                                    <td><a href="" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEnchere_{{ $liste->user->id }}">{{$liste->user->nom ??''}}</a></td>
+                                                    <td>
+                                                        {{-- <span>
+                                                            <span class="iconify" data-icon="clarity:crown-solid"></span>
+                                                        </span>
+                                                        <span>
+                                                            <span class="iconify" data-icon="pepicons:electricity"></span>
+                                                        </span> --}}
+                                                    </td>
+                                                    <td>
+                                                        <span class="badge bg-primary">{{$liste->valeur ??''}}</span>
+
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+
+                                </table>
+                                <button type="button" class="btn btn-ok" data-bs-dismiss="modal">Annuler</button>
+                            </div>
+                        </div>
                     </div>
+
+
                 </div>
             </div>
-
-            <div class="modal-footer d-flex justify-content-between align-items-center">
-                <button type="button" class="btn btn-no" data-bs-dismiss="modal"></button>
-                <a type="button" href="/detail-enchere/"  class="btn btn-ok">Annuler</a>
-            </div>
-        </div>
-    </div>
+        @endif
     </div>
     <h5 class="mt-3 text-center">Options </h5>
-    @include('components.outils')
-    
+    @include('components.outils-detailenchere')
+
 </div>

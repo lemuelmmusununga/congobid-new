@@ -15,7 +15,6 @@ class AchatController extends Controller
         $paquets = Paquet::where('statut_id', '3')->get();
         $bids = Bid::where('statut_id', '3')->get();
         $page = 2;
-
         return view('pages.achat-bid',compact('bids', 'paquets', 'page'));
     }
     public function success($id){

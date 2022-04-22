@@ -44,7 +44,8 @@
                                 <span>{{Session::get('success')}}</span>
                             </div>
                         @endif
-                        @livewire('counterbid',['article'=>$article->id])
+                        
+                        @livewire('counterbid',['article'=>$article->id,'article_titre'=>$article->titre,'article_paquet'=>$article->paquet_id,'article_enchere'=>$article->enchere->id])
 
                     </div>
                     {{-- <div class="col-12 col-md-6 col-lg-3">
