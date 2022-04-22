@@ -171,12 +171,9 @@
                         @foreach ($articles as $article)
 
                             @php
-                              
                                 if( Auth::user() && $articles != null){
-
                                     $pivot =$article->enchere->pivotbideurenchere->where('enchere_id',$article->enchere->id?? '')->where('user_id',Auth::user()->id)->first() ?? '';
                                 }
-
                             @endphp
                             @if ((date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y')) && ($article->enchere->state == 1) && (date('H:i:s', strtotime($article->enchere->heure_debut)) >= now()->format('H:i:s')))
 

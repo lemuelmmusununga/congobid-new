@@ -34,8 +34,59 @@
                 <img src="{{asset('images/bouclier.png')}}" alt="bouclier">
             </a>
         </div>
-@endif
-<div wire:ignore.self class="modal fade" id="modalEnchere_{{ $liste->user->id ?? '' }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    @endif
+    {{-- acheter de bid roi=0 --}}
+    <div wire:ignore.self class="modal fade" id="roi" tabindex="-1" aria-labelledby="roi" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="text-center">
+                        <div class="block-power d-flex justify-content-center align-items-center">
+                            <a href="#">
+                                <img src="{{asset('images/couronne.png')}}" alt="couronne">
+                            </a>
+                        </div>
+                        <h5> il vous faut {{$roi->bid_prix}} bids pour bloquer "{{ $liste->user->nom  }}" Voulez-vous Acheter ?</h5>
+                        @if (Auth::user()->bideurs->first()->balance >= $roi->bid_prix )
+                            <a type="button" href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$pivot->enchere_id,'sanction'=>'roi','name'=>$liste->user->nom,'bid_cut'=>$roi->bid_prix])}}" class="btn btn-ok w-50 ">Acheter</a>
+                        @else
+                            <a type="button" href="{{route('clients.achat.bid')}}" class="btn btn-ok w-50 ">Acheter</a>
+                        @endif
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-non" data-bs-dismiss="modal" aria-label="close">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{-- acheter de bid foudre=0 --}}
+    <div wire:ignore.self class="modal fade" id="foudre" tabindex="-1" aria-labelledby="foudre" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="block-power d-flex justify-content-center align-items-center">
+                       ]
+                        <a href="#">
+                            <img src="{{asset('images/foudre.png')}}" alt="foudre">
+                        </a>
+
+                    </div>
+                    <div class="text-center">
+                        <h5> il vous faut {{$roi->bid_prix}} bids pour foudroyer "{{ $liste->user->nom  }}" Voulez-vous Acheter ?</h5>
+                        <a type="button" href="{{route('clients.achat.bid')}}" class="btn btn-ok">Acheter</a>
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-center align-items-center">
+                    <button type="button" class="btn btn-non" data-bs-dismiss="modal" aria-label="close">Annuler</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div wire:ignore.self class="modal fade" id="modalEnchere_{{ $liste->user->id ?? '' }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
@@ -46,12 +97,32 @@
 
                         @if (Auth::user() && $pivot != null)
                             @if (Auth::user()->id != $liste->user->id )
-                                @if (Auth::user()->pivotbideurenchere->first()->roi == 0)
-                                    <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$roi->bid_prix}} bids Pour acheter l'options</h5>
-                                    <button type="button" class="btn btn-ok" data-bs-dismiss="modal" wire:click.prevent()="option({{$roi->bid_prix}})"> Acheter</button>
-                                @else
+
+                                    <h5> Pour bloquer  "{{ $liste->user->nom  }}" </h5>
+                                    {{-- {{route('sanction',['id'=>$liste->user->id,'enchere'=>$pivot->enchere_id,'sanction'=>$roi-,'name'=>$liste->user->nom,'bid_cut'=>$roi->bid_prix>bid_prix])}} --}}
+                                    <div class="block-power d-flex justify-content-center align-items-center">
+                                        @if (Auth::user()->pivotbideurenchere->first()->roi == 0)
+                                            <a class="me-5" href="#" data-bs-toggle="modal" data-bs-dismiss="modal"  data-bs-target="#roi">
+                                                <img src="{{asset('images/couronne.png')}}" alt="couronne">
+                                                <span>X{{Auth::user()->pivotbideurenchere->first()->roi ?? 0}}</span>
+                                            </a>
+                                        @endif
+                                        @if (Auth::user()->pivotbideurenchere->first()->foundre == 0)
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#foudre">
+                                                <img src="{{asset('images/foudre.png')}}" alt="foudre">
+                                                <span>X{{ Auth::user()->pivotbideurenchere->first()->foudre ?? 0 }}</span>
+                                            </a>
+                                        @endif
+                                    </div>
+                                        {{-- <a type="button" class="btn btn-ok"  href="{{route('sanction',['id'=>$liste->user->id,'enchere'=>$pivot->enchere_id,'sanction'=>$roi-,'name'=>$liste->user->nom,'bid_cut'=>$roi->bid_prix>bid_prix])}}" >Bloquer</a> --}}
+
+
+
+                                    <a type="button" href={{route('clients.achat.bid')}} class="btn btn-ok" data-bs-dismiss="modal" aria-label="close"> Acheter les options</a>
+
+                                {{-- @else
                                     <h5>  voulez vous bloquer "{{$liste->user->nom}}" <br> il vous faudra  bids  {{$roi->bid_prix}} </h5>
-                                @endif
+                                @endif --}}
 
                             @endif
 
@@ -70,40 +141,41 @@
 
                 <div class="modal-footer d-flex justify-content-center align-items-center">
                 {{-- <button type="button" class="btn btn-no" data-bs-dismiss="modal"></button> --}}
-                <button type="button" class="btn btn-non" data-bs-dismiss="modal">Annuler</button>
+                <button type="button" class="btn btn-non" data-bs-dismiss="modal" aria-label="close">Annuler</button>
 
             </div>
         </div>
     </div>
-</div>
 
 
-<div wire:ignore.self class="modal fade" id="nonenchere" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="icon">
-                    <span class="iconify" data-icon="ant-design:info-outlined"></span>
+
+    <div wire:ignore.self class="modal fade" id="nonenchere" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="icon">
+                        <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                    </div>
+                    <div class="text-center">
+
+                        @if (Auth::user() && $pivot == null)
+                        <h5> Vous ne faite pas parti de cette enchere voulez vous participer en payant {{$paquet_enchere->prix}} bids ?</h5>
+                        <a type="button" href="{{route('detail.article',['id'=>$article,'name'=>$article_titre])}}" class="btn btn-ok">Participer</a>
+
+                        @else
+                            <h5> Veillez pentientez l'enchere n'a pas encore commencée !</h5>
+                        @endif
+                    </div>
                 </div>
-                <div class="text-center">
 
-                    @if (Auth::user() && $pivot == null)
-                    <h5> Vous ne faite pas parti de cette enchere voulez vous participer en payant {{$paquet_enchere->prix}} bids ?</h5>
-                    <a type="button" href="{{route('detail.article',['id'=>$article,'name'=>$article_titre])}}" class="btn btn-ok">Participer</a>
+                <div class="modal-footer d-flex justify-content-center align-items-center">
+                {{-- <button type="button" class="btn btn-no" data-bs-dismiss="modal"></button> --}}
+                <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
 
-                    @else
-                        <h5> Veillez pentientez</h5>
-                    @endif
-                </div>
             </div>
-
-            <div class="modal-footer d-flex justify-content-center align-items-center">
-            {{-- <button type="button" class="btn btn-no" data-bs-dismiss="modal"></button> --}}
-            <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
-
         </div>
     </div>
-</div>
+
 
 
 </div>

@@ -93,7 +93,7 @@ Route::get('/articles/categorie/{id}', [ArticlesController::class, 'ArticlesCate
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
 Route::get('/salons', [SalonController::class, 'index'])->name('clients.salons.index');
-Route::get('/enchere/sanction/{id}/{enchere}/{sanction}',[DetailEnchereController::class, 'sanction'])->name('sanction');
+Route::get('/enchere/sanction/{id}/{enchere}/{sanction}/{name}/{bid_cut}',[DetailEnchereController::class, 'sanction'])->name('sanction');
 Route::get('/comment-ca-marche', [InstructionController::class, 'index'])->name('clients.instructions.index');
 Route::get('/faq', [indexController::class, 'faq'])->name('faq');
 Route::get('/politique-de-confidentialite', [indexController::class, 'politique'])->name('politique');
