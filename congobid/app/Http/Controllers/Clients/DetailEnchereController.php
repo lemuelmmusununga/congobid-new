@@ -76,23 +76,36 @@ class DetailEnchereController extends Controller
         $bideur = PivotBideurEnchere::where('user_id',$id)->first();
         $bid_soustraction = Bideur::where('user_id',Auth::user()->id)->first();
         $sanction = Sanction::where('user_id', $id)->where('enchere_id',$enchere)->where('deleted_at',null)->first();
-        
         if ($sanction == null) {
-            $insert = Sanction::create([
-                'enchere_id' => $enchere,
-                'paquet_id' => $bideur->enchere->paquet->id,
-                'duree' =>$bideur->enchere->paquet->roi,
-                'statut' => 1 ,
-                'suspendu_by' => Auth::user()->id,
-                'user_id'=>$id,
-                'santance'=>$sanctance
-            ]);
+            if ($bideur->enchere->pivotbideurenchere->first()->bouclier == 0) {
 
-            $total_bid_user = Auth::user()->bideurs->first()->balance - $bid_cut;
-            $bid_soustraction->update([
-                'balance'=>$total_bid_user
-            ]);
-            return redirect()->back()->with('success','le bideur est bloqué');
+                $insert = Sanction::create([
+                    'enchere_id' => $enchere,
+                    'paquet_id' => $bideur->enchere->paquet->id,
+                    'duree' =>$bideur->enchere->paquet->roi,
+                    'statut' => 1 ,
+                    'suspendu_by' => Auth::user()->id,
+                    'user_id'=>$id,
+                    'santance'=>$sanctance
+                ]);
+                $total_bid_user = Auth::user()->bideurs->first()->balance - $bid_cut;
+                $bid_soustraction->update([
+                    'balance'=>$total_bid_user
+                ]);
+                return redirect()->back()->with('success','le bideur est bloqué');
+
+            }else{
+                $total_bid_user = Auth::user()->bideurs->first()->balance - $bid_cut;
+                $bid_soustraction->update([
+                    'balance'=>$total_bid_user
+                ]);
+                $bideur->enchere->pivotbideurenchere->first()->update([
+                    'bouclier' => $bideur->enchere->pivotbideurenchere->first()->bouclier -1
+                ]);
+                return redirect()->back()->with('danger','le bideur est protegé veillez reessayer');
+            }
+
+
         }
         elseif ($sanction->enchere_id == $enchere && $sanction->statut == 1) {
             return redirect()->back()->with('danger','le bideur est deja sous sanction');
@@ -119,5 +132,17 @@ class DetailEnchereController extends Controller
         }
 
     }
+    public function bouclier($enchere,$paquet,$name){
+        $bideur = PivotBideurEnchere::where('user_id',Auth::user()->id)->first();
+        $bid_soustraction = Bideur::where('user_id',Auth::user()->id)->first();
 
+        $bideur->update([
+            'bouclier' => $bideur->bouclier+1
+        ]);
+
+        Auth::user()->bideurs->first()->update([
+            'balance'=>Auth::user()->bideurs->first()->balance -$paquet
+        ]);
+        return redirect()->back()->with('success','Achat effectué avec success');
+    }
 }

@@ -80,7 +80,8 @@ Route::get('/valid-account', function () {
     return view('pages.valid-account');
 });
 
-
+// bouclier
+Route::get('/articles/detail/produit/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'bouclier'])->name('bouclier');
 Route::get('/articles/detail/produit/{id}/{name}', [DetailEnchereController::class, 'index'])->name('detail.article');
 
 Route::get('/articles/{id}/{id_categorie}', [ArticlesController::class, 'ArticlesAll'])->name('all.articles');

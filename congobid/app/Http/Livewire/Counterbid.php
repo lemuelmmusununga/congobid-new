@@ -14,6 +14,8 @@ use App\Models\Sanction;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\PivotClientsSalon;
 use App\Models\Roi;
+use App\Models\Foudre;
+use App\Models\Bouclier;
 
 class Counterbid extends Component
 {
@@ -26,7 +28,7 @@ class Counterbid extends Component
     public $ids,$solde_bid,$solde_bonus,$bonus,$solde_non_tranferable,$enchere;
     public $listes=[];
     public $getSalons=[],$paquet_enchere;
-    public $detail=[],$addclick,$block = 0,$listes_sentance,$article_titre,$article_paquet,$article_enchere,$roi;
+    public $detail=[],$addclick,$block = 0,$listes_sentance,$article_titre,$article_paquet,$article_enchere,$roi,$foudre,$bouclier;
     // recuperation de l'article cliquer
     public $getart,$user_id,$etat;
     // santion
@@ -38,6 +40,8 @@ class Counterbid extends Component
         $this->article_enchere =$article_enchere;
         $this->enchere = Enchere::where('article_id',$this->getart)->first();
         $this->roi = Roi::where('paquet_id',$article_paquet)->first();
+        $this->bouclier = Bouclier::where('paquet_id',$article_paquet)->first();
+        $this->foudre = Foudre::where('paquet_id',$article_paquet)->first();
         $this->paquet_enchere = Paquet::where('id',$article_paquet)->first();
         if (Auth::user()) {
             # code...
@@ -96,7 +100,8 @@ class Counterbid extends Component
         $add = PivotBideurEnchere::where('user_id',auth()->user()->id)->first();
         $add->update([
             'foudre'=>$option,
-            'roi'=>$option
+            'roi'=>$option,
+            'bouclier'=>$option
         ]);
     }
     public function render()
