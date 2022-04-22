@@ -14,38 +14,34 @@
                                 <th>#</th>
                                 <th>Pseudo</th>
                                 <th>Optionsxb</th>
-                                <th>Nbr. click</th>
+                                <th>Nbr. click </th>
                                 </tr>
                             </thead>
-                                <tbody>
-
-                                    @foreach ($listes as $liste)
-                                    {{--lister les bideurs de l'enchere  --}}
-
-                                            <tr>
-                                             <td>{{$loop->index+1 }}</td>
-                                            <td><a href="" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $liste->user->id }}">{{$liste->user->nom ??''}}</a></td>
-                                            <td>
-                                                {{-- <span>
-                                                    <span class="iconify" data-icon="clarity:crown-solid"></span>
-                                                </span>
-                                                <span>
-                                                    <span class="iconify" data-icon="pepicons:electricity"></span>
-                                                </span> --}}
-                                            </td>
-                                            <td>
-                                                <span class="badge bg-primary">{{$liste->valeur ??''}}</span>
-
-                                            </td>
-                                        </tr>
-
-
-                                    @endforeach
-                                </tbody>
+                            <tbody>
+                                @foreach ($listes as $liste)
+                                {{--lister les bideurs de l'enchere  --}}
+                                    <tr>
+                                        <td>{{$loop->index+1 }}</td>
+                                        <td><a href="" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $liste->user->id }}">{{$liste->user->nom ??''}}</a></td>
+                                        <td>
+                                            {{-- <span>
+                                                <span class="iconify" data-icon="clarity:crown-solid"></span>
+                                            </span>
+                                            <span>
+                                                <span class="iconify" data-icon="pepicons:electricity"></span>
+                                            </span> --}}
+                                        </td>
+                                        <td>
+                                            <span class="badge bg-primary">{{$liste->valeur ??''}}</span>
+                                        </td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
                         </table>
                     </div>
                 </div>
             </div>
+            {{-- {{ $this }} --}}
             <div class="col-4">
                 {{-- <div><span class="text-center d-block" id="time">03:00</span></div>--}}
                 {{-- @livewire('decrematation', ['munite' => $munite,'times' => $times,'getart'=>$getart]) --}}
@@ -55,28 +51,32 @@
                     </div> <!-- end of countdown --> --}}
 
                 @if ($pivot != null)
-                    @if (date('d-m-Y ', strtotime($this->enchere->date_debut)) == now()->format('d-m-Y ') && date('H:i:s', strtotime($this->enchere->heure_debut)) <= now()->format('H:i:s'))
-
+                    {{-- @if (date('d-m-Y ', strtotime($this->enchere->date_debut)) == now()->format('d-m-Y ') && date('H:i:s', strtotime($this->enchere->heure_debut)) <= now()->format('H:i:s')) --}}
+                    @if (($pivot->enchere->state == '1') && ($pivot->where('user_id', Auth::user()->id)->first() != null))
                         <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
                             <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
                             <button class="btn w-100 btn-bid" wire:click.prevent="update()" >
-                                Bider 1
+                                Bider
                             </button>
                         </div>
                     @else
-
                         <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
                             <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
-                            <button class="btn w-100 btn-bid" data-bs-toggle="modal" data-bs-target="#nonenchere">
-                                Bider 2
+                            <button class="btn w-100 btn-bid" data-bs-toggle="modal" data-bs-target="">
+                                Bider
                             </button>
+                            <style>
+                                .btn-bid{
+                                    background: #a7a7a7!important;
+                                }
+                            </style>
                         </div>
                     @endif
                 @else
                     <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
                         <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
                         <button class="btn w-100 btn-bid" data-bs-toggle="modal" data-bs-target="#nonenchere">
-                            Bider 3
+                            Participer
                         </button>
                     </div>
                 @endif
@@ -91,7 +91,11 @@
                     <label for="">Acheter des cliques</label>
                     <div class="input-group">
                         <input type="number" wire:model="addclick" class="form-control w-50" name="add-click">
-                        <button wire:click.privent="addclick({{$addclick}})" class="form-control btn btn-primary w-25 btn-sm">OK</button>
+                        @if ($pivot != null)
+                            <button wire:click.privent="addclick({{$addclick}})" class="form-control btn btn-primary w-25 btn-sm">OK</button>
+                        @else
+                            <button data-bs-toggle="modal" data-bs-target="#nonenchere" class="form-control btn btn-primary w-25 btn-sm">OK</button>
+                        @endif
                     </div>
 
                 </div>
