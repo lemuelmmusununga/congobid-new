@@ -34,6 +34,22 @@
                     <div class="col-lg-5">
                         <div class="text-center mb-4">
                             <h3 class="name-article text-center">{{$article->titre ?? ''}}</h3>
+                            <?php
+                                $temps_restant_heure = (now()->format('H') - date('H', strtotime($article->enchere->heure_debut))) ;
+                                $temps_restant_minute = (now()->format('i') - date('i', strtotime($article->enchere->heure_debut)));
+
+                                $temps_restant_heure_minute = ($temps_restant_heure * 60) + $temps_restant_minute;
+
+                                $temps_restant_total = $article->paquet->duree - $temps_restant_heure_minute ;
+
+                                $enchere_fini = ($temps_restant_total <= 0) ? 'true' : 'false';
+                            ?>
+                            <h3 class="name-article text-center">temps restant : {{ $temps_restant_heure.':'.$temps_restant_minute }}</h3>
+                            <h3 class="name-article text-center"> temps restant en minute : {{ $temps_restant_heure_minute }}</h3>
+                            <h3 class="name-article text-center">durée de l'enchere : {{ $article->paquet->duree }}</h3>
+                            <h3 class="name-article text-center">heure du debut de l'enchere : {{ $article->enchere->heure_debut }}</h3>
+                            <h3 class="name-article text-center">temps restant total en minute : {{ $temps_restant_total }}</h3>
+                            <h3 class="name-article text-center">Etat de l'enchere : {{ $enchere_fini }}</h3>
                         </div>
                         @if (Session::has('danger'))
                                 <div class="alert alert-danger">
@@ -44,7 +60,7 @@
                                 <span>{{Session::get('success')}}</span>
                             </div>
                         @endif
-                        
+
                         @livewire('counterbid',['article'=>$article->id,'article_titre'=>$article->titre,'article_paquet'=>$article->paquet_id,'article_enchere'=>$article->enchere->id])
 
                     </div>

@@ -20,6 +20,26 @@ class DetailEnchereController extends Controller
         $article = Article::where('id', $id)->where('statut_id', '3')->first();
         $paquets = Paquet::where('statut_id', '3')->get();
 
+
+        $temps_restant_heure = (now()->format('H') - date('H', strtotime($article->enchere->heure_debut))) ;
+        $temps_restant_minute = (now()->format('i') - date('i', strtotime($article->enchere->heure_debut)));
+
+        $temps_restant_heure_minute = ($temps_restant_heure * 60) + $temps_restant_minute;
+
+        $temps_restant_total = $article->paquet->duree - $temps_restant_heure_minute ;
+
+        // $enchere_fini = ($temps_restant_total <= 0) ? 'true' : 'false';
+
+        if (($temps_restant_total >= 0) && ($temps_restant_total <= $article->paquet->duree)) {
+            Enchere::where('id', $article->enchere->id)->update([
+                'state' => '1',
+            ]);
+        } else {
+            Enchere::where('id', $article->enchere->id)->update([
+                'state' => '0',
+            ]);
+        }
+
         // couper les nombres de bids
         if (Auth::user()) {
         $pivots = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $article->enchere->id)->first();
@@ -28,10 +48,10 @@ class DetailEnchereController extends Controller
             if (Auth::user()->bideurs->first()->balance >= $article->paquet->nombre_enchere) {
                $cutebid= Bideur::where('user_id', Auth::user()->id)->first();
 
-               $cutebid->update([
-                    'balance' => Auth::user()->bideurs->first()->balance - $article->paquet->nombre_enchere,
-                ]);
-                if ($pivots == null) {
+               if ($pivots == null) {
+                   $cutebid->update([
+                        'balance' => Auth::user()->bideurs->first()->balance - $article->paquet->prix,
+                    ]);
 
                     PivotBideurEnchere::create([
                         'valeur' => '0',
