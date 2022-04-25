@@ -35,6 +35,7 @@
                                             <span class="badge bg-primary">{{$liste->valeur ??''}}</span>
                                         </td>
                                     </tr>
+                                    
                                 @endforeach
                             </tbody>
                         </table>
@@ -146,6 +147,7 @@
 
                                                     </td>
                                                 </tr>
+
                                             @endforeach
                                         </tbody>
 

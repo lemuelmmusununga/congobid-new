@@ -34,7 +34,7 @@ class IndexController extends Controller
                     'state' => '1',
                 ]);
 
-                dd($temps_restant_total >= 0, $temps_restant_total <= $article->paquet->duree);
+                // dd($temps_restant_total >= 0, $temps_restant_total <= $article->paquet->duree);
             } else {
                 Enchere::where('id', $article->enchere->id)->update([
                     'state' => '0',

@@ -80,8 +80,13 @@ Route::get('/valid-account', function () {
     return view('pages.valid-account');
 });
 
-// bouclier
-Route::get('/articles/detail/produit/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'bouclier'])->name('bouclier');
+// bouclier achat
+Route::get('/articles/detail/produit/bouclier/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'bouclier'])->name('bouclier');
+// roi achat
+Route::get('/articles/detail/produit/roi/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'roi'])->name('roi');
+// foundre achat
+Route::get('/articles/detail/produit/foudre/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'foudre'])->name('foudre');
+
 Route::get('/articles/detail/produit/{id}/{name}', [DetailEnchereController::class, 'index'])->name('detail.article');
 
 Route::get('/articles/{id}/{id_categorie}', [ArticlesController::class, 'ArticlesAll'])->name('all.articles');

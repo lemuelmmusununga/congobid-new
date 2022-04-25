@@ -18,23 +18,29 @@ use Livewire\WithPagination;
 use App\Models\PivotClientsSalon;
 use App\Models\Roi;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Foudre;
+use App\Models\Bouclier;
 class Index extends Component
 {
 use WithPagination;
 protected $paginationTheme = 'bootstrap';
     public $search ='',$getart,$favoris;
     public $article = '';
-    public $participer ='';
-    public $iids,$like=0,$counter_like,$favori_enchere,$favori_user,$favori_favori,$pivot;
+    public $participer ='',$roi,$foudre,$bouclier;
+    public $iids,$like=0,$counter_like,$favori_enchere,$favori_user,$favori_favori,$pivot,$boucliers;
 
     public $artis='';
     public $getEnchere=[];
 
     public function mount(){
-
+        // dd(Auth::user()->pivotbideurenchere->first()->roi ?? '');
         // $this->article = Article::all();
-
+        if (Auth::user() && Auth::user()->pivotbideurenchere != null) {
+            # code...
+            $this->roi = Roi::where('paquet_id',Auth::user()->pivotbideurenchere->first()->roi ?? '')->first();
+            $this->bouclier = Bouclier::where('paquet_id',Auth::user()->pivotbideurenchere->first()->bouclier ?? '')->first();
+            $this->foudre = Foudre::where('paquet_id',Auth::user()->pivotbideurenchere->first()->foudre ?? '')->first();
+        }
         $this->getEnchere = Enchere::all();
     //    $l= $this->getEnchere->pivotbideurenchere->where('user_id',Auth::user()->id)->first();
 
@@ -45,9 +51,7 @@ protected $paginationTheme = 'bootstrap';
         $idmodal = Article::where('id', $id)->first();
         $this->participer = $idmodal->id;
        }
-    public function participer($user , $enchere){
-        dd($user , $enchere);
-    }
+
     public function like($id,$rec,$enchere){
         $verify = PivotBideurEnchere::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
         $favoris = Favoris::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
@@ -159,10 +163,9 @@ protected $paginationTheme = 'bootstrap';
         else if ($find->paquet_id == 1) {
             return view('pages.detail-enchere',compact('id'));
         }
-
-
-
-
+    }
+    public function paquet($paquet){
+        $this->boucliers = Bouclier::where('paquet',$paquet)->first() ;
     }
     public function render()
     {

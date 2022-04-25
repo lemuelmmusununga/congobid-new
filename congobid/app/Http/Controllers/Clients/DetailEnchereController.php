@@ -97,6 +97,7 @@ class DetailEnchereController extends Controller
         $bid_soustraction = Bideur::where('user_id',Auth::user()->id)->first();
         $sanction = Sanction::where('user_id', $id)->where('enchere_id',$enchere)->where('deleted_at',null)->first();
         if ($sanction == null) {
+
             if ($bideur->enchere->pivotbideurenchere->first()->bouclier == 0) {
 
                 $insert = Sanction::create([
@@ -108,6 +109,16 @@ class DetailEnchereController extends Controller
                     'user_id'=>$id,
                     'santance'=>$sanctance
                 ]);
+
+                if (Auth::user()->pivotbideurenchere->first()->foudre >=1 && $sanctance == "foudre") {
+                    Auth::user()->pivotbideurenchere->first()->update([
+                        'foudre' => $bideur->enchere->pivotbideurenchere->first()->foudre -1
+                    ]);
+                }else if(Auth::user()->pivotbideurenchere->first()->roi >=1 && $sanctance == "roi"){
+                    Auth::user()->pivotbideurenchere->first()->update([
+                        'roi' => Auth::user()->pivotbideurenchere->first()->roi -1
+                    ]);
+                }
                 $total_bid_user = Auth::user()->bideurs->first()->balance - $bid_cut;
                 $bid_soustraction->update([
                     'balance'=>$total_bid_user
@@ -163,6 +174,35 @@ class DetailEnchereController extends Controller
         Auth::user()->bideurs->first()->update([
             'balance'=>Auth::user()->bideurs->first()->balance -$paquet
         ]);
-        return redirect()->back()->with('success','Achat effectué avec success');
+        return redirect()->back()->with('success','Achat du bouclier effectué avec success');
+    }
+    // achat roi
+    public function roi($enchere,$paquet,$name){
+        $bideur = PivotBideurEnchere::where('user_id',Auth::user()->id)->first();
+        $bid_soustraction = Bideur::where('user_id',Auth::user()->id)->first();
+
+        $bideur->update([
+            'roi' => $bideur->roi+1
+        ]);
+
+        Auth::user()->bideurs->first()->update([
+            'balance'=>Auth::user()->bideurs->first()->balance -$paquet
+        ]);
+        return redirect()->back()->with('success','Achat du roi effectué avec success');
+    }
+
+    // achat foudre
+    public function foudre($enchere,$paquet,$name){
+        $bideur = PivotBideurEnchere::where('user_id',Auth::user()->id)->first();
+        $bid_soustraction = Bideur::where('user_id',Auth::user()->id)->first();
+
+        $bideur->update([
+            'foudre' => $bideur->foudre+1
+        ]);
+
+        Auth::user()->bideurs->first()->update([
+            'balance'=>Auth::user()->bideurs->first()->balance -$paquet
+        ]);
+        return redirect()->back()->with('success','Achat du foudre effectué avec success');
     }
 }

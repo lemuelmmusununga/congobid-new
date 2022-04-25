@@ -173,8 +173,9 @@
                                 if( Auth::user() && $articles != null){
                                     $pivot =$article->enchere->pivotbideurenchere->where('enchere_id',$article->enchere->id?? '')->where('user_id',Auth::user()->id)->first() ?? '';
                                 }
+                                // dd(date('d-m-Y', strtotime($article->enchere->date_debut)),now()->format('d-m-Y'),($article->enchere->state),$article->titre);
                             @endphp
-                            @if ((date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y')) && ($article->enchere->state == 1) && (date('H:i:s', strtotime($article->enchere->heure_debut)) >= now()->format('H:i:s')))
+                            @if ((date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y')) )
                                 <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                     <div class="card" id="">
                                         <div class="timeUpdate">
@@ -312,7 +313,7 @@
                                             </div>
                                         </div>
                                         @if (Auth::user())
-                                            <div class="block-statut {{ $article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first() != null ? 'active' : 'unactive' }}">
+                                            <div class="block-statut {{ $article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first() != null ? 'active' : 'unactive' }} on">
                                                 <div class="statut">
                                                     <span class="blink"></span>
                                                 </div>
@@ -324,6 +325,31 @@
                                         <a href="{{route('detail.article',['id'=>$article->id,'name'=>$article->titre])}}" class="text-center d-block mb-3">Voir plus</a>
                                         @include('components.outils')
                                         @include('components.favoris')
+
+                                        {{-- bouclier --}}
+                                        <div wire:ignore.self class="modal fade" id="achat_bouclier_{{$article->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered">
+                                                <div class="modal-content">
+                                                    <div class="modal-body">
+                                                        <div class="icon">
+                                                            <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                                                        </div>
+                                                        <div class="text-center">
+                                                            <h5>Pour acheter il vous faut  bids pour cette enchere Voulez-vous Acheter ?</h5>
+                                                            {{-- @if (Auth::user()->bideurs->first()->balance >= $article->enchere->pivotbideurenchere->first()->enchere_id )
+                                                                <a type="button" href="{{route('bouclier',['enchere'=>$pivot->enchere_id,'paquet'=>$bouclier->bid_prix,'name'=>Auth::user()->nom])}}" class="btn btn-ok w-50 ">Acheter</a>
+                                                            @else
+                                                                <a type="button" href="{{route('clients.achat.bid')}}" class="btn btn-ok w-50 ">Acheter</a>
+                                                            @endif --}}
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer d-flex justify-content-center align-items-center">
+                                                        <button type="button" class="btn btn-non" data-bs-dismiss="modal" aria-label="close">Annuler</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
                                         <div class="text-center mb-3">
                                             <p class="mb-0">
                                                 Si vous aimez, cliquez sur le coeur pour que cet article passe à la prochaine enchère.
@@ -433,8 +459,4 @@
             </div>
         </div>
     </div>
-
-  {{-- document.getElementById("days").innerHTML = ((days < 10 && days > 0) ? '0' + days : days) + "J" ;
-  document.getElementById("hours").innerHTML =((hours < 10 && hours > 0) ? '0' + hours : hours) + ":";
-  document.getElementById("minutes").innerHTML =((minutes < 10 && minutes > 0) ? '0' + minutes : minutes) + ":";
-  document.getElementById("seconds").innerHTML =((seconds < 10 && seconds > 0) ? '0' + seconds : seconds); --}}
+ + seconds : seconds); --}}
