@@ -1,8 +1,12 @@
 <div>
     @php
         $pivot =(App\Models\PivotBideurEnchere::where('enchere_id',$article)->where('user_id',Auth::user()->id)->first());
-
+        $verify_sanction =(App\Models\Sanction::where('enchere_id',$article)->where('user_id',Auth::user()->id)->first());
     @endphp
+    {{-- <div wire:poll.keeplive>
+
+        <span>{{$temps_restant_total-1}}</span>
+    </div> --}}
     @if (Auth::user() )
         <div class="row g-3 g-lg-5">
             <div class="col-8">
@@ -35,7 +39,7 @@
                                             <span class="badge bg-primary">{{$liste->valeur ??''}}</span>
                                         </td>
                                     </tr>
-                                    
+
                                 @endforeach
                             </tbody>
                         </table>
@@ -53,7 +57,7 @@
 
                 @if ($pivot != null)
                     {{-- @if (date('d-m-Y ', strtotime($this->enchere->date_debut)) == now()->format('d-m-Y ') && date('H:i:s', strtotime($this->enchere->heure_debut)) <= now()->format('H:i:s')) --}}
-                    @if (($pivot->enchere->state == '1') && ($pivot->where('user_id', Auth::user()->id)->first() != null))
+                    @if (($pivot->enchere->state == 1) && ($pivot->where('user_id', Auth::user()->id)->first() != null && $verify_sanction->statut == 0))
                         <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
                             <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
                             <button class="btn w-100 btn-bid" wire:click.prevent="update()" >
@@ -64,7 +68,7 @@
                         <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
                             <span class="num-clic text-center mb-3"><strong>{{$counter??'0'}}X</strong></span>
                             <button class="btn w-100 btn-bid" data-bs-toggle="modal" data-bs-target="">
-                                Bider
+                                Bider {{$pivot->enchere->state}}
                             </button>
                             <style>
                                 .btn-bid{
@@ -91,7 +95,7 @@
 
                     <label for="">Acheter des cliques</label>
                     <div class="input-group">
-                        <input type="number" wire:model="addclick" class="form-control w-50" name="add-click">
+                        <input type="number" wire:model="addclick" class="form-control w-50" name="add-click" >
                         @if ($pivot != null)
                             <button wire:click.privent="addclick({{$addclick}})" class="form-control btn btn-primary w-25 btn-sm">OK</button>
                         @else

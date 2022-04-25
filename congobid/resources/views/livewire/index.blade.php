@@ -175,7 +175,7 @@
                                 }
                                 // dd(date('d-m-Y', strtotime($article->enchere->date_debut)),now()->format('d-m-Y'),($article->enchere->state),$article->titre);
                             @endphp
-                            @if ((date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y')) )
+                            @if ((date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y')) && $article->enchere->state == 1 && (date('d-m-Y', strtotime($article->enchere->heure_debut)) >= now()->format('d-m-Y') )  )
                                 <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                     <div class="card" id="">
                                         <div class="timeUpdate">
@@ -206,26 +206,7 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        {{-- @if (Auth::user())
 
-                                            @if ($pivot != null)
-                                                <div class="block-statut active on">
-                                                    <div class="statut">
-                                                        <span class="blink"></span>
-                                                    </div>
-                                                </div>
-                                            @else
-                                                <div class="block-statut unactive on">
-                                                    <div class="statut">
-                                                        <span class="blink"></span>
-                                                    </div>
-                                                </div>
-                                            @endif
-                                        @else
-                                            <div class="block-statut unactive on">
-                                                <span class="blink"></span>
-                                            </div>
-                                        @endif --}}
                                         <h5 class="text-center mt-2">{{ $article->titre }}</h5>
                                         <h6 class="text-center">{{ $article->marque }}</h6>
                                         <span class="text-center">{{ Str::substr($article->description, 0, 80) }}...</span>

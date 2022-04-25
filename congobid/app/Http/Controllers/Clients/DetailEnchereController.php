@@ -23,10 +23,13 @@ class DetailEnchereController extends Controller
 
         $temps_restant_heure = (now()->format('H') - date('H', strtotime($article->enchere->heure_debut))) ;
         $temps_restant_minute = (now()->format('i') - date('i', strtotime($article->enchere->heure_debut)));
+        $temps_restant_seconde = (now()->format('s') - date('s', strtotime($article->enchere->heure_debut)));
 
         $temps_restant_heure_minute = ($temps_restant_heure * 60) + $temps_restant_minute;
-
         $temps_restant_total = $article->paquet->duree - $temps_restant_heure_minute ;
+        $total_heure_restant =  $temps_restant_heure .":". $temps_restant_minute .":". $temps_restant_seconde;
+
+
 
         // $enchere_fini = ($temps_restant_total <= 0) ? 'true' : 'false';
 
@@ -62,13 +65,13 @@ class DetailEnchereController extends Controller
 
                 }
                 $block = 0;
-                return view('pages.detail-enchere', compact('article', 'paquets','block'));
+                return view('pages.detail-enchere', compact('article', 'paquets','block','total_heure_restant'));
             }else{
                 return back()->with('danger','Votre compte est insuffisant');
             }
         }else{
             $block = 0;
-            return view('pages.detail-enchere', compact('article', 'paquets','block'));
+            return view('pages.detail-enchere', compact('article', 'paquets','block','total_heure_restant'));
         }
 
     }
@@ -176,7 +179,7 @@ class DetailEnchereController extends Controller
         ]);
         return redirect()->back()->with('success','Achat du bouclier effectué avec success');
     }
-    // achat roi
+    // achat roi a revoir
     public function roi($enchere,$paquet,$name){
         $bideur = PivotBideurEnchere::where('user_id',Auth::user()->id)->first();
         $bid_soustraction = Bideur::where('user_id',Auth::user()->id)->first();
@@ -189,6 +192,28 @@ class DetailEnchereController extends Controller
             'balance'=>Auth::user()->bideurs->first()->balance -$paquet
         ]);
         return redirect()->back()->with('success','Achat du roi effectué avec success');
+    }
+    // bloquer encher
+    public function roiBlock($enchere,$paquet,$name,$duree){
+        $bideurs = PivotBideurEnchere::orderby('id','DESC')->where('user_id','!=',Auth::user()->id)->where('enchere_id',$enchere)->get();
+
+        // $bid_soustraction = Bideur::where('user_id',Auth::user()->id)->first();
+        foreach ($bideurs as $bideur) {
+           $bloquer_enchere = Sanction::create([
+                'paquet_id'=>$paquet,
+                'enchere_id'=>$enchere,
+                'santance' =>'roi',
+                'duree'=>$duree,
+                'suspendu_by'=>Auth::user()->id,
+                'statut_id'=>1,
+                'user_id'=>$bideur->user_id
+           ]);
+        }
+        // Auth::user()->pivotBideurEnchere->first()->roi->update([
+        //     'roi' => Auth::user()->pivotBideurEnchere->first()->roi-1
+        // ]);
+
+        return redirect()->back()->with('success','Anchere bloquer avec success');
     }
 
     // achat foudre

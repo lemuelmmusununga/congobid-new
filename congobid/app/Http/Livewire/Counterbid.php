@@ -25,7 +25,7 @@ class Counterbid extends Component
     public $user,$article,$update=[''];
     public $click ='';
     public $bid;
-    public $ids,$solde_bid,$solde_bonus,$bonus,$solde_non_tranferable,$enchere;
+    public $ids,$solde_bid,$solde_bonus,$bonus,$solde_non_tranferable,$enchere,$temps_restant_total;
     public $listes=[];
     public $getSalons=[],$paquet_enchere;
     public $detail=[],$addclick,$block = 0,$listes_sentance,$article_titre,$article_paquet,$article_enchere,$roi,$foudre,$bouclier;
@@ -33,7 +33,7 @@ class Counterbid extends Component
     public $getart,$user_id,$etat;
     // santion
 
-    public function mount($article,$article_paquet,$article_titre,$article_enchere){
+    public function mount($article,$article_paquet,$article_titre,$article_enchere,$temps_restant_total){
         $this->article_paquet = $article_paquet;
         $this->article_titre = $article_titre;
         $this->getart = $article;
@@ -43,6 +43,7 @@ class Counterbid extends Component
         $this->bouclier = Bouclier::where('paquet_id',$article_paquet)->first();
         $this->foudre = Foudre::where('paquet_id',$article_paquet)->first();
         $this->paquet_enchere = Paquet::where('id',$article_paquet)->first();
+        $this->temps_restant_total = $temps_restant_total;
         if (Auth::user()) {
             # code...
             $soldebid = Bideur::where('user_id',Auth::user()->id)->first();
@@ -88,7 +89,7 @@ class Counterbid extends Component
 
         $this->update = PivotBideurEnchere::where('user_id',auth()->user()->id)->where('enchere_id',$this->getart)->first();
 
-        $this->addclick =$this->update->valeur + $add ;
+        $this->addclick =$this->update->valeur + ($add??0) ;
 
         $this->update->update([
             'valeur'=>$this->addclick
@@ -127,14 +128,14 @@ class Counterbid extends Component
         }
         // dd($valeur->enchere->paquet->duree);
         // calcule du temps
-        // $this->munite = $valeur->enchere->paquet->duree;
+        $this->temps_restant_total=$this->temps_restant_total+1;
         // $this->times =$this->times-1;
         // $this->munite-1;
+        // dd($this->temps_restant_total,date('i',strtotime($this->enchere->heure_debut)));
+        if($this->temps_restant_total == 60){
+            $this->temps_restant_total =0;
 
-        // if($this->times == 0){
-        //     $this->times =59;
-        //     $this->munite =$valeur->enchere->paquet->duree-1;
-        // }
+        }
 
         return view('livewire.counterbid',[
 

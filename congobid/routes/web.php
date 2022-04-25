@@ -84,6 +84,7 @@ Route::get('/valid-account', function () {
 Route::get('/articles/detail/produit/bouclier/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'bouclier'])->name('bouclier');
 // roi achat
 Route::get('/articles/detail/produit/roi/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'roi'])->name('roi');
+Route::get('/articles/detail/{duree}/produit/bloquer_enchere/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'roiBlock'])->name('roi.block');
 // foundre achat
 Route::get('/articles/detail/produit/foudre/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'foudre'])->name('foudre');
 
