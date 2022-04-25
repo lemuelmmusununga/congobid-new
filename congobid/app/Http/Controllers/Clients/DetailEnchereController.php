@@ -95,6 +95,7 @@ class DetailEnchereController extends Controller
             return view('pages.detail-enchere', compact('article', 'paquets' ,'block'));
         }
     }
+    //push
     public function sanction($id,$enchere,$sanctance,$name,$bid_cut){
         $bideur = PivotBideurEnchere::where('user_id',$id)->first();
         $bid_soustraction = Bideur::where('user_id',Auth::user()->id)->first();
