@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 25, 2022 at 12:12 PM
+-- Generation Time: Apr 30, 2022 at 11:52 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -20,32 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `congobid_rdc`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `achat_clicks`
---
-
-CREATE TABLE `achat_clicks` (
-  `id` int(11) NOT NULL,
-  `paquet_id` int(11) NOT NULL,
-  `prix` float NOT NULL,
-  `prix_bid` int(11) NOT NULL,
-  `benefice` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `achat_clicks`
---
-
-INSERT INTO `achat_clicks` (`id`, `paquet_id`, `prix`, `prix_bid`, `benefice`) VALUES
-(1, 1, 0.05, 1, 340),
-(2, 1, 0.09, 2, 380),
-(3, 3, 0.21, 1, 472),
-(4, 4, 0.4, 1, 513),
-(5, 5, 0.74, 1, 675),
-(6, 6, 1.23, 1, 810);
 
 -- --------------------------------------------------------
 
@@ -118,7 +92,7 @@ CREATE TABLE `articles` (
 
 INSERT INTO `articles` (`id`, `titre`, `marque`, `promouvoir`, `code_produit`, `description`, `prix`, `prix_marche`, `prix_min`, `prix_max`, `cout_livraison`, `infos_livraison`, `meta_description`, `meta_keywords`, `limite_enchere_auto`, `credit_enchere_auto`, `quantite`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`, `categorie_id`, `paquet_id`) VALUES
 (1, 'Ordinateur portable', 'HP', 1, '11030420220424014', 'Ordinateur portable\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Vitae quisquam aliquam ducimus! Accusamus commodi obcaecati consequuntur veritatis. Temporibus voluptatem, iste odit, at ea voluptatibus nemo adipisci obcaecati aspernatur aut debitis!\r\nDucimus atque iusto aut eligendi itaque voluptatem! Quos odio at, incidunt totam asperiores facilis ad et autem aut voluptatem! Excepturi aliquid eaque inventore totam repellat ut nisi laudantium soluta suscipit.\r\nIure beatae nulla iusto vero earum similique necessitatibus officiis magnam optio quis ratione eveniet quod a doloremque cum consequuntur, tempora, unde ipsa labore! Quam dolor fuga tempora labore quod modi?', 500, 1000, 333, 500, '0', 'dgzd', 'zndbzd', 'zndbzd', '0', '0', '10', '2022-02-28 14:40:28', '2022-04-03 03:24:01', NULL, NULL, NULL, 3, 1, 1, 1),
-(2, 'PS5', 'Konami', 0, '11030420220421414', 'PS5\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Vitae quisquam aliquam ducimus! Accusamus commodi obcaecati consequuntur veritatis. Temporibus voluptatem, iste odit, at ea voluptatibus nemo adipisci obcaecati aspernatur aut debitis!\r\nDucimus atque iusto aut eligendi itaque voluptatem! Quos odio at, incidunt totam asperiores facilis ad et autem aut voluptatem! Excepturi aliquid eaque inventore totam repellat ut nisi laudantium soluta suscipit.\r\nIure beatae nulla iusto vero earum similique necessitatibus officiis magnam optio quis ratione eveniet quod a doloremque cum consequuntur, tempora, unde ipsa labore! Quam dolor fuga tempora labore quod modi?', 800, 1600, 533, 800, '0', 'zkfdz', 'eae', 'eae', '0', '0', '100', '2022-02-28 14:41:19', '2022-04-03 03:21:41', NULL, NULL, NULL, 3, 1, 1, 3),
+(2, 'PS5', 'Konami', 0, '11030420220421414', 'PS5\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Vitae quisquam aliquam ducimus! Accusamus commodi obcaecati consequuntur veritatis. Temporibus voluptatem, iste odit, at ea voluptatibus nemo adipisci obcaecati aspernatur aut debitis!\r\nDucimus atque iusto aut eligendi itaque voluptatem! Quos odio at, incidunt totam asperiores facilis ad et autem aut voluptatem! Excepturi aliquid eaque inventore totam repellat ut nisi laudantium soluta suscipit.\r\nIure beatae nulla iusto vero earum similique necessitatibus officiis magnam optio quis ratione eveniet quod a doloremque cum consequuntur, tempora, unde ipsa labore! Quam dolor fuga tempora labore quod modi?', 800, 1600, 533, 800, '0', 'zkfdz', 'eae', 'eae', '0', '0', '100', '2022-02-28 14:41:19', '2022-04-03 03:21:41', NULL, NULL, NULL, 3, 1, 1, 6),
 (3, 'Ordinateur iod', 'zdzd', 1, '21030420220437014', 'Ordinateur iod\r\nLorem ipsum dolor sit amet consectetur adipisicing elit. Vitae quisquam aliquam ducimus! Accusamus commodi obcaecati consequuntur veritatis. Temporibus voluptatem, iste odit, at ea voluptatibus nemo adipisci obcaecati aspernatur aut debitis!\r\nDucimus atque iusto aut eligendi itaque voluptatem! Quos odio at, incidunt totam asperiores facilis ad et autem aut voluptatem! Excepturi aliquid eaque inventore totam repellat ut nisi laudantium soluta suscipit.\r\nIure beatae nulla iusto vero earum similique necessitatibus officiis magnam optio quis ratione eveniet quod a doloremque cum consequuntur, tempora, unde ipsa labore! Quam dolor fuga tempora labore quod modi?', 1000, 2000, 667, 1000, '0', 'djbqdj', 'zhdva', 'zhdva', '0', '0', '80', '2022-03-09 11:55:55', '2022-04-03 03:37:01', NULL, NULL, NULL, 3, 1, 2, 3);
 
 -- --------------------------------------------------------
@@ -129,7 +103,7 @@ INSERT INTO `articles` (`id`, `titre`, `marque`, `promouvoir`, `code_produit`, `
 
 CREATE TABLE `bideurs` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `balance` int(11) NOT NULL DEFAULT 0,
+  `balance` int(11) NOT NULL,
   `nontransferable` int(11) NOT NULL DEFAULT 0,
   `bonus` int(11) NOT NULL DEFAULT 0,
   `roi` int(11) NOT NULL DEFAULT 0,
@@ -151,8 +125,13 @@ CREATE TABLE `bideurs` (
 --
 
 INSERT INTO `bideurs` (`id`, `balance`, `nontransferable`, `bonus`, `roi`, `foudre`, `bouclier`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`, `paquet_id`, `admin_id`) VALUES
-(2, 870, 100, 53, 2, 12, 1, '2022-03-09 09:46:01', '2022-04-25 17:09:14', NULL, 1, NULL, 3, 11, 2, 1),
-(3, 40, 0, 0, 0, 0, 0, '2022-04-25 13:46:17', '2022-04-25 13:46:17', NULL, NULL, NULL, 3, 14, 1, NULL);
+(2, 66710, 100, 57, 2, 12, 1, '2022-03-09 09:46:01', '2022-04-30 10:16:30', NULL, 1, NULL, 3, 11, 2, 1),
+(3, 120, 0, 3, 0, 0, 0, '2022-04-25 13:46:17', '2022-04-30 10:07:21', NULL, NULL, NULL, 3, 14, 1, NULL),
+(4, 280, 0, 0, 0, 0, 0, '2022-04-28 13:29:49', '2022-04-28 14:06:41', NULL, NULL, NULL, 3, 15, 1, NULL),
+(5, 30, 0, 0, 0, 0, 0, '2022-04-29 22:06:24', '2022-04-29 22:27:47', NULL, NULL, NULL, 3, 18, 1, NULL),
+(6, 0, 0, 0, 0, 0, 0, '2022-04-29 22:07:16', '2022-04-29 22:23:40', NULL, NULL, NULL, 3, 19, 1, NULL),
+(7, 40, 0, 0, 0, 0, 0, '2022-04-29 22:07:49', '2022-04-29 22:27:43', NULL, NULL, NULL, 3, 20, 1, NULL),
+(8, 49860, 0, 0, 0, 0, 0, '2022-04-29 23:37:15', '2022-04-29 23:40:01', NULL, NULL, NULL, 3, 21, 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -192,20 +171,21 @@ CREATE TABLE `boucliers` (
   `paquet_id` int(11) NOT NULL,
   `benefice` int(11) NOT NULL,
   `prix` int(11) NOT NULL,
-  `bid_prix` int(11) NOT NULL
+  `bid_prix` int(11) NOT NULL,
+  `temps_blocage` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `boucliers`
 --
 
-INSERT INTO `boucliers` (`id`, `paquet_id`, `benefice`, `prix`, `bid_prix`) VALUES
-(1, 1, 8, 30, 60),
-(2, 2, 10, 45, 90),
-(3, 3, 8, 40, 80),
-(4, 4, 10, 45, 90),
-(5, 5, 15, 50, 100),
-(6, 6, 15, 70, 140);
+INSERT INTO `boucliers` (`id`, `paquet_id`, `benefice`, `prix`, `bid_prix`, `temps_blocage`) VALUES
+(1, 1, 8, 30, 60, '00:08:00'),
+(2, 2, 10, 45, 90, '00:10:00'),
+(3, 3, 8, 40, 80, '00:10:00'),
+(4, 4, 10, 45, 90, '00:08:00'),
+(5, 5, 15, 50, 100, '00:15:00'),
+(6, 6, 15, 70, 140, '00:15:00');
 
 -- --------------------------------------------------------
 
@@ -263,6 +243,60 @@ INSERT INTO `chats` (`id`, `libelle`, `created_at`, `updated_at`, `deleted_at`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `clicks`
+--
+
+CREATE TABLE `clicks` (
+  `id` int(11) NOT NULL,
+  `paquet_id` int(11) NOT NULL,
+  `prix` float NOT NULL,
+  `prix_bid` int(11) NOT NULL,
+  `benefice` int(11) NOT NULL,
+  `temps_blocage` time NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `clicks`
+--
+
+INSERT INTO `clicks` (`id`, `paquet_id`, `prix`, `prix_bid`, `benefice`, `temps_blocage`) VALUES
+(1, 1, 0.05, 1, 340, '00:00:00'),
+(2, 1, 0.09, 2, 380, '00:00:00'),
+(3, 3, 0.21, 1, 472, '00:00:00'),
+(4, 4, 0.4, 1, 513, '00:00:00'),
+(5, 5, 0.74, 1, 675, '00:00:00'),
+(6, 6, 1.23, 1, 810, '00:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `click_autos`
+--
+
+CREATE TABLE `click_autos` (
+  `id` int(11) NOT NULL,
+  `paquet_id` int(11) NOT NULL,
+  `bid_prix` int(11) NOT NULL,
+  `prix` int(11) NOT NULL,
+  `benefice` int(11) NOT NULL,
+  `temps_bidage` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `click_autos`
+--
+
+INSERT INTO `click_autos` (`id`, `paquet_id`, `bid_prix`, `prix`, `benefice`, `temps_bidage`) VALUES
+(1, 1, 100, 10, 2400, 8),
+(2, 2, 120, 12, 2400, 8),
+(3, 3, 300, 15, 2400, 10),
+(4, 4, 314, 17, 2400, 10),
+(5, 5, 400, 20, 2400, 12),
+(6, 6, 450, 25, 2400, 12);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `communiques`
 --
 
@@ -297,6 +331,18 @@ CREATE TABLE `comptes` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `types_compte_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `conditions`
+--
+
+CREATE TABLE `conditions` (
+  `id` int(11) NOT NULL,
+  `titre` int(11) NOT NULL,
+  `description` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -408,19 +454,20 @@ CREATE TABLE `encheres` (
   `statut_id` bigint(20) UNSIGNED NOT NULL,
   `article_id` bigint(20) UNSIGNED NOT NULL,
   `paquet_id` bigint(20) UNSIGNED NOT NULL,
-  `participant` int(11) DEFAULT NULL
+  `participant` int(11) DEFAULT NULL,
+  `munite` int(11) NOT NULL,
+  `seconde` int(11) NOT NULL,
+  `prix` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `encheres`
 --
 
-INSERT INTO `encheres` (`id`, `click`, `favoris`, `date_debut`, `heure_debut`, `state`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `article_id`, `paquet_id`, `participant`) VALUES
-(1, '0', 21, '2022-04-25', '06:49:00', 0, '2022-02-28 14:40:28', '2022-04-25 17:10:25', NULL, NULL, NULL, 3, 1, 1, NULL),
-(2, '0', 13, '2022-04-22', '15:00:00', 0, '2022-02-28 14:41:19', '2022-04-21 08:03:25', NULL, NULL, NULL, 3, 2, 3, 20),
-(3, '0', 8, '2022-04-29', '13:58:00', 0, '2022-03-09 11:55:55', '2022-04-25 17:10:09', NULL, NULL, NULL, 3, 3, 3, 20),
-(6, '0', 8, '2022-04-24', '23:58:00', 1, '2022-03-09 11:55:55', '2022-04-21 07:52:48', NULL, NULL, NULL, 3, 3, 2, 20),
-(7, '0', 8, '2022-04-21', '13:58:00', 1, '2022-03-09 11:55:55', '2022-04-21 07:52:48', NULL, NULL, NULL, 3, 3, 3, 20);
+INSERT INTO `encheres` (`id`, `click`, `favoris`, `date_debut`, `heure_debut`, `state`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `article_id`, `paquet_id`, `participant`, `munite`, `seconde`, `prix`) VALUES
+(1, '0', 22, '2022-04-29', '17:49:00', 0, '2022-02-28 14:40:28', '2022-04-30 22:26:49', NULL, NULL, NULL, 3, 1, 1, 1, 55, 59, 500),
+(2, '0', 9, '2022-04-30', '15:20:00', 0, '2022-02-28 14:41:19', '2022-04-30 09:59:29', NULL, NULL, NULL, 3, 2, 6, 20, 0, 0, 800),
+(3, '0', 21, '2022-04-29', '14:58:00', 1, '2022-03-09 11:55:55', '2022-04-30 02:35:51', NULL, NULL, NULL, 3, 3, 3, 20, 52, 56, 1000);
 
 -- --------------------------------------------------------
 
@@ -477,12 +524,10 @@ CREATE TABLE `favoris` (
 --
 
 INSERT INTO `favoris` (`id`, `user_id`, `favoris`, `enchere_id`, `updated_at`, `created_at`) VALUES
-(34, 11, 1, 2, '2022-04-21 01:03:25', '2022-04-21 00:52:41'),
-(35, 11, 0, 3, '2022-04-24 21:13:20', '2022-04-21 00:52:48'),
-(36, 11, 1, 1, '2022-04-21 09:41:51', '2022-04-21 00:52:56'),
-(37, 11, 1, 1, '2022-04-21 09:22:08', '2022-04-21 09:22:08'),
-(38, 14, 0, 1, '2022-04-25 07:09:13', '2022-04-25 06:53:09'),
-(39, 14, 1, 3, '2022-04-25 06:53:33', '2022-04-25 06:53:29');
+(105, 11, 0, 2, '2022-04-29 07:06:25', '2022-04-28 00:26:37'),
+(106, 11, 1, 3, '2022-04-30 02:10:22', '2022-04-28 00:27:17'),
+(107, 14, 1, 3, '2022-04-30 02:14:05', '2022-04-28 06:31:01'),
+(108, 14, 0, 2, '2022-04-30 02:21:12', '2022-04-29 11:32:45');
 
 -- --------------------------------------------------------
 
@@ -498,14 +543,14 @@ CREATE TABLE `foudres` (
   `bid_deblocage` int(11) NOT NULL,
   `bid_prix` int(11) NOT NULL,
   `benefice` int(11) NOT NULL,
-  `temps` int(11) NOT NULL
+  `temps_blocage` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `foudres`
 --
 
-INSERT INTO `foudres` (`id`, `paquet_id`, `prix`, `prix_deblocage`, `bid_deblocage`, `bid_prix`, `benefice`, `temps`) VALUES
+INSERT INTO `foudres` (`id`, `paquet_id`, `prix`, `prix_deblocage`, `bid_deblocage`, `bid_prix`, `benefice`, `temps_blocage`) VALUES
 (1, 1, 2, 1, 10, 20, 40, 10),
 (2, 2, 3, 1.5, 30, 60, 40, 10),
 (3, 3, 4, 2, 40, 80, 40, 10),
@@ -676,7 +721,9 @@ CREATE TABLE `messages` (
 
 INSERT INTO `messages` (`id`, `libelle`, `read`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `salon_id`, `user_id`) VALUES
 (1, 'bonjour', 0, '2022-04-06 22:27:20', '2022-04-06 22:27:20', NULL, NULL, NULL, NULL, NULL, 11),
-(2, 'bonjour a tous !', 0, '2022-04-19 20:46:09', '2022-04-19 20:46:09', NULL, NULL, NULL, NULL, NULL, 11);
+(2, 'bonjour a tous !', 0, '2022-04-19 20:46:09', '2022-04-19 20:46:09', NULL, NULL, NULL, NULL, NULL, 1),
+(3, 'pour toi', 0, '2022-04-28 03:16:44', '2022-04-28 03:16:44', NULL, NULL, NULL, NULL, NULL, 4),
+(4, 'frgtrgvffr', 0, '2022-04-29 23:17:43', '2022-04-29 23:17:43', NULL, NULL, NULL, NULL, NULL, 14);
 
 -- --------------------------------------------------------
 
@@ -828,6 +875,22 @@ CREATE TABLE `notifications` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `options`
+--
+
+CREATE TABLE `options` (
+  `id` int(11) NOT NULL,
+  `paquet_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `temps_option` time NOT NULL,
+  `temps_restant` time NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pages`
 --
 
@@ -894,6 +957,13 @@ CREATE TABLE `password_resets` (
   `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `password_resets`
+--
+
+INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
+('lem.musungafd@gmail.com', '$2y$10$aG6P2VIS9aVPmne.CcptQ.BeSJZ6zGrK2rph6XIsULBMDm.y2lSuq', '2022-04-27 13:59:15');
 
 -- --------------------------------------------------------
 
@@ -978,18 +1048,25 @@ CREATE TABLE `pivot_bideur_encheres` (
   `id_deleted_at` int(11) DEFAULT NULL,
   `statut_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `enchere_id` bigint(20) UNSIGNED NOT NULL
+  `enchere_id` bigint(20) UNSIGNED NOT NULL,
+  `time_bid_auto` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `pivot_bideur_encheres`
 --
 
-INSERT INTO `pivot_bideur_encheres` (`id`, `valeur`, `roi`, `foudre`, `clicks`, `bouclier`, `favoris`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`, `enchere_id`) VALUES
-(279, 1, 0, 0, 0, 0, 0, '2022-04-21 08:29:52', '2022-04-21 08:30:34', NULL, NULL, NULL, 3, 4, 1),
-(282, 3, 0, 5, 0, 0, 0, '2022-04-21 10:35:50', '2022-04-21 19:30:28', NULL, NULL, NULL, 3, 1, 1),
-(285, 0, 0, 0, 0, 0, 0, '2022-04-25 16:15:21', '2022-04-25 16:15:21', NULL, NULL, NULL, 3, 4, 3),
-(286, 0, 0, 0, 0, 0, 0, '2022-04-25 16:55:09', '2022-04-25 16:55:09', NULL, NULL, NULL, 3, 11, 3);
+INSERT INTO `pivot_bideur_encheres` (`id`, `valeur`, `roi`, `foudre`, `clicks`, `bouclier`, `favoris`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`, `enchere_id`, `time_bid_auto`) VALUES
+(308, 0, 0, 0, 0, 0, 1, '2022-04-28 10:00:20', '2022-04-29 14:06:41', NULL, NULL, NULL, 3, 11, 3, NULL),
+(309, 50, 1, 0, 0, 0, 0, '2022-04-28 13:36:12', '2022-04-28 14:06:41', NULL, NULL, NULL, 3, 15, 3, NULL),
+(310, 21042, 1, 0, 0, 0, 1, '2022-04-28 14:23:21', '2022-04-30 09:21:12', NULL, NULL, NULL, 3, 14, 2, '2022-04-29 20:54:39'),
+(311, 307, 0, 0, 0, 0, 1, '2022-04-28 15:16:58', '2022-04-29 23:39:54', NULL, NULL, NULL, 3, 14, 3, NULL),
+(312, 1, 0, 0, 0, 0, 0, '2022-04-29 22:07:00', '2022-04-29 22:07:01', NULL, NULL, NULL, 3, 18, 3, NULL),
+(313, 0, 0, 0, 0, 0, 0, '2022-04-29 22:13:29', '2022-04-29 22:13:29', NULL, NULL, NULL, 3, 20, 1, NULL),
+(314, 1, 0, 0, 0, 0, 0, '2022-04-29 22:23:40', '2022-04-29 22:23:41', NULL, NULL, NULL, 3, 19, 3, NULL),
+(315, 0, 0, 0, 0, 0, 0, '2022-04-29 22:27:43', '2022-04-29 22:27:43', NULL, NULL, NULL, 3, 20, 3, NULL),
+(316, 0, 0, 0, 0, 0, 0, '2022-04-29 23:38:01', '2022-04-29 23:38:01', NULL, NULL, NULL, 3, 21, 3, NULL),
+(317, 2400, 0, 0, 1, 0, 0, '2022-04-30 09:52:04', '2022-04-30 10:03:13', NULL, NULL, NULL, 3, 11, 2, NULL);
 
 -- --------------------------------------------------------
 
@@ -1117,18 +1194,22 @@ CREATE TABLE `rois` (
   `prix` int(11) NOT NULL,
   `prix_deblocage` float NOT NULL,
   `bid_deblocage` int(11) NOT NULL,
-  `bid_prix` int(11) NOT NULL
+  `bid_prix` int(11) NOT NULL,
+  `temps_blocage` time NOT NULL,
+  `benefice` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `rois`
 --
 
-INSERT INTO `rois` (`id`, `paquet_id`, `prix`, `prix_deblocage`, `bid_deblocage`, `bid_prix`) VALUES
-(1, 1, 3, 0.2, 5, 30),
-(2, 2, 5, 2, 1, 2),
-(3, 3, 3, 0.2, 5, 30),
-(4, 4, 10, 5, 2, 5);
+INSERT INTO `rois` (`id`, `paquet_id`, `prix`, `prix_deblocage`, `bid_deblocage`, `bid_prix`, `temps_blocage`, `benefice`) VALUES
+(1, 1, 3, 0.2, 2, 30, '00:10:00', 50),
+(2, 2, 5, 0.4, 4, 50, '00:15:00', 50),
+(3, 3, 7, 0.4, 4, 70, '00:15:00', 50),
+(4, 4, 10, 0.5, 5, 100, '00:15:00', 50),
+(5, 5, 15, 0.7, 7, 150, '00:15:00', 50),
+(6, 6, 20, 1, 10, 200, '00:15:00', 50);
 
 -- --------------------------------------------------------
 
@@ -1214,9 +1295,12 @@ CREATE TABLE `sanctions` (
 --
 
 INSERT INTO `sanctions` (`id`, `paquet_id`, `enchere_id`, `santance`, `duree`, `tous`, `suspendu_by`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `statut`, `user_id`) VALUES
-(26, 1, '1', '1', '00:05:05', 0, 11, '2022-04-06 20:25:11', '2022-04-06 21:41:39', NULL, NULL, NULL, NULL, 1, 11),
-(27, 1, '1', '2', '00:05:05', 0, 11, '2022-04-06 20:27:07', '2022-04-06 20:32:34', NULL, NULL, NULL, NULL, 1, 1),
-(31, 1, '1', 'roi', '00:05:05', 0, 11, '2022-04-25 13:41:43', '2022-04-25 13:41:43', NULL, NULL, NULL, NULL, 1, 4);
+(80, 6, '2', 'foudre', '00:00:00', 0, 14, '2022-04-29 20:26:00', '2022-04-29 20:26:00', NULL, NULL, NULL, NULL, 1, 11),
+(81, 3, '3', 'foudre', '00:00:00', 0, 14, '2022-04-29 23:33:18', '2022-04-29 23:33:18', NULL, NULL, NULL, NULL, 1, 18),
+(82, 3, '3', 'foudre', '00:00:00', 0, 14, '2022-04-29 23:33:32', '2022-04-29 23:33:32', NULL, NULL, NULL, NULL, 1, 15),
+(83, 3, '3', 'foudre', '00:00:00', 0, 14, '2022-04-29 23:35:05', '2022-04-29 23:35:05', NULL, NULL, NULL, NULL, 1, 19),
+(84, 3, '3', 'foudre', '00:00:00', 0, 14, '2022-04-29 23:35:39', '2022-04-29 23:35:39', NULL, NULL, NULL, NULL, 1, 11),
+(85, 3, '3', 'foudre', '00:00:00', 0, 21, '2022-04-29 23:40:01', '2022-04-29 23:41:27', '2022-04-29 23:41:27', NULL, NULL, NULL, 1, 14);
 
 -- --------------------------------------------------------
 
@@ -1358,15 +1442,15 @@ CREATE TABLE `users` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `role_id` bigint(20) UNSIGNED DEFAULT NULL,
   `nom` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `provider_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telephone` varchar(12) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telephone` varchar(12) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sexe` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'users/default.png',
   `date_naissance` date DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `two_factor_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -1378,18 +1462,24 @@ CREATE TABLE `users` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `id_updated_at` int(11) DEFAULT NULL,
   `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL
+  `statut_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_conneted_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `role_id`, `nom`, `username`, `provider_id`, `telephone`, `sexe`, `email`, `avatar`, `date_naissance`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `settings`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`) VALUES
-(1, 1, 'Roger Mutoto', 'Seymour', NULL, '243818086892', 'Masculin', 'admin@admin.com', '243818086892.webp', '2020-09-02', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, 'Is9i9SEbyKW69wl7gnzDOUuRk7CZ3eawWyJixRwM1WIkk8jwjlAAwofypvQ9', NULL, NULL, '', '2022-01-24 07:06:55', '2022-03-08 14:55:51', NULL, NULL, NULL, 3),
-(4, 3, 'Pedrien Kinkani', 'Pedro', NULL, '243818086890', 'Masculin', 'pedro@congobid.com', '243818086890.webp', '2022-02-02', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, NULL, NULL, NULL, NULL, '2022-02-28 14:32:51', '2022-03-11 15:25:55', '2022-03-11 15:25:55', 1, 1, 2),
-(11, 5, 'Musunga Alex', 'LmPro', NULL, '243818086893', 'Masculin', 'alex@gmail.com', '243818086893.webp', '2010-02-10', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, NULL, NULL, NULL, NULL, '2022-03-09 09:46:01', '2022-03-10 13:56:17', NULL, 1, NULL, 3),
-(14, 5, 'yas', 'yas22', NULL, '0811246071', '', 'lem.musungafd@gmail.com', '', NULL, NULL, '$2y$10$p5EIxIKWXiUaoOpAxjMy3u5ZCqOvM4FZvdfXyIqw0hWDb0gu9W5im', NULL, NULL, NULL, NULL, NULL, NULL, '2022-04-25 13:46:17', '2022-04-25 13:46:17', NULL, NULL, NULL, 3);
+INSERT INTO `users` (`id`, `role_id`, `nom`, `username`, `provider_id`, `telephone`, `sexe`, `email`, `avatar`, `date_naissance`, `email_verified_at`, `password`, `two_factor_secret`, `two_factor_recovery_codes`, `remember_token`, `settings`, `current_team_id`, `profile_photo_path`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_conneted_at`) VALUES
+(1, 1, 'Roger Mutoto', 'Seymour', NULL, '243818086892', 'Masculin', 'admin@admin.com', '243818086892.webp', '2020-09-02', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, 'Is9i9SEbyKW69wl7gnzDOUuRk7CZ3eawWyJixRwM1WIkk8jwjlAAwofypvQ9', NULL, NULL, '', '2022-01-24 07:06:55', '2022-03-08 14:55:51', NULL, NULL, NULL, 3, NULL),
+(4, 3, 'Pedrien Kinkani', 'Pedro', NULL, '243818086890', 'Masculin', 'pedro@congobid.com', '243818086890.webp', '2022-02-02', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, NULL, NULL, NULL, NULL, '2022-02-28 14:32:51', '2022-03-11 15:25:55', '2022-03-11 15:25:55', 1, 1, 2, NULL),
+(11, 5, 'Musunga Alex', 'LmPro', NULL, '243818086893', 'Masculin', 'alex@gmail.com', '243818086893.webp', '2010-02-10', NULL, '$2y$10$T4fbBuit8NcQiTp3Snu5uewP7lM6hEUeS.F/.7r..Pu66zO6BmyPO', NULL, NULL, NULL, NULL, NULL, NULL, '2022-03-09 09:46:01', '2022-04-30 10:16:30', NULL, 1, NULL, 3, '2022-05-24 13:40:28'),
+(14, 5, 'yas', 'yas22', NULL, '0811246071', '', 'lem.musungafd@gmail.com', '243818086893.webp', NULL, NULL, '$2y$10$p5EIxIKWXiUaoOpAxjMy3u5ZCqOvM4FZvdfXyIqw0hWDb0gu9W5im', NULL, NULL, NULL, NULL, NULL, NULL, '2022-04-25 13:46:17', '2022-04-30 10:07:21', NULL, NULL, NULL, 3, '2022-05-24 13:40:28'),
+(15, 5, 'Jeannette', 'J2', NULL, '0811245071', '', 'l@gmail.com', '243818086893.webp', NULL, NULL, '$2y$10$eP9c5gM85zco3L8Aje.wAua9k80Rc6PG.mqkYeef/c2B3IYB8uIsO', NULL, NULL, NULL, NULL, NULL, NULL, '2022-04-28 13:29:49', '2022-04-28 13:29:49', NULL, NULL, NULL, 3, NULL),
+(18, 5, 'CongoBID', 'Test', NULL, '243822787442', '', 'j.trumet@gmail.com', '', NULL, NULL, '$2y$10$eC5VBr9p3eAIZl9THg9Qy.UfVtpAvP1cY4CF5EPPlIc9LWkxDBA/a', NULL, NULL, NULL, NULL, NULL, NULL, '2022-04-29 22:06:24', '2022-04-29 22:06:34', NULL, NULL, NULL, 3, '2022-04-29 22:06:34'),
+(19, 5, 'Masikini', 'Mufasa01', NULL, '243814119017', '', 'alfredmasikini09@gmail.com', '', NULL, NULL, '$2y$10$LtQc.WFuVC/f0FrFrFwvKOyDHg0IIUI38IA3Dh21qVmgAoPDx8sEO', NULL, NULL, NULL, NULL, NULL, NULL, '2022-04-29 22:07:16', '2022-04-29 22:14:34', NULL, NULL, NULL, 3, '2022-04-29 22:14:34'),
+(20, 5, 'Didas', 'Mlk', NULL, '0853070956', '', 'didasmlk9@gmail.com', '', NULL, NULL, '$2y$10$Y17B6FugEhuNbogBsSTZ7u3sqrDzkflP2dH2N2H4aSJtjl7jC/6BG', NULL, NULL, NULL, NULL, NULL, NULL, '2022-04-29 22:07:49', '2022-04-29 22:07:51', NULL, NULL, NULL, 3, '2022-04-29 22:07:51'),
+(21, 5, 'Avatar', 'Avatar', NULL, '0811346071', '', 'lm@gmail.com', '', NULL, NULL, '$2y$10$6m6UXjk7nTycyxg4SoBHaOS082JoknDOgmCGN5R5/UUAJiIBs0Bee', NULL, NULL, NULL, NULL, NULL, NULL, '2022-04-29 23:37:15', '2022-04-29 23:40:25', NULL, NULL, NULL, 3, NULL);
 
 -- --------------------------------------------------------
 
@@ -1405,12 +1495,6 @@ CREATE TABLE `user_roles` (
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `achat_clicks`
---
-ALTER TABLE `achat_clicks`
-  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `administrateurs`
@@ -1474,6 +1558,18 @@ ALTER TABLE `chats`
   ADD KEY `chats_user_id_foreign` (`user_id`);
 
 --
+-- Indexes for table `clicks`
+--
+ALTER TABLE `clicks`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `click_autos`
+--
+ALTER TABLE `click_autos`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `communiques`
 --
 ALTER TABLE `communiques`
@@ -1489,6 +1585,12 @@ ALTER TABLE `comptes`
   ADD KEY `comptes_statut_id_foreign` (`statut_id`),
   ADD KEY `comptes_user_id_foreign` (`user_id`),
   ADD KEY `comptes_types_compte_id_foreign` (`types_compte_id`);
+
+--
+-- Indexes for table `conditions`
+--
+ALTER TABLE `conditions`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `coupons`
@@ -1749,16 +1851,10 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `achat_clicks`
---
-ALTER TABLE `achat_clicks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
 -- AUTO_INCREMENT for table `bideurs`
 --
 ALTER TABLE `bideurs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `boucliers`
@@ -1767,10 +1863,28 @@ ALTER TABLE `boucliers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `clicks`
+--
+ALTER TABLE `clicks`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `click_autos`
+--
+ALTER TABLE `click_autos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `conditions`
+--
+ALTER TABLE `conditions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `favoris`
 --
 ALTER TABLE `favoris`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
 
 --
 -- AUTO_INCREMENT for table `foudres`
@@ -1782,13 +1896,19 @@ ALTER TABLE `foudres`
 -- AUTO_INCREMENT for table `messages`
 --
 ALTER TABLE `messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `newsletters`
+--
+ALTER TABLE `newsletters`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `pivot_bideur_encheres`
 --
 ALTER TABLE `pivot_bideur_encheres`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=287;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=318;
 
 --
 -- AUTO_INCREMENT for table `politiques`
@@ -1800,19 +1920,19 @@ ALTER TABLE `politiques`
 -- AUTO_INCREMENT for table `rois`
 --
 ALTER TABLE `rois`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sanctions`
 --
 ALTER TABLE `sanctions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
