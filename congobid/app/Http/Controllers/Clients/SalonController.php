@@ -34,9 +34,9 @@ class SalonController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create($id)
     {
-        //
+
     }
 
     /**
@@ -45,10 +45,34 @@ class SalonController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id,$enchere,$salon)
     {
-        //
-    }
+        $bideur = PivotClientsSalon::where('user_id',$id)->where('salon_id',$salon)->first();
+        $article = Article::where('id', $id)->where('statut_id', '3')->first();
+        $paquets = Paquet::where('statut_id', '3')->get();
+        if (Auth::user()) {
+            $pivots = PivotClientsSalon::where('user_id', Auth::user()->id)->where('enchere_id', $enchere)->first();
+
+            // verification du balance
+
+
+               if ($bideur == null) {
+
+                    PivotClientsSalon::create([
+                        'valeur' => '0',
+                        'statut_id' => '3',
+                        'user_id' => Auth::user()->id,
+                        'salon_id' => $salon,
+                    ]);
+
+                }
+                $block = 0;
+                return view('pages.detail-enchere', compact('article', 'paquets','block','total_heure_restant','sanction'));
+            }else{
+                return back()->with('danger','Votre compte est insuffisant');
+            }
+        }
+
     public function insert($id){
         $article = Article::where('id', $id)->where('statut_id', '3')->first();
         $paquets = Paquet::where('statut_id', '3')->get();

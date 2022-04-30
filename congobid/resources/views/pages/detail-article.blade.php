@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@include('components.header-index')
+
     <div class="wrapper">
         <div class="banner-sm">
             <div class="container-fluid">
@@ -27,7 +27,7 @@
                                                         </div>
                                                     </div>
                                                     <div class="carousel-item">
-                                                        
+
                                                         <div class="col-lg-8 d-flex justify-content-center align-items-center">
                                                             <img src="{{asset('images/articles/'.$article->images->first()->lien)}}" alt="" class="w-100 d-block">
                                                         </div>

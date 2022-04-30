@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@include('components.header-index')
+
 <div class="content-block">
     <div class="banner-sm">
         <div class="container-fluid">

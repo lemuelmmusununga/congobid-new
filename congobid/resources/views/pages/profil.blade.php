@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-@include('components.header')
+
     <div class="wrapper">
         <div class="banner-user">
             <div class="container-fluid" style="height: inherit">

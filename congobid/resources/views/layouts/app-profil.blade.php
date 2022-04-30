@@ -22,7 +22,7 @@
     </head>
     <body class="font-sans antialiased">
 
-        @include('components.header')
+        @include('components.header-index')
         <div class="global-div">
             @yield('content')
             <div class="overplay"></div>

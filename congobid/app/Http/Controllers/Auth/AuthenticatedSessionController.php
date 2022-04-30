@@ -7,7 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\User;
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -43,6 +43,12 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
+        $addbid = User::where('id',Auth::user()->id)->first();
+        if ($addbid->user_conneted_at != null) {
+            $addbid->update([
+                $addbid->user_conneted_at =null
+            ]);
+        }
         Auth::guard('web')->logout();
 
         $request->session()->invalidate();

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@include('components.header')
+
 <div class="chat-block">
     <div class="block-title">
         <div class="container-fluid d-flex justify-content-between align-items-center">

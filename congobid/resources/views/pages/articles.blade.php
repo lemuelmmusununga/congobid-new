@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@include('components.header-index')
+
 <div class="content-block">
     <div class="banner-sm">
         <div class="container-fluid">
@@ -30,30 +30,7 @@
                         </ul>
                     </div>
                 </div>
-                {{-- @foreach ($articles as $article)
-                    <div class="col-lg-3 col-6">
-                        <div class="card">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <span class="type">{{$article->categorie->libelle}}</span>
-                                <a href="#" class="like">
-                                    <span class="iconify" data-icon="ant-design:heart-filled"></span>
-                                </a>
-                            </div>
-                            <div class="content-img">
-                                <img src="{{asset('images/articles/'.$article->images[0]->lien)}}" alt="">
-                            </div>
-                            <div class="card-body text-center">
-                                <h6>{{$article->titre}}</h6>
-                                <p>Prix congobid</p>
-                                <h4>{{$article->prix}}</h4>
-                                <button class="btn">Demarrer l'enchère</button>
-                            </div>
-                        </div>
-                    </div>
-                    @endforeach
-                    <div class="block-pagination">
-                        {{$articles->links()}}
-                    </div> --}}
+                
 
             </div>
 

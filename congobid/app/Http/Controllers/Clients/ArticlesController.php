@@ -29,21 +29,27 @@ class ArticlesController extends Controller
     public function ArticlesCategorie($id){
         $id_paquet = $id;
 
-        $categories = Categorie::all();
+        $categories = Categorie::where('id',$id)->first();
 
         // $articles  = Article::where('categorie_id',$id)->get();
-        return view('pages.categorie-details',compact('categories','id_paquet'));
+        return view('pages.categorie-details',compact('categories','id_paquet','id'));
     }
 // l'id provient de la page detail categorie
     public function ArticlesAll($id,$id_categorie){
-        $ids=$id;
+        $ids=$id_categorie;
 
-        $articles  = Article::where('paquet_id',$id)->get();
-        return view('pages.all-articles',compact('articles','ids'));
+        $articles  = Article::where('categorie_id',$id_categorie)->orderby('id','DESC')->get();
+
+        return view('pages.all-articles',compact('articles','ids','id_categorie'));
     }
-//detail article
-public function detailArticle($id,$name){
-    $article = Article::where('id',$id)->first();
-    return view('pages.detail-article',compact('article'));
-}
+    //detail article
+    public function detailArticle($id,$name){
+        $article = Article::where('id',$id)->first();
+        return view('pages.detail-article',compact('article'));
+    }
+    public function etailArticleSalon($id,$name){
+        $article = Article::where('id',$id)->first();
+
+        return view('pages.detail-article',compact('article'));
+    }
 }

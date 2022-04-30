@@ -6,9 +6,16 @@
                     <textarea name="message" wire:model="message" id="" class="form-control" placeholder="Message"></textarea>
                 </div>
                 <div class="col-2 d-flex justify-content-end ps-0">
-                    <button class="btn" wire:click.prevent="send()">
-                        <span class="iconify" data-icon="fluent:send-16-regular"></span>
-                    </button>
+                    @if (Auth::user())
+                        <button class="btn" wire:click.prevent="send()">
+                            <span class="iconify" data-icon="fluent:send-16-regular"></span>
+                        </button>
+                    @else
+                        <a class="btn" href="/login">
+                            <span class="iconify" data-icon="fluent:send-16-regular"></span>
+                        </a>
+                    @endif
+
                 </div>
             </div>
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Enchere extends Model
 {
     use HasFactory;
-    
+
 
     protected $guarded = [];
 
@@ -54,6 +54,7 @@ class Enchere extends Model
     {
         return $this->belongsTo(Article::class, 'article_id');
     }
+    
 
 
 }

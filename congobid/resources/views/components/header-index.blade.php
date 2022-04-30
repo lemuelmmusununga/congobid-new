@@ -25,8 +25,11 @@
               <li class="nav-item">
               <a class="nav-link" href="{{ route('clients.salons.index') }}">Salons</a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('clients.instructions.index') }}">Comment ça marche ?</a>
+              </li> --}}
+              <li class="nav-item">
+                <a class="nav-link" href="{{route('favoris')}}">Favoris</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="/chat">chat</a>
@@ -80,12 +83,12 @@
                         </div>
                     </a>
                     @endif
-                    <a href="#" class="humber click-butto">
+                    <a  class="humber click-buttom" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                         <div class="icon">
                             <span class="iconify" data-icon="eva:menu-outline"></span>
                         </div>
                     </a>
-                    <div class="block-dropmenu">
+                    {{-- <div class="block-dropmenu">
                         <ul>
                             <li><a href="/tarif">Tarifs</a></li>
                             <li><a href="#">Notifications</a></li>
@@ -96,7 +99,63 @@
                             <li><a href="{{ route('clients.instructions.index') }}">Comment ça marche</a></li>
                             <li><a href="/contact">Nous contactez</a></li>
                         </ul>
-                    </div>
+                    </div> --}}
+
+    <div class="offcanvas offcanvas-end d-md-none" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+        <div class="offcanvas-header">
+            <h5 id="offcanvasRightLabel">Menus</h5>
+            <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+            <div class="d-block">
+                <div class="pb-3">
+                    <a href="/tarif" class="fw-bold fs-3 text-black-50 text-black-50"> Tarifs</a>
+                    <hr>
+                </div>
+                <div class="pb-3">
+                    <a href="#" class="fw-bold fs-3 text-black-50 text-black-50">Notifications</a>
+                    <hr>
+                </div>
+                <div class="pb-3">
+                    <a href="/favoris" class="fw-bold fs-3 text-black-50 text-black-50">Favoris</a>
+                    <hr>
+                </div>
+                <div class="pb-3">
+                    <a href="{{route('clients.achat.bid')}}" class="fw-bold fs-3 text-black-50">Acheter des bids</a>
+                    <hr>
+                </div>
+                <div class="pb-3">
+                    <a href="{{route('show.enchers-gagne')}}" class="fw-bold fs-3 text-black-50">Enchères gagnées</a>
+                    <hr>
+                </div>
+                <div class="pb-3">
+
+                    <a href="{{ route('clients.salons.index') }}" class="fw-bold fs-3 text-black-50">Salons</a>
+                    <hr>
+                </div>
+                <div class="pb-3">
+                    <a href="/chat" class="fw-bold fs-3 text-black-50">Chat</a>
+                    <hr>
+
+                </div>
+                <div class="pb-3">
+                    <a href="{{ route('clients.instructions.index') }}" class="fw-bold fs-3 text-black-50">Comment ça marche</a>
+                    <hr>
+
+                </div>
+                <div class="pb-3">
+                    <a href="/contact" class="fw-bold fs-3 text-black-50">Nous contactez</a>
+                    <hr>
+
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+        </div>
                 </div>
             </div>
           </div>
@@ -233,5 +292,5 @@
             </div>
         </div>
     </nav> --}}
-   
+
 </header>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@include('components.header-index')
+
 
     <div class="wrapper">
         <div class="banner-sm">

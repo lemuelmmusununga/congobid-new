@@ -5,7 +5,7 @@
                 <h4>Compagnie</h4>
                 <ul>
                     <li>
-                        <a href="">A propos de nous</a>
+                        <a href="/a_propos">A propos de nous</a>
                     </li>
                     <li>
                         <a href="/faq">Faq</a>

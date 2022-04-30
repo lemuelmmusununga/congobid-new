@@ -20,13 +20,15 @@ use App\Models\Roi;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Foudre;
 use App\Models\Bouclier;
+use App\Models\User;
+
 class Index extends Component
 {
 use WithPagination;
-protected $paginationTheme = 'bootstrap';
+    protected $paginationTheme = 'bootstrap';
     public $search ='',$getart,$favoris;
     public $article = '';
-    public $participer ='',$roi,$foudre,$bouclier;
+    public $participer ='',$roi,$foudre,$bouclier,$addbid;
     public $iids,$like=0,$counter_like,$favori_enchere,$favori_user,$favori_favori,$pivot,$boucliers;
 
     public $artis='';
@@ -35,6 +37,31 @@ protected $paginationTheme = 'bootstrap';
     public function mount(){
         // dd(Auth::user()->pivotbideurenchere->first()->roi ?? '');
         // $this->article = Article::all();
+        if (Auth::user()) {
+            $this->addbid = User::where('id',Auth::user()->id)->first();
+            $bideur = Bideur::where('user_id',Auth::user()->id)->first();
+            if ($this->addbid->user_conneted_at == null) {
+                $this->addbid->update([
+                    $this->addbid->user_conneted_at =now()
+                ]);
+            }
+            $heur_acces = now()->format('H') - date('H',strtotime($this->addbid->user_conneted_at));
+            if (now()->format('i') > date('i',strtotime($this->addbid->user_conneted_at))) {
+                $munite_acces = now()->format('i') - date('i',strtotime($this->addbid->user_conneted_at));
+
+            } else {
+                $munite_acces = date('i',strtotime($this->addbid->user_conneted_at))-now()->format('i');
+            }
+            if (date('d-m-Y',strtotime($this->addbid->user_conneted_at)) == now()->format('d-m-Y') && $munite_acces==5) {
+               $balance = $bideur->balance + 10;
+
+                $bideur->update([
+                    'balance' =>$balance
+                ]);
+
+            }
+        }
+
         if (Auth::user() && Auth::user()->pivotbideurenchere != null) {
             # code...
             $this->roi = Roi::where('paquet_id',Auth::user()->pivotbideurenchere->first()->roi ?? '')->first();
@@ -52,94 +79,51 @@ protected $paginationTheme = 'bootstrap';
         $this->participer = $idmodal->id;
        }
 
-    public function like($id,$rec,$enchere){
+    public function like($id,$rec,$enchere)
+    {
         $verify = PivotBideurEnchere::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
         $favoris = Favoris::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
-
-        if ($verify != null) {
-
-            $like = PivotBideurEnchere::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
-            $article_add_like = Enchere::where('id',$like->enchere_id)->first();
-
-            if ($like->favoris == 0) {
-                $like->update([
-                    'favoris'=> 1
+        $enchere_favoris = Enchere::where('id',$enchere)->first();
+       if ($favoris != null  ) {
+           if ($favoris->favoris < 1) {
+                $favoris->update([
+                    'favoris' => 1
                 ]);
-                if ($favoris->favoris == 0) {
-                    $favoris->update([
-                        'favoris'=> 1
-                    ]);
-                }else{
-                    $favoris->update([
-                        'favoris'=> 0
-                    ]);
-                }
-
-                $article_add_like->update([
-                    'favoris'=>$article_add_like->favoris + 1
+                $enchere_favoris->update([
+                    'favoris'=> $enchere_favoris->favoris +1
                 ]);
+           } else {
+                $favoris->update([
+                    'favoris' => 0
+                ]);
+                $enchere_favoris->update([
+                    'favoris'=> $enchere_favoris->favoris -1
+                ]);
+           }
 
-                if (Auth::user()->id == $this->favoris->user_id || Auth::user()->id != $this->favoris->user_id && $this->favoris->enchere_id != $enchere) {
-                    $user=Favoris::create([
-                        'favoris'=> 1,
-                        'enchere_id'=>$enchere,
-                        'user_id'=>Auth::user()->id,
-                    ]);
 
-                }
+       } else {
+            $favoris = Favoris::create([
+                'favoris' => 1,
+                'user_id'=>Auth::user()->id,
+                'enchere_id'=>$enchere,
+            ]);
+            $enchere_favoris->update([
+                'favoris'=> $enchere_favoris->favoris +1
+            ]);
+       }
 
+        if ($verify != null  ) {
+            if ($verify->favoris < 1) {
+                $verify->update([
+                    'favoris' => 1
+                ]);
             } else {
-                    $like->update([
-                        'favoris'=> 0
-                    ]);
-                    $article_add_like->update([
-                        'favoris'=>$article_add_like->favoris -1
-                ]);
-                if ($favoris->favoris == 0) {
-                    $favoris->update([
-                        'favoris'=> 1
-                    ]);
-                }else{
-                    $favoris->update([
-                        'favoris'=> 0
-                    ]);
-                }
-            }
-        }else{
-            $favoris = Favoris::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
-            $article_add_like = Enchere::where('id',$enchere)->first();
-
-            if ($favoris != null) {
-                if ($favoris->favoris == 0 ) {
-                   $favoris->update([
-                        'favoris'=> 1
-                    ]);
-                    $article_add_like->update([
-                        'favoris'=>$article_add_like->favoris + 1
-                    ]);
-                }
-                else {
-                    $favoris->update([
-                        'favoris'=> 0
-                    ]);
-                    $article_add_like->update([
-                        'favoris'=>$article_add_like->favoris -1
-                    ]);
-                }
-            }else{
-                $user=Favoris::create([
-                    'favoris'=> 1,
-                    'enchere_id'=>$enchere,
-                    'user_id'=>Auth::user()->id,
-                ]);
-                $article_add_like->update([
-                    'favoris'=>$article_add_like->favoris + 1
+                $verify->update([
+                    'favoris' => 0
                 ]);
             }
-
         }
-
-
     }
     public function cutbid($id){
 
@@ -169,6 +153,36 @@ protected $paginationTheme = 'bootstrap';
     }
     public function render()
     {
+        //connexion user
+        if (Auth::user()) {
+            $this->addbid = User::where('id',Auth::user()->id)->first();
+            $bideur = Bideur::where('user_id',Auth::user()->id)->first();
+            if ($this->addbid->user_conneted_at == null) {
+                $this->addbid->update([
+                    $this->addbid->user_conneted_at =now()
+                ]);
+            }
+            $heur_acces = now()->format('H') - date('H',strtotime($this->addbid->user_conneted_at));
+            if (now()->format('i') > date('i',strtotime($this->addbid->user_conneted_at))) {
+                $munite_acces = now()->format('i') - date('i',strtotime($this->addbid->user_conneted_at));
+
+
+            } else {
+                $munite_acces = date('i',strtotime($this->addbid->user_conneted_at))-now()->format('i');
+            }
+            if (date('d-m-Y',strtotime($this->addbid->user_conneted_at)) == now()->format('d-m-Y') && $munite_acces>5) {
+               $balance = $bideur->balance + 10;
+
+                $bideur->update([
+                    'balance' =>$balance
+                ]);
+                $this->addbid->update([
+                    $this->addbid->user_conneted_at ="2022-05-24 06:40:28"
+                ]);
+            }
+        }
+        //end
+
         $this->v = $this->iids;
         $communique = Communique::where('statut_id', '3')->get()->first();
         // $communique == null ? null : $communique->message;
@@ -177,6 +191,9 @@ protected $paginationTheme = 'bootstrap';
         if (Auth::user()) {
             # code...
             $this->favoris = Favoris::where('user_id',Auth::user()->id)->first();
+            $this->addbid->update([
+                'connected_at'=> 1
+            ]);
         }
 
         $paquets = Paquet::where('statut_id', '3')->get();

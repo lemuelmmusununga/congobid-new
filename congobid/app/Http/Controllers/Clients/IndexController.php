@@ -11,12 +11,12 @@ use App\Models\Faq;
 use App\Models\Politique;
 use App\Models\Condition;
 use App\Models\Enchere;
-
+use Illuminate\Support\Facades\Auth;
 class IndexController extends Controller
 {
     public function index(){
 
-
+       
         $paquets = Paquet::where('statut_id', '3')->get();
         $articles = Article::where('statut_id', '3')->paginate(1);
         $page = 2;

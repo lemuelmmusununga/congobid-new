@@ -12,16 +12,20 @@ use App\Models\Communique;
 use App\Models\Enchere;
 use Livewire\WithPagination;
 use App\Models\PivotClientsSalon;
+use App\Models\PivotBideurEnchere;
+use App\Models\Favoris;
+use Illuminate\Support\Facades\Auth;
 class EnchereEncours extends Component
 {
+
     use WithPagination;
-protected $paginationTheme = 'bootstrap';
-    public $search ='';
-    public $article = '';
-    public $participer ='';
-    public $iids;
-    public $artis='';
-    public $getEnchere=[];
+    protected $paginationTheme = 'bootstrap';
+        public $search ='';
+        public $article = '';
+        public $participer ='';
+        public $iids;
+        public $artis='';
+        public $getEnchere=[];
 
     public function mount(){
         $this->article = Article::all();
@@ -31,7 +35,54 @@ protected $paginationTheme = 'bootstrap';
         // envoyer id vers le modal
         $idmodal = Article::where('id',$id)->first();
         $this->participer = $idmodal->id;
-       }
+        }
+   
+    public function like($id,$rec,$enchere)
+    {
+        $verify = PivotBideurEnchere::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
+        $favoris = Favoris::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
+        $enchere_favoris = Enchere::where('id',$enchere)->first();
+        if ($favoris != null  ) {
+            if ($favoris->favoris < 1) {
+                $favoris->update([
+                    'favoris' => 1
+                ]);
+                $enchere_favoris->update([
+                    'favoris'=> $enchere_favoris->favoris +1
+                ]);
+            } else {
+                $favoris->update([
+                    'favoris' => 0
+                ]);
+                $enchere_favoris->update([
+                    'favoris'=> $enchere_favoris->favoris -1
+                ]);
+            }
+
+
+        } else {
+            $favoris = Favoris::create([
+                'favoris' => 1,
+                'user_id'=>Auth::user()->id,
+                'enchere_id'=>$enchere,
+            ]);
+            $enchere_favoris->update([
+                'favoris'=> $enchere_favoris->favoris +1
+            ]);
+        }
+
+        if ($verify != null  ) {
+            if ($verify->favoris < 1) {
+                $verify->update([
+                    'favoris' => 1
+                ]);
+            } else {
+                $verify->update([
+                    'favoris' => 0
+                ]);
+            }
+        }
+    }
     public function render()
     {
         $this->v = $this->iids;
@@ -43,6 +94,6 @@ protected $paginationTheme = 'bootstrap';
         $communique = $communique->message ?? null;
 
         $Categories = Article::where('titre','like',"%{$this->search}%")->orwhere('marque',"%{$this->search}%")->get();
-        return view('livewire.encheres.enchere-encours', compact('promotions', 'articles', 'paquets', 'communique', 'Categories'));
+        return view('livewire.encheres.enchere-encours',compact('promotions', 'articles', 'paquets', 'communique', 'Categories'));
     }
 }

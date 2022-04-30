@@ -1,15 +1,27 @@
 @extends('layouts.app')
 @section('content')
-@include('components.header')
+
 <div class="content-block">
     @if (isset($success) )
         <div class="alert alert-success">
             <p>{{$success}}</p>
         </div>
     @endif
+    <div class="justify-content-center mt-4 container ">
+        <div class="card justify-content-center align-items-center py-4">
+            <div class="text-center">
+                <h1>800 bids </h1>
+                <button class="btn btn-achat-bid" data-bs-toggle="modal" data-bs-target="#modalbid">
+                    Valider
+                </button>
+            </div>
+        </div>
+    </div>
     <div class="banner-sm">
+
         <div class="container-fluid">
             <div class="row">
+
                 <div class="col-12 text-center">
                     <h1>Achats bids</h1>
                 </div>
@@ -33,26 +45,7 @@
                                 </ul>
                                 <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbid_{{ $bid->id }}">Acheter</a>
 
-                                <div wire:ignore.self class="modal fade" id="modalbid_{{ $bid->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <div class="icon">
-                                                    <span class="iconify" data-icon="ant-design:info-outlined"></span>
-                                                </div>
-                                                <div class="text-center">
-                                                    <h5>Voulez-vous acheter {{ $bid->quantite }} bids  ?</h5>
-                                                    <p>Cette partie vas nous envoyer sur la page de moyen de payement</p>
-                                                </div>
-                                            </div>
 
-                                            <div class="modal-footer d-flex justify-content-between align-items-center">
-                                            <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
-                                            <a type="button" href="{{route('achat.success',['id'=>$bid->id])}}"  class="btn btn-ok">Accepter</a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,5 +99,24 @@
         </div>
     </div>
 </div>
+<div wire:ignore.self class="modal fade" id="modalbid" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="icon">
+                    <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                </div>
+                <div class="text-center">
+                    <h5>Voulez-vous acheter 800 bids  ?</h5>
+                    <p>Cette partie vas nous envoyer sur la page de moyen de payement</p>
+                </div>
+            </div>
 
+            <div class="modal-footer d-flex justify-content-between align-items-center">
+            <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
+            <a type="button" href="/"  class="btn btn-ok">Accepter</a>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection

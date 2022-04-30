@@ -1,9 +1,18 @@
 @extends('layouts.app')
 @section('content')
-@include('components.header-index')
+
     <div class="wrapper">
         <div class="banner-sm">
             <div class="container-fluid">
+                @if (Session::has('danger'))
+                <div class="alert alert-danger">
+                    <span>{{Session::get('danger')}}</span>
+                </div>
+                @elseif(Session::has('success'))
+                    <div class="alert alert-success">
+                        <span>{{Session::get('success')}}</span>
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-12 text-center">
                         <h1>Favoris</h1>
@@ -14,96 +23,35 @@
         <div class="block-all-videos">
             <div class="container">
                 <div class="row justify-content-center align-items-center">
+                    @foreach ($favoris as $favori)
                     <div class="col-lg-8">
-                        <div class="card-favoris">
-                            <div class="row">
-                                <div class="col-lg-6 col-6">
-                                    <img src="{{asset('images/img-6.png')}}" alt="" class="w-50 me-auto ms-auto d-block">
-                                </div>
-                                <div class="col-lg-6 col-6">
-                                    <h4>Play station</h4>
-                                    <div class="row mt-4 mb-4">
-                                        <div class="col-6 col-lg-4">
-                                            <h5 class="price">Prix CongoBid</h5>
-                                            <span class="ammount">20000</span>
-                                        </div>
-                                        <div class="col-6 col-lg-4">
-                                            <h5 class="price">Prix Kinshasa</h5>
-                                            <span class="ammount"><strike style="color: black;">20000</strike></span>
-                                        </div>
+                            <div class="card-favoris">
+                                <div class="row">
+                                    <div class="col-lg-6 col-6">
+                                        <img src="{{asset('images/articles/'.$favori->enchere->article->images->first()->lien ?? '')}}" alt="" class="w-50 me-auto ms-auto d-block">
                                     </div>
-                                    <a href="#" class="btn btn-salon">Ouvrir un salon </a>
-                                    <a href="#" class="btn btn-sup">Supprimez</a>
+                                    <div class="col-lg-6 col-6">
+                                        <h4>{{$favori->enchere->article->titre}}</h4>
+                                        <div class="row mt-4 mb-4">
+                                            <div class="col-6 col-lg-4">
+                                                <h5 class="price">Prix CongoBid</h5>
+                                                <span class="ammount">{{$favori->enchere->article->prix}}</span>
+                                            </div>
+                                            <div class="col-6 col-lg-4">
+                                                <h5 class="price">Prix Kinshasa</h5>
+                                                <span class="ammount"><strike style="color: black;">{{$favori->enchere->article->prix_marche}}</strike></span>
+                                            </div>
+                                        </div>
+                                        <a href="{{ route('show.detail', ['id' => $favori->enchere->article->id,'name'=>$favori->enchere->article->titre]) }}" class="btn-participer btn-ok"><span class="iconify"
+                                            data-icon="akar-icons:plus"></span>Ouvrir l'enchere</a>
+                                        <a href="{{route('delete.favoris',['id'=>$favori->enchere->article->id,'name'=>$favori->enchere->article->titre])}}" class="btn btn-sup">Supprimez</a>
+                                    </div>
+
                                 </div>
                             </div>
+
                         </div>
-                        <div class="card-favoris">
-                            <div class="row">
-                                <div class="col-lg-6 col-6">
-                                    <img src="{{asset('images/img-6.png')}}" alt="" class="w-50 me-auto ms-auto d-block">
-                                </div>
-                                <div class="col-lg-6 col-6">
-                                    <h4>Play station</h4>
-                                    <div class="row mt-4 mb-4">
-                                        <div class="col-6 col-lg-4">
-                                            <h5 class="price">Prix CongoBid</h5>
-                                            <span class="ammount">20000</span>
-                                        </div>
-                                        <div class="col-6 col-lg-4">
-                                            <h5 class="price">Prix Kinshasa</h5>
-                                            <span class="ammount"><strike style="color: black;">20000</strike></span>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn btn-salon">Ouvrir un salon </a>
-                                    <a href="#" class="btn btn-sup">Supprimez</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-favoris">
-                            <div class="row">
-                                <div class="col-lg-6 col-6">
-                                    <img src="{{asset('images/img-6.png')}}" alt="" class="w-50 me-auto ms-auto d-block">
-                                </div>
-                                <div class="col-lg-6 col-6">
-                                    <h4>Play station</h4>
-                                    <div class="row mt-4 mb-4">
-                                        <div class="col-6 col-lg-4">
-                                            <h5 class="price">Prix CongoBid</h5>
-                                            <span class="ammount">20000</span>
-                                        </div>
-                                        <div class="col-6 col-lg-4">
-                                            <h5 class="price">Prix Kinshasa</h5>
-                                            <span class="ammount"><strike style="color: black;">20000</strike></span>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn btn-salon">Ouvrir un salon </a>
-                                    <a href="#" class="btn btn-sup">Supprimez</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-favoris">
-                            <div class="row">
-                                <div class="col-lg-6 col-6">
-                                    <img src="{{asset('images/img-6.png')}}" alt="" class="w-50 me-auto ms-auto d-block">
-                                </div>
-                                <div class="col-lg-6 col-6">
-                                    <h4>Play station</h4>
-                                    <div class="row mt-4 mb-4">
-                                        <div class="col-6 col-lg-4">
-                                            <h5 class="price">Prix CongoBid</h5>
-                                            <span class="ammount">20000</span>
-                                        </div>
-                                        <div class="col-6 col-lg-4">
-                                            <h5 class="price">Prix Kinshasa</h5>
-                                            <span class="ammount"><strike style="color: black;">20000</strike></span>
-                                        </div>
-                                    </div>
-                                    <a href="#" class="btn btn-salon">Ouvrir un salon </a>
-                                    <a href="#" class="btn btn-sup">Supprimez</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        @endforeach
                 </div>
             </div>
         </div>

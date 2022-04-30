@@ -21,13 +21,13 @@
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
     </head>
-    <body class="font-sans antialiased">
+    <body class="font-sans antialiased" style="overflow-x: hidden;">
 
 
         @include('components.side-menu')
         {{-- @include('components.side-filter') --}}
         <div class="overplay"></div>
-
+        @include('components.header-index')
         <div class="global-div">
             @yield('content')
         </div>

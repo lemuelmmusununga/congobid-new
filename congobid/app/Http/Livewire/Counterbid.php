@@ -10,30 +10,32 @@ use App\Models\Paquet;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Models\Sanction;
-
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use App\Models\PivotClientsSalon;
 use App\Models\Roi;
 use App\Models\Foudre;
 use App\Models\Bouclier;
+use App\Models\Clicks;
 
 class Counterbid extends Component
 {
 
-    public $counter = 0,$times=60,$munite = 0 ;
+    public $counter = 0,$times=60,$munite = 0 ,$incrementation,$click_achat='';
     public $client = '';
-    public $user,$article,$update=[''];
+    public $user,$article,$update=[''],$clicks;
     public $click ='';
     public $bid;
     public $ids,$solde_bid,$solde_bonus,$bonus,$solde_non_tranferable,$enchere,$temps_restant_total;
     public $listes=[];
-    public $getSalons=[],$paquet_enchere;
+    public $getSalons=[],$paquet_enchere,$sec =0;
     public $detail=[],$addclick,$block = 0,$listes_sentance,$article_titre,$article_paquet,$article_enchere,$roi,$foudre,$bouclier;
     // recuperation de l'article cliquer
-    public $getart,$user_id,$etat;
+    public $getart,$user_id,$etat,$temps_total_heure,$click_paye ;
     // santion
 
-    public function mount($article,$article_paquet,$article_titre,$article_enchere,$temps_restant_total){
+    public function mount($article,$article_paquet,$article_titre,$article_enchere,$temps_total_heure){
+
         $this->article_paquet = $article_paquet;
         $this->article_titre = $article_titre;
         $this->getart = $article;
@@ -43,7 +45,8 @@ class Counterbid extends Component
         $this->bouclier = Bouclier::where('paquet_id',$article_paquet)->first();
         $this->foudre = Foudre::where('paquet_id',$article_paquet)->first();
         $this->paquet_enchere = Paquet::where('id',$article_paquet)->first();
-        $this->temps_restant_total = $temps_restant_total;
+        $this->temps_total_heure = $temps_total_heure;
+
         if (Auth::user()) {
             # code...
             $soldebid = Bideur::where('user_id',Auth::user()->id)->first();
@@ -56,6 +59,7 @@ class Counterbid extends Component
             $this->solde_bid=0;
             $this->solde_non_tranferable = 0;
         }
+
     }
 
     public function update(){
@@ -79,21 +83,24 @@ class Counterbid extends Component
 
 
     }
-    public function sanction($id,$enchere){
 
-        // afficher tout les biddeurs sanctionner
-
-
+    public function autoclickbideur(){
+        dd(24);
     }
     public function addclick($add){
 
-        $this->update = PivotBideurEnchere::where('user_id',auth()->user()->id)->where('enchere_id',$this->getart)->first();
+        if ($add > 0  ) {
+            # code...
+            $this->update = PivotBideurEnchere::where('user_id',auth()->user()->id)->where('enchere_id',$this->getart)->first();
 
-        $this->addclick =$this->update->valeur + ($add??0) ;
+            $this->addclick =$this->update->valeur + ($add) ;
 
-        $this->update->update([
-            'valeur'=>$this->addclick
-        ]);
+            $this->update->update([
+                'valeur'=>$this->addclick
+            ]);
+        }else{
+
+        }
         $this->addclick ="";
     }
     // update les options a revoir
@@ -107,6 +114,34 @@ class Counterbid extends Component
     }
     public function render()
     {
+        // ajout des lors nous somme connecter
+        if (Auth::user()) {
+            $this->addbid = User::where('id',Auth::user()->id)->first();
+            $bideur = Bideur::where('user_id',Auth::user()->id)->first();
+            if ($this->addbid->user_conneted_at == null) {
+                $this->addbid->update([
+                    $this->addbid->user_conneted_at =now()
+                ]);
+            }
+            $heur_acces = now()->format('H') - date('H',strtotime($this->addbid->user_conneted_at));
+            if (now()->format('i') > date('i',strtotime($this->addbid->user_conneted_at))) {
+                $munite_acces = now()->format('i') - date('i',strtotime($this->addbid->user_conneted_at));
+            } else {
+                $munite_acces = date('i',strtotime($this->addbid->user_conneted_at))-now()->format('i');
+            }
+            if (date('d-m-Y',strtotime($this->addbid->user_conneted_at)) == now()->format('d-m-Y') && $munite_acces > 5) {
+               $balance = $bideur->balance + 10;
+                $bideur->update([
+                    'balance' =>$balance
+                ]);
+                $this->addbid->update([
+                    $this->addbid->user_conneted_at ="2022-05-24 06:40:28"
+                ]);
+
+            }
+        }
+
+        // end
 
         // lister les bideurs de l'article
 
@@ -126,16 +161,21 @@ class Counterbid extends Component
             # code...
             $this->solde_bonus = 0;
         }
-        // dd($valeur->enchere->paquet->duree);
+        //  dd($this->munite*60+$this->times);
         // calcule du temps
         $this->temps_restant_total=$this->temps_restant_total+1;
         // $this->times =$this->times-1;
         // $this->munite-1;
-        // dd($this->temps_restant_total,date('i',strtotime($this->enchere->heure_debut)));
+
+        // dd()
         if($this->temps_restant_total == 60){
             $this->temps_restant_total =0;
 
         }
+        $this->clicks = Clicks::all();
+        // $this->sec =date('s',strtotime($this->temps_total_heure))  ;
+        $this->click_achat;
+        $this->click_paye = Clicks::where('id',$this->click_achat)->first();
 
         return view('livewire.counterbid',[
 

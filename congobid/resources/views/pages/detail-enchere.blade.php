@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-    @include('components.header-index')
+
     <div class="content-block">
 
         <div class="block-detail-enchere">
@@ -22,13 +22,7 @@
                                 $enchere_fini = ($temps_restant_total <= 0) ? 'true' : 'false';
                                 $total_heure_restant =  $temps_restant_heure .":". $temps_restant_minute .":". $temps_restant_seconde;
                             ?>
-                            <h3 class="name-article text-center">temps restant : {{ $temps_restant_heure.':'.$temps_restant_minute }}</h3>
-                            <h3 class="name-article text-center"> temps restant en minute : {{ $temps_restant_heure_minute }}</h3>
-                            <h3 class="name-article text-center">durée de l'enchere : {{ $article->paquet->duree }}</h3>
-                            <h3 class="name-article text-center">heure du debut de l'enchere : {{ $article->enchere->heure_debut }}</h3>
-                            <h3 class="name-article text-center">temps restant total en minute : {{ $temps_restant_total }}</h3>
-                            <h3 class="name-article text-center">Etat de l'enchere : {{ $enchere_fini }}</h3>
-                            <h3 class="name-article text-center">Total heur : {{ $total_heure_restant }}</h3>
+                           
 
                         </div>
                         @if (Session::has('danger'))
@@ -41,7 +35,7 @@
                             </div>
                         @endif
 
-                        @livewire('counterbid',['article'=>$article->id,'article_titre'=>$article->titre,'article_paquet'=>$article->paquet_id,'article_enchere'=>$article->enchere->id,'temps_restant_total'=>$temps_restant_seconde,'temps_restant_seconde'=>$temps_restant_seconde])
+                        @livewire('counterbid',['article'=>$article->id,'article_titre'=>$article->titre,'article_paquet'=>$article->paquet_id,'article_enchere'=>$article->enchere->id,'temps_total_heure'=>$total_heure_restant,'temps_restant_seconde'=>$temps_restant_seconde])
 
                     </div>
 

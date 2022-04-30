@@ -12,6 +12,9 @@ use App\Models\Communique;
 use App\Models\Enchere;
 use Livewire\WithPagination;
 use App\Models\PivotClientsSalon;
+use App\Models\PivotBideurEnchere;
+use App\Models\Favoris;
+use Illuminate\Support\Facades\Auth;
 class EnchereFutures extends Component
 {
 
@@ -33,6 +36,95 @@ class EnchereFutures extends Component
             $idmodal = Article::where('id',$id)->first();
             $this->participer = $idmodal->id;
            }
+           public function like($id,$rec,$enchere){
+            $verify = PivotBideurEnchere::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
+            $favoris = Favoris::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
+
+            if ($verify != null) {
+
+                $like = PivotBideurEnchere::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
+                $article_add_like = Enchere::where('id',$like->enchere_id)->first();
+
+                if ($like->favoris == 0) {
+                    $like->update([
+                        'favoris'=> 1
+                    ]);
+                    if ($favoris->favoris == 0) {
+                        $favoris->update([
+                            'favoris'=> 1
+                        ]);
+                    }else{
+                        $favoris->update([
+                            'favoris'=> 0
+                        ]);
+                    }
+
+                    $article_add_like->update([
+                        'favoris'=>$article_add_like->favoris + 1
+                    ]);
+
+                    if (Auth::user()->id == $this->favoris->user_id || Auth::user()->id != $this->favoris->user_id && $this->favoris->enchere_id != $enchere) {
+                        $user=Favoris::create([
+                            'favoris'=> 1,
+                            'enchere_id'=>$enchere,
+                            'user_id'=>Auth::user()->id,
+                        ]);
+
+                    }
+
+                } else {
+                        $like->update([
+                            'favoris'=> 0
+                        ]);
+                        $article_add_like->update([
+                            'favoris'=>$article_add_like->favoris -1
+                    ]);
+                    if ($favoris->favoris == 0) {
+                        $favoris->update([
+                            'favoris'=> 1
+                        ]);
+                    }else{
+                        $favoris->update([
+                            'favoris'=> 0
+                        ]);
+                    }
+                }
+            }else{
+                $favoris = Favoris::where('enchere_id',$enchere)->where('user_id',Auth::user()->id)->first();
+                $article_add_like = Enchere::where('id',$enchere)->first();
+
+                if ($favoris != null) {
+                    if ($favoris->favoris == 0 ) {
+                       $favoris->update([
+                            'favoris'=> 1
+                        ]);
+                        $article_add_like->update([
+                            'favoris'=>$article_add_like->favoris + 1
+                        ]);
+                    }
+                    else {
+                        $favoris->update([
+                            'favoris'=> 0
+                        ]);
+                        $article_add_like->update([
+                            'favoris'=>$article_add_like->favoris -1
+                        ]);
+                    }
+                }else{
+                    $user=Favoris::create([
+                        'favoris'=> 1,
+                        'enchere_id'=>$enchere,
+                        'user_id'=>Auth::user()->id,
+                    ]);
+                    $article_add_like->update([
+                        'favoris'=>$article_add_like->favoris + 1
+                    ]);
+                }
+
+            }
+
+
+        }
     public function render()
     {
         $this->v = $this->iids;
