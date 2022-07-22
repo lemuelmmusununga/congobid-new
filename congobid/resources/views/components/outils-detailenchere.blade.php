@@ -1,5 +1,42 @@
 
-    @if (Auth::user() && Auth::user()->role_id == 5 && $pivot != null  )
+    @if ($sanction != null)
+        <div wire:ignore.self class="modal fade" id="debloque_user_{{$sanction->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="icon">
+                            <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                        </div>
+                        @php
+                            $prix_click = App\Models\Click_auto::where('paquet_id',$article_paquet)->first()->bid_prix ;
+                        @endphp
+
+                        <div class="text-center">
+                            @if ($sanction->santance =="foudre" && Auth::user()->bideurs->first()->balance >= $foudre->bid_deblocage)
+                                <h5> Vous pouvez vous débloquer en payant {{$foudre->bid_deblocage}} bids </h5>
+                                @if (Auth::user()->bideurs->first()->balance >=$foudre->bid_deblocage)
+                                    <a type="button" href="{{route('debloquer',['id'=>Auth::user()->id,'enchere'=>$pivot->enchere_id,'sanction'=>'foudre','name'=>Auth::user()->nom,'bid_cut'=>$foudre->bid_deblocage])}}" class="btn btn-ok w-50 ">Débloquer</a>
+                                @else
+                                    <a type="button" href="{{route('clients.achat.bid')}}" class="btn btn-ok w-50 ">Débloquer</a>
+                                @endif
+                            @else
+                                <h5> Vous pouvez vous débloquer en payant {{$roi->bid_deblocage}} bids </h5>
+                                @if (Auth::user()->bideurs->first()->balance >=$roi->bid_deblocage)
+                                <a type="button" href="{{route('debloquer',['id'=>Auth::user()->id,'enchere'=>$pivot->enchere_id,'sanction'=>'roi','name'=>Auth::user()->nom,'bid_cut'=>$roi->bid_deblocage])}}" class="btn btn-ok w-50 ">Débloquer</a>
+                                @else
+                                    <a type="button" href="{{route('clients.achat.bid')}}" class="btn btn-ok w-50 ">Débloquer</a>
+                                @endif
+                            @endif
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center align-items-center">
+                        <button type="button" class="btn btn-non" data-bs-dismiss="modal" aria-label="close">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endif
+    @if (Auth::user() && Auth::user()->role_id == 5 && $pivot != null && $first_treve > $enchere->munite )
 
 
         <div class="block-power d-flex justify-content-between align-items-center">
@@ -116,46 +153,9 @@
         </div>
         {{-- debloque user --}}
         {{-- click achat_use --}}
-        @if ($sanction != null)
 
-            <div wire:ignore.self class="modal fade" id="debloque_user_{{$sanction->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <div class="icon">
-                                <span class="iconify" data-icon="ant-design:info-outlined"></span>
-                            </div>
-                            @php
-                                $prix_click = App\Models\Click_auto::where('paquet_id',$article_paquet)->first()->bid_prix ;
-                            @endphp
-
-                            <div class="text-center">
-                                @if ($sanction->santance =="foudre" )
-                                    <h5> Vous pouvez vous débloquer en payant {{$foudre->bid_deblocage}} bids </h5>
-                                    @if (Auth::user()->bideurs->first()->balance >=$foudre->bid_deblocage)
-                                        <a type="button" href="{{route('debloquer',['id'=>Auth::user()->id,'enchere'=>$pivot->enchere_id,'sanction'=>'foudre','name'=>Auth::user()->nom,'bid_cut'=>$foudre->bid_deblocage])}}" class="btn btn-ok w-50 ">Débloquer</a>
-                                    @else
-                                        <a type="button" href="{{route('clients.achat.bid')}}" class="btn btn-ok w-50 ">Débloquer</a>
-                                    @endif
-                                @else
-                                    <h5> Vous pouvez vous débloquer en payant {{$roi->bid_deblocage}} bids </h5>
-                                    @if (Auth::user()->bideurs->first()->balance >=$roi->bid_deblocage)
-                                    <a type="button" href="{{route('debloquer',['id'=>Auth::user()->id,'enchere'=>$pivot->enchere_id,'sanction'=>'roi','name'=>Auth::user()->nom,'bid_cut'=>$roi->bid_deblocage])}}" class="btn btn-ok w-50 ">Débloquer</a>
-                                    @else
-                                        <a type="button" href="{{route('clients.achat.bid')}}" class="btn btn-ok w-50 ">Débloquer</a>
-                                    @endif
-                                @endif
-                            </div>
-                        </div>
-                        <div class="modal-footer d-flex justify-content-center align-items-center">
-                            <button type="button" class="btn btn-non" data-bs-dismiss="modal" aria-label="close">Annuler</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
         {{-- modal --}}
-      
+
         {{-- click achat_use --}}
         <div wire:ignore.self class="modal fade" id="achat_click" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -314,10 +314,10 @@
 
     @endif
 
-    @if (Auth::user() && $enchere->munite*60+$enchere->seconde > 0 && $pivot != null)
-    @if (Auth::user() && $enchere->munite*60+$enchere->seconde > 0 && date('d-m-Y ', strtotime($this->enchere->date_debut)) == now()->format('d-m-Y ') && $pivot->where('user_id', Auth::user()->id)->first() != null && date('H:i:s', strtotime($this->enchere->heure_debut)) <= now()->format('H:i:s'))
+    {{-- @if (Auth::user() && $enchere->munite*60+$enchere->seconde > 0 && $pivot != null) --}}
+    {{-- @if (Auth::user() && $enchere->munite*60+$enchere->seconde > 0 && date('d-m-Y ', strtotime($this->enchere->date_debut)) == now()->format('d-m-Y ') && $pivot->where('user_id', Auth::user()->id)->first() != null && date('H:i:s', strtotime($this->enchere->heure_debut)) <= now()->format('H:i:s')) --}}
 
-    @endif
+    {{-- @endif --}}
 
 
 
@@ -345,7 +345,36 @@
                 </div>
             </div>
         </div> --}}
-    @endif
+    {{-- @endif --}}
+    @if ($first_treve < $enchere->munite)
+    <div wire:ignore.self class="modal fade" id="nonenchere" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="icon">
+                        <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                    </div>
+                    <div class="text-center">
+
+                        @if (Auth::user() && $pivot == null)
+                        <h5> Vous ne faite pas parti de cette enchere voulez vous participer en payant {{$paquet_enchere->prix}} bids ?</h5>
+                        <a type="button" href="{{route('detail.article',['id'=>$article,'name'=>$article_titre])}}" class="btn btn-ok">Participer</a>
+
+                        @else
+                            <h5> Veillez pentientez c'est le moment de paix !</h5>
+                        @endif
+
+                    </div>
+                </div>
+
+                <div class="modal-footer d-flex justify-content-center align-items-center">
+                {{-- <button type="button" class="btn btn-no" data-bs-dismiss="modal"></button> --}}
+                <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
+
+            </div>
+        </div>
+    </div>
+    @else
     <div wire:ignore.self class="modal fade" id="nonenchere" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -373,4 +402,5 @@
             </div>
         </div>
     </div>
+    @endif
 </div>

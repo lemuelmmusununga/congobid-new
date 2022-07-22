@@ -1,14 +1,14 @@
 <footer>
-    <div class="container">
-        <div class="row g-4 g-lg-5">
+    <div class="container" style="overflow: hidden">
+        <div class="row g-5 g-lg-5">
             <div class="col-lg-4">
                 <h4>Compagnie</h4>
-                <ul>
+                <ul class="mb-0">
                     <li>
                         <a href="/a_propos">A propos de nous</a>
                     </li>
                     <li>
-                        <a href="/faq">Faq</a>
+                        <a href="/faq">FAQ</a>
                     </li>
                     <li>
                         <a href="/contact">Contactez-nous</a>
@@ -46,7 +46,7 @@
         </div>
         <hr>
         <div class="text-center">
-            <small class="text-white">CongoBid 2022 Tous droits réservées.</small>
+            <small class="text-white">Developed by <a href="https://newtech-rdc.net" target="_blank" class="text-white">Newtech Consulting</a></small>
         </div>
     </div>
 </footer>

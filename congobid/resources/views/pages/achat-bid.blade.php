@@ -1,33 +1,22 @@
 @extends('layouts.app')
 @section('content')
+<div class="banner-sm">
 
+    <div class="container-fluid">
+        <div class="row">
+
+            <div class="col-12 text-center">
+                <h1>Achats bids</h1>
+            </div>
+        </div>
+    </div>
+</div>
 <div class="content-block">
-    @if (isset($success) )
+    @if (Session::has('success') )
         <div class="alert alert-success">
-            <p>{{$success}}</p>
+            <p>{{Session::get('success')}}</p>
         </div>
     @endif
-    <div class="justify-content-center mt-4 container ">
-        <div class="card justify-content-center align-items-center py-4">
-            <div class="text-center">
-                <h1>800 bids </h1>
-                <button class="btn btn-achat-bid" data-bs-toggle="modal" data-bs-target="#modalbid">
-                    Valider
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="banner-sm">
-
-        <div class="container-fluid">
-            <div class="row">
-
-                <div class="col-12 text-center">
-                    <h1>Achats bids</h1>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="content-bid">
         <div class="container">
             <div class="row g-4">
@@ -50,6 +39,43 @@
                         </div>
                     </div>
                 @endforeach --}}
+                @foreach ($bids as $bid)
+                    <div class="col-6 col-md-3 col-sm-3">
+                        <div class="card tarif junior">
+                            <div class="ammount">
+                                {{$bid->valeur}} $
+                            </div>
+                            <div class="card-body">
+                                <ul>
+                                    <li>
+                                        <h5>{{$bid->quantite}}<span> Bids</span></h5>
+                                    </li>
+                                </ul>
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbid_{{ $bid->id }}">Acheter</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div wire:ignore.self class="modal fade" id="modalbid_{{ $bid->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <div class="icon">
+                                        <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                                    </div>
+                                    <div class="text-center">
+                                        <h5>Voulez-vous acheter {{$bid->quantite}} bids  ?</h5>
+                                        <p>Cette partie vas nous envoyer sur la page de moyen de payement qui est encours de traitement</p>
+                                    </div>
+                                </div>
+
+                                <div class="modal-footer d-flex justify-content-between align-items-center">
+                                <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
+                                <a type="button" href="{{route('achat.bids',['id'=>Auth::user()->id,'valeur'=>$bid->quantite])}}"  class="btn btn-ok">Accepter</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
                 <div class="col-lg-3 col-6">
                     <div class="card tarif justify-content-center align-items-center py-4">
                         <img src="{{asset('images/logo-visa.png')}}" alt="" class="w-50">

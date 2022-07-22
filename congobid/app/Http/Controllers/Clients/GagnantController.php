@@ -41,7 +41,7 @@ class GagnantController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return response()->json('true', 200);
     }
 
     /**

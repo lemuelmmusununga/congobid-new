@@ -29,6 +29,6 @@ class AchatController extends Controller
         $bids = Bid::where('statut_id', '3')->get();
         $page = 2;
         $success = "Achat effectué avec succes";
-        return view('pages.achat-bid',compact('bids', 'paquets', 'page','success'));
+        return view('pages.achat-bid',compact('bids', 'paquets', 'page'))->with('success','Achat éffectué avec success !');
     }
 }

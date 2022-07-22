@@ -55,7 +55,7 @@ class DetailEnchereController extends Controller
             $pivots = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $article->enchere->id)->first();
 
             // verification du balance
-            if (Auth::user()->bideurs->first()->balance >= $article->paquet->nombre_enchere) {
+            if (Auth::user()->bideurs->first()->balance > $article->paquet->nombre_enchere) {
                $cutebid= Bideur::where('user_id', Auth::user()->id)->first();
 
                if ($pivots == null) {
@@ -116,12 +116,14 @@ class DetailEnchereController extends Controller
     }
 
     //push achat click
-    public function achatClick($id,$name){
+    public function achatClick($id,$name,$enchere_id){
         $cliks = Clicks::where('id',$id)->first();
-       Auth::user()->pivotbideurenchere->first()->update([
-           'valeur'=>Auth::user()->pivotbideurenchere->first()->valeur + $cliks->benefice
-       ]) ;
-       Auth::user()->bideurs->first()->update([
+        $addclick = PivotBideurEnchere::where('user_id',Auth::user()->id)->where('enchere_id',$enchere_id)->first();
+        // dd($cliks->benefice,$id,$enchere_id,$addclick->foudre,Auth::user()->id,$addclick->valeur + $cliks->benefice);
+        $addclick->update([
+           'valeur'=>$addclick->valeur + $cliks->benefice
+        ]) ;
+        Auth::user()->bideurs->first()->update([
             'balance'=> Auth::user()->bideurs->first()->balance - $cliks->prix_bid
        ]);
        return redirect()->back()->with('success','Achat des cliques éffectué avec succes');
@@ -218,7 +220,8 @@ class DetailEnchereController extends Controller
 
         $bideur->update([
             'bouclier' => $bideur->bouclier+1,
-            'valeur' => $bideur->valeur + $bouclier_benefice
+            'valeur' => $bideur->valeur + $bouclier_benefice,
+            'time_bouclier'=>now()
         ]);
 
         Auth::user()->bideurs->first()->update([
@@ -234,7 +237,8 @@ class DetailEnchereController extends Controller
 
         $bideur->update([
             'roi' => $bideur->roi+1,
-            'valeur'=>$bideur->valeur +$roi_benefice
+            'valeur'=>$bideur->valeur +$roi_benefice,
+            'time_roi'=>now()
         ]);
 
         Auth::user()->bideurs->first()->update([
@@ -257,7 +261,6 @@ class DetailEnchereController extends Controller
 
         Auth::user()->bideurs->first()->update([
             'balance'=>Auth::user()->bideurs->first()->balance -$paquet,
-
         ]);
         return redirect()->back()->with('success','Achat du clique effectué avec success');
     }
@@ -303,12 +306,23 @@ class DetailEnchereController extends Controller
 
         $bideur->update([
             'foudre' => $bideur->foudre+1,
-            'valeur' => $bideur->valeur + $foudre_benefice
+            'valeur' => $bideur->valeur + $foudre_benefice,
+            'time_foudre'=>now()
         ]);
 
         Auth::user()->bideurs->first()->update([
             'balance'=>Auth::user()->bideurs->first()->balance -$paquet
         ]);
         return redirect()->back()->with('success','Achat du foudre effectué avec success');
+
+        // return redirect()->back()->with('success','Achat du foudre effectué avec success');
+    }
+    public function achatBid($id,$valeur){
+        $bideur = Bideur::where('user_id',Auth::user()->id)->first();
+        $bideur->update([
+            'balance'=>Auth::user()->bideurs->first()->balance + $valeur,
+        ]);
+        return view('pages.profil');
+
     }
 }

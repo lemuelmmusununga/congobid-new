@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.app-profil')
 
 @section('content')
 
@@ -23,65 +23,51 @@
                         @endif --}}
 
                     @if ((Auth::user()->avatar == "default.png") || (Auth::user()->avatar == "default.jpg") || (Auth::user()->avatar == "users/default.png") || (Auth::user()->avatar == "") || (Auth::user()->avatar == null))
-                        <div class="icon">
-                            <span class="iconify" data-icon="bx:bx-user"></span>
+                        <div class="avatar">
+                           <a href="{{route('update.profil',['name'=>Auth::user()->nom,'id'=>Auth::user()->id])}}"><img src="{{ asset('images/users/default.png') }}" alt="Image de {{ Auth::user()->username }}"></a>
                         </div>
                     @else
-                            <div class="avatar">
-                                <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="Image de {{ Auth::user()->username }}">
-                            </div>
-                        @endif
+                        <div class="avatar">
+                            <a href="{{route('update.profil',['name'=>Auth::user()->nom,'id'=>Auth::user()->id])}}"><img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="Image de {{ Auth::user()->username }}"></a>
+                        </div>
+                    @endif
                     </div>
                     <div class="block-name">
                         <h5>{{Auth::user()->nom}}</h5>
                         <span>{{ '@' }}{{Auth::user()->username}}</span>
                     </div>
                 </div>
-                <div class="block-items-2">
-                    <div class="row">
-                        <div class="col-3">
-                            <div class="item">
-                                <h4> {{ Auth::user()->bideurs->first()->balance }} </h4>
-                                <p class="mb-0">Bids</p>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="item">
-                                <h4> {{ Auth::user()->bideurs->first()->bonus }} </h4>
-                                <p class="mb-0">Bids bonus</p>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="item">
-                                <h4> {{ Auth::user()->bideurs->first()->nontransferable }} </h4>
-                                <p class="mb-0">Bids non transferable</p>
-                            </div>
-                        </div>
-                        <div class="col-3">
+
+
+
+
+                               @livewire('bid-bonus')
+
+
+                        {{-- <div class="col-3">
                             <div class="item">
                                 <?php
-                                    $favoris = 0;
+                                    $favoris = 0 ;
                                     foreach (Auth::user()->pivotbideurenchere as $favori) {
                                         $favoris = $favoris + $favori->favoris;
                                     }
                                 ?>
-                                {{-- <h4> {{ $favoris }} </h4> --}}
+
                                 <h4> {{ $favoris }} </h4>
                                 <p class="mb-0">Favoris</p>
                             </div>
-                        </div>
-                    </div>
-                </div>
+                        </div> --}}
+
             </div>
         </div>
-        <div class="content-link">
+        <div class="content-link " style="margin-top: 100px;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
                         <div class="card">
                             <ul>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{route('update.profil',['name'=>Auth::user()->nom,'id'=>Auth::user()->id])}}">
                                         <span class="iconify" data-icon="bx:bx-user"></span>
                                         <span class="title">Modifier mon profil</span>
                                     </a>
@@ -127,6 +113,14 @@
                                     </a>
                                 </li> --}}
                                 <li>
+                                    <a href="/envoyer/bid">
+                                        <span class="iconify" data-icon="carbon:user-follow"></span>
+                                        <span class="title">
+                                            transfère des bids
+                                        </span>
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="#">
                                         <span class="iconify" data-icon="carbon:user-follow"></span>
                                         <span class="title">
@@ -134,7 +128,7 @@
                                         </span>
                                     </a>
                                 </li>
-                                <li>
+                                <li class="last">
                                     <form method="POST" action="{{ route('logout') }}">
                                         @csrf
                                         <a href="{{ route('logout') }}" onclick="event.preventDefault();
@@ -146,7 +140,7 @@
                                         </a>
                                     </form>
                                 </li>
-                            <ul>
+                            </ul>
                         </div>
                     </div>
                 </div>

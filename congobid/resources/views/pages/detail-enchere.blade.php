@@ -22,19 +22,44 @@
                                 $enchere_fini = ($temps_restant_total <= 0) ? 'true' : 'false';
                                 $total_heure_restant =  $temps_restant_heure .":". $temps_restant_minute .":". $temps_restant_seconde;
                             ?>
-                           
+
 
                         </div>
                         @if (Session::has('danger'))
                                 <div class="alert alert-danger">
                                     <span>{{Session::get('danger')}}</span>
                                 </div>
+
                         @elseif(Session::has('success'))
+
+
+
                             <div class="alert alert-success">
                                 <span>{{Session::get('success')}}</span>
                             </div>
                         @endif
 
+
+                            <div wire:ignore.self class="modal fade" id="achat" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="icon">
+                                                <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                                            </div>
+                                            <div class="text-center">
+
+                                                    <h5> il faudrait payé   bids ?</h5>
+
+
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-center align-items-center">
+                                            <button type="button" class="btn btn-non" data-bs-dismiss="modal" aria-label="close">Annuler</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         @livewire('counterbid',['article'=>$article->id,'article_titre'=>$article->titre,'article_paquet'=>$article->paquet_id,'article_enchere'=>$article->enchere->id,'temps_total_heure'=>$total_heure_restant,'temps_restant_seconde'=>$temps_restant_seconde])
 
                     </div>

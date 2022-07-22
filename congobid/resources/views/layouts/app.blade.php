@@ -2,7 +2,7 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <title>CongoBid | HomePage</title>
         <link rel="shortcut icon" href="{{asset('images/logocongobid.ico')}}" type="image/x-icon">
@@ -20,8 +20,9 @@
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
+
     </head>
-    <body class="font-sans antialiased" style="overflow-x: hidden;">
+    <body>
 
 
         @include('components.side-menu')
@@ -54,5 +55,24 @@
         <script src="{{asset('js/jquery.blueimp-gallery.min.js')}}"></script>
         <script src="{{asset('js/main.js')}}"></script>
         {{-- <script src="{{asset('js/counterdown.js')}}"></script> --}}
+        <script>
+            var video= document.querySelector(".video")
+
+                $(".modal .btn-close").click(function(){
+                    video.pause();
+                    video.currentTime = 0;
+                })
+
+
+                 $(document).ready(function(){
+                    @if (session()->has('success'))
+                        $('.modal-success').addClass('show')
+                    @endif
+
+                    $('.close-modal-sm').click(function(){
+                        $('.modal-success').removeClass('show')
+                    })
+                });
+        </script>
     </body>
 </html>

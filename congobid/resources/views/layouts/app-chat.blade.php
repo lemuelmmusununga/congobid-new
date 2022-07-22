@@ -24,7 +24,7 @@
 
 
         @include('components.side-menu')
-
+        @include('components.header-chat')
         <div class="global-div">
             @yield('content')
             <div class="overplay"></div>

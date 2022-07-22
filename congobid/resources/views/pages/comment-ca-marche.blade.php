@@ -41,28 +41,29 @@
     </div>
     <div class="block-logo-money" style="padding: 30px 0">
         <div class="container">
-            <div class="row justify-content-center align-items-center g-3">
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/logo-visa.png')}}" alt="logo-visa" class="w-100">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/MasterCard_Logo.png')}}" alt="MasterCard_Logo" class="w-100">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/Paypal-logo.png')}}" alt="Paypal-logo" class="w-100">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/logo-mpesa.jpg')}}" alt="logo-mpesa" class="w-75">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/logo-airtel.jpg')}}" alt="logo-airtel" class="w-50">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/logo-orange-money.jpg')}}" alt="logo-orange-money" class="w-50">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/logo-afrimoney.png')}}" alt="logo-afrimoney" class="w-100">
-                </div>
+            <div class="col-img">
+                <img src="{{asset('images/logo-visa.png')}}" alt="logo-visa" class="w-100">
+            </div>
+            <div class="col-img">
+                <img src="{{asset('images/MasterCard_Logo.png')}}" alt="MasterCard_Logo" class="w-100">
+            </div>
+            <div class="col-img">
+                <img src="{{asset('images/Paypal-logo.png')}}" alt="Paypal-logo" class="w-100">
+            </div>
+            <div class="col-img">
+                <img src="{{asset('images/logo-equity.jpg')}}" alt="Paypal-logo" class="w-100">
+            </div>
+            <div class="col-img">
+                <img src="{{asset('images/logo-mpesa.png')}}" alt="logo-mpesa" class="w-75">
+            </div>
+            <div class="col-img">
+                <img src="{{asset('images/logo-airtel.png')}}" alt="logo-airtel" class="w-50">
+            </div>
+            <div class="col-img">
+                <img src="{{asset('images/logo-orange.png')}}" alt="logo-orange-money" class="w-50">
+            </div>
+            <div class="col-img">
+                <img src="{{asset('images/logo-afrimoney.png')}}" alt="logo-afrimoney" class="w-100">
             </div>
         </div>
     </div>
@@ -75,7 +76,7 @@
                 </div>
                 <div class="modal-body">
                     <div class="content-video">
-                        <iframe src="{{asset('videos/gagnants/enchere_1.mp4')}}" autoplay="off" frameborder="0"></iframe>
+                        <video src="{{asset('videos/gagnants/enchere_1.mp4')}}" controls class="video" preload="auto" playsinline></video>
                     </div>
                 </div>
             </div>

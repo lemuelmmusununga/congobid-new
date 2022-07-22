@@ -12,10 +12,9 @@
             <div class="row g-3">
                 @foreach ($salons as $salon)
                     <div class="col-12 col-salon">
-                        @if ($salon->pivotclientsalon->count() >= $salon->limite)
-                            <a href="{{ route('show.detail', ['id' => $salon->article->id] ) }}"></a>
-                        @else
-                            <a href="#" class="btn-participer" data-bs-toggle="modal" data-bs-target="#modalEnchere">
+                        @if ($salon->pivotclientsalon->count() <= $salon->limite)
+
+                            <a href="#" class="btn-participer" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{$salon->id}}">
                                 <div class="card card-info-chat">
                                     <div class="content d-flex justify-content-star align-items-center">
                                         <div class="block-user d-flex justify-content-star align-items-center">
@@ -27,7 +26,8 @@
                                             </div>
                                             <div class="block-name-user">
                                                 <h5>{{ $salon->article->titre }}</h5>
-                                                <p> Prix CongoBid : {{ $salon->article->prix }}$ | Prix Kinshasa : <strike style="color: black;"> {{ $salon->article->prix_marche }}$ </strike> </p>
+                                                <p> Prix CongoBid : {{ $salon->article->prix }}$</p>
+                                                <p>Prix Kinshasa : <strike style="color: black;"> {{ $salon->article->prix_marche }}$ </strike></p>
                                             </div>
                                             <div class="block-notif">
                                                 <div class="date">
@@ -43,13 +43,33 @@
 
                                     </div>
                                 </div>
-
                             </a>
 
+                        @else
+                            <a href="{{ route('show.detail', ['id' => $salon->article->id] ) }}"></a>
                         @endif
+                        <div wire:ignore.self class="modal fade" id="modalEnchere_{{$salon->id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-body">
+                                        <div class="icon">
+                                            <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                                        </div>
+                                        <div class="text-center">
+                                            <h5>L'enchère est bloquée !</h5>
+                                            <p class="fw-bold"> Le nombre de participants n'a pas encore été atteint voulez-vous participer ? </p>
 
+                                        </div>
+                                        <div class="modal-footer d-flex justify-content-between align-items-center">
+                                            <button type="button" class="btn btn-no" data-bs-dismiss="modal">Non</button>
+                                            <a href="{{route('detail.article.salon',['id'=>$salon->article->id,'name'=>$salon->article->titre,'salon'=>$salon->id])}}" type="button" data-bs-dismiss="modal"  class="btn btn-ok">Oui</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    @endforeach
+                @endforeach
 
             </div>
         </div>
@@ -61,26 +81,6 @@
         <span class="iconify" data-icon="akar-icons:plus"></span>
     </div> --}}
 {{-- modal --}}
-<div wire:ignore.self class="modal fade" id="modalEnchere" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-body">
-                <div class="icon">
-                    <span class="iconify" data-icon="ant-design:info-outlined"></span>
-                </div>
-                <div class="text-center">
-                    <h5>L'enchère est bloquée !</h5>
-                    <p class="fw-bold"> Le nombre de participants n'a pas encore été atteint voulez-vous participer ? </p>
-
-                </div>
-                <div class="modal-footer d-flex justify-content-between align-items-center">
-                    <button type="button" class="btn btn-no" data-bs-dismiss="modal">Non</button>
-                    <a href="{{route('detail.article.salon',['id'=>$salon->article->id,'name'=>$salon->article->titre,'salon'=>$salon->id])}}" type="button" data-bs-dismiss="modal"  class="btn btn-ok">Oui</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 @endsection

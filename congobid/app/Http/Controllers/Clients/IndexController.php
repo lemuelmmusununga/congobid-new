@@ -10,13 +10,14 @@ use App\Models\Paquet;
 use App\Models\Faq;
 use App\Models\Politique;
 use App\Models\Condition;
+use App\Models\Contact;
 use App\Models\Enchere;
 use Illuminate\Support\Facades\Auth;
 class IndexController extends Controller
 {
     public function index(){
 
-       
+
         $paquets = Paquet::where('statut_id', '3')->get();
         $articles = Article::where('statut_id', '3')->paginate(1);
         $page = 2;
@@ -65,5 +66,15 @@ class IndexController extends Controller
     public function contact(){
 
         return view('pages.contact');
+    }
+    public function sendContact( Request $request){
+        $user = Contact::create([
+            'nom'=>$request->get('nom'),
+            'telephone'=>$request->get('telephone'),
+            'content'=>$request->get('content'),
+            'email'=>$request->get('email'),
+
+        ]);
+        return redirect()->back()->with('success','La requette a ete envoyer a vec succes');
     }
 }

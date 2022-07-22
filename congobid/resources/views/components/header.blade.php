@@ -22,9 +22,9 @@
               <li class="nav-item">
                 <a class="nav-link active" href="#">Tarifs</a>
               </li>
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('clients.salons.index') }}">Salons</a>
-              </li>
+              </li> --}}
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('clients.instructions.index') }}">Comment ça marche ?</a>
               </li>
@@ -85,7 +85,7 @@
                             <li><a href="#">Notifications</a></li>
                             <li><a href="{{route('clients.achat.bid')}}">Acheter des bids</a></li>
                             <li><a href="{{route('show.enchers-gagne')}}">Enchères gagnées</a></li>
-                            <li><a href="{{ route('clients.salons.index') }}">Salons</a></li>
+                            {{-- <li><a href="{{ route('clients.salons.index') }}">Salons</a></li> --}}
                             <li><a href="{{ route('clients.instructions.index') }}">Comment ça marche ?</a></li>
                             <li><a href="#">Nous contacter</a></li>
                         </ul>

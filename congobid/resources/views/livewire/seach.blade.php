@@ -1,6 +1,6 @@
 <div>
     <form class="d-flex" style="position: relative">
-        <input class="form-control me-2" type="search" placeholder="Recherche..." aria-label="Search" wire:model='search'>
+        <input class="form-control me-4" type="search" placeholder="Recherche..." aria-label="Search" wire:model='search'>
 
     </form>
 

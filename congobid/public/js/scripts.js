@@ -4,14 +4,39 @@
     /* Countdown Timer - The Final Countdown */
 
 
-	$('#clock').countdown('2022/5/24 10:50:56') /* change here your "countdown to" date */
+	$('#clock').countdown('2022/7/24 10:50:56') /* change here your "countdown to" date */
 	.on('update.countdown', function(event) {
 		var format = '<span class="counter-number p-1">%D<span class="timer-text">J</span></span><span class="counter-number p-1">%H<span class="timer-text">H</span></span><span class="counter-number p-1">%M<span class="timer-text">M</span></span><span class="counter-number p-1">%S<span class="timer-text">S</span></span>';
 		$(this).html(event.strftime(format));
 	})
 	.on('finish.countdown', function(event) {
-	$(this).html('Enchere Fermé')
+	    $(this).html('Enchere Fermé')
 		.parent().addClass('disabled');
+        $('.btn-bid').addClass('disabled');
+    });
+
+    var clicks = 0;
+    var labelClick = $('.num-clic');
+
+    $('.btn-bid').on('click', function () {
+        clicks += 1;
+        console.log(clicks);
+        $.ajaxSetup({
+            headers : {
+                'X-CSRF-TOKEN' : $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/click/count/btn/ajax',
+            method: 'POST',
+            data: 'click='+clicks,
+            done: function (data) {
+                console.log(data);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
     });
 
 })(jQuery);

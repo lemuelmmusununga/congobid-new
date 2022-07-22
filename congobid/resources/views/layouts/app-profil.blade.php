@@ -22,13 +22,14 @@
     </head>
     <body class="font-sans antialiased">
 
-        @include('components.header-index')
+        @include('components.header-profil')
         <div class="global-div">
             @yield('content')
             <div class="overplay"></div>
 
-
-        @include('components.footer')
+        </div>
+        
+        {{-- @include('components.footer') --}}
         {{-- @include('components.menu-chat-select')
 
         @stack('modals') --}}
@@ -44,6 +45,33 @@
         <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
         <script src="{{asset('js/main.js')}}"></script>
 
+        <script>
+            const nvFichier = document.getElementById('img-file');
 
+            const imgDw = document.querySelector('.modal-body .avatar-profil img');
+
+            nvFichier.addEventListener('change', function () {
+
+
+                const fichier = this.files[0];
+
+                if (fichier) {
+
+                    const analyseur = new FileReader();
+
+                    // imgDw1.style.display = "block";
+
+                    analyseur.readAsDataURL(fichier);
+
+                    analyseur.addEventListener('load', function () {
+
+                        imgDw.setAttribute('src', this.result);
+
+                    })
+
+                }
+
+            })
+        </script>
     </body>
 </html>

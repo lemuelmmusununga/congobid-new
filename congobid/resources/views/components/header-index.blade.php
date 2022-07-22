@@ -72,9 +72,16 @@
                 <div class="links d-flex justify-content-end">
                     @if (Auth::user())
                     <a href="/profil">
+                        @if ((Auth::user()->avatar == "default.png") || (Auth::user()->avatar == "default.jpg") || (Auth::user()->avatar == "users/default.png") || (Auth::user()->avatar == "") || (Auth::user()->avatar == null))
                         <div class="icon">
-                            <img src="{{ asset('images/users/' . Auth::user()->avatar ) }}" alt="" srcset="" class="rounded-pill" style="width: 30px;height:30px;">
+                            <img src="{{ asset('images/users/default.png') }}" alt="" srcset="" class="rounded-pill" style="width: 30px;height:30px; background: #fff; border: 2px solid #fff;">
                         </div>
+                    @else
+
+                            <div class="icon">
+                                <img src="{{ asset('images/users/' . Auth::user()->avatar ) }}" alt="" srcset="" class="rounded-pill" style="width: 30px;height:30px;">
+                            </div>
+                        @endif
                     </a>
                     @else
                     <a href="/profil">
@@ -83,11 +90,37 @@
                         </div>
                     </a>
                     @endif
-                    <a  class="humber click-buttom" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
-                        <div class="icon">
-                            <span class="iconify" data-icon="eva:menu-outline"></span>
-                        </div>
-                    </a>
+                    <div class="dropdown">
+                        <a  class="humber">
+                            <div class="icon">
+                                <span class="iconify" data-icon="eva:menu-outline"></span>
+                            </div>
+                        </a>
+                        <ul class="dropdown-menu">
+                          <li><a class="dropdown-item" href="/tarif">Tarifs</a></li>
+                          <li><a class="dropdown-item" href="#">Notifications</a></li>
+                          <li><a class="dropdown-item" href="/favoris">Favoris</a></li>
+                          <li>
+                            <a href="{{route('clients.achat.bid')}}"class="dropdown-item">Acheter des bids</a>
+                          </li>
+                          <li>
+                            <a href="{{route('show.enchers-gagne')}}" class="dropdown-item">Enchères gagnées</a>
+                          </li>
+                          {{-- <li>
+                            <a href="{{ route('clients.salons.index') }}" class="dropdown-item">Salons</a>
+                          </li> --}}
+                          <li>
+                            <a href="/chat" class="dropdown-item">Chat</a>
+                          </li>
+                          <li>
+                            <a href="{{ route('clients.instructions.index') }}" class="dropdown-item">Comment ça marche</a>
+                          </li>
+                          <li>
+                            <a href="/contact" class="dropdown-item">Nous contactez</a>
+                          </li>
+                        </ul>
+                    </div>
+
                     {{-- <div class="block-dropmenu">
                         <ul>
                             <li><a href="/tarif">Tarifs</a></li>

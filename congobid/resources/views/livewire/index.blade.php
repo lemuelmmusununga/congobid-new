@@ -94,7 +94,7 @@
                 <div class="block-marquee">
                     <div class="content">
                         <div class="title">
-                            {{ $communique ?? "Bienvenue dans CongoBid !" }}
+                            {{ $communique ?? "Bienvenue chez CongoBid !" }}
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                             <div class="col-lg-3 col-6">
                                 <div class="card">
                                     <a href="/register">
-                                        <div class="content d-flex justify-content-between align-items-center">
+                                        <div class="content d-flex justify-content-center align-items-center">
                                             <div class="block-icon">
                                                 <span class="iconify" data-icon="bi:pencil-square"></span>
                                             </div>
@@ -118,7 +118,7 @@
                             <div class="col-lg-3 col-6">
                                 <div class="card">
                                     <a href="{{ route('clients.achat.bid') }}">
-                                        <div class="content d-flex justify-content-between align-items-center">
+                                        <div class="content d-flex justify-content-center align-items-center">
                                             <div class="block-icon">
                                                 <span class="iconify" data-icon="fa6-solid:hand-holding-dollar"></span>
                                             </div>
@@ -132,7 +132,7 @@
                             <div class="col-lg-3 col-6">
                                 <div class="card">
                                     <a href="{{route('clients.instructions.index')}}">
-                                        <div class="content d-flex justify-content-between align-items-center">
+                                        <div class="content d-flex justify-content-center align-items-center">
                                             <div class="block-icon">
                                                 <span class="iconify" data-icon="el:play"></span>
                                             </div>
@@ -146,7 +146,7 @@
                             <div class="col-lg-3 col-6">
                                 <div class="card">
                                     <a href="{{route('profil')}}">
-                                        <div class="content d-flex justify-content-between align-items-center">
+                                        <div class="content d-flex justify-content-center align-items-center">
                                             <div class="block-icon">
                                                 <span class="iconify" data-icon="fa:user"></span>
                                             </div>
@@ -163,19 +163,21 @@
             </div>
             <div class="block-bid-home">
                 <div class="text-center">
-                    <h2>{{__('content.title-index')}} {{now()->format('H:i') }}</h2>
+                    <h2>{{__('content.title-index')}} {{now(' Africa/kinshasa')->format('H:i') }}</h2>
                 </div>
                 <div class="container">
                     <div class="row g-4 mb-4">
                         @foreach ($articles as $article)
                             @php
                                 if( Auth::user() && $articles != null){
-                                    $pivot =$article->enchere->pivotbideurenchere->where('enchere_id',$article->enchere->id?? '')->where('user_id',Auth::user()->id)->first() ?? '';
+                                    $pivot =$article->enchere->pivotbideurenchere->where('enchere_id',$article->enchere->id)->where('user_id',Auth::user()->id)->first() ?? '';
                                 }
                                 $prix_roi="";
+                                // dd($article->enchere->pivotbideurenchere->where('enchere_id',$article->enchere->id)->first(),$pivot,$article->enchere->id);
                                 // dd(date('d-m-Y', strtotime($article->enchere->date_debut)),now()->format('d-m-Y'),($article->enchere->state),$article->titre);
                             @endphp
-                            @if ($article->enchere->munite*60+$article->enchere->seconde > 0 && (date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y')) && $article->enchere->state == 1 && (date('H:i', strtotime($article->enchere->heure_debut)) <= now()->format('H:i') )  )
+                            {{-- @dump(($article->enchere->munite*60+$article->enchere->seconde >= 0) && (date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y')) && (date('H:i', strtotime($article->enchere->heure_debut)) <= now(' Africa/kinshasa')->format('H:i') )); --}}
+                            @if (($article->enchere->munite*60+$article->enchere->seconde >= 0) && (date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y')) && (date('H:i', strtotime($article->enchere->heure_debut)) <= now(' Africa/kinshasa')->format('H:i') )  )
                                 <div class="col-12 col-lg-4" id="{{$article->titre}} ">
                                     <div class="card" id="">
                                         <div class="timeUpdate">
@@ -196,7 +198,9 @@
                                                 </div>
                                                 <div class="col-7">
                                                     {{-- <img src="{{ asset('images/articles/'.($article->images == null ? null : $article->images[0]->lien) ) }}" alt="{{ $article->titre }}"> --}}
-                                                    <img src="{{asset('images/articles/'.$article->images->first()->lien ?? '')}}" alt="img" class="w-100">
+                                                    <div class="block-img-show">
+                                                        <img src="{{asset('images/articles/'.$article->images->first()->lien ?? '')}}" alt="img" class="w-100">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -208,51 +212,63 @@
                                             </div>
                                         @endif
 
-                                        <h5 class="text-center mt-2">{{ $article->titre }}</h5>
+                                        <h5 class="text-center mt-3">{{ $article->titre }}</h5>
                                         <h6 class="text-center">{{ $article->marque }}</h6>
                                         <span class="text-center">{{ Str::substr($article->description, 0, 80) }}...</span>
                                         <a href="{{route('show.detail.article',['id'=>$article->id,'name'=>$article->titre])}}" class="text-center d-block mb-3">Voir plus</a>
                                         @include('components.outils')
                                         @include('components.favoris')
                                         <div class="text-center mb-3">
-                                            <p class="mb-0">
+                                            {{-- <p class="mb-0">
                                                 Si vous aimez, cliquez sur le coeur pour que cet article passe à la prochaine enchère.
-                                            </p>
-                                                <?php
+                                            </p> --}}
+                                            @if (Auth::user())
 
-                                                    $favori_enchere = App\Models\Favoris::where('enchere_id',$article->enchere->id)->first() ?? '';
+                                                <?php
+                                                    $favori_enchere = App\Models\Favoris::where('enchere_id',$article->enchere->id)->where('user_id',Auth::user()->id)->first() ?? '';
                                                 ?>
+                                            @endif
 
                                                 @if ( Auth::user() )
-
                                                     {{-- @if ($favori_enchere ?? '' != null && $favori_enchere->user_id ?? '' == Auth::user()->id && $favori_enchere->enchere_id ?? '' == $article->enchere->pivotbideurenchere->first()->enchere_id) --}}
                                                         @if ($favori_enchere != null && $favori_enchere->favoris == 1)
+                                                            @if (Auth::user() && $favori_enchere != null && $favori_enchere->favoris == 1 && Auth::user()->id == $favori_enchere->user_id )
 
-                                                            <a href="#"  class="like" wire:click.prevent="like({{Auth::user()->id}}, 0,{{$article->enchere->id}})">
-                                                                <span class="iconify" style="color:red;" data-icon="ant-design:heart-fill"></span>
-                                                            </a>
-                                                        @else
+                                                                <a href="#"  class="like" wire:click.prevent="like({{Auth::user()->id}}, 0,{{$article->enchere->id}})">
+                                                                    <span class="iconify" style="color:red;" data-icon="ant-design:heart-fill"></span>
+                                                                </a>
+                                                            @else
+
                                                             <a href="#" class="like" data-bs-toggle="modal" data-bs-target="" wire:click.prevent="like({{Auth::user()->id}}, 1,{{$article->enchere->id}})">
                                                                 <span class="iconify"  data-icon="ant-design:heart-outlined"></span>
                                                             </a>
-                                                            {{-- <a href="#" class="like" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}" wire:click.prevent="like({{Auth::user()->id}}, 1,{{$article->enchere->id}})">
+                                                            @endif
+
+                                                        @elseif ($favori_enchere != null && $favori_enchere->favoris < 1)
+                                                            @if (Auth::user())
+
+                                                                <a href="#" class="like" data-bs-toggle="modal" data-bs-target="" wire:click.prevent="like({{Auth::user()->id}}, 1,{{$article->enchere->id}})">
+                                                                    <span class="iconify"  data-icon="ant-design:heart-outlined"></span>
+                                                                </a>
+                                                            @else
+                                                                <a href="/login" class="like">
+                                                                    <span class="iconify"  data-icon="ant-design:heart-outlined"></span>
+                                                                </a>
+                                                            @endif
+
+                                                            <a href="#" class="like" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}" wire:click.prevent="like({{Auth::user()->id}}, 1,{{$article->enchere->id}})">
                                                                 <span class="iconify"  data-icon="ant-design:heart-outlined"></span>
-                                                            </a> --}}
+                                                            </a>
                                                         @endif
-                                                    {{-- @else
-                                                        <a href="" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}" class="like" wire:click.prevent="like({{Auth::user()->id}}, 1,{{$article->enchere->id}})" >
+
+                                                    @else
+                                                        <a href="" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}" class="like" >
                                                             <span class="iconify" data-icon="ant-design:heart-outlined"></span>
                                                         </a>
-                                                    @endif --}}
-                                                @else
-                                                    <a href="" data-bs-toggle="modal" data-bs-target="#modalEnchere_{{ $article->id }}" class="like" >
-                                                        <span class="iconify" data-icon="ant-design:heart-outlined"></span>
-                                                    </a>
-                                                @endif
-
-                                                <span>{{$article->enchere->favoris}} {{ $article->enchere->favoris < 2 ? 'vote' : 'votes' }}</span>
-                                            </div>
+                                                    @endif
+                                                    {{-- <span>{{$article->enchere->favoris}} {{ $article->enchere->favoris < 2 ? 'vote' : 'votes' }}</span> --}}
                                             @include('components.boutons')
+                                        </div>
                                     </div>
                                 </div>
                             @endif
@@ -265,11 +281,11 @@
                 <div class="text-center">
                     <h2>Enchères futures</h2>
                 </div>
-                <div class="container">
+                <div class="container futur">
                     <div class="row g-4 mb-4">
                         @foreach ($articles as $article)
 
-                            @if (date('d-m-Y', strtotime($article->enchere->date_debut)) >= now()->format('d-m-Y') && $article->enchere->state == 0 && date('H:i', strtotime($article->enchere->heure_debut)) > now()->format('H:i'))
+                            @if (date('d-m-Y', strtotime($article->enchere->date_debut)) >= now()->format('d-m-Y') && $article->enchere->state == 0 && date('H:i', strtotime($article->enchere->heure_debut)) > now(' Africa/kinshasa')->format('H:i'))
 
                                 <div class="col-12 col-lg-4" id="{{$article->titre}}">
                                     <div class="card" id="">
@@ -291,7 +307,9 @@
                                                 </div>
                                                 <div class="col-7">
                                                     {{-- <img src="{{ asset('images/articles/'.($article->images == null ? null : $article->images[0]->lien) ) }}" alt="{{ $article->titre }}"> --}}
-                                                    <img src="{{asset('images/articles/'.$article->images->first()->lien)}}" alt="img" class="w-100">
+                                                    <div class="block-img-show">
+                                                        <img src="{{asset('images/articles/'.$article->images->first()->lien)}}" alt="img" class="w-100">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -302,16 +320,16 @@
                                                 </div>
                                             </div>
                                         @endif
-                                        <h5 class="text-center mt-2">{{ $article->titre }}</h5>
+                                        <h5 class="text-center mt-3">{{ $article->titre }}</h5>
                                         <h6 class="text-center">{{ $article->marque }}</h6>
                                         <span class="text-center">{{ Str::substr($article->description, 0, 80) }}...</span>
                                         <a href="{{route('show.detail.article',['id'=>$article->id,'name'=>$article->titre])}}" class="text-center d-block mb-3">Voir plus</a>
                                         @include('components.outils')
                                         @include('components.favoris')
                                         <div class="text-center mb-3">
-                                            <p class="mb-0">
+                                            {{-- <p class="mb-0">
                                                 Si vous aimez, cliquez sur le coeur pour que cet article passe à la prochaine enchère.
-                                            </p>
+                                            </p> --}}
                                             @if (Auth::user())
 
                                                 <?php
@@ -361,7 +379,7 @@
                                                     </a>
                                                 @endif
 
-                                                <span>{{$article->enchere->favoris}} {{ $article->enchere->favoris < 2 ? 'vote' : 'votes' }}</span>
+                                                {{-- <span>{{$article->enchere->favoris}} {{ $article->enchere->favoris < 2 ? 'vote' : 'votes' }}</span> --}}
                                             </div>
 
                                             @include('components.boutons')
@@ -384,7 +402,7 @@
                                                             $prix_roi = App\Models\Roi::where('paquet_id',$article->paquet->id)->first()->bid_prix ;
 
                                                         @endphp
-                                                        {{$article->paquet->id}}
+
                                                         <h5>Pour acheter l'option roi , il vous faut {{$prix_roi}} bids pour cette enchere Voulez-vous Acheter ?</h5>
                                                         @if (Auth::user()->bideurs->first()->balance >= $prix_roi)
 
@@ -402,14 +420,10 @@
                                                         @endif
                                                     </div>
                                                 @else
-                                                <div class="text-center">
-
-                                                    <h5>Pour acheter l'option roi , il vous faut {{$prix_roi}} bids pour cette enchere Voulez-vous Acheter ?</h5>
-
-
+                                                    <div class="text-center">
+                                                        <h5>Pour acheter l'option roi , il vous faut {{$prix_roi}} bids pour cette enchere Voulez-vous Acheter ?</h5>
                                                         <a type="button" href="/login" class="btn btn-ok w-50 ">Connecter vous</a>
-
-                                                </div>
+                                                    </div>
                                                 @endif
                                             </div>
                                             <div class="modal-footer d-flex justify-content-center align-items-center">
@@ -463,11 +477,11 @@
                                                     $prix_foudre = App\Models\Foudre::where('paquet_id',$article->paquet->id)->first()->bid_prix ;
 
                                                 @endphp
-                                                {{$article->paquet->id}}
+
                                                 <div class="text-center">
                                                     <h5>Pour acheter il vous faut {{$prix_foudre}} bids pour cette enchere Voulez-vous Acheter ?</h5>
                                                     @if ($pivot != null )
-                                                        @if ( Auth::user()->bideurs->first()->balance >= $prix_foudre)
+                                                        @if ( Auth::user()->bideurs->first()->balance > $prix_foudre)
                                                             <a type="button" href="{{route('foudre',['enchere'=>$article->enchere->id,'paquet'=>$prix_foudre,'name'=>Auth::user()->nom])}}" class="btn btn-ok w-50">Acheter</a>
                                                         @else
                                                             <a type="button" href="{{route('clients.achat.bid')}}" class="btn btn-ok w-50 ">Acheter</a>
@@ -612,31 +626,29 @@
 
         <div class="block-logo-money" style="padding: 30px 0">
             <div class="container">
-                <div class="row justify-content-center align-items-center g-3">
-                    <div class="col-3 col-lg-1">
-                        <img src="{{asset('images/logo-visa.png')}}" alt="logo-visa" class="w-100">
-                    </div>
-                    <div class="col-3 col-lg-1">
-                        <img src="{{asset('images/MasterCard_Logo.png')}}" alt="MasterCard_Logo" class="w-100">
-                    </div>
-                    <div class="col-3 col-lg-1">
-                        <img src="{{asset('images/Paypal-logo.png')}}" alt="Paypal-logo" class="w-100">
-                    </div>
-                    <div class="col-3 col-lg-1">
-                        <img src="{{asset('images/logo-equity.jpg')}}" alt="Paypal-logo" class="w-100">
-                    </div>
-                    <div class="col-3 col-lg-1">
-                        <img src="{{asset('images/logo-mpesa.jpg')}}" alt="logo-mpesa" class="w-75">
-                    </div>
-                    <div class="col-3 col-lg-1">
-                        <img src="{{asset('images/logo-airtel.jpg')}}" alt="logo-airtel" class="w-50">
-                    </div>
-                    <div class="col-3 col-lg-1">
-                        <img src="{{asset('images/logo-orange-money.jpg')}}" alt="logo-orange-money" class="w-50">
-                    </div>
-                    <div class="col-3 col-lg-1">
-                        <img src="{{asset('images/logo-afrimoney.png')}}" alt="logo-afrimoney" class="w-100">
-                    </div>
+                <div class="col-img">
+                    <img src="{{asset('images/logo-visa.png')}}" alt="logo-visa" class="w-100">
+                </div>
+                <div class="col-img">
+                    <img src="{{asset('images/MasterCard_Logo.png')}}" alt="MasterCard_Logo" class="w-100">
+                </div>
+                <div class="col-img">
+                    <img src="{{asset('images/Paypal-logo.png')}}" alt="Paypal-logo" class="w-100">
+                </div>
+                <div class="col-img">
+                    <img src="{{asset('images/logo-equity.jpg')}}" alt="Paypal-logo" class="w-100">
+                </div>
+                <div class="col-img">
+                    <img src="{{asset('images/logo-mpesa.png')}}" alt="logo-mpesa" class="w-75">
+                </div>
+                <div class="col-img">
+                    <img src="{{asset('images/logo-airtel.png')}}" alt="logo-airtel" class="w-50">
+                </div>
+                <div class="col-img">
+                    <img src="{{asset('images/logo-orange.png')}}" alt="logo-orange-money" class="w-50">
+                </div>
+                <div class="col-img">
+                    <img src="{{asset('images/logo-afrimoney.png')}}" alt="logo-afrimoney" class="w-100">
                 </div>
             </div>
         </div>

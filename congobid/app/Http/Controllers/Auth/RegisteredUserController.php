@@ -38,21 +38,22 @@ class RegisteredUserController extends Controller
         $check_users = User::all();
         foreach ($check_users as $check_user) {
             if ($check_user->telephone == $request->get('telephone')) {
-                return redirect()->back()->with('success','le numero existe deja');
+                return redirect()->back()->with('telephone','le numero existe deja');
             }elseif($check_user->username == $request->get('pseudo')){
-                return redirect()->back()->with('success','le pseudo existe deja');
+                return redirect()->back()->with('pseudo','le pseudo existe deja');
             }
         }
         // dd($request->newsletter == "on");
         $request->validate([
             'pseudo' => ['required', 'string', 'max:255'],
             'telephone' => ['required', 'string', 'max:13'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            // 'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'nom' => $request->name,
+            'premom' => $request->prenom,
             'username' => $request->pseudo,
             'email' => $request->email,
             'role_id' => 5,

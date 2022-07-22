@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,maximum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>CongoBid | HomePage</title>
     <link href="https://fonts.googleapis.com/css2?family=BioRhyme:wght@300;400&family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
@@ -26,30 +26,34 @@
                         <div class="text-center">
                             <img src="{{asset('images\logo\logo.png')}}" class="mb-4" alt="" srcset="">
                             <h2>Connexion</h2>
-                            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Est, at.</p>
+                            <p>Acheter a un prix hors toute concurrence</p>
                         </div>
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <div class="card card-form">
+                    <div class="block-content-card">
+                        <div class="card card-form">
 
-                        <!-- Session Status -->
-                        <x-auth-session-status class="mb-4" :status="session('status')" />
+                            <!-- Session Status -->
+                            <x-auth-session-status class="mb-4" :status="session('status')" />
 
-                        <!-- Validation Errors -->
-                        <x-auth-validation-errors class="mb-4" :errors="$errors" />
+                            <!-- Validation Errors -->
+                            <x-auth-validation-errors class="mb-4 text-danger" :errors="$errors" />
 
-                        <form method="POST" action="{{ route('login') }}">
-                            @csrf
+                            <form method="POST" action="{{ route('login') }}">
+                                @csrf
 
-                            <!-- Email Address -->
-                            <div>
+                                <div class="form-group row g-3 g-lg-4">
+                                    <!-- Email Address -->
+                                <div class="col-12">
 
-                                <x-input id="telephone" placeholder="Téléphone" class="block mt-1 w-full" type="text" name="telephone" :value="old('telephone')" class="form-control" required autofocus />
+
+                                    <x-input id="telephone" placeholder="Téléphone" class="block mt-1 w-full" type="text" name="telephone" :value="old('telephone')" class="form-control" required autofocus />
+
                             </div>
 
                             <!-- Password -->
-                            <div class="mt-3 col-password">
+                            <div class="col-password col-12">
                                 <div class="show-password">
                                     <span class="iconify icon-hidden" data-icon="akar-icons:eye-slashed" id="icon_hidden"></span>
                                     <span class="iconify icon-show" data-icon="akar-icons:eye-open" id="icon_show"></span>
@@ -58,49 +62,53 @@
                             </div>
 
                             <!-- Remember Me -->
-                            <div class="block mt-3">
+                            <div class="col-12 d-flex justify-content-between">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="newsletter" id="remember_me">
                                     <label class="form-check-label" for="remember_me">
                                         {{ __('Se souvenir de moi') }}
                                     </label>
                                 </div>
+                                <div class="d-flex items-center justify-content-end">
+                                    @if (Route::has('password.request'))
+                                        <a class="resert-password" href="{{ route('password.request') }}">
+                                            {{ __('Mot de passe oublié ?') }}
+                                        </a>
+                                    @endif
+
+                                </div>
                             </div>
 
-                            <div class="d-flex items-center justify-content-end mt-2 mb-3">
-                                @if (Route::has('password.request'))
-                                    <a class="resert-password" href="{{ route('password.request') }}">
-                                        {{ __('Mot de passe oublié ?') }}
-                                    </a>
-                                @endif
 
-                            </div>
                             <div class="col-12">
                                 <x-button class="ml-3 btn w-100">
                                     {{ __('Connexion') }}
                                 </x-button>
                             </div>
-                        </form>
-                    </div>
-                    <div class="block-login-network">
-                        {{-- <div class="text-center mt-4">
-                            <p class="separator">Ou</p>
-                        </div> --}}
-                        {{-- <div class="row justify-content-center">
-                            <div class="col-5">
-                                <a href="{{ route('login.google') }}" class="icon">
-                                    <span class="iconify" data-icon="flat-color-icons:google"></span>
-                                </a>
+                                </div>
+                            </form>
+                            <div class="block-login-network">
+                                {{-- <div class="text-center mt-4">
+                                    <p class="separator">Ou</p>
+                                </div> --}}
+                                {{-- <div class="row justify-content-center">
+                                    <div class="col-5">
+                                        <a href="{{ route('login.google') }}" class="icon">
+                                            <span class="iconify" data-icon="flat-color-icons:google"></span>
+                                        </a>
+                                    </div>
+                                    <div class="col-5">
+                                        <a href="{{route('login.facebook')}}" class="icon">
+                                            <span class="iconify" data-icon="logos:facebook"></span>
+                                        </a>
+                                    </div>
+                                </div> --}}
+                                <div class="text-center mt-5" style="font-size: 1.3em">
+                                    <p class="link mb-0">Pas de compte ? <a href="/register">Inscrivez-vous</a></p>
+                                </div>
                             </div>
-                            <div class="col-5">
-                                <a href="{{route('login.facebook')}}" class="icon">
-                                    <span class="iconify" data-icon="logos:facebook"></span>
-                                </a>
-                            </div>
-                        </div> --}}
-                        <div class="text-center mt-5" style="font-size: 1.3em">
-                            <p class="link">Pas de compte ? <a href="/register">Inscrivez-vous</a></p>
                         </div>
+
                     </div>
                 </div>
             </div>

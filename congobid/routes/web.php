@@ -28,12 +28,13 @@ use App\Http\Controllers\FavorisController;
 |
 */
 
+// route pour le click du bouton compteur
+Route::post('click/count/btn/ajax', [GagnantController::class, 'store']);
+
 Route::get('/araka', [App\Http\Controllers\PaiementController::class, 'index'])->name('paiements.index');
 Route::post('/araka/store', [App\Http\Controllers\PaiementController::class, 'store'])->name('paiements.store');
 
-Route::get('/counter', function () {
-    return view('welcome');
-});
+
 
 // Route::get('/dashboard',[IndexController::class,'index'])->name('index');
 
@@ -44,9 +45,7 @@ require __DIR__ . '/auth.php';
 Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
 // ours rooutes
-Route::get('/chat', function () {
-    return view('pages.chat');
-});
+
 Route::get('/detail-article', function () {
     return view('pages.detail-article');
 });
@@ -59,6 +58,13 @@ Route::get('/tarif', function () {
 Route::get('/invite-user', function () {
     return view('pages.invite-user');
 })->name('parrainage');
+// send bid
+Route::get('/envoyer/bid', function () {
+    return view('pages.sendbid');
+});
+Route::post('/envoie-des-bids',[EnchersController::class,'sendBid'])->name('send.bid');
+
+// close
 Route::get('/famille', function () {
     return view('pages.famille');
 });
@@ -80,13 +86,6 @@ Route::get('/valid-account', function () {
     return view('pages.valid-account');
 });
 
-// bouclier achat
-Route::get('/articles/detail/produit/bouclier/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'bouclier'])->name('bouclier');
-// roi achat
-Route::get('/articles/detail/produit/roi/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'roi'])->name('roi');
-Route::get('/articles/detail/{duree}/produit/bloquer_enchere/{enchere}/{paquet}/{achat}', [DetailEnchereController::class, 'roiBlock'])->name('roi.block');
-// foundre achat
-Route::get('/articles/detail/produit/foudre/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'foudre'])->name('foudre');
 Route::get('/articles/detail/produit/{id}/{name}/{salon}', [SalonController::class, 'create'])->name('detail.article.salon');
 
 Route::get('/articles/detail/produit/{id}/{name}', [DetailEnchereController::class, 'index'])->name('detail.article');
@@ -100,28 +99,14 @@ Route::get('/articles/categorie/{id}', [ArticlesController::class, 'ArticlesCate
 Route::get('/articles/voir_detail/produit/{id}/{name}', [ArticlesController::class, 'detailArticle'])->name('show.detail.article');
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
-// click
-Route::get('/articles/detail/produit/click/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'click'])->name('click');
-// Route::get('/articles/auto_click/detail/{enchere}/produit/click/{paquet}/{name}', [DetailEnchereController::class, 'click_auto'])->name('click_auto');
-
-Route::get('/salons', [SalonController::class, 'index'])->name('clients.salons.index');
-// sanction
-Route::get('/enchere/sanction/{id}/{enchere}/{sanction}/{name}/{bid_cut}',[DetailEnchereController::class, 'sanction'])->name('sanction');
-// deblocage
-// achat_click
-Route::get('/enchere/sanction/{id}/{name}',[DetailEnchereController::class, 'achatClick'])->name('achat.click');
-// bid_auto
-Route::get('/activation/bid-auto/{name}',[DetailEnchereController::class, 'activationBid'])->name('bid.auto');
-
-Route::get('/enchere/deblocage/{enchere}/{sanction}/{name}/{bid_cut}/{id}',[DetailEnchereController::class, 'debloquer'])->name('debloquer');
-Route::get('/favoris',[FavorisController::class, 'favoris'])->name('favoris');
-Route::get('/favoris/supprimer/{id}/{name}',[FavorisController::class, 'delete'])->name('delete.favoris');
 
 Route::get('/comment-ca-marche', [InstructionController::class, 'index'])->name('clients.instructions.index');
 Route::get('/faq', [indexController::class, 'faq'])->name('faq');
 Route::get('/politique-de-confidentialite', [indexController::class, 'politique'])->name('politique');
 Route::get('/terme-et-condition', [indexController::class, 'condition'])->name('terme');
+// contact
 Route::get('/contact', [indexController::class, 'contact'])->name('contact');
+Route::post('/contact/requette/', [indexController::class, 'sendContact'])->name('contact.requette');
 
 Route::get('/nos-gagnants', [GagnantController::class, 'index'])->name('clients.gagnants.index');
 
@@ -147,17 +132,55 @@ Route::middleware(['clients'])->group(function () {
     Route::get("login/facebook/callback", [LoginController::class, 'handleFacebookCallback'])->name('facebook.callback');
 
     // end
-    // profil
-    Route::get('/achat-bid', [AchatController::class, 'index'])->name('clients.achat.bid');
-    Route::get('/achat-bid/success/{id}', [AchatController::class, 'success'])->name('achat.success');
+
 });
 
 
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
     Route::group(['middleware' => ['user']], function () {
+        Route::get('/counter', function () {
+            return view('welcome');
+        });
+        // chat
+        Route::get('/chat', function () {
+            return view('pages.chat');
+        });
+        Route::get('/enchere/deblocage/{enchere}/{sanction}/{name}/{bid_cut}/{id}',[DetailEnchereController::class, 'debloquer'])->name('debloquer');
+        // favorie
+        Route::get('/favoris',[FavorisController::class, 'favoris'])->name('favoris');
+        Route::get('/favoris/supprimer/{id}/{name}',[FavorisController::class, 'delete'])->name('delete.favoris');
+
+                // bouclier achat
+        Route::get('/articles/detail/produit/bouclier/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'bouclier'])->name('bouclier');
+        // roi achat
+        Route::get('/articles/detail/produit/roi/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'roi'])->name('roi');
+        Route::get('/articles/detail/{duree}/produit/bloquer_enchere/{enchere}/{paquet}/{achat}', [DetailEnchereController::class, 'roiBlock'])->name('roi.block');
+        // foundre achat
+        Route::get('/articles/detail/produit/foudre/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'foudre'])->name('foudre');
+
+            // click
+    Route::get('/articles/detail/produit/click/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'click'])->name('click');
+    // Route::get('/articles/auto_click/detail/{enchere}/produit/click/{paquet}/{name}', [DetailEnchereController::class, 'click_auto'])->name('click_auto');
+
+    Route::get('/salons', [SalonController::class, 'index'])->name('clients.salons.index');
+    // sanction
+    Route::get('/enchere/sanction/{id}/{enchere}/{sanction}/{name}/{bid_cut}',[DetailEnchereController::class, 'sanction'])->name('sanction');
+    // deblocage
+    // achat_click
+        Route::get('/enchere/sanction/{id}/{name}/{enchere_id}',[DetailEnchereController::class, 'achatClick'])->name('achat.click');
+        // bid_auto
+        Route::get('/activation/bid-auto/{name}',[DetailEnchereController::class, 'activationBid'])->name('bid.auto');
+
+        Route::get('/achat/bid/{id}/{valeur}',[DetailEnchereController::class, 'achatBid'])->name('achat.bids');
         Route::get('/profil', [ProfileController::class, 'index'])->name('profil');
+        // update profil
+        Route::get('/profil/update/{name}/{id}',[ProfileController::class, 'update'])->name('update.profil');
+        Route::post('/profil/update/',[ProfileController::class, 'updateProfile'])->name('update.profile');
         Route::get('/detail-enchere/{id}/{name}', [DetailEnchereController::class, 'openEnchere'])->name('show.detail');
+        // profil
+        Route::get('/achat-bid', [AchatController::class, 'index'])->name('clients.achat.bid');
+        Route::get('/achat-bid/success/{id}', [AchatController::class, 'success'])->name('achat.success');
     });
 
     Route::group(['middleware' => ['admin']], function () {

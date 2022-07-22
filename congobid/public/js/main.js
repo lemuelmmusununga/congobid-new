@@ -1,5 +1,6 @@
 
 const password = document.getElementById('password')
+const passwords = document.getElementById('password_confirmation')
 function isInputNumber(evt){
     var inputValid = String.fromCharCode(evt.which);
 
@@ -7,7 +8,7 @@ function isInputNumber(evt){
         evt.preventDefault();
     }
 }
-$('.show-password').click(function(){
+$('#show-password').click(function(){
     if(password.type === 'password'){
         password.setAttribute('type','text')
         $('#icon_hidden').addClass('hidden')
@@ -17,6 +18,19 @@ $('.show-password').click(function(){
         password.setAttribute('type','password')
         $('#icon_hidden').removeClass('hidden')
         $('#icon_show').removeClass('show')
+    }
+})
+
+$('#show-password_two').click(function(){
+    if(passwords.type === 'password'){
+        passwords.setAttribute('type','text')
+        $('#icon_hidden_two').addClass('hidden')
+        $('#icon_show_two').addClass('show')
+    }
+    else{
+        passwords.setAttribute('type','password')
+        $('#icon_hidden_two').removeClass('hidden')
+        $('#icon_show_two').removeClass('show')
     }
 })
 $('.btn-article').click(function(e){

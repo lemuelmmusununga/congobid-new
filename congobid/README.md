@@ -1,66 +1,57 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+CONGOBID
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+6.	Les messages d’erreurs apparaissent en anglais les mettre en français
 
-## About Laravel
+7.	Sortir un pop-up pour confirmation d’inscription ou pas à la fin de chaque inscription. Voir image 01 envoyé a Alex le 08 juillet 2022 à 17h05
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+PAGE MON COMPTE
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+8.	Sur la page « mon compte » enlever la bannière avec le logo congobid qui se trouve tout au-dessus. 
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+9.	Ajouter à l’extrême gauche tout au-dessus le bouton « accueil »et la petite flèche juste à côté exactement comme sur la page d’inscription. Sur la même ligne dans le même axe à l’extrême droite garder le menu hamburger.
 
-## Learning Laravel
+10.	Lorsque l’on clique sur le cercle qui devrait contenir la photo de profil, il est inactif. Agrandir le cercle en question. Mettre en juxtaposition à peu près à 5h du cercle un petit appareil photo pour montrer qu’on peut prendre une photo ou accéder à la galerie photo. Dans le cercle mettre un bonhomme monochrome (car par habitude il représente un profil sans image ou photo).
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+12.	Créer un lien « articles favoris » dans lequel on retrouvera la liste de tous les articles ainsi que leurs infos des articles que j’ai aimé en cliquant sur le cœur.
+ 
 
-## Laravel Sponsors
+15.	Créer une rubrique « options ». Un participant devrait être capable d’acheter des options au préalables et pouvoir les conserver dans un portefeuille d’options.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
 
-### Premium Partners
+PAGE MODIFIER MON PROFIL
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+18.	Retirer les boutons « choisir le fichier » et « aucun fichier sel. »
 
-## Contributing
+19.	Vu que nous ferons dorénavant des livraisons  il est important d’avoir des adresses précises donc sur exemple d’AMAZON ajouter des rubriques/champs : rubrique Pays (avec la liste des pays proposées en cliquant sur le champ ou sur le petit triangle dirigé vers le bas) ; rubrique adresse (dans le champ écrire en gris pale numéro, rue ou avenue ou boulevard) + 1 champ complémentaire (avec à l’intérieur en gris pale appartement, étage, immeuble) ; rubrique ville ; rubrique Etat/ Province/Région ; rubrique Code postal ; rubrique message pour la livraison
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+20.	Créer un bouton « modifier votre mot de passe » juste en bas du grand bouton bleu « Modifier ». Une fois que l’on clique dessus il devrait dérouler les rubriques et champs ancien mot de passe, nouveau mot de passe, confirmation du nouveau mot de passe à la fin un bouton modifier.
 
-## Code of Conduct
+PAGE DEDIDE POUR BIDER
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+21.	Le nombre de fois que vous avez cliqué juste au-dessus du bouton bider devrait être de la même taille que les chiffres du temps. Mettre les chiffres du temps et le nombre de clique au-dessus du bouton bider en vert et en gras. Mettre les chiffres du prix de l’enchère en noir et gras
 
-## Security Vulnerabilities
+22.	Utiliser le format du chrono du temps suivant par exemple  01 : 29 : 59 , sans « ‘, ‘’ »
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+23.	Voir image 02 envoyé à Alex le 08/07/2022 à 18h12. Reprendre l’écriture du temps et la petite icone la montre verte avec la date et le temps en vert, et remplacer l’écriture actuelle du temps.
 
-## License
+24.	On remarque la vitesse à laquelle on clique sur le bouton bider ne correspond pas la monter des chiffres du nombre de clique. On observe aussi que de temps en temps malgré que l’on clique sur le bouton bider le nombre de clique reste bloqué.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+25.	Il faut faire monter les options de façon a pouvoir y avoir accès sur l’entièreté de la page sans scroller 
+	
+
+PAGE D’ACCEUILLE
+
+
+29.	Sur la page d’accueil dans enchères futures quand l’enchère se passe le jour même il faudrait écrire aujourd’hui à la place de mettre la date
+
+
+
+31.	Il faudrait que les articles sur page d’accueil dans la partie « enchère en cours » apparaissent comme sur les pages nos articles avec en plus le compte à rebours actif.
+
+32.	On remarque l’heure n’est pas synchro
+
+33.	Le signal est vert lorsque vous avez souscrit pour cette catégorie donc vous autorise à bider, Lorsqu’il est statique l’enchère n’a pas encore commencé. Lorsqu’il est gris et qu’il flash cela veut vous n’avez pas le droit de bider car il est gris et que l’enchère est cours.
+
+
+35.	Lorsque vous cliquez sur ouvrir l’enchère il vous permet d’uniquement voir l’enchère sans y participer et ce, seulement si l’enchère avait déjà débuté. Si l’enchère n’a pas encore démarrer un pop-up sort et vous dit que l’enchère n’a pas encore démarré.  

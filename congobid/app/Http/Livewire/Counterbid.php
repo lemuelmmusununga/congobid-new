@@ -16,6 +16,7 @@ use App\Models\PivotClientsSalon;
 use App\Models\Roi;
 use App\Models\Foudre;
 use App\Models\Bouclier;
+use App\Models\Click_auto;
 use App\Models\Clicks;
 
 class Counterbid extends Component
@@ -23,12 +24,12 @@ class Counterbid extends Component
 
     public $counter = 0,$times=60,$munite = 0 ,$incrementation,$click_achat='';
     public $client = '';
-    public $user,$article,$update=[''],$clicks;
+    public $user,$article,$update=[''],$clicks,$first_treve;
     public $click ='';
     public $bid;
-    public $ids,$solde_bid,$solde_bonus,$bonus,$solde_non_tranferable,$enchere,$temps_restant_total;
+    public $ids,$solde_bid,$solde_bonus,$prix,$bonus,$solde_non_tranferable,$enchere,$temps_restant_total;
     public $listes=[];
-    public $getSalons=[],$paquet_enchere,$sec =0;
+    public $getSalons=[],$paquet_enchere,$sec =0,$time_bouclier;
     public $detail=[],$addclick,$block = 0,$listes_sentance,$article_titre,$article_paquet,$article_enchere,$roi,$foudre,$bouclier;
     // recuperation de l'article cliquer
     public $getart,$user_id,$etat,$temps_total_heure,$click_paye ;
@@ -43,10 +44,19 @@ class Counterbid extends Component
         $this->enchere = Enchere::where('article_id',$this->getart)->first();
         $this->roi = Roi::where('paquet_id',$article_paquet)->first();
         $this->bouclier = Bouclier::where('paquet_id',$article_paquet)->first();
+        $this->click_auto = Click_auto::where('paquet_id',$article_paquet)->first();
         $this->foudre = Foudre::where('paquet_id',$article_paquet)->first();
         $this->paquet_enchere = Paquet::where('id',$article_paquet)->first();
         $this->temps_total_heure = $temps_total_heure;
-
+        $this->prix = $this->enchere->article->prix . ' $';
+        $duree =$this->enchere->paquet->duree ;
+        $treve =$this->enchere->paquet->treve ;
+        $guerre = $this->enchere->paquet->guerre;
+        $duree_enchere = (($this->enchere->munite));
+        $this->first_treve = $duree - $treve ;
+        $this->second_treve = $this->first_treve - $this->enchere->paquet->guerre;
+        $this->tree_treve = $this->second_treve - $this->enchere->paquet->guerre;
+        // $first_treve = (($duree -  )- $treve);
         if (Auth::user()) {
             # code...
             $soldebid = Bideur::where('user_id',Auth::user()->id)->first();
@@ -84,9 +94,7 @@ class Counterbid extends Component
 
     }
 
-    public function autoclickbideur(){
-        dd(24);
-    }
+
     public function addclick($add){
 
         if ($add > 0  ) {
@@ -114,6 +122,41 @@ class Counterbid extends Component
     }
     public function render()
     {
+        if (Auth::user()->pivotbideurenchere->where('enchere_id',$this->article_enchere)->first()) {
+            # code...
+            $echeance = Auth::user()->pivotbideurenchere->where('enchere_id',$this->article_enchere)->first()->time_bouclier;
+            $this->time_bouclier = now()->format('i')-date('i',strtotime($echeance));
+            $duree =date('i',strtotime($this->bouclier->temps_blocage));
+            // bid-auto
+            $echeance_bid_auto = Auth::user()->pivotbideurenchere->where('enchere_id',$this->article_enchere)->first()->time_bid_auto;
+           $time_click_auto = now()->format('i')-date('i',strtotime($echeance));
+           $this->time_click = $time_click_auto;
+            $duree_click =$this->click_auto->temps_bidage;
+
+            if ($this->time_bouclier > $duree) {
+
+                # code...
+                // $bouclier = PivotBideurEnchere::where('enchere_id',$this->article_enchere)->where('user_id',Auth::user()->id)->first();
+                $thatall = Auth::user()->pivotbideurenchere->where('enchere_id',$this->article_enchere)->first();
+
+                $thatall->update([
+                    'time_bouclier'=>null,
+                    'bouclier'=>0
+                ]);
+            }
+            if ($duree_click < $this->time_click) {
+
+                # code...
+                // $bouclier = PivotBideurEnchere::where('enchere_id',$this->article_enchere)->where('user_id',Auth::user()->id)->first();
+                $thatall = Auth::user()->pivotbideurenchere->where('enchere_id',$this->article_enchere)->first();
+
+                $thatall->update([
+                    'time_bid_auto'=>null,
+                    'clicks'=>0
+                ]);
+            }
+        }
+
         // ajout des lors nous somme connecter
         if (Auth::user()) {
             $this->addbid = User::where('id',Auth::user()->id)->first();

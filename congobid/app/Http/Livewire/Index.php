@@ -153,7 +153,7 @@ use WithPagination;
     }
     public function render()
     {
-        //connexion user
+        //connexion user for add bid
         if (Auth::user()) {
             $this->addbid = User::where('id',Auth::user()->id)->first();
             $bideur = Bideur::where('user_id',Auth::user()->id)->first();
@@ -177,7 +177,7 @@ use WithPagination;
                     'balance' =>$balance
                 ]);
                 $this->addbid->update([
-                    $this->addbid->user_conneted_at ="2022-05-24 06:40:28"
+                    $this->addbid->user_conneted_at =null
                 ]);
             }
         }
@@ -195,7 +195,12 @@ use WithPagination;
                 'connected_at'=> 1
             ]);
         }
-
+        $enchere= Enchere::where('date_debut',now()->format('Y-m-d'))->where('heure_debut','<=',now()->format('H:i'))->first();
+        if ($enchere != null) {
+            $enchere->update([
+                'state'=>1
+            ]);
+        }
         $paquets = Paquet::where('statut_id', '3')->get();
         $communique = $communique->message ?? null;
         $user = Pivotbideurenchere::all();

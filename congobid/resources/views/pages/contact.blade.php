@@ -18,13 +18,21 @@
 
                     <div class="col-md-4">
                         <div class="card card-form">
-
-                            <form method="POST" action="{{ route('register') }}">
+                            @if (Session::has('danger'))
+                                <div class="alert alert-danger">
+                                    <span>{{Session::get('danger')}}</span>
+                                </div>
+                            @elseif(Session::has('success'))
+                                <div class="alert alert-success">
+                                    <span>{{Session::get('success')}}</span>
+                                </div>
+                            @endif
+                            <form method="POST" action="{{ route('contact.requette') }}">
                                 @csrf
                                 <!-- Name -->
                                 <div class="form-group row g-3">
                                     <div class="col-12">
-                                        <x-input placeholder="Entrez votre nom" id="name" class="block mt-1 w-full form-control" type="text" name="name" :value="old('name')" required autofocus />
+                                        <x-input placeholder="Entrez votre nom" id="nom" class="block mt-1 w-full form-control" type="text" name="nom" required autofocus />
                                     </div>
                                     <div class="col-12">
                                         <x-input placeholder="Entrez votre numero de telephone"  class="block mt-1 w-full form-control" type="telephone" name="telephone"  required autofocus />
@@ -34,10 +42,10 @@
                                         <x-input placeholder="Email" id="mail" class="block mt-1 w-full form-control" type="email" name="email" required autofocus />
                                     </div>
                                     <div class="col-12">
-                                        <textarea name="" id="" cols="30" class="form-control" rows="10" aria-placeholder="messages"></textarea>
+                                        <textarea name="content" id="" cols="30" class="form-control" rows="10" aria-placeholder="messages"></textarea>
                                     </div>
                                     <div class="float-right">
-                                        <button class="btn btn-primary">Envoyer</button>
+                                        <button type="submit" class="btn btn-primary btn-contact">Envoyer</button>
                                     </div>
                                 </div>
                             </form>

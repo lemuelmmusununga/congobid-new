@@ -43,6 +43,7 @@
 
         @endforeach
 
+        @livewire('btnbidchat')
     </div>
 
 </div>
