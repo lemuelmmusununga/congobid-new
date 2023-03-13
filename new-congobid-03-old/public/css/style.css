@@ -1392,6 +1392,7 @@ footer .bundel-bottom p {
 
 .block-page .form-edit .fake-form-control label {
   line-height: 100%;
-  color: var(--blackColor);
+  color: #6c757d;
+  font-size: 10px;
 }
 /*# sourceMappingURL=style.css.map */
