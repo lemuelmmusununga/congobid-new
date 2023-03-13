@@ -63,6 +63,9 @@ Route::get('/mon_compte', function () {
 Route::get('/edit_compte', function () {
     return view('pages.edit-profil');
 });
+Route::get('/historique', function () {
+    return view('pages.historique');
+});
 Route::get('/favoris', function () {
     return view('pages.favoris');
 });
