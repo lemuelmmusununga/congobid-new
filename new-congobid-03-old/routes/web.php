@@ -54,9 +54,18 @@ Route::get('/detail-article', function () {
 Route::get('/tarif', function () {
     return view('pages.tarif');
 });
-// Route::get('/favoris', function () {
-//     return view('pages.favoris');
-// });
+Route::get('/message', function () {
+    return view('pages.message');
+});
+Route::get('/mon_compte', function () {
+    return view('pages.profil-user');
+});
+Route::get('/edit_compte', function () {
+    return view('pages.edit-profil');
+});
+Route::get('/favoris', function () {
+    return view('pages.favoris');
+});
 Route::get('/invite-user', function () {
     return view('pages.invite-user');
 })->name('parrainage');

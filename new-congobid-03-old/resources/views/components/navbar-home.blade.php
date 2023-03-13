@@ -4,7 +4,7 @@
             <div class="row w-100 ms-0">
                 <div class="col-3">
                     <div class="block-avatar">
-                        <a href="/">
+                        <a href="/mon_compte">
                             <img src="images/bg2.jpg" alt="">
                         </a>
                     </div>
@@ -20,7 +20,7 @@
                 </div>
                 <div class="col-3 d-flex justify-content-end">
                     <div class="block-tools d-flex align-items-center">
-                        <a href="#">
+                        <a href="/message">
                             <i class="fi fi-rr-envelope"></i>
                         </a>
                         <a href="#" class="btn-menu">

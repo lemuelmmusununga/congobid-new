@@ -719,7 +719,7 @@ footer{
         .card{
             border: 1px solid var(--borderColor);
             border-radius: 12px;
-            padding: 10px 0;
+            padding: 14px 0;
             background:  #dc76cf;
             z-index: 1;
             &::before{
@@ -745,6 +745,53 @@ footer{
                 margin-bottom: 10px;
                 color: #59d15d;
                 text-shadow: 0 2px 0  #30ac34;
+            }
+        }
+        .card-piece{
+            height: 12vw;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            img{
+                width: 20px;
+                position: absolute;
+                &:first-child{
+                    top: -5px;
+                }
+                &:nth-child(2){
+                    left: 7px;
+                    bottom: 5px;
+                }
+                &:nth-child(3){
+                    right: 7px;
+                    bottom: 5px;
+                }
+                &:nth-child(4){
+                    bottom: 10px;
+                    left: 24px;
+
+                }
+                &:nth-child(5){
+                    left: 12px;
+                    top: 0;
+                }
+                &:nth-child(6){
+                    right: 12px;
+                    top: 0;
+                }
+                &:nth-child(7){
+                    bottom: -5px;
+                    left: 18px;
+                }
+                &:nth-child(8){
+                    bottom: -5px;
+                    right: 18px;
+                }
+                &:nth-child(9){
+                    bottom: 10px;
+                    right: 24px;
+                }
             }
         }
     }
@@ -854,14 +901,30 @@ footer{
             .avatar{
                 width: 30vw;
                 height: 30vw;
-                overflow: hidden;
                 border-radius: 100%;
                 margin-right: auto;
                 margin-left: auto;
                 margin-bottom: 10px;
+                position: relative;
+                .add-photo{
+                    display: flex;
+                    position: absolute;
+                    border: 1px solid var(--borderColor);
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 100%;
+                    cursor: pointer;
+                    justify-content: center;
+                    align-items: center;
+                    background: var(--yellowLight);
+                    right: 0;
+                    bottom: 7px;
+                }
                 img{
                     width: 100%;
-
+                    height: 100%;
+                    object-fit: cover;
+                    border-radius: 100%;
                 }
             }
             .name{
@@ -873,7 +936,8 @@ footer{
         }
     }
     .block-banner-profil.block-banner-profil-edit{
-        padding-bottom: 40px;
+        padding-bottom: 20px;
+        padding-top: 20px;
     }
     .block-content-profil{
         position: relative;
@@ -998,6 +1062,33 @@ footer{
                         }
                     }
                 }
+            }
+        }
+    }
+    .form-edit{
+        padding-bottom: 30px;
+        input.form-control, select.form-control{
+            height: 42px;
+            border-radius: 50px;
+        }
+        textarea{
+            border-radius: 50px;
+            resize: none;
+            height: 42px;
+            padding-top: 10px;
+        }
+        .fake-form-control{
+            border-radius: 50px;
+            border: 1px solid var(--borderColor);
+            font-size: 12px;
+            padding: 5px 10px;
+            background: var(--colorWhite);
+            input.form-control, select.form-control{
+                height: 30px;
+            }
+            label{
+                line-height: 100%;
+                color: var(--blackColor);
             }
         }
     }

@@ -199,7 +199,7 @@
                                     <a href="/envoyer/bid">
                                         <span class="iconify" data-icon="carbon:user-follow"></span>
                                         <span class="title">
-                                            Porte-feuille : 1 roi , 2 foudres 
+                                            Porte-feuille : 1 roi , 2 foudres
                                         </span>
                                     </a>
                                 </li>

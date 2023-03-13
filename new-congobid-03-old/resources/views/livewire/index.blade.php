@@ -111,90 +111,67 @@
                 <h4>Enchères en cours</h4>
             </div>
             <div class="container">
-                @foreach ($articles as $article)
-                    @php
-                        if (Auth::user() && $articles != null) {
-                            $pivot =
-                                $article->enchere->pivotbideurenchere
-                                    ->where('enchere_id', $article->enchere->id)
-                                    ->where('user_id', Auth::user()->id)
-                                    ->first() ?? '';
-                            //$pivot =(App\Models\PivotBideurEnchere::where('enchere_id',$article->enchere->id)->where('user_id',Auth::user()->id)->first());
-                        }
-                        $prix_roi = '';
-
-                        // dd($article->enchere->pivotbideurenchere->where('enchere_id',$article->enchere->id)->first(),$pivot,$article->enchere->id);
-                        // dd(date('d-m-Y', strtotime($article->enchere->date_debut)),now()->format('d-m-Y'),($article->enchere->state),$article->titre);
-
-                    @endphp
-                    @if (
-                        $article->enchere->munite * 60 + $article->enchere->seconde > 0 &&
-                            $article->enchere->state == 0 &&
-                            date('d-m-Y', strtotime($article->enchere->date_debut)) == now()->format('d-m-Y') &&
-                            date('d-m-Y H:i', strtotime($article->enchere->date_debut)) <= now(' Africa/kinshasa')->format('d-m-Y H:i'))
-                        <div id="slider-produit" class="owl-carousel carousel-car">
-                            <div class="item">
-                                <div class="card card-product">
-                                    <div class="container-fluid px-0">
-                                        <div class="row g-2 justify-content-center align-items-center">
-                                            <div class="col-6 d-flex">
-                                                <div class="item-badge">
-                                                    Lot n°32
-                                                </div>
-                                            </div>
-                                            <div class="col-6 d-flex justify-content-end">
-                                                <div class="item-badge">
-                                                    Toute les villes
-                                                </div>
-                                            </div>
-                                            <div class="col-12 d-flex justify-content-center">
-                                                <div class="time-block text-center">
-                                                    <h6 class="title mb-0"><i class="fi fi-rr-alarm-clock"></i> Enchère en cours</h6>
-                                                    <div class="time">
-                                                        00:09:12
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-5">
-                                                <div class="block-cat">
-                                                    <p>Catégorie :</p>
-                                                    <h5 class="mb-0">
-                                                        {{ $article->paquet->libelle ?? '' }}</h5>
-                                                </div>
-                                                <div class="block-cat">
-                                                    <p>Prix CongoBid :</p>
-                                                    <h5>{{ $article->prix }}$</h5>
-                                                    <p>Prix du Marché :</p>
-                                                    <h5 class="text-hidden mb-0">
-                                                        {{ $article->prix_marche }}$ </h5>
-                                                </div>
-                                            </div>
-                                            <div class="col-7">
-                                                <div class="card-img">
-                                                    <img src="{{ asset('images/articles/' . ($article->images->first()->lien == null ? '' : $article->images->first()->lien)) }}"
-                                                        alt="">
-                                                </div>
-                                            </div>
-                                            <div class="col-12 text-center">
-                                                <h2>{{ $article->titre }}</h2>
-                                                <p>{{ Str::substr($article->description, 0, 80) }}...
-                                                </p>
-                                                <a href="{{ route('show.detail.article', ['id' => $article->id, 'name' => $article->titre]) }}"
-                                                    class="link">Voir plus</a>
-                                            </div>
-                                            <div class="col-12 text-center">
-                                                <a href="#" class="btn btn-3d-rounded-sm">
-                                                    <i class="fi fi-rr-plus"></i> Participer à
-                                                    l'enchère
-                                                </a>
+                <div id="slider-produit" class="owl-carousel carousel-car">
+                    <div class="item">
+                        <div class="card card-product">
+                            <div class="container-fluid px-0">
+                                <div class="row g-2 justify-content-center align-items-center">
+                                    <div class="col-6 d-flex">
+                                        <div class="item-badge">
+                                            Lot n°32
+                                        </div>
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-end">
+                                        <div class="item-badge">
+                                            Toute les villes
+                                        </div>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <div class="time-block text-center">
+                                            <h6 class="title mb-0"><i class="fi fi-rr-alarm-clock"></i> Enchère en cours</h6>
+                                            <div class="time">
+                                                00:09:12
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <div class="block-cat">
+                                            <p>Catégorie :</p>
+                                            <h5 class="mb-0">
+                                                Simba</h5>
+                                        </div>
+                                        <div class="block-cat">
+                                            <p>Prix CongoBid :</p>
+                                            <h5>200$</h5>
+                                            <p>Prix du Marché :</p>
+                                            <h5 class="text-hidden mb-0">
+                                                300$ </h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-7">
+                                        <div class="card-img">
+                                            <img src="images/6.png"
+                                                alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <h2>Weston</h2>
+                                        <p>...
+                                        </p>
+                                        <a href="#"
+                                            class="link">Voir plus</a>
+                                    </div>
+                                    <div class="col-12 text-center">
+                                        <a href="#" class="btn btn-3d-rounded-sm">
+                                            <i class="fi fi-rr-plus"></i> Participer à
+                                            l'enchère
+                                        </a>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    @endif
-                @endforeach
+                    </div>
+                </div>
             </div>
         </div>
         <div class="block-enchere-in-progress">
@@ -455,13 +432,25 @@
     <div class="block-all-bids">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-10">
+                <div class="col-11">
                     <a href="#">
                         <div class="card">
-                            <div class="container-fluid">
+                            <div class="container-fluid px-2">
                                 <div class="row">
-                                    <div class="col-3"></div>
-                                    <div class="col-9">
+                                    <div class="col-4">
+                                        <div class="card-piece">
+                                            <img src="{{asset('images/piece.png')}}" alt="">
+                                            <img src="{{asset('images/piece.png')}}" alt="">
+                                            <img src="{{asset('images/piece.png')}}" alt="">
+                                            <img src="{{asset('images/piece.png')}}" alt="">
+                                            <img src="{{asset('images/piece.png')}}" alt="">
+                                            <img src="{{asset('images/piece.png')}}" alt="">
+                                            <img src="{{asset('images/piece.png')}}" alt="">
+                                            <img src="{{asset('images/piece.png')}}" alt="">
+                                            <img src="{{asset('images/piece.png')}}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="col-8">
                                         <h4>Obtenez gratuitement des bids</h4>
                                     </div>
                                 </div>

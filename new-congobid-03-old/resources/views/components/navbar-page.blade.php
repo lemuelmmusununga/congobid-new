@@ -8,7 +8,7 @@
           </div>
           <div class="col-6 d-flex justify-content-end align-items-center">
             <div class="block-avatar me-3">
-              <a href="#">
+              <a href="/mon_compte">
                 <img src="images/bg2.jpg" alt="">
               </a>
             </div>
