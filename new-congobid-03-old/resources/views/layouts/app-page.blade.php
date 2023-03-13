@@ -21,7 +21,7 @@
         <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
         <script src="{{ asset('js/slowNumber.js') }}"></script>
         <!-- Scripts -->
-        {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
+        <script src="{{ asset('js/app.js') }}" defer></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -35,14 +35,13 @@
     <body>
         {{-- @include('components.side-menu') --}}
         {{-- @include('components.side-filter') --}}
-        @include('components.navbar-home')
+        @include('components.navbar-page')
         <div class="overplay"></div>
         {{-- @include('components.header-index') --}}
         <div class="global-div">
             <div class="wrapper">
                 <div class="bg-linear">
                     @yield('content')
-                    @include('components.footer-home')
                 </div>
             </div>
 
@@ -111,7 +110,7 @@
         {{-- @include('components.footer-page') --}}
         {{-- @include('components.menu-chat-select') --}}
         {{-- @stack('modals') --}}
-        {{-- <script>
+        <script>
             var video= document.querySelector(".video")
 
                 $(".modal .btn-close").click(function(){
@@ -139,13 +138,19 @@
               }
             }).click(function(){ location.reload() });
           })
-        </script> --}}
+        </script>
         <!-- Scripts -->
+        <script src="{{ asset('js/jquery.simple.timer.js') }}"></script>
+        <script src="{{asset('js/jquery.min.js')}}"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
+        <script src="{{asset('js/jquery.countdown.min.js')}}"></script> <!-- The Final Countdown plugin for jQuery -->
+        <script src="{{asset('js/scripts.js')}}"></script> <!-- Custom scripts -->
         @livewireScripts
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-        <script src="{{asset('js/owl.carousel.min.js')}}"></script>
-        <script src="{{asset('js/scriptcarousel.js')}}"></script>
+        <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>
+        <script src="{{asset('js/jquery.blueimp-gallery.min.js')}}"></script>
+        <script src="{{asset('js/main.js')}}"></script>
+        {{-- <script src="{{asset('js/counterdown.js')}}"></script> --}}
         <script>
             var video= document.querySelector(".video")
 
