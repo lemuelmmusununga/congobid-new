@@ -18,8 +18,8 @@
         <link rel="stylesheet" href="{{asset('css/app.css')}}">
 
         @livewireStyles
-        <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-        <script src="{{ asset('js/slowNumber.js') }}"></script>
+        {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+        <script src="{{ asset('js/slowNumber.js') }}"></script> --}}
         <!-- Scripts -->
         {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -111,60 +111,15 @@
         {{-- @include('components.footer-page') --}}
         {{-- @include('components.menu-chat-select') --}}
         {{-- @stack('modals') --}}
-        {{-- <script>
-            var video= document.querySelector(".video")
-
-                $(".modal .btn-close").click(function(){
-                    video.pause();
-                    video.currentTime = 0;
-                })
-
-
-                 $(document).ready(function(){
-                    @if (session()->has('success'))
-                        $('.modal-success').addClass('show')
-                    @endif
-
-                    $('.close-modal-sm').click(function(){
-                        $('.modal-success').removeClass('show')
-                    })
-                });
-        </script>
-        <script>
-            $(function(){
-            $('.timer').startTimer({
-              onComplete: function(element){
-                $('html, body').addClass('bodyTimeoutBackground');
-                $('.btn').addClass('red');
-              }
-            }).click(function(){ location.reload() });
-          })
-        </script> --}}
-        <!-- Scripts -->
         @livewireScripts
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
+        {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="{{asset('js/owl.carousel.min.js')}}"></script>
         <script src="{{asset('js/scriptcarousel.js')}}"></script>
         <script>
-            var video= document.querySelector(".video")
-
-                $(".modal .btn-close").click(function(){
-                    video.pause();
-                    video.currentTime = 0;
-                })
-
-
-                 $(document).ready(function(){
-                    @if (session()->has('success'))
-                        $('.modal-success').addClass('show')
-                    @endif
-
-                    $('.close-modal-sm').click(function(){
-                        $('.modal-success').removeClass('show')
-                    })
-                });
-            $('.btn-menu').click(function(e){
+            document.ready(function(){
+                $('.btn-menu').click(function(e){
                 e.preventDefault();
                 $('.menu-sm').addClass('show');
                 $('.back-drop-menu').addClass('show');
@@ -177,6 +132,25 @@
                 $('.back-drop-menu').removeClass('show');
                 $('.menu-sm').removeClass('show');
             })
+            })
+            // var video= document.querySelector(".video")
+
+            //     $(".modal .btn-close").click(function(){
+            //         video.pause();
+            //         video.currentTime = 0;
+            //     })
+
+
+            //     $(document).ready(function(){
+            //     @if (session()->has('success'))
+            //         $('.modal-success').addClass('show')
+            //     @endif
+
+            //     $('.close-modal-sm').click(function(){
+            //         $('.modal-success').removeClass('show')
+            //     })
+            // });
+
         </script>
     </body>
 </html>

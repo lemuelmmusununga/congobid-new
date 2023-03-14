@@ -60,14 +60,26 @@ Route::get('/message', function () {
 Route::get('/mon_compte', function () {
     return view('pages.profil-user');
 });
+Route::get('/options', function () {
+    return view('pages.options');
+});
 Route::get('/edit_compte', function () {
     return view('pages.edit-profil');
+});
+Route::get('/all-salons', function () {
+    return view('pages.all-salons');
 });
 Route::get('/historique', function () {
     return view('pages.historique');
 });
 Route::get('/favoris', function () {
     return view('pages.favoris');
+});
+Route::get('/new-favoris', function () {
+    return view('pages.new-favoris');
+});
+Route::get('/detail-cat', function () {
+    return view('pages.detail-cat');
 });
 Route::get('/invite-user', function () {
     return view('pages.invite-user');
