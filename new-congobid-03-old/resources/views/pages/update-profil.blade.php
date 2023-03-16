@@ -1,158 +1,285 @@
-@extends('layouts.detail-profil')
+@extends('layouts.app-page')
 @section('content')
-
-    <div class="wrapper">
-        <div class="banner-user">
-            <div class="container-fluid" style="height: inherit">
-                <div class="content d-flex justify-content-center align-items-center" style="height: inherit; flex-direction:column">
-                    <div class="block-avatar-profil">
-
-                        <div class="upload-file" data-bs-toggle="modal" data-bs-target="#modal-upload-file-profil">
-                            <label>
-                                <span  class="iconify" data-icon="fa:camera"></span>
-                            </label>
-                        </div>
-
-                        {{-- @if ((Auth::user()->avatar == "default.png") || (Auth::user()->avatar == "default.jpg") || (Auth::user()->avatar == "users/default.png") || (Auth::user()->avatar == "") || (Auth::user()->avatar == null))
-                            <div class="icon">
-                                <span class="iconify" data-icon="bx:bx-user"></span>
-                            </div>
-                        @else
-                            <div class="avatar">
-                                @if (Auth::user()->role_id == 5)
-                                    <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="Image de {{ Auth::user()->username }}">
-                                    @else
-                                    <img src="{{ asset('images/profil/' . Auth::user()->avatar) }}" alt="Image de {{ Auth::user()->username }}">
-                                    @endif
-                                </div>
-                                @endif --}}
-
-                            @if ((Auth::user()->avatar == "default.png") || (Auth::user()->avatar == "default.jpg") || (Auth::user()->avatar == "users/default.png") || (Auth::user()->avatar == "") || (Auth::user()->avatar == null))
-                                <div class="avatar">
-                                    <img src="{{ asset('images/users/default.png') }}" alt="Image de {{ Auth::user()->username }}">
-                                </div>
-                            @else
-                                    <div class="avatar">
-                                        <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="Image de {{ Auth::user()->username }}">
-                                    </div>
-                                @endif
-                            </div>
-                            {{-- <div class="block-name mt-2">
-                                <h5>{{Auth::user()->nom}}</h5>
-                                <span>{{ '@' }}{{Auth::user()->username}}</span>
-                            </div> --}}
-                </div>
-
-            </div>
+<div class="block-page">
+    <div class="block-banner-profil block-banner-profil-edit">
+      <div class="content-banner text-center">
+        <div class="avatar">
+            @if (Auth::user()->avatar != null)
+                <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="">
+            @else
+                <img src="{{ asset('images/users/default.png') }}" alt="">
+            @endif
+          <div class="add-photo" data-bs-toggle="modal" data-bs-target="#modal-upload-file-profil">
+            <i class="fi fi-rr-camera"></i>
+          </div>
         </div>
-        <div class="content-link">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="card justify-content-center" style="margin-top: -88px">
-                            <div class="col-lg-12 px-0">
-                                <div class="">
-                                    {{-- <a href="/" class="back">
-                                        <span>
-                                            <span class="iconify" data-icon="la:angle-left"></span>
-                                        </span>
-                                        Accueil
-                                    </a> --}}
-
-                                </div>
-
-                            </div>
-                            <div class="row ">
-
-                                <div class="col-lg-4">
-
-                                </div>
-                                <div class="col-lg-4 ">
-                                    <form method="POST" action="{{ route('update.profile') }}" enctype="multipart/form-data">
-                                        @csrf
-                                        <div class="form-group row g-3">
-                                            <div class="col-12">
-                                                <x-input value="{{Auth::user()->nom}}" placeholder="Entrez votre nom" id="name" class="block rounded-pill mt-1 w-full form-control" type="text" name="name"  required autofocus />
-                                            </div>
-                                            <div class="col-12">
-                                                <x-input value="{{Auth::user()->username}}" placeholder="Entrez votre pseudonyme" id="pseudo" class="block rounded-pill mt-1 w-full form-control" type="text" name="pseudo"  required autofocus />
-                                            </div>
-                                            <div class="col-12">
-                                                <input value="{{Auth::user()->telephone}}" placeholder="Entrez votre numero de telephone" id="telephone" class="block rounded-pill mt-1 w-full form-control" type="telephone" maxlength="12" name="telephone" required autofocus />
-                                            </div>
-                                            <!-- Email Address -->
-                                            <div class="col-12">
-                                                <x-input value="{{Auth::user()->email}}" placeholder="Entrez votre adresse e-mail" id="email" class="block rounded-pill mt-1 w-full form-control" type="email" name="email" />
-                                            </div>
-                                            <!-- Password -->
-
-                                            <div class="col-12">
-                                                <x-button class="ml-4 btn-primary rounded-pill w-100 btn mt-3">
-                                                    Modifier
-                                                </x-button>
-                                            </div>
-
-                                        </div>
-                                    </form>
-                                </div>
-                                <div class="col-lg-4"></div>
-                            </div>
-                        </div>
-
-                    </div>
-
-
-
-                </div>
-            </div>
+        <div class="name">
+          Caleb
         </div>
+      </div>
     </div>
-
-    <!-- Button trigger modal -->
-
-
-  <!-- Modal -->
-  <div class="modal fade" id="modal-upload-file-profil" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Changer photo profil</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <form method="POST" action="{{ route('update.my.profile') }}" enctype="multipart/form-data">
+    <div class="block-content-profil block-content-profil-edit">
+      <div class="container">
+        <form method="POST" action="{{ route('update.profile') }}" enctype="multipart/form-data" class="form-edit">
             @csrf
-            <div class="modal-body">
-                @if ((Auth::user()->avatar == "default.png") || (Auth::user()->avatar == "default.jpg") || (Auth::user()->avatar == "users/default.png") || (Auth::user()->avatar == "") || (Auth::user()->avatar == null))
-                    <div class="avatar-profil">
-                        <img src="{{ asset('images/users/default.png') }}" alt="Image de {{ Auth::user()->username }}">
-                        <div class="upload-file">
-                            <label for="img-file">
-                            </label>
-                            <input type="file" id="img-file" name="profil" accept=".jpg, .png, .svg, .jpeg">
+      
+          <div class="form-group row g-3 justify-content-center mt-2">
+            <div class="col-11">
+              <input type="text" value="{{Auth::user()->nom}}" class="form-control" placeholder="Nom complet (tels que sur votre identité)" name="full-name"  name="name"  required autofocus >
+            </div>
+            <div class="col-11">
+                <input type="text" value="{{Auth::user()->username}}" class="form-control" placeholder="Speudo" name="full-name"  name="pseudo"  required autofocus  >
+            </div>
+            <div class="col-11">
+              <input type="telephone" class="form-control" placeholder="Numéro téléphone portable" value="{{Auth::user()->telephone}}" name="telephone" required autofocus>
+            </div>
+            <div class="col-11">
+              <input type="email" value="{{Auth::user()->email}}" class="form-control" placeholder="Email" type="email" name="email" >
+            </div>
+            <div class="col-11">
+              <textarea name="adresse" id="" cols="30" rows="2" class="form-control" placeholder="Adresse"></textarea>
+            </div>
+            <div class="col-11">
+                <select class="form-select form-control" aria-label="Default select example" name="ville">
+                    <option selected>Ville</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+            </div>
+            <div class="col-11">
+                <select class="form-select form-control" aria-label="Default select example" name="pays">
+                    <option selected>Pays</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+            </div>
+            <div class="col-11">
+                <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                    <option selected>Sexe</option>
+                    <option value="1">One</option>
+                    <option value="2">Two</option>
+                    <option value="3">Three</option>
+                  </select>
+            </div>
+            <div class="col-11">
+                <input type="text" class="form-control" placeholder="Lieu de naissance" name="lieu-naiss">
+            </div>
+            <div class="col-11">
+                <div class="fake-form-control">
+                    <div class="row g-1 align-items-center">
+                        <div class="col-3">
+                            <label for="">Date de naiss</label>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>J</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>M</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>A</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
                         </div>
                     </div>
-                @else
-                    <div class="avatar-profil">
-                        <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="Image de {{ Auth::user()->username }}">
-                        <div class="upload-file">
-                            <label for="img-file">
-
-                            </label>
-                            <input type="file" name="profil" id="img-file" accept=".jpg, .png, .svg, .jpeg" value="img-file">
+                </div>
+            </div>
+            <div class="col-11">
+                <div class="fake-form-control">
+                    <div class="row g-1 align-items-center">
+                        <div class="col-4">
+                            <label for="">Pointure</label>
+                        </div>
+                        <div class="col-4">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>US</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                        <div class="col-4">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>EU</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
                         </div>
                     </div>
-                @endif
+                </div>
             </div>
-            <div class="modal-footer d-flex justify-content-between">
-                <p  class="text-white btn btn-danger" data-bs-dismiss="modal" style="font-size: 16px">Supprimer</p>
-                <x-button type="button" class="btn btn-primary" type="submit">Sauvegarder</x-button>
+            <div class="col-11">
+                <div class="fake-form-control">
+                    <div class="row g-1 align-items-center">
+                        <div class="col-3">
+                            <label for="">Taille du haut</label>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>US</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>EU</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>Small</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                    </div>
+                </div>
             </div>
+            <div class="col-11">
+                <div class="fake-form-control">
+                    <div class="row g-1 align-items-center">
+                        <div class="col-3">
+                            <label for="">Taille du bas</label>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>US</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>EU</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>Small</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-11">
+                <div class="fake-form-control">
+                    <div class="row g-1 align-items-center">
+                        <div class="col-3">
+                            <label for="">Taille de la ceinture</label>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>US</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>EU</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                        <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                                <option selected>Small</option>
+                                <option value="1">One</option>
+                                <option value="2">Two</option>
+                                <option value="3">Three</option>
+                              </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-11">
+                <input type="password" class="form-control" placeholder="Lieu de naissance" name="mot-passe">
+            </div>
+            <div class="col-11">
+                <input type="text" class="form-control" placeholder="Lieu de naissance" name="pass-conf">
+              </div>
+            <div class="col-11">
+              <button class="btn btn-3d-rounded-sm w-100">
+                <i class="fi fi-rr-check"></i> Valider
+              </button>
+            </div>
+          </div>
         </form>
-
-
       </div>
     </div>
   </div>
-
+    <!-- Modal -->
+    <div class="modal fade" id="modal-upload-file-profil" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Changer photo profil</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" action="{{ route('update.my.profile') }}" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
+                    @if ((Auth::user()->avatar == "default.png") || (Auth::user()->avatar == "default.jpg") || (Auth::user()->avatar == "users/default.png") || (Auth::user()->avatar == "") || (Auth::user()->avatar == null))
+                        <div class="avatar-profil">
+                            <img src="{{ asset('images/users/default.png') }}" alt="Image de {{ Auth::user()->username }}">
+                            <div class="upload-file">
+                                <label for="img-file">
+                                </label>
+                                <input type="file" id="img-file" name="profil" accept=".jpg, .png, .svg, .jpeg">
+                            </div>
+                        </div>
+                    @else
+                        <div class="avatar-profil">
+                            <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="Image de {{ Auth::user()->username }}">
+                            <div class="upload-file">
+                                <label for="img-file">
+    
+                                </label>
+                                <input type="file" name="profil" id="img-file" accept=".jpg, .png, .svg, .jpeg" value="img-file">
+                            </div>
+                        </div>
+                    @endif
+                </div>
+                <div class="modal-footer d-flex justify-content-between">
+                    <p  class="text-white btn btn-danger" data-bs-dismiss="modal" style="font-size: 16px">Supprimer</p>
+                    <x-button type="button" class="btn btn-primary" type="submit">Sauvegarder</x-button>
+                </div>
+            </form>
+    
+    
+          </div>
+        </div>
+    </div>
 @endsection
 

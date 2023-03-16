@@ -26,18 +26,16 @@ class ArticlesController extends Controller
     }
 
     public function articles(){
-        $categories = Paquet::all();
+        $categories = Categorie::all();
+        $paquets = Paquet::all();
         $articles= Article::OrderBy('id','DESC')->paginate(1);
-
-        return view('pages.articles',compact('articles','categories'));
+        return view('pages.articles',compact('articles','categories','paquets'));
     }
 
     public function ArticlesCategorie($id){
         $id_paquet = $id;
-
         //$categories = Categorie::where('categorieid',$id)->first();
         $categories = Categorie::where('categorie_id',$id)->get();
-
         // $categories = Categorie::where('categorie_id',$id)->get();
         return view('pages.categorie-details',compact('categories','id_paquet','id'));
     }
@@ -50,13 +48,13 @@ class ArticlesController extends Controller
         return back()->with('success', 'Notication supprimé avec succes !');
     }
     // l'id provient de la page detail categorie
-    public function ArticlesAll($id,$nom){
+    public function ArticlesAll($id,$id_paquet){
         // $articles  = Article::where('salon',1)->get();
-
+        $nom ='bonjour';
         $articles  = Article::where('categorie_id',$id)->where('salon',1)->orderby('id','DESC')->get();
-        return view('pages.all-articles',compact('articles','nom'));
+        return view('pages.detail',compact('articles','nom'));
     }
-    //detail article
+    //detail article0
     public function detailArticle($id,$name){
         // $article = Article::where('id',$id)->first();
         $article = Article::where('id',$id)->first();

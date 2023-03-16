@@ -6,6 +6,7 @@ use App\Models\Favoris;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Notification;
+
 class FavorisController extends Controller
 {
     public function favoris(){
@@ -18,6 +19,28 @@ class FavorisController extends Controller
         }
         $favoris=Favoris::where('user_id',Auth::user()->id)->where('favoris',1)->orderby('id','DESC')->get();
         return view('pages.favoris',compact('favoris','notifications','publics'));
+    }
+    public function addfavoris($enchere,$user){
+        $enchere = $enchere;
+        $user = $user;
+        $find = Favoris::where('user_id',auth()->user()->id)->where('enchere_id',$enchere)->first();
+        if ($find == null) {
+            $create = Favoris::create([
+                'user_id' =>$user,
+                'enchere_id'=>$enchere,
+                'etat'=>1
+            ]);
+        }else if($find->etat == 1){
+            $find->update([
+
+                'etat'=>0
+            ]);
+        }else{
+            $find->update([
+
+                'etat'=>1
+            ]);
+        }
     }
     public function delete($id,$name){
         $favoris=Favoris::where('enchere_id',$id)->where('user_id',Auth::user()->id)->first();
