@@ -69,6 +69,9 @@ Route::get('/edit_compte', function () {
 Route::get('/all-salons', function () {
     return view('pages.all-salons');
 });
+Route::get('/tranfert-bid', function () {
+    return view('pages.transfertbid');
+});
 Route::get('/historique', function () {
     return view('pages.historique');
 });
