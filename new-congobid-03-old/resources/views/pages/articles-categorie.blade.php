@@ -11,7 +11,7 @@
             </div>
         </div>
     </div>
-    
+
     <div class="content-articles">
         <div class="container-fluid">
             <div class="d-flex justify-content-end mb-4">
