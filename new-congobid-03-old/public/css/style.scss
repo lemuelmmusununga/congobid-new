@@ -1179,3 +1179,41 @@ footer{
         }
     }
 }
+.modal{
+    .modal-content{
+        background: radial-gradient(circle at 50%, var(--colorWhite), var(--yellowLight));
+        border-radius: 12px;
+        border: 3px solid var(--colorGold);
+        padding: 0 10px;
+        .title-form{
+            font-size: 14px;
+            color: var(--orangeColor);
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+        .modal-header{
+            border: none!important;
+            .btn-close{
+                opacity: 1;
+                &:focus{
+                    box-shadow: none;
+
+                }
+            }
+        }
+        .modal-body{
+            .form-control {
+                border: 1px solid var(--borderColor);
+                font-size: 12px;
+                border-radius: 8px;
+                -webkit-box-shadow: none;
+                box-shadow: none;
+                border-radius: 24px;
+                &::placeholder{
+                    opacity: .6;
+                }
+            }
+
+        }
+    }
+}
