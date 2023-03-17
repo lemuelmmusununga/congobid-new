@@ -8,9 +8,21 @@
           </div>
           <div class="col-6 d-flex justify-content-end align-items-center">
             <div class="block-avatar me-3">
-              <a href="/mon_compte">
-                <img src="images/bg2.jpg" alt="">
-              </a>
+                @if (Auth::user())
+                  <a href="/profil">
+                      @if (Auth::user()->avatar != null)
+                          <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="">
+
+                      @else
+                          
+                      <img src="{{ asset('images/users/default.png') }}" alt="">
+                      @endif
+                  </a>
+                @else
+                    <a href="/login">
+                        <img src="{{ asset('images/users/default.png') }}" alt="">
+                    </a>
+                @endif
             </div>
             <div class="block-tools d-flex align-items-center">
               <!-- <a href="#">

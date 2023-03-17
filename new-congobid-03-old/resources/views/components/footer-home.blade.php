@@ -5,12 +5,12 @@
                 <div class="text-star text-white">
                     <ul>
                         <li>
-                            <a href="#">
+                            <a href="/contact">
                                 Contactez-nous
                             </a>
                         </li>
                         <li>
-                            <a href="#">
+                            <a href="/faq">
                                 FAQ
                             </a>
                         </li>
@@ -41,8 +41,8 @@
                 </div>
             </div>
             <div class="col-12 d-flex justify-content-center align-items-center text-center">
-                <a href="#" class="me-2">Termes et Conditions</a>
-                <a href="#">Politique de confidentialité</a>
+                <a href="/terme-et-condition" class="me-2">Termes et Conditions</a>
+                <a href="/politique-de-confidentialite">Politique de confidentialité</a>
             </div>
         </div>
         <div class="bundel-bottom">

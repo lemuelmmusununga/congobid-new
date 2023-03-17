@@ -4,18 +4,29 @@
             <div class="row w-100 ms-0">
                 <div class="col-3">
                     <div class="block-avatar">
-                        <a href="/mon_compte">
-                            <img src="images/bg2.jpg" alt="">
-                        </a>
-                    </div>
+                        @if (Auth::user())
+                            <a href="/profil">
+                                @if (Auth::user()->avatar != null)
+                                    <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="">
 
+                                @else
+                                    
+                                <img src="{{ asset('images/users/default.png') }}" alt="">
+                                @endif
+                            </a>
+                        @else
+                            <a href="/login">
+                                  <img src="{{ asset('images/users/default.png') }}" alt="">
+                            </a>
+                        @endif
+                    </div>
                 </div>
                 <div class="col-6 d-flex justify-content-center">
-                    <div class="logo-site d-flex align-items-center">
-                        <a href="index.html" class="block-logo d-flex">
-                            <img src="images/logo.png" alt="">
+                    {{-- <div class="logo-site d-flex align-items-center">
+                        <a href="/" class="block-logo d-flex">
+                            <img src="images/users/default.png" alt="">
                         </a>
-                    </div>
+                    </div> --}}
 
                 </div>
                 <div class="col-3 d-flex justify-content-end">
