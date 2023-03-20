@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Clients;
 
 use App\Http\Controllers\Controller;
 use App\Models\Bideur;
+use App\Models\Bloque;
 use App\Models\Encheregagner;
 use App\Models\Paquet;
 use App\Models\User;
@@ -29,6 +30,10 @@ class ProfileController extends Controller
             $notifications = '';
         }
         return view('pages.profil', compact('paquets', 'page','publics', 'notifications','solde','gagners'));
+    }
+    public function ListeBloked(){
+        $users = Bloque::where('user_blocked',Auth::user()->id)->whereMonth('created_at',now())->get();
+        return view('pages.historique', compact('users'));
     }
 
     public function update($name,$id){

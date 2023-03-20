@@ -48,11 +48,11 @@ class ArticlesController extends Controller
         return back()->with('success', 'Notication supprimé avec succes !');
     }
     // l'id provient de la page detail categorie
-    public function ArticlesAll($id,$id_paquet){
+    public function liste($id,$id_paquet,$nom){
+      
         // $articles  = Article::where('salon',1)->get();
-        $nom ='bonjour';
-        $articles  = Article::where('categorie_id',$id)->where('salon',1)->orderby('id','DESC')->get();
-        return view('pages.detail',compact('articles','nom'));
+        $articles  = Article::where('categorie_id',$id)->where('paquet_id',$id_paquet)->orderby('id','DESC')->get();
+        return view('pages.article-categories',compact('articles','nom'));
     }
     //detail article0
     public function detailArticle($id,$name){

@@ -74,7 +74,10 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->hasMany(Administrateur::class);
     }
-
+    public function blocked()
+    {
+        return $this->hasMany(Bloque::class, 'user_action');
+    }
     public function adminagents()
     {
         return $this->hasMany(Administrateur::class, 'administrateur_id');

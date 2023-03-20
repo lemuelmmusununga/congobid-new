@@ -8,29 +8,34 @@
         </div>
         <ul>
             <li>
-                <a href="#">Nos aticles</a>
+                <a href="/articles">Nos aticles</a>
             </li>
             <li>
-                <a href="#">Tarifs</a>
+                <a href="/tarif">Tarifs</a>
             </li>
             <li>
-                <a href="#">Enchères clôturées</a>
+                <a href="/salons">Enchères clôturées</a>
             </li>
             <li>
-                <a href="#">Salons</a>
+                <a href="/salons">Salons</a>
             </li>
             <li>
-                <a href="#">Chats</a>
+                <a href="/chat">Chats</a>
             </li>
             <li>
-                <a href="#">Comment ça marche</a>
+                <a href="{{ route('clients.instructions.index') }}">Comment ça marche</a>
             </li>
             <li>
                 <a href="#">Obtenir gratuitement des bids</a>
             </li>
         </ul>
-        <a href="#" class="btn btn-action">
-            Déconnexion
-        </a>
+
+        {{-- action="" method="POST" --}}
+        <form action="{{ route('logout') }}" method="post">
+        
+            <button type="submit" href="{{ route('logout') }}" class="btn btn-action">
+                Déconnexion
+            </button>
+        </form>
     </div>
 </div>

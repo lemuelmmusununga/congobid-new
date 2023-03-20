@@ -27,7 +27,7 @@
                                         <ul>
                                             @foreach ($paquets as $paquet)
                                                 <li>
-                                                    <a href="{{route('all.articles',['id'=>$categorie->id,'id_paquet'=>$paquet->id])}}">
+                                                    <a href="{{route('all.articles',['id'=>$categorie->id,'id_paquet'=>$paquet->id,'nom'=>$categorie->libelle])}}">
                                                         <span>{{$paquet->libelle}}</span>
                                                         <span>({{$paquet->prix_intervalle}})</span>
                                                         <span></span>

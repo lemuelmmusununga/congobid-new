@@ -72,9 +72,6 @@ Route::get('/all-salons', function () {
 Route::get('/tranfert-bid', function () {
     return view('pages.transfertbid');
 });
-Route::get('/historique', function () {
-    return view('pages.historique');
-});
 Route::get('/favoris', function () {
     return view('pages.favoris');
 });
@@ -123,7 +120,7 @@ Route::get('/articles/detail/produit/{id}/{name}', [DetailEnchereController::cla
 Route::get('/articles/detail/produit/{id}/{valeur}/{enchere_id}/{enchere_name}', [DetailEnchereController::class, 'achatBid'])->name('detail.article.enchere');
 Route::get('/suppressions/notification/{id}', [ArticlesController::class, 'sup'])->name('destroy.notif');
 
-Route::get('/articles/{id}/{id_paquet}', [ArticlesController::class, 'ArticlesAll'])->name('all.articles');
+Route::get('/articles/{id}/{id_paquet}/{nom}', [ArticlesController::class, 'liste'])->name('all.articles');
 Route::get('/encheres-en-cours', [EnchersController::class, 'index'])->name('show.enchers');
 Route::get('/encheres-futures', [EnchersController::class, 'future'])->name('show.enchers-future');
 Route::get('/articles', [ArticlesController::class, 'articles'])->name('show.articles');
@@ -176,6 +173,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/counter', function () {
             return view('welcome');
         });
+        Route::get('/historique',[ProfileController::class,'ListeBloked'])->name('liste.bloque');
         Route::get('/encheres-gagnees', [EnchersController::class, 'gagne'])->name('show.enchers-gagne');
         Route::get('/encheres-fermees', [EnchersController::class, 'ferme'])->name('show.enchers-ferme');
 
