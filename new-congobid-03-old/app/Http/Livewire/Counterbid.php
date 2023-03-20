@@ -94,7 +94,7 @@ class Counterbid extends Component
     }
      // temps bid auto
     public function bidAuto(){
-        dd('ac');
+        // dd('ac');
        $auto =  Auth::user()->pivotbideurenchere->where('enchere_id',$this->enchere->id)->first();
        $auto -> update([
             'temps_bid_auto'=>60,

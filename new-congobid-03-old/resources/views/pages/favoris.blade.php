@@ -1,89 +1,96 @@
-@extends('layouts.app')
+@extends('layouts.app-page')
 @section('content')
-
-    <div class="wrapper">
-        <div class="banner-sm">
-            <div class="container-fluid">
-                @if (Session::has('danger'))
-                <div class="alert alert-danger">
-                    <span>{{Session::get('danger')}}</span>
-                </div>
-                @elseif(Session::has('success'))
-                    <div class="alert alert-success">
-                        <span>{{Session::get('success')}}</span>
-                    </div>
-                @endif
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <h1>Favoris</h1>
-                    </div>
-                </div>
+<div class="block-page">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12">
+          <h4 class="text-center title">Favoris</h4>
+          <div class="all-message">
+            <div class="d-flex justify-content-end">
+              <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle btn-filter-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Filtrer
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Action</a></li>
+                  <li><a class="dropdown-item" href="#">Another action</a></li>
+                  <li><a class="dropdown-item" href="#">Something else here</a></li>
+                </ul>
+              </div>
             </div>
+          </div>
         </div>
-        <div class="block-all-videos">
-            <div class="container">
-                <div class="row justify-content-center align-items-center">
-                    @foreach ($favoris as $favori)
-                    <div class="col-lg-8">
-                            <div class="card-favoris">
-                                <div class="row">
-                                    <div class="col-lg-6 col-6">
-                                        <img src="{{asset('images/articles/'.$favori->enchere->article->images->first()->lien ?? '')}}" alt="" class="w-50 me-auto ms-auto d-block">
-                                    </div>
-                                    <div class="col-lg-6 col-6">
-                                        <h4>{{$favori->enchere->article->titre}}</h4>
-                                        <div class="row mt-4 mb-4">
-                                            <div class="col-6 col-lg-4">
-                                                <h5 class="price">Prix CongoBid</h5>
-                                                <span class="ammount">{{$favori->enchere->article->prix}}</span>
-                                            </div>
-                                            <div class="col-6 col-lg-4">
-                                                <h5 class="price">Prix Kinshasa</h5>
-                                                <span class="ammount"><strike style="color: black;">{{$favori->enchere->article->prix_marche}}</strike></span>
-                                            </div>
-                                        </div>
-                                        {{-- <a href="{{ route('show.detail', ['id' => $favori->enchere->article->id,'name'=>$favori->enchere->article->titre]) }}" class="btn-participer"><span class="iconify"
-                                            data-icon="akar-icons:plus"></span>Ouvrir l'enchere</a> --}}
-
-                                        <a href="{{route('delete.favoris',['id'=>$favori->enchere->article->id,'name'=>$favori->enchere->article->titre])}}" class="btn btn-sup">Supprimez</a>
-
-
-                                    </div>
-
-                                </div>
+      </div>
+    </div>
+</div>
+<div class="block-all-enchere mt-3 pb-4">
+    <div class="block-enchere-in-progress">
+      <div class="container">
+        <div class="row g-3">
+            @foreach ($favoris as $favori)
+                <div class="col-md-6 col-lg-4 col-xl-3 col-xxl-3">
+                    <div class="card card-product">
+                    <div class="container-fluid px-0">
+                        <div class="row g-2">
+                        <div class="col-6 d-flex">
+                            <div class="item-badge">
+                            Lot n°{{$favori->enchere?->article?->id}}
                             </div>
-
                         </div>
-                        @endforeach
+                        <div class="col-6 d-flex justify-content-end">
+                            <div class="item-badge">
+                            Toute les villes
+                            </div>
+                        </div>
+                        <div class="col-12 d-flex justify-content-center">
+                            <div class="time-block text-center">
+                            <h6 class="title mb-0">Enchère en cours</h6>
+                            <div class="time">
+                                00:09:12
+                            </div>
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <div class="block-cat">
+                            <p>Catégorie :</p>
+                            <h5 class="mb-0">Simba</h5>
+                            </div>
+                            <div class="block-cat">
+                            <p>Prix CongoBid :</p>
+                            <h5>{{$favori->enchere->article->prix}}</h5>
+                            <p>Prix du Marché :</p>
+                            <h5 class="text-hidden mb-0">{{$favori->enchere->article->prix_marche}}</h5>
+                            </div>
+                        </div>
+                        <div class="col-7">
+                            <div class="card-img">
+                            <img src="images/6.png" alt="">
+                            </div>
+                        </div>
+                        <div class="col-12 text-center">
+                            <h2>{{$favori->enchere->article->titre}}</h2>
+                            <p>Loremipsum dolor...</p>
+                            <a href="#" class="link">Voir plus</a>
+                        </div>
+                        <div class="col-6 text-center">
+                            <a href="#" class="btn btn-3d-rounded-sm w-100 h-100">
+                            Ouvrir un salon
+                            </a>
+                        </div>
+                        <div class="col-6 text-center">
+                            <a href="#" class="btn btn-3d-rounded-sm w-100">
+                            Voter pour cet article pour la prochaine enchère
+                            </a>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                 </div>
-            </div>
+            @endforeach
+         
         </div>
+      </div>
     </div>
-    <div class="block-logo-money" style="padding: 30px 0">
-        <div class="container">
-            <div class="row justify-content-center align-items-center g-3">
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/logo-visa.png')}}" alt="logo-visa" class="w-100">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/MasterCard_Logo.png')}}" alt="MasterCard_Logo" class="w-100">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/Paypal-logo.png')}}" alt="Paypal-logo" class="w-100">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/logo-mpesa.jpg')}}" alt="logo-mpesa" class="w-75">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/logo-airtel.jpg')}}" alt="logo-airtel" class="w-50">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/logo-orange-money.jpg')}}" alt="logo-orange-money" class="w-50">
-                </div>
-                <div class="col-3 col-lg-1">
-                    <img src="{{asset('images/logo-afrimoney.png')}}" alt="logo-afrimoney" class="w-100">
-                </div>
-            </div>
-        </div>
-    </div>
+  </div>
+
 @endsection

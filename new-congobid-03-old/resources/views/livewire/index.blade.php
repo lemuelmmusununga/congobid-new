@@ -19,11 +19,11 @@
                                             <div class="row g-1">
                                                 <div class="col-6 col-bg">
                                                     <p>Prix CongoBid</p>
-                                                    <h6>500$</h6>
+                                                    <h6>{{$promotion->prix}}</h6>
                                                 </div>
                                                 <div class="col-6 col-bg">
                                                     <p>Prix marché</p>
-                                                    <h6>500$ </h6>
+                                                    <h6>{{$promotion->prix_marche}}</h6>
                                                 </div>
                                             </div>
                                             <div class="block-content-img">

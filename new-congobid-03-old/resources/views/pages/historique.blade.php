@@ -23,132 +23,31 @@
               </div>
             </div>
             <div class="content-message">
-              <a href="#" class="link-message">
-                <div class="card-message">
-                  <div class="row align-items-center">
-                    <div class="col-8">
-                      <div class="block-info-message d-flex align-items-center">
-                        <div class="avatar">
-                          <img src="images/bg2.jpg" alt="">
-                        </div>
-                        <div class="text">
-                          <h6>Caleb Kuedisala</h6>
+              @foreach ($users as $user)
+                  
+                <a href="#" class="link-message">
+                  <div class="card-message">
+                    <div class="row align-items-center">
+                      <div class="col-8">
+                        <div class="block-info-message d-flex align-items-center">
+                          <div class="avatar">
+                            <img src="images/bg2.jpg" alt="">
+                          </div>
+                          <div class="text">
+                            <h6>{{$user->user?->username}}</h6>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div class="col-4 d-flex align-items-end" style="flex-direction: column;">
-                      <div class="indice">
-                        2
+                      <div class="col-4 d-flex align-items-end" style="flex-direction: column;">
+                        <div class="indice">
+                          {{$user->user?->blocked->count()}}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </a>
-              <a href="#" class="link-message">
-                <div class="card-message">
-                  <div class="row align-items-center">
-                    <div class="col-8">
-                      <div class="block-info-message d-flex align-items-center">
-                        <div class="avatar">
-                          <img src="images/bg2.jpg" alt="">
-                        </div>
-                        <div class="text">
-                          <h6>Caleb Kuedisala</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-4 d-flex align-items-end" style="flex-direction: column;">
-                      <div class="indice">
-                        2
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <a href="#" class="link-message">
-                <div class="card-message">
-                  <div class="row align-items-center">
-                    <div class="col-8">
-                      <div class="block-info-message d-flex align-items-center">
-                        <div class="avatar">
-                          <img src="images/bg2.jpg" alt="">
-                        </div>
-                        <div class="text">
-                          <h6>Caleb Kuedisala</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-4 d-flex align-items-end" style="flex-direction: column;">
-                      <div class="indice">
-                        2
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <a href="#" class="link-message">
-                <div class="card-message">
-                  <div class="row align-items-center">
-                    <div class="col-8">
-                      <div class="block-info-message d-flex align-items-center">
-                        <div class="avatar">
-                          <img src="images/bg2.jpg" alt="">
-                        </div>
-                        <div class="text">
-                          <h6>Caleb Kuedisala</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-4 d-flex align-items-end" style="flex-direction: column;">
-                      <div class="indice">
-                        2
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <a href="#" class="link-message">
-                <div class="card-message">
-                  <div class="row align-items-center">
-                    <div class="col-8">
-                      <div class="block-info-message d-flex align-items-center">
-                        <div class="avatar">
-                          <img src="images/bg2.jpg" alt="">
-                        </div>
-                        <div class="text">
-                          <h6>Caleb Kuedisala</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-4 d-flex align-items-end" style="flex-direction: column;">
-                      <div class="indice">
-                        2
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
-              <a href="#" class="link-message">
-                <div class="card-message">
-                  <div class="row align-items-center">
-                    <div class="col-8">
-                      <div class="block-info-message d-flex align-items-center">
-                        <div class="avatar">
-                          <img src="images/bg2.jpg" alt="">
-                        </div>
-                        <div class="text">
-                          <h6>Caleb Kuedisala</h6>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-4 d-flex align-items-end" style="flex-direction: column;">
-                      <div class="indice">
-                        2
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </a>
+                </a>
+              @endforeach
+              
 
             </div>
           </div>

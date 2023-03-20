@@ -57,7 +57,7 @@
             </div>
             <div class="col-11">
                 <a href="#" class="btn btn-3d-rounded-sm w-100">
-                <i class="fi fi-rs-fire-flame-curved"></i> Pouvoir
+                <i class="fi fi-rs-fire-flame-curved"></i> Options
                 </a>
             </div>
             <div class="col-11">
@@ -66,7 +66,7 @@
                 </a>
             </div>
             <div class="col-11">
-                <a href="#" class="btn btn-3d-rounded-sm w-100">
+                <a href="/favoris" class="btn btn-3d-rounded-sm w-100">
                 <i class="fi fi-rr-heart"></i> Favoris
                 </a>
             </div>
@@ -81,7 +81,7 @@
                 </a>
             </div>
             <div class="col-11">
-                <a href="#" class="btn btn-3d-rounded-sm w-100">
+                <a href="/historique" class="btn btn-3d-rounded-sm w-100">
                 <i class="fi fi-rr-clipboard-list-check"></i> Historiques
                 </a>
             </div>

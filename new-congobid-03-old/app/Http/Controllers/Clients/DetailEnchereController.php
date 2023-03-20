@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Article;
 use App\Models\Bideur;
+use App\Models\Bloque;
 use App\Models\Bouclier;
 use App\Models\Click;
 use App\Models\Click_auto;
@@ -201,6 +202,13 @@ class DetailEnchereController extends Controller
                     'user_id'=>$id,
                     'santance'=>$sanctance
                 ]);
+                $insert = Bloque::create([
+                    'enchere_id' => $enchere,
+                
+                    'user_blocked' => $id,
+                    'user_action'=>Auth::user()->id,
+                    
+                ]);
 
 
             }else{
@@ -232,6 +240,11 @@ class DetailEnchereController extends Controller
                 'suspendu_by' => Auth::user()->id,
                 'user_id'=>$id,
                 'santance'=>$sanctance
+            ]);
+            $insert = Bloque::create([
+                'enchere_id' => $enchere,
+                'user_blocked' => $id,
+                'user_action'=>Auth::user()->id,
             ]);
             return redirect()->back()->with('success','le bideur est sanctionner');
             // session()->flash('success','le bideur est sanctionner');
