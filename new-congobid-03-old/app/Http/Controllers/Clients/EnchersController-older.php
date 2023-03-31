@@ -91,39 +91,25 @@ class EnchersController extends Controller
                 foreach ($takusers as $key => $takuser) {
                     $first = $takuser->where('paquet_id',1)->where('user_id',$verify_num->id)->first();
                     $first->update([
-                        'roi'=>$first->roi + $request->get('taperoiSimba'),
-                        'foudre'=>$first->foudre + $request->get('tapeFoudreSimba'),
-                        'click'=>$first->click + $request->get('tapeClickSimba'),
-                        'bouclier'=>$first->bouclier + $request->get('tapeBouclierSimba'),
+                        'roi'=>$takuser->roi + $request->get('taperoiSimba'),
+                        'foudre'=>$takuser->foudre + $request->get('tapeFoudreSimba'),
+                        'click'=>$takuser->click + $request->get('tapeClickSimba'),
+                        'bouclier'=>$takuser->bouclier + $request->get('tapeBouclierSimba'),
                     ]);
-                    unset($request['taperoiSimba']);
-                    unset($request['tapeFoudreSimba']);
-                    unset($request['tapeClickSimba']);
-                    unset($request['tapeBouclierSimba']);
-                   
-                   
                     $second = $takuser->where('paquet_id',2)->where('user_id',$verify_num->id)->first();
                     $second->update([
-                        'roi'=>$second->roi + $request->get('taperoiBenda'),
-                        'foudre'=>$second->foudre + $request->get('tapeFoudreBenda'),
-                        'click'=>$second->click + $request->get('tapeClickBenda'),
-                        'bouclier'=>$second->bouclier + $request->get('tapeBouclierBenda'),
+                        'roi'=>$takuser->roi + $request->get('taperoiBenda'),
+                        'foudre'=>$takuser->foudre + $request->get('tapeFoudreBenda'),
+                        'click'=>$takuser->click + $request->get('tapeClickBenda'),
+                        'bouclier'=>$takuser->bouclier + $request->get('tapeBouclierBenda'),
                     ]);
-                    unset($request['taperoiBenda']);
-                    unset($request['tapeFoudreBenda']);
-                    unset($request['tapeClickBenda']);
-                    unset($request['tapeBouclierBenda']);
                     $tree = $takuser->where('paquet_id',3)->where('user_id',$verify_num->id)->first();
                     $tree->update([
-                        'roi'=>$tree->roi + $request->get('taperoiTurbo'),
-                        'foudre'=>$tree->foudre + $request->get('tapeFoudreTurbo'),
-                        'click'=>$tree->click + $request->get('tapeClickTurbo'),
-                        'bouclier'=>$tree->bouclier + $request->get('tapeBouclierTurbo'),
+                        'roi'=>$takuser->roi + $request->get('taperoiTurbo'),
+                        'foudre'=>$takuser->foudre + $request->get('tapeFoudreTurbo'),
+                        'click'=>$takuser->click + $request->get('tapeClickTurbo'),
+                        'bouclier'=>$takuser->bouclier + $request->get('tapeBouclierTurbo'),
                     ]);
-                    unset($request['taperoiTurbo']);
-                    unset($request['tapeFoudreTurbo']);
-                    unset($request['tapeClickTurbo']);
-                    unset($request['tapeBouclierTurbo']);
 
                     // $four = $takuser->where('paquet_id',4)->where('user_id',$verify_num->id)->first();
                     // $four->update([
@@ -134,26 +120,18 @@ class EnchersController extends Controller
                     // ]);
                     $five = $takuser->where('paquet_id',5)->where('user_id',$verify_num->id)->first();
                     $five->update([
-                        'roi'=>$five->roi + $request->get('taperoiBulldozer'),
-                        'foudre'=>$five->foudre + $request->get('tapeFoudreBulldozer'),
-                        'click'=>$five->click + $request->get('tapeClickBulldozer'),
-                        'bouclier'=>$five->bouclier + $request->get('tapeBouclierBulldozer'),
+                        'roi'=>$takuser->roi + $request->get('taperoiBulldozer'),
+                        'foudre'=>$takuser->foudre + $request->get('tapeFoudreBulldozer'),
+                        'click'=>$takuser->click + $request->get('tapeClickBulldozer'),
+                        'bouclier'=>$takuser->bouclier + $request->get('tapeBouclierBulldozer'),
                     ]);
-                    unset($request['taperoiBulldozer']);
-                    unset($request['tapeFoudreBulldozer']);
-                    unset($request['tapeClickBulldozer']);
-                    unset($request['tapeBouclierBulldozer']);
                     $six = $takuser->where('paquet_id',6)->where('user_id',$verify_num->id)->first();
                     $six->update([
-                        'roi'=>$six->roi + $request->get('taperoiSukisa'),
-                        'foudre'=>$six->foudre + $request->get('tapeFoudreSukisa'),
-                        'click'=>$six->click + $request->get('tapeClickSukisa'),
-                        'bouclier'=>$six->bouclier + $request->get('tapeBouclierSukisa'),
+                        'roi'=>$takuser->roi + $request->get('taperoiSukisa'),
+                        'foudre'=>$takuser->foudre + $request->get('tapeFoudreSukisa'),
+                        'click'=>$takuser->click + $request->get('tapeClickSukisa'),
+                        'bouclier'=>$takuser->bouclier + $request->get('tapeBouclierSukisa'),
                     ]);
-                    unset($request['taperoiSukisa']);
-                    unset($request['tapeFoudreSukisa']);
-                    unset($request['tapeClickSukisa']);
-                    unset($request['tapeBouclierSukisa']);
                 }
                 
                 Notification::create([
@@ -183,13 +161,13 @@ class EnchersController extends Controller
         //     'bouclier'=>$userBouclier,
         //     'foudre'=>$userFoudre 
         // ]);
-        $priceSimbas =Paquet::where('id',1)->get();
+        $prices =Paquet::all();
         $pricebendas = Paquet::where('id',2)->get();
         $pricesukisas = Paquet::where('id',6)->get();
         $pricebulldozers = Paquet::where('id',5)->get();
         $priceturbos = Paquet::where('id',3)->get();
         $pricebetons = Paquet::where('id',4)->get();
-        return view('pages.options',compact('priceSimbas','pricebendas','pricebetons','priceturbos','pricebulldozers','pricesukisas',));
+        return view('pages.options',compact('prices','pricebendas','pricebetons','priceturbos','pricebulldozers','pricesukisas',));
 
     }
 }

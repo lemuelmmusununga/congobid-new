@@ -23,9 +23,8 @@
               </div>
             </div>
             <div class="content-message">
-              @if ($users->count() > 0)
               @foreach ($users as $user)
-                    
+                  
                 <a href="#" class="link-message">
                   <div class="card-message">
                     <div class="row align-items-center">
@@ -48,11 +47,6 @@
                   </div>
                 </a>
               @endforeach
-              @else
-                <h4 class="text-center title">Pas d'historique pour ce moi</h4>
-
-              @endif
-             
               
 
             </div>

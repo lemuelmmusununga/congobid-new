@@ -11,7 +11,6 @@ class FavorisController extends Controller
 {
     public function favoris(){
         $publics = Notification::where('public',1)->get();
-
         if(Auth::user()){
             $notifications  = Notification::where('notification_id',Auth::user()->id)->get();
         }else{

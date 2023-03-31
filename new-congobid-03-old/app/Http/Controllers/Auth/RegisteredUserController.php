@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Bideur;
 use App\Models\Newsletter;
+use App\Models\Option;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -137,8 +138,19 @@ class RegisteredUserController extends Controller
                     'foudre' => 0,
                     'user_id' => $user->id,
                     'statut_id' => 3,
-                    'paquet_id' =>1
+                    'paquet_id' =>null
                 ]);
+                for ($i=1; $i < 7 ; $i++) { 
+                    # creation des option pour le nouveau enregistré
+                    Option::create([
+                        'click' => 0,
+                        'bouclier' => 0,
+                        'roi' => 0,
+                        'foudre' => 0,
+                        'user_id' => $user->id,
+                        'paquet_id' =>$i
+                    ]);
+                }
 
                 if ($request->newsletter == "on"){
                     Newsletter::create([

@@ -128,6 +128,7 @@
                                         <input type="text" name="meta_keywords" class="form-control "
                                             id="smallInput" placeholder="Entrez les clés pour les metas données">
                                     </div>
+                                    
                                     <div class="form-group">
                                         <label for="comment">Description de Meta données</label>
                                         <textarea class="form-control" name="meta_description" id="comment"
@@ -136,6 +137,11 @@
                                     <div class="form-group">
                                         <input class="form-check-input " type="checkbox" name="state" value="1" id="flexCheckDefault" x-on:click="open = ! open">
                                         <span class="text-primary"> Voulez-vous creer un salon ? </span>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="salon">Nombre de participant au salon</label>
+                                        <input type="text" name="nombre_salon" class="form-control "
+                                            id="salon" placeholder="Entrez les nombre de participants">
                                     </div>
                                     {{-- <div class="form-check">
                                         <label class="form-check-label">

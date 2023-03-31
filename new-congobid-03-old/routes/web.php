@@ -60,18 +60,18 @@ Route::get('/message', function () {
 Route::get('/mon_compte', function () {
     return view('pages.profil-user');
 });
-Route::get('/options', function () {
-    return view('pages.options');
-});
+// Route::get('/option', function () {
+//     return view('pages.options');
+// });
 Route::get('/edit_compte', function () {
     return view('pages.edit-profil');
 });
 Route::get('/all-salons', function () {
     return view('pages.all-salons');
 });
-Route::get('/tranfert-bid', function () {
-    return view('pages.transfertbid');
-});
+// Route::get('/tranfert-bid', function () {
+//     return view('pages.transfertbid');
+// });
 Route::get('/favoris', function () {
     return view('pages.favoris');
 });
@@ -88,7 +88,7 @@ Route::get('/invite-user', function () {
 Route::get('/envoyer/bid', function () {
     return view('pages.sendbid');
 });
-Route::post('/envoie-des-bids',[EnchersController::class,'sendBid'])->name('send.bid');
+
 
 // close
 Route::get('/famille', function () {
@@ -173,6 +173,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/counter', function () {
             return view('welcome');
         });
+        
         Route::get('/historique',[ProfileController::class,'ListeBloked'])->name('liste.bloque');
         Route::get('/encheres-gagnees', [EnchersController::class, 'gagne'])->name('show.enchers-gagne');
         Route::get('/encheres-fermees', [EnchersController::class, 'ferme'])->name('show.enchers-ferme');
@@ -225,7 +226,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/achat-bid/enchere/{enchere_id}/{enchere_titre}', [AchatController::class, 'achatBidEnchere'])->name('achat.bid.enchere');
         Route::get('/achat-bid/success/{id}', [AchatController::class, 'success'])->name('achat.success');
         Route::get('/newtech-rdc/supprimer/profil', [App\Http\Controllers\AccueilController::class, 'destroyProfil'])->name('sup.profil');
-
+        // envoie options
+        Route::post('/profil/envoie-des-bids',[EnchersController::class,'sendBid'])->name('send.bid');
+        Route::post('/profil/envoie-des-options',[EnchersController::class,'sendOption'])->name('send.option');
+        Route::get('/profil/tranfert-options',[EnchersController::class,'trans'])->name('trans.options');
+        Route::get('/profil/option',[EnchersController::class,'liste'])->name('liste.option');
     });
 
     Route::group(['middleware' => ['admin']], function () {

@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Click_auto;
 class Decrematation extends Component
 {
-    public $munite,$times=0,$progresse,$getart,$click_live,$incrementation_prix,$enchere,$temps_auto,$date_enchere,$heures_enchere ,$somme_temps_passer,$incrementation=0,$listes,$add;
+    public $munite,$times=0,$interval ,$progresse,$click_auto, $val,$heure_enchere,$solde_bonus,$getart,$click_live,$incrementation_prix,$enchere,$temps_auto,$date_enchere,$heures_enchere ,$somme_temps_passer,$incrementation=0,$listes,$add;
     // public function mount($getart){
     //     $this->enchere = Enchere::where('id',$this->getart)->first();
 
@@ -43,6 +43,7 @@ class Decrematation extends Component
 
         $this->times = $this->enchere->seconde ?? '';
         $this->munite = $this->enchere->munite ?? '';
+        
         $this->listes= PivotBideurEnchere::where('enchere_id', $this->getart)->orderby('valeur','DESC')->get();
         $this->click_auto = Click_auto::where('paquet_id',$this->enchere->paquet->id)->first();
     }
@@ -57,6 +58,7 @@ class Decrematation extends Component
 
         }
         $this->munites = $this->enchere->munite;
+        $this->interval = 1000;
         // $this->times = $this->enchere->seconde;
         $heur = now()->format('H') - date('H',strtotime($this->enchere->heure_debut));
         $munites =now()->format('i') - date('i',strtotime($this->enchere->heure_debut)) ;

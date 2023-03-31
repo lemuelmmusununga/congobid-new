@@ -30,7 +30,7 @@ use WithPagination;
     public $search ='',$getart,$favoris;
     public $article = '';
     public $participer ='',$roi,$foudre,$bouclier,$addbid;
-    public $incrementation=0,$iids,$like=0,$counter_like,$munite,$times=0,$favori_enchere,$favori_user,$favori_favori,$pivot,$boucliers;
+    public $incrementation=0,$v,$cutbid,$iids,$like=0,$counter_like,$munite,$times=0,$favori_enchere,$favori_user,$favori_favori,$pivot,$boucliers;
 
     public $artis='',$favoris_salon;
     public $getEnchere=[],$salons;
@@ -38,8 +38,7 @@ use WithPagination;
     public function mount(){
         // dd(Auth::user()->pivotbideurenchere->first()->roi ?? '');
         // $this->article = Article::all();
-        $this->salons = Salon::where('state',1)->where('created_at',null)->get();
-
+        $this->salons = Salon::where('state',0)->get();
         if (Auth::user()) {
             $this->addbid = User::where('id',Auth::user()->id)->first();
             $bideur = Bideur::where('user_id',Auth::user()->id)->first();
@@ -51,17 +50,14 @@ use WithPagination;
             $heur_acces = now()->format('H') - date('H',strtotime($this->addbid->user_conneted_at));
             if (now()->format('i') > date('i',strtotime($this->addbid->user_conneted_at))) {
                 $munite_acces = now()->format('i') - date('i',strtotime($this->addbid->user_conneted_at));
-
             } else {
                 $munite_acces = date('i',strtotime($this->addbid->user_conneted_at))-now()->format('i');
             }
             if (date('d-m-Y',strtotime($this->addbid->user_conneted_at)) == now()->format('d-m-Y') && $munite_acces==5) {
                $balance = $bideur->balance + 10;
-
                 $bideur->update([
                     'balance' =>$balance
                 ]);
-
             }
         }
 
@@ -218,9 +214,7 @@ use WithPagination;
         $paquets = Paquet::where('statut_id', '3')->get();
         $communique = $communique->message ?? null;
         $user = Pivotbideurenchere::all();
-
         $Categories = Article::where('titre','like',"%{$this->search}%")->orwhere('marque',"%{$this->search}%")->get();
-
         return view('livewire.index', compact('promotions', 'articles', 'paquets', 'communique', 'Categories','user'));
     }
 }

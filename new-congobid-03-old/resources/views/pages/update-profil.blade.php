@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="name">
-          Caleb
+          {{Auth::user()->pseudo}} 
         </div>
       </div>
     </div>

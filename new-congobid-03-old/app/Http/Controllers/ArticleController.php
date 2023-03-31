@@ -59,6 +59,7 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request->state === 'on' ? 1 :0);
 
          //try{
             $articlesCount = Article::all()->count();
@@ -98,7 +99,7 @@ class ArticleController extends Controller
                 'statut_id' => $request->statut_id,
                 'user_id' => Auth::user()->id,
                 'paquet_id' => $paquet_id,
-                'salon'=>$request->debut_enchere == null ? 1 : 0,
+                'salon'=>$request->state === 'on' ? 0 :1,
 
             ]);
 
@@ -114,16 +115,16 @@ class ArticleController extends Controller
                 $request->file('image')->move(public_path('images/articles/'), $request->titre. '.webp');
 
             }
-            if ($request->state == 1) {
+            if ($request->state === 'on') {
                 # code...
 
-                //Salon::create([
-                //    'libelle' => 'Salon #'.$article->id,
-                //    'statut_id' => $request->statut_id,
-                //    'article_id' => $article->id,
-                //    'state'=>0,
-                //    'limite' => $request->nombre,
-                //]);
+                Salon::create([
+                   'libelle' => 'Salon #'.$article->id,
+                   'statut_id' => $request->statut_id,
+                   'article_id' => $article->id,
+                   'state'=>0,
+                   'limite' => $request->nombre ??  $request->nombre_salon,
+                ]);
 
                 Enchere::create([
                     'click' => 0,

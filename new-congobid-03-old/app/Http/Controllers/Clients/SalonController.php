@@ -33,7 +33,8 @@ class SalonController extends Controller
         }
         $paquets = Paquet::where('statut_id', '3')->get();
         $articles = Article::where('statut_id', '3')->where('salon', 0)->get();
-        $salons = Salon::where('state',1)->get();
+        $salons = Salon::where('state',0)->get();
+        
         // $verifyDateSalon = Salon::where('created_at','>',now()->subDays(3))->get();
         $page = 2;
         return view('pages.salon',compact('articles', 'notifications','publics','page', 'paquets','salons'));
@@ -209,7 +210,7 @@ class SalonController extends Controller
             $enchere = Enchere::where('article_id', $articleid)->first();
             $getdate = now('Africa/kinshasa')->format('Y-m');
             $gethours = now('Africa/kinshasa')->format('d') + 1;
-            $getmunite = now('Africa/kinshasa')->format('18:30:00');
+            $getmunite = now('Africa/kinshasa')->format('m');
             Notification::create([
                 'message'=>Auth::user()->username.' Participation  au salon '.$name .' effectuer',
                 'user_id'=>null,
@@ -227,16 +228,13 @@ class SalonController extends Controller
                 } catch (\Throwable $th) {
                     return back()->with('danger','Veillez actualiser la page puis reessayer');
                 }
-
-
             }
-            return back()->with('success','Enregistrement effectué avec succès');
+                return back()->with('success','Enregistrement effectué avec succès');
             }else{
                 return back()->with('danger','Votre compte est insuffisant');
             }
         }else{
             return back()->with('danger','Vous faite deja parti de cet salon');
-
         }
     }
 

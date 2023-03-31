@@ -98,6 +98,11 @@ class User extends \TCG\Voyager\Models\User
         return $this->hasMany(Bideur::class);
     }
 
+    public function options()
+    {
+        return $this->hasMany(Option::class,'user_id');
+    }
+
     public function gagnants()
     {
         return $this->hasMany(Gagnant::class);
