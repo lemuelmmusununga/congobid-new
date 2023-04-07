@@ -204,7 +204,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         // active bouclier
         Route::get('active-bouclier/articles/detail/produit/active-click/{name}/{enchere}', [DetailEnchereController::class, 'activeBouclier'])->name('Active.bouclier');
 
-    Route::get('/salons', [SalonController::class, 'index'])->name('clients.salons.index');
+        Route::get('/mes-salons/{id}/{name}', [SalonController::class, 'mesSalons'])->name('clients.messalons');
+        Route::get('/salons', [SalonController::class, 'index'])->name('clients.salons.index');
+        Route::post('/creation-salons', [SalonController::class, 'salonCreate'])->name('createSalon');
     // sanction
     Route::get('/enchere/sanction/{id}/{enchere}/{sanction}/{name}/{bid_cut}',[DetailEnchereController::class, 'sanction'])->name('sanction');
     // deblocage

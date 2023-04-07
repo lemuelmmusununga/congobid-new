@@ -87,8 +87,8 @@ class ProfileController extends Controller
     public function updateProfile(Request $request){
         $user = User::where('id',Auth::user()->id)->first();
 
-
-
+        // dd($request, $user );
+        if ($user && $request->get('mot-passe') == $request->get('pass-conf')) {
             $user->update([
 
                 'nom' => $request->name,
@@ -97,11 +97,19 @@ class ProfileController extends Controller
                 'username' => $request->pseudo,
                 'email' => $request->email,
                 'telephone'=>$request->get('telephone'),
-
-
+                'adresse'=>$request->get('adresse'),
+                'lieu_naissance'=>$request->get('lieu-naiss'),
+                'sexe'=>$request->get('sexe'),
+                'pointure'=>$request->get('pointure'),
             ]);
 
-        return redirect()->back()->with('success', 'Mise à jour effectué !');
+            return redirect()->back()->with('success', 'Mise à jour effectué !');
+        } else {
+            return redirect()->back()->with('danger', 'Veillez verifier votre mot de passe !');
+
+        }
+        
+            
 
 
     }

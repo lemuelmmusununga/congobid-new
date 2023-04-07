@@ -11,8 +11,7 @@
                         <div class="form-group row g-3">
                             <div class="col-12">
                                 <div class="text-center">
-                                        <h4 class="title-form mb-0">Achat {{$simba->libe}}</h4>
-                                   
+                                    <h4 class="title-form mb-0">Achat {{$simba->libe}}</h4>
                                 </div>
                             </div>
                             <div class="col-12">

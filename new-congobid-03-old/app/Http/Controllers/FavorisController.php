@@ -27,7 +27,8 @@ class FavorisController extends Controller
             $create = Favoris::create([
                 'user_id' =>$user,
                 'enchere_id'=>$enchere,
-                'etat'=>1
+                'etat'=>1,
+                'favoris'=>1
             ]);
         }else if($find->etat == 1){
             $find->update([
@@ -40,6 +41,8 @@ class FavorisController extends Controller
                 'etat'=>1
             ]);
         }
+        return redirect()->back()->with('success','Favori ajouter avec succes');
+
     }
     public function delete($id,$name){
         $favoris=Favoris::where('enchere_id',$id)->where('user_id',Auth::user()->id)->first();

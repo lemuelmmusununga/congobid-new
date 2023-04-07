@@ -123,6 +123,7 @@ class ArticleController extends Controller
                    'statut_id' => $request->statut_id,
                    'article_id' => $article->id,
                    'state'=>0,
+                   'user_id'=>null,
                    'limite' => $request->nombre ??  $request->nombre_salon,
                 ]);
 

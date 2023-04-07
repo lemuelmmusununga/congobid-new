@@ -51,7 +51,7 @@
             </div>
             <div class="row g-3 justify-content-center mt-2">
             <div class="col-11">
-                <a href="{{route('update.profil',['name'=>Auth::user()->nom,'id'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100">
+                <a href="{{route('update.profil',['name'=>Auth::user()->nom??'pas de nom','id'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100">
                 <i class="fi fi-rr-user"></i> Profil
                 </a>
             </div>
@@ -61,8 +61,8 @@
                 </a>
             </div>
             <div class="col-11">
-                <a href="#" class="btn btn-3d-rounded-sm w-100">
-                <i class="fi fi-rr-users-alt"></i>Salons
+                <a href="{{route('clients.messalons',['id'=>Auth::user()->id,'name'=>Auth::user()->nom,])}}" class="btn btn-3d-rounded-sm w-100">
+                <i class="fi fi-rr-users-alt"></i>Mes Salons
                 </a>
             </div>
             <div class="col-11">
