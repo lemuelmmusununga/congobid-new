@@ -5,15 +5,16 @@
                 <div class="text-star text-white">
                     <ul>
                         <li>
-                            <a href="/contact">
-                                Contactez-nous
-                            </a>
-                        </li>
-                        <li>
                             <a href="/faq">
                                 FAQ
                             </a>
                         </li>
+                        <li>
+                            <a href="/contact">
+                                Contactez-nous
+                            </a>
+                        </li>
+
                         <li>
                             <a href="#">
                                 A propos de nous
