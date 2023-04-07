@@ -7,7 +7,7 @@
                         <input type="text" class="form-control" placeholder="Recherche...">
                     </div>
 
-                    <div class="col-4">
+                    <div class="col-5">
                         <div class="card card-carousel">
 
 
@@ -47,7 +47,7 @@
 
                     </div>
 
-                    <div class="col-8">
+                    <div class="col-7">
                         <div class="row g-2">
                             <div class="col-6">
                                 <div class="block-circle-video">
@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-center">
-                                <a href="/articles" class="btn btn-3d-rounded-sm">
+                                <a href="/articles" class="btn btn-3d-rounded-sm btn-article">
                                     Nos articles
                                 </a>
                             </div>
@@ -84,7 +84,7 @@
         <div class="bundel">
             <h5>Bienvenu chez CongoBid !</h5>
         </div>
-        <div class="block-btns">
+        <div class="block-btns pt-1">
             <div class="container">
                 <div class="row g-3">
                     <div class="col-6">
@@ -223,7 +223,7 @@
                                                     <h6 class="title mb-0"><i class="fi fi-rr-alarm-clock"></i> {{ (date('d-m-Y', strtotime($article->enchere?->date_debut))) == now('Africa/Kinshasa')->format('d-m-Y') ? 'Aujourd\'hui' : 'Date du début' }}</h6>
                                                     <div class="time">
                                                         <h5 class="text-success">{{ date('d-m-Y', strtotime($article->enchere->date_debut)) . ' à ' . date('H:i:s',strtotime($article->enchere->date_debut)) }}
-                                                        </h5>                                                    
+                                                        </h5>
                                                     </div>
                                                 </div>
                                             </div>
