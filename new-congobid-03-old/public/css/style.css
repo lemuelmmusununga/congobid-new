@@ -2,13 +2,13 @@
   --colorWhite: #fff;
   --redColor: #c24a2f;
   --blackColor: #000;
-  --yellowColor: #f9d665;
+  --yellowColor: #ffdf9a;
   --yellowLight: #fbff94;
   --orangeColor: #f27007;
   --darkenOrange: #dda60d;
   --orangeBtn: #ffbc63;
   --orangeBtnDark: #e19c3e;
-  --linearBg: linear-gradient(to bottom,var(--yellowLight),var(--colorWhite));
+  --linearBg: linear-gradient(to bottom,#fae3b2,var(--colorWhite));
   --borderColor: #707070;
   --colorTime: #198754;
   --linearCard: radial-gradient(circle at 50%, #f8f0de,  #ffdf9a);
@@ -223,7 +223,7 @@ a {
   padding: 14px 0;
   -webkit-transition: .3s;
   transition: .3s;
-  background: var(--yellowColor);
+  background: #ffd16f;
 }
 
 .navbar .block-avatar {
@@ -353,7 +353,7 @@ a {
 }
 
 .nav-page {
-  background: var(--yellowLight);
+  background: #ffd16f;
 }
 
 .bg-linear {
@@ -587,7 +587,7 @@ i::before {
 
 .block-all-enchere .bundel {
   background: var(--yellowColor);
-  border: 1px solid var(--borderColor);
+  /* border: 1px solid var(--borderColor); */
   padding: 10px 0;
   margin-bottom: 10px;
 }
@@ -605,7 +605,7 @@ i::before {
 }
 
 .block-all-enchere .card-product {
-  background: radial-gradient(circle at 50%, var(--colorWhite), var(--yellowLight));
+  background: radial-gradient(circle at 50%, var(--colorWhite), #ffdb8b);
   border: none;
   border-radius: 8px;
   -webkit-box-shadow: 0 5px 10px 0px rgba(0, 0, 0, 0.1);
@@ -668,13 +668,63 @@ i::before {
   font-weight: 600;
   color: var(--colorTime);
 }
+.block-all-enchere .card-product .block-cat .box {
+  position: relative;
+}
+
+.block-all-enchere .card-product .block-cat .box::before,
+.block-all-enchere .card-product .block-cat .box::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.block-all-enchere .card-product .block-cat.box::before {
+  background-color: #000;
+  z-index: 1;
+  animation: entrant 1s ease-in-out forwards;
+}
+
+.block-all-enchere .card-product .block-cat.box::after {
+  background-color: #000;
+  z-index: 2;
+  animation: sortant 1s ease-in-out forwards;
+}
+
+@keyframes entrant {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+
+@keyframes sortant {
+  from {
+    transform: translateX(0%);
+  }
+  to {
+    transform: translateX(100%);
+  }
+}
+
+.block-all-enchere .card-product .block-cat .bg-prix{
+  background-image: url('../polygone.png');
+  position: absolute;
+  height: 20px;
+}
 
 .block-all-enchere .card-product .block-cat {
   padding: 7px;
   border: 1px solid var(--borderColor);
   border-radius: 8px;
   margin-bottom: 10px;
-  background: #fceac2;
+  background: radial-gradient(circle at 50%, var(--colorWhite), #f98fff);;
+  /* background: #fceac2; */
   width: 85%;
   -webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
           box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);

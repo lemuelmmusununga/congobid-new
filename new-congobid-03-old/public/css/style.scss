@@ -2,13 +2,13 @@
     --colorWhite: #fff;
     --redColor: #c24a2f;
     --blackColor: #000;
-    --yellowColor: #f9d665;
+    --yellowColor: #ffdf9a;
     --yellowLight: #fbff94;
     --orangeColor: #f27007;
     --darkenOrange: #dda60d;
     --orangeBtn: #ffbc63;
     --orangeBtnDark: #e19c3e;
-    --linearBg: linear-gradient(to bottom,var(--yellowLight),var(--colorWhite));
+    --linearBg: linear-gradient(to bottom,#fae3b2,var(--colorWhite));
     --borderColor: #707070;
     --colorTime: #198754;
     --linearCard: radial-gradient(circle at 50%, #f8f0de,  #ffdf9a);
@@ -496,8 +496,9 @@ i{
     .item{
         padding: 10px;
     }
+  
     .card-product{
-        background: radial-gradient(circle at 50%, var(--colorWhite),  var(--yellowLight));
+        background: radial-gradient(circle at 50%, var(--colorWhite),  #ffdb8b);
         border: none;
         border-radius: 8px;
         box-shadow: 0 5px 10px 0px rgba($color: #000000, $alpha: .1);

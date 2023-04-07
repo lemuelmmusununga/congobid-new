@@ -230,12 +230,20 @@
                                             <div class="col-5">
                                                 <div class="block-cat">
                                                     <p>Catégorie :</p>
+                                                    <h1  style="font-size: 74px;
+                                                    font-weight: bolder;
+                                                    color: green;" class="border">2$</h1>
                                                     <h5 class="mb-0">
                                                         {{ $article->paquet->libelle ?? '' }}</h5>
                                                 </div>
+                                                {{-- <div class="bg-pr" style="">
+                                                    <img src="{{asset('images/polygone.png')}}"  alt="" srcset="">
+                                                </div> --}}
                                                 <div class="block-cat">
                                                     <p>Prix CongoBid :</p>
                                                     <h5>{{ $article->prix }}$</h5>
+                                                    <div class="box">Contenu à animer</div>
+                                                    
                                                     <p>Prix du Marché :</p>
                                                     <h5 class="text-hidden mb-0">
                                                         {{ $article->prix_marche }}$ </h5>

@@ -16,10 +16,10 @@
                                         <p>de l'article {{ $article->titre}} {{ $count}}</p>
                                     </div>
                                 </div>
-                                <button wire:click='click()'>4</button>
+                                {{-- <button wire:click='click()'>4</button> --}}
                                 <div class="col-12">
-                                    <input type="text" wire:model="getcount" class="form-control" name="participant" placeholder="Entrez le nombre de bideurs">
-                                    <input type="text" value=" {{$getcount}}" class="form-control" name="participant" placeholder="Entrez le nombre de bideurs">
+                                    {{-- <input type="text" wire:model="getcount" class="form-control" name="participant" placeholder="Entrez le nombre de bideurs"> --}}
+                                    <input type="text"  wire:model="getcount"  class="form-control" name="participant" placeholder="Entrez le nombre de bideurs">
                                     <input type="hidden" class="form-control" name="nombre" value="{{$article->prix}}" wire:model="prix" >
                                     <input type="hidden" class="form-control" name="articleid" value="{{$article->id}}">
                                     <input type="hidden" class="form-control" name="prix" value="{{$article->id}}">
