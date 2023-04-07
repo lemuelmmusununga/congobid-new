@@ -20,7 +20,7 @@
                 </ul>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="#">Tarifs</a>
+                <a class="nav-link active" href="/tarif">Tarifs</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="{{ route('clients.salons.index') }}">Salons</a>
@@ -29,7 +29,7 @@
                 <a class="nav-link" href="{{ route('clients.instructions.index') }}">Comment ça marche ?</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#">Nous contacter</a>
+                <a class="nav-link" href="/contact">Nous contacter</a>
               </li>
             </ul>
         </div>

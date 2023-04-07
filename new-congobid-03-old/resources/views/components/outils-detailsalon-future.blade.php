@@ -1,7 +1,6 @@
 
 
     @if (Auth::user() && Auth::user()->role_id == 5  )
-
         @if (Auth::user())
             <div class="row block-power  justify-content-between align-items-center">
                 <div class="col-md-6">
@@ -82,13 +81,10 @@
                 </div>
 
                 <div class="modal-footer d-flex justify-content-center align-items-center">
-                {{-- <button type="button" class="btn btn-no" data-bs-dismiss="modal"></button> --}}
-                <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
+                    {{-- <button type="button" class="btn btn-no" data-bs-dismiss="modal"></button> --}}
+                    <button type="button" class="btn btn-no" data-bs-dismiss="modal">Annuler</button>
 
+                </div>
             </div>
         </div>
     </div>
-
-
-
-</div>

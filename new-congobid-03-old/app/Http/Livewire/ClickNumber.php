@@ -22,7 +22,7 @@ class ClickNumber extends Component
 
     }
     public function mount(){
-      $this->client = auth()->id();
+      $this->client = auth()->user()->id;
 
     }
 

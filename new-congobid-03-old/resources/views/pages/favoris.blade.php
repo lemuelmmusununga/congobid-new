@@ -27,6 +27,8 @@
     <div class="block-enchere-in-progress">
       <div class="container">
         <div class="row g-3">
+          @if ($favoris->count())
+              
             @foreach ($favoris as $favori)
                 <div class="col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <div class="card card-product">
@@ -87,6 +89,10 @@
                     </div>
                 </div>
             @endforeach
+          @else
+            <h4 class="text-center title">Pas de Favoris pour l'instant</h4>
+
+          @endif
          
         </div>
       </div>

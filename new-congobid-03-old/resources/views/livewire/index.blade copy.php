@@ -855,7 +855,7 @@
                         </div>
                          {{-- modale annuler salon--}}
                         <div wire:ignore.self class="modal fade" id="modalEnchereAnnuler_{{ $salon->id}}"
-                        tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-body">

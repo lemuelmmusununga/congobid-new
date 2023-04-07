@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class="name">
-          Caleb
+          {{Auth::user()->pseudo}} 
         </div>
       </div>
     </div>
@@ -25,10 +25,10 @@
       
           <div class="form-group row g-3 justify-content-center mt-2">
             <div class="col-11">
-              <input type="text" value="{{Auth::user()->nom}}" class="form-control" placeholder="Nom complet (tels que sur votre identité)" name="full-name"  name="name"  required autofocus >
+              <input type="text" value="{{Auth::user()->nom}}" class="form-control" placeholder="Nom complet (tels que sur votre identité)"  name="name"  required autofocus >
             </div>
             <div class="col-11">
-                <input type="text" value="{{Auth::user()->username}}" class="form-control" placeholder="Speudo" name="full-name"  name="pseudo"  required autofocus  >
+                <input type="text" value="{{Auth::user()->username}}" class="form-control" placeholder="Speudo"  name="pseudo"  required autofocus  >
             </div>
             <div class="col-11">
               <input type="telephone" class="form-control" placeholder="Numéro téléphone portable" value="{{Auth::user()->telephone}}" name="telephone" required autofocus>
@@ -55,14 +55,7 @@
                     <option value="3">Three</option>
                   </select>
             </div>
-            <div class="col-11">
-                <select class="form-select form-control" aria-label="Default select example" name="sexe">
-                    <option selected>Sexe</option>
-                    <option value="1">One</option>
-                    <option value="2">Two</option>
-                    <option value="3">Three</option>
-                  </select>
-            </div>
+            
             <div class="col-11">
                 <input type="text" class="form-control" placeholder="Lieu de naissance" name="lieu-naiss">
             </div>
@@ -73,29 +66,17 @@
                             <label for="">Date de naiss</label>
                         </div>
                         <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
-                                <option selected>J</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                              </select>
+                            <input type="date" class="form-control" name="lieu-naiss"> 
                         </div>
                         <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                            <select class="form-select form-control" aria-label="Default select example" name="sexe" >
                                 <option selected>M</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                                <option value="1">Masculin</option>
+                                <option value="2">Feminin</option>
+                                <option value="3">Personnalisé</option>
                               </select>
                         </div>
-                        <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
-                                <option selected>A</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                              </select>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -106,21 +87,17 @@
                             <label for="">Pointure</label>
                         </div>
                         <div class="col-4">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
-                                <option selected>US</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
+                            <select class="form-select form-control" aria-label="Default select example" name="pointure">
+                                <option selected >US</option>
+                                @for ($i = 30; $i < 90; $i++)
+                                <option value="{{$i}}">
+                                      {{$i}} 
+                                    </option>
+                                    @endfor
+                          
                               </select>
                         </div>
-                        <div class="col-4">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
-                                <option selected>EU</option>
-                                <option value="1">One</option>
-                                <option value="2">Two</option>
-                                <option value="3">Three</option>
-                              </select>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -131,7 +108,7 @@
                             <label for="">Taille du haut</label>
                         </div>
                         <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                            <select class="form-select form-control" aria-label="Default select example" >
                                 <option selected>US</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -139,7 +116,7 @@
                               </select>
                         </div>
                         <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                            <select class="form-select form-control" aria-label="Default select example" >
                                 <option selected>EU</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -147,7 +124,7 @@
                               </select>
                         </div>
                         <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                            <select class="form-select form-control" aria-label="Default select example" >
                                 <option selected>Small</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -164,7 +141,7 @@
                             <label for="">Taille du bas</label>
                         </div>
                         <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                            <select class="form-select form-control" aria-label="Default select example" name="taille">
                                 <option selected>US</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -172,7 +149,7 @@
                               </select>
                         </div>
                         <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                            <select class="form-select form-control" aria-label="Default select example" >
                                 <option selected>EU</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -180,7 +157,7 @@
                               </select>
                         </div>
                         <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                            <select class="form-select form-control" aria-label="Default select example" >
                                 <option selected>Small</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -197,23 +174,23 @@
                             <label for="">Taille de la ceinture</label>
                         </div>
                         <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                            <select class="form-select form-control" aria-label="Default select example" name="tailleCeinture">
                                 <option selected>US</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                               </select>
                         </div>
-                        <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                        {{-- <div class="col-3">
+                            <select class="form-select form-control" aria-label="Default select example" >
                                 <option selected>EU</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
                                 <option value="3">Three</option>
                               </select>
-                        </div>
+                        </div> --}}
                         <div class="col-3">
-                            <select class="form-select form-control" aria-label="Default select example" name="sexe">
+                            <select class="form-select form-control" aria-label="Default select example" >
                                 <option selected>Small</option>
                                 <option value="1">One</option>
                                 <option value="2">Two</option>
@@ -224,13 +201,13 @@
                 </div>
             </div>
             <div class="col-11">
-                <input type="password" class="form-control" placeholder="Lieu de naissance" name="mot-passe">
+                <input type="password" class="form-control" placeholder="Mot de passe" name="mot-passe" required>
             </div>
             <div class="col-11">
-                <input type="text" class="form-control" placeholder="Lieu de naissance" name="pass-conf">
+                <input type="text" class="form-control" placeholder="Comfirmer le mot de passe" name="pass-conf" required>
               </div>
             <div class="col-11">
-              <button class="btn btn-3d-rounded-sm w-100">
+              <button class="btn btn-3d-rounded-sm w-100" type="submit">
                 <i class="fi fi-rr-check"></i> Valider
               </button>
             </div>

@@ -14,6 +14,7 @@ use App\Models\PivotClientsSalon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Sanction;
 use App\Models\Notification;
+use App\Models\Mesalon;
 
 class SalonController extends Controller
 {
@@ -33,10 +34,30 @@ class SalonController extends Controller
         }
         $paquets = Paquet::where('statut_id', '3')->get();
         $articles = Article::where('statut_id', '3')->where('salon', 0)->get();
-        $salons = Salon::where('state',1)->get();
+        $salons = Salon::where('state',0)->where('user_id',null)->get();
+        
         // $verifyDateSalon = Salon::where('created_at','>',now()->subDays(3))->get();
         $page = 2;
         return view('pages.salon',compact('articles', 'notifications','publics','page', 'paquets','salons'));
+
+
+    }
+    public function mesSalons($id,$name)
+    {
+        $publics = Notification::where('public',1)->get();
+
+        if(Auth::user()){
+            $notifications  = Notification::where('notification_id',Auth::user()->id)->get();
+        }else{
+            $notifications = '';
+        }
+        $paquets = Paquet::where('statut_id', '3')->get();
+        $articles = Article::where('statut_id', '3')->where('salon', 0)->get();
+        $salons = Salon::where('state',0)->where('user_id',$id)->get();
+        
+        // $verifyDateSalon = Salon::where('created_at','>',now()->subDays(3))->get();
+        $page = 2;
+        return view('pages.messalons',compact('articles', 'notifications','publics','page', 'paquets','salons'));
 
 
     }
@@ -119,6 +140,7 @@ class SalonController extends Controller
                     'statut_id' => '3',
                     'article_id' => $articleid,
                     'state'=>1,
+                    'user_id'=>Auth::user()->id,
                     'limite' => $participant,
                     'montant'=>$nombre,
                 ]);
@@ -152,6 +174,80 @@ class SalonController extends Controller
                 ]);
                 Notification::create([
                     'message'=>Auth::user()->username.' Participation  au salon '.$name .' effectuer',
+                    'user_id'=>null,
+                    'notification_id'=>Auth::user()->id,
+                ]);
+                // if ($conte->count() == $salon->limite) {
+                //     $salon->update([
+                //         'state'=>1
+                //     ]);52
+                //     $enchere->update([
+                //         'date_debut' => $getdate.'-'.$gethours.' '.$getmunite
+                //     ]);
+                // }
+                return back()->with('success','Création effectué avec succès');
+            }else{
+                return back()->with('danger','Votre compte est insuffisant');
+            }
+        }else{
+
+            return back()->with('danger','Vous avez déja souscrit a ce salon');
+
+        }
+    }
+    public function salonCreate(Request $request){
+        dd($request);
+        // $bideur = PivotClientsSalon::where('user_id',Auth::user()->id)->where('enchere_id',$id)->first();
+        // $article = Article::where('id', $articleid)->where('statut_id', '3')->first();
+        // $paquets = Paquet::where('id',$paquet)->where('statut_id', '3')->get();
+        $pivots = PivotClientsSalon::where('user_id', Auth::user()->id)->where('enchere_id',$request->enchereid)->first();
+
+        // dd($pivots );
+        // verification du balance
+        if ($pivots == null){
+            if(Auth::user()->bideurs->first()->balance >= $$request->nombre){
+                Auth::user()->bideurs->first()->update([
+                    'balance' => Auth::user()->bideurs->first()->balance - $$request->nombre,
+                ]);
+                Salon::create([
+                    'libelle' => 'Salon #'.$request->articleid,
+                    'statut_id' => '3',
+                    'article_id' => $request->articleid,
+                    'state'=>1,
+                    'user_id'=>Auth::user()->id,
+                    'limite' => $request->participant,
+                    'montant'=>$request->nombre,
+                ]);
+                $salon = Salon::all()->last();
+
+                PivotClientsSalon::create([
+                    'valeur' => '0',
+                    'statut_id' => '3',
+                    'user_id' => Auth::user()->id,
+                    'salon_id' => $salon->id,
+                    'enchere_id'=>$request->enchereid,
+                    'valeur'=>0,
+                    'montant'=>$request->nombre,
+                    'creator'=> 1
+                ]);
+                PivotBideurEnchere::create([
+                    'valeur' => '0',
+                    'statut_id' => '3',
+                    'user_id' => Auth::user()->id,
+                    'enchere_id' => $request->enchereid,
+                ]);
+
+                $conte = PivotClientsSalon::where('enchere_id', $request->enchereid)->get();
+                $salon = Salon::where('article_id', $request->articleid)->first();
+                $enchere = Enchere::where('article_id', $request->articleid)->first();
+                $getdate = now('Africa/kinshasa')->format('Y-m');
+                $gethours = now('Africa/kinshasa')->format('d') + 1;
+                $getmunite = now('Africa/kinshasa')->format('15:30:00');
+                $enchere->update([
+                    'participant' =>$request->participant
+                ]);
+                Notification::create([
+                    'message'=>Auth::user()->username.' Participation  au salon '.$request->name .' effectuer',
                     'user_id'=>null,
                     'notification_id'=>Auth::user()->id,
                 ]);
@@ -209,7 +305,7 @@ class SalonController extends Controller
             $enchere = Enchere::where('article_id', $articleid)->first();
             $getdate = now('Africa/kinshasa')->format('Y-m');
             $gethours = now('Africa/kinshasa')->format('d') + 1;
-            $getmunite = now('Africa/kinshasa')->format('18:30:00');
+            $getmunite = now('Africa/kinshasa')->format('m');
             Notification::create([
                 'message'=>Auth::user()->username.' Participation  au salon '.$name .' effectuer',
                 'user_id'=>null,
@@ -227,16 +323,13 @@ class SalonController extends Controller
                 } catch (\Throwable $th) {
                     return back()->with('danger','Veillez actualiser la page puis reessayer');
                 }
-
-
             }
-            return back()->with('success','Enregistrement effectué avec succès');
+                return back()->with('success','Enregistrement effectué avec succès');
             }else{
                 return back()->with('danger','Votre compte est insuffisant');
             }
         }else{
             return back()->with('danger','Vous faite deja parti de cet salon');
-
         }
     }
 

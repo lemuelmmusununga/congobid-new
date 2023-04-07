@@ -32,7 +32,7 @@
 
         {{-- action="" method="POST" --}}
         <form action="{{ route('logout') }}" method="post">
-        
+            @csrf   
             <button type="submit" href="{{ route('logout') }}" class="btn btn-action">
                 Déconnexion
             </button>

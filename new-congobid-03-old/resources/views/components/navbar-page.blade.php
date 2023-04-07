@@ -3,7 +3,7 @@
       <div class="container-fluid px-lg-3 px-xl-3 px-xxl-5 px-1">
         <div class="row w-100 ms-0 align-items-center">
           <div class="col-6">
-            <a href="/" class="back"><i class="fi fi-rr-angle-left"></i>Retour</a>
+            <a href="javascript:history.go(-1)" class="back"><i class="fi fi-rr-angle-left"></i>Retour</a>
 
           </div>
           <div class="col-6 d-flex justify-content-end align-items-center">

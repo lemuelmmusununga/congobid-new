@@ -45,13 +45,8 @@ class AuthenticatedSessionController extends Controller
 
     }
 
-    /**
-     * Destroy an authenticated session.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(Request $request)
+   
+    public function Destroys(Request $request)
     {
         $addbid = User::where('id',Auth::user()->id)->first();
         if ($addbid->user_conneted_at != null) {

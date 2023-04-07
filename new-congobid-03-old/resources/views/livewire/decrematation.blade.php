@@ -18,4 +18,17 @@
             <h4 class="text-success">{{   Str::length(Str::before(($munite /60), '.')) == 1 ? '0'. Str::before(($munite /60), '.'):Str::before(($munite /60), '.') }}:{{ Str::length( ($munite % 60)) == 1 ? ('0'.$munite % 60) : ($munite % 60)  }}:{{ Str::length( $times) == 1 ? '0'. $times :  $times}}  </h4></h4>
         </div>
     </div>
+    <script>
+        Livewire.on('start-countdown', ({ interval }) => {
+            setInterval(() => {
+                Livewire.emit('countdown');
+            }, interval);
+        });
+    
+        Livewire.on('countdown', ({ secondsRemaining }) => {
+            window.requestAnimationFrame(() => {
+                Livewire.redraw();
+            });
+        });
+    </script>
 </div>

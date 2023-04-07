@@ -30,7 +30,7 @@
             @if ($articles->count() <= 0)
                 <p class="text-center">Pas d'article pour l'instans.</p>
             @else
-              @foreach ($articles as $article)
+              @foreach ($articles as $key => $article)
                 <div class="col-md-6 col-lg-4 col-xl-3 col-xxl-3">
                     <div class="card card-product">
                       <div class="container-fluid px-0">
@@ -86,23 +86,29 @@
                                 class="link">Voir plus</a>
                           </div>
                           <div class="col-4 text-center">
-                              <a href="#" class="btn btn-3d-rounded-sm w-100 h-100">
+                              <a href="#" class="btn btn-3d-rounded-sm w-100 h-100" data-bs-toggle="modal" data-bs-target="#modalsalon{{$key}}">
                               Ouvrir un salon
                               </a>
                           </div>
                           <div class="col-4 text-center">
                             @if (Auth::user())
                                 <?php
-                                    $favori_enchere =App\Models\Favoris::where('enchere_id', $article->enchere?->id)->where('user_id', Auth::user()->id)->first() ?? '';
+                                    $favori_enchere =App\Models\Favoris::where('enchere_id', $article->enchere?->id)->where('user_id', Auth::user()->id)->first() ?? null;
                                 ?>
-                                @if (Auth::user() && $favori_enchere != null )
-                                    <a href="{{route('delete.favoris',['id'=>$article->enchere->id,'user'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
-                                        <i class="fi fi-rr-plus"></i> Favorie
-                                    </a>
+                                @if ($favori_enchere != null )
+                                  @if (Auth::user() )
+                                      <a href="{{route('delete.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100 text-black {{ $favori_enchere == null ?'card-salon':'card-salon-me'}}">
+                                          <i class="fi fi-rr-plus"></i> Favorie
+                                      </a>
+                                  @else
+                                      <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
+                                          <i class="fi fi-rr-plus"></i> Ajouter aux favories
+                                      </a>
+                                  @endif
                                 @else
-                                    <a href="{{route('add.favoris',['id'=>$article->enchere->id,'user'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
-                                        <i class="fi fi-rr-plus"></i> Ajouter aux favories
-                                    </a>
+                                  <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
+                                      <i class="fi fi-rr-plus"></i> Ajouter aux favories
+                                  </a>
                                 @endif
                             @else
                                 <a href="/register" class="btn btn-3d-rounded-sm w-100 h-100">
@@ -126,5 +132,7 @@
       </div>
     </div>
   </div>
+  @livewire('counte-mumber-salon',['articles'=>$articles])
 
+  
 @endsection

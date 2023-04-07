@@ -1,7 +1,7 @@
 <header class="">
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid px-lg-3 px-xl-3 px-xxl-5 px-1">
-            <a href="/" class="back text-white">
+            <a href="javascript:history.go(-1)" class="back text-white">
                 <span>
                     <span class="iconify" data-icon="la:angle-left"></span>
                 </span>
