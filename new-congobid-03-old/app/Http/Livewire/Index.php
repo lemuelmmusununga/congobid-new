@@ -27,7 +27,7 @@ class Index extends Component
 {
 use WithPagination;
     protected $paginationTheme = 'bootstrap';
-    public $search ='',$getart,$favoris;
+    public $search ='',$getart,$favoris,$mod="bonjour";
     public $article = '';
     public $participer ='',$roi,$foudre,$bouclier,$addbid;
     public $incrementation=0,$v,$cutbid,$iids,$like=0,$counter_like,$munite,$times=0,$favori_enchere,$favori_user,$favori_favori,$pivot,$boucliers;
@@ -214,6 +214,7 @@ use WithPagination;
         $paquets = Paquet::where('statut_id', '3')->get();
         $communique = $communique->message ?? null;
         $user = Pivotbideurenchere::all();
+      
         $Categories = Article::where('titre','like',"%{$this->search}%")->orwhere('marque',"%{$this->search}%")->get();
         return view('livewire.index', compact('promotions', 'articles', 'paquets', 'communique', 'Categories','user'));
     }

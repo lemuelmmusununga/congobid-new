@@ -86,7 +86,7 @@
                                 class="link">Voir plus</a>
                           </div>
                           <div class="col-4 text-center">
-                              <a href="#" class="btn btn-3d-rounded-sm w-100 h-100" data-bs-toggle="modal" data-bs-target="#modalsalon{{$key}}">
+                              <a href="#" class="btn btn-3d-rounded-sm w-100 h-100" data-bs-toggle="modal" data-bs-target="#modalsalonpers{{$key}}">
                               Ouvrir un salon
                               </a>
                           </div>
@@ -131,8 +131,23 @@
         </div>
       </div>
     </div>
+    @foreach ($articles as $key => $article)
+      <div wire:ignore.self class="modal fade" id="modalsalonpers{{$key}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                    
+                </div>
+            </div>
+        </div>
+      </div>
+    @endforeach
+    {{-- @livewire('counte-mumber-salon',['articles'=>$articles]) --}}
   </div>
-  @livewire('counte-mumber-salon',['articles'=>$articles])
 
   
 @endsection

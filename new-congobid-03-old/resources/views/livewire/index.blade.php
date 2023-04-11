@@ -193,6 +193,7 @@
                 </div>
             </div>
         </div>
+       
         <div class="block-enchere-in-progress">
             <div class="bundel text-center">
                 <h4>Enchères futures</h4>
@@ -204,7 +205,7 @@
                             @php
                                 $test = (($article->enchere?->date_debut) > (now('Africa/Kinshasa')->format('Y-m-d H:i:s')));
                             @endphp
-                        @if ($test && $article->enchere?->state == 0 )
+                            @if ($test && $article->enchere?->state == 0 )
                                 <div class="card card-product">
                                     <div class="container-fluid px-0">
                                         <div class="row g-2 justify-content-center align-items-center">
