@@ -34,8 +34,28 @@ class SalonController extends Controller
         }
         $paquets = Paquet::where('statut_id', '3')->get();
         $articles = Article::where('statut_id', '3')->where('salon', 0)->get();
-        $salons = Salon::where('state',0)->where('user_id',null)->get();
-        
+        $salons = Salon::where('state',0)->where('created_at','<=',now()->subDays(1)->format('d-m-y h:i:s'))->get();
+        $verifyDateSalons = Salon::where('created_at','>',now()->subDays(1)->format('d-m-y h:i:s'))->get();
+        if ($verifyDateSalons->count() > 0) {
+            foreach ($verifyDateSalons as $key => $salon) {
+            $checkPivots=PivotClientsSalon::where('salon_id',$salon->id)->get();
+                foreach ($checkPivots as $key => $checkPivot) {
+                    $getBideur = Bideur::where('user_id',$checkPivot->user_id)->first();
+                    $getmoney = PivotClientsSalon::where('id',$checkPivot->id)->first();
+                    $getBideur->update([
+                        'balance'=>$getmoney->montant + $getBideur->balance
+                    ]);
+                    $notification  = Notification::where('notification_id',$checkPivot->user_id)->first();
+                    $notification->create([
+                        'public'=>0,
+                        'user_id'=>$checkPivot->user_id,
+                        'message'=>'Vous etiez participant a l\'enchere du lot '.$salon->id.' de '.$salon->article->titre.' Malheuresement le quota de '.$salon->limite.' personnes n\'a pas éte atteint la retenu de '.$salon->montant.' bibs a été retourné sur votre compte.' ,
+                    ]);
+                    $getmoney->delete();
+                }
+                $salon->delete();
+            }
+        }
         // $verifyDateSalon = Salon::where('created_at','>',now()->subDays(3))->get();
         $page = 2;
         return view('pages.salon',compact('articles', 'notifications','publics','page', 'paquets','salons'));
@@ -51,13 +71,13 @@ class SalonController extends Controller
         }else{
             $notifications = '';
         }
-        $paquets = Paquet::where('statut_id', '3')->get();
-        $articles = Article::where('statut_id', '3')->where('salon', 0)->get();
-        $salons = Salon::where('state',0)->where('user_id',$id)->get();
-        
+        // $paquets = Paquet::where('statut_id', '3')->get();
+        // $articles = Article::where('statut_id', '3')->where('salon', 0)->get();
+        $salons = Salon::where('statut_id',3)->where('user_id',Auth::user()->id)->where('created_at','>',now()->subDays(1)->format('d-m-y h:i:s'))->get();
         // $verifyDateSalon = Salon::where('created_at','>',now()->subDays(3))->get();
+        // dd($salons);
         $page = 2;
-        return view('pages.messalons',compact('articles', 'notifications','publics','page', 'paquets','salons'));
+        return view('pages.messalons',compact( 'notifications','publics','salons'));
 
 
     }
@@ -196,18 +216,18 @@ class SalonController extends Controller
         }
     }
     public function salonCreate(Request $request){
-        dd($request);
         // $bideur = PivotClientsSalon::where('user_id',Auth::user()->id)->where('enchere_id',$id)->first();
         // $article = Article::where('id', $articleid)->where('statut_id', '3')->first();
         // $paquets = Paquet::where('id',$paquet)->where('statut_id', '3')->get();
         $pivots = PivotClientsSalon::where('user_id', Auth::user()->id)->where('enchere_id',$request->enchereid)->first();
-
-        // dd($pivots );
+    
+        
         // verification du balance
+        // dd( $pivots);
         if ($pivots == null){
-            if(Auth::user()->bideurs->first()->balance >= $$request->nombre){
+            if(Auth::user()->bideurs->first()->balance >= $request->nombre){
                 Auth::user()->bideurs->first()->update([
-                    'balance' => Auth::user()->bideurs->first()->balance - $$request->nombre,
+                    'balance' => Auth::user()->bideurs->first()->balance - $request->nombre,
                 ]);
                 Salon::create([
                     'libelle' => 'Salon #'.$request->articleid,

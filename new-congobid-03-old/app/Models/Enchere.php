@@ -55,6 +55,9 @@ class Enchere extends Model
         return $this->belongsTo(Article::class, 'article_id');
     }
     
-
+    public function pivotclientsSalon()
+    {
+        return $this->hasMany(PivotClientsSalon::class);
+    }
 
 }

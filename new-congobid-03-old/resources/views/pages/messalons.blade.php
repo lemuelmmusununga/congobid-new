@@ -18,7 +18,7 @@
                     <li><a class="dropdown-item" href="#">Something else here</a></li>
                     </ul>
                 </div>
-                <a href="/favoris" class="btn btn-3d-rounded-sm w-50">
+                <a href="{{route('clients.salons.index')}}" class="btn btn-3d-rounded-sm w-50">
                      Salons
                 </a>
                 </div>
@@ -58,6 +58,7 @@
                                                         <div class="num">1</div>
                                                         <img src="{{asset('images/articles/'.$salon->article->images[0]->lien) }}" alt="">
                                                     </div>
+                                                    
                                                 </div>
                                                 <div class="col-8">
                                                     <div class="row">
@@ -79,7 +80,7 @@
                                                                 <div class="time-block d-inline-flex">
                                                                     <div class="time">03:08:04</div>
                                                                 </div>
-                                                                à condition que le quota 500 Participants soit
+                                                                à condition que le quota {{$salon->limite}} Participants soit
                                                                 atteint.
                                                             </div>
                                                             @if ($salon->pivotclientsalon?->where('user_id',Auth::user()->id)->first() === null)
@@ -170,7 +171,7 @@
                                 Voulez vous vraiment annuler votre participation ?
                             </h5>
 
-                            <a type="button" href="{{ route('annuler.salon',['articleid'=>$salon->id,'enchereid'=>$salon->article->enchere?->id,'salon'=>$salon->montant ,'name'=>$salon->article?->titre]) }}" class="btn btn-ok w-50 my-3 ">Oui</a>
+                            {{-- <a type="button" href="{{ route('annuler.salon',['articleid'=>$salon->articleid,'enchereid'=>$salon->article?->enchere?->id,'salon'=>$salon->montant ,'name'=>$salon->article?->titre]) }}" class="btn btn-ok w-50 my-3 ">Oui</a> --}}
 
                         </div>
                     </div>

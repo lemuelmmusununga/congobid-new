@@ -112,20 +112,6 @@ Route::get('/valid-account', function () {
     return view('pages.valid-account');
 });
 
-Route::get('/articles/detail/produit/{articleid}/{salonid}/{enchereid}/{paquet}/{name}/sauvegarde', [SalonController::class, 'store'])->name('detail.article.salon');
-Route::get('/articles/detail/{articleid}/{nombre}/{enchereid}/{participant}/{name}/{munite}/creation', [SalonController::class, 'salonCreat'])->name('create.salon');
-Route::get('/articles/detail/{articleid}/{enchereid}/{salon}/{name}/creation', [SalonController::class, 'salonDelete'])->name('annuler.salon');
-
-Route::get('/articles/detail/produit/{id}/{name}', [DetailEnchereController::class, 'index'])->name('detail.article');
-Route::get('/articles/detail/produit/{id}/{valeur}/{enchere_id}/{enchere_name}', [DetailEnchereController::class, 'achatBid'])->name('detail.article.enchere');
-Route::get('/suppressions/notification/{id}', [ArticlesController::class, 'sup'])->name('destroy.notif');
-
-Route::get('/articles/{id}/{id_paquet}/{nom}', [ArticlesController::class, 'liste'])->name('all.articles');
-Route::get('/encheres-en-cours', [EnchersController::class, 'index'])->name('show.enchers');
-Route::get('/encheres-futures', [EnchersController::class, 'future'])->name('show.enchers-future');
-Route::get('/articles', [ArticlesController::class, 'articles'])->name('show.articles');
-Route::get('/articles/categorie/{id}', [ArticlesController::class, 'ArticlesCategorie'])->name('sous-categorie');
-Route::get('/articles/voir_detail/produit/{id}/{name}', [ArticlesController::class, 'detailArticle'])->name('show.detail.article');
 
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
@@ -173,7 +159,21 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/counter', function () {
             return view('welcome');
         });
-        
+        Route::get('/articles/detail/produit/{articleid}/{salonid}/{enchereid}/{paquet}/{name}/sauvegarde', [SalonController::class, 'store'])->name('detail.article.salon');
+        Route::get('/articles/detail/{articleid}/{nombre}/{enchereid}/{participant}/{name}/{munite}/creation', [SalonController::class, 'salonCreat'])->name('create.salon');
+        Route::get('/articles/detail/{articleid}/{enchereid}/{salon}/{name}/creation', [SalonController::class, 'salonDelete'])->name('annuler.salon');
+
+        Route::get('/articles/detail/produit/{id}/{name}', [DetailEnchereController::class, 'index'])->name('detail.article');
+        Route::get('/articles/detail/produit/{id}/{valeur}/{enchere_id}/{enchere_name}', [DetailEnchereController::class, 'achatBid'])->name('detail.article.enchere');
+        Route::get('/suppressions/notification/{id}', [ArticlesController::class, 'sup'])->name('destroy.notif');
+
+        Route::get('/articles/{id}/{id_paquet}/{nom}', [ArticlesController::class, 'liste'])->name('all.articles');
+        Route::get('/encheres-en-cours', [EnchersController::class, 'index'])->name('show.enchers');
+        Route::get('/encheres-futures', [EnchersController::class, 'future'])->name('show.enchers-future');
+        Route::get('/articles', [ArticlesController::class, 'articles'])->name('show.articles');
+        Route::get('/articles/categorie/{id}', [ArticlesController::class, 'ArticlesCategorie'])->name('sous-categorie');
+        Route::get('/articles/voir_detail/produit/{id}/{name}', [ArticlesController::class, 'detailArticle'])->name('show.detail.article');
+
         Route::get('/historique',[ProfileController::class,'ListeBloked'])->name('liste.bloque');
         Route::get('/encheres-gagnees', [EnchersController::class, 'gagne'])->name('show.enchers-gagne');
         Route::get('/encheres-fermees', [EnchersController::class, 'ferme'])->name('show.enchers-ferme');
