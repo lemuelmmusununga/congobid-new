@@ -35,7 +35,7 @@
     <body>
         {{-- @include('components.side-menu') --}}
         {{-- @include('components.side-filter') --}}
-        @include('components.navbar-page')
+        @includeWhen($contentNavbar, 'components.navbar-page')
         <div class="overplay"></div>
         {{-- @include('components.header-index') --}}
         <div class="global-div">
@@ -144,7 +144,7 @@
         <script src="{{asset('js/jquery.min.js')}}"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
         <script src="{{asset('js/jquery.countdown.min.js')}}"></script> <!-- The Final Countdown plugin for jQuery -->
         <script src="{{asset('js/scripts.js')}}"></script> <!-- Custom scripts -->
-        
+
         <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
         <script src="https://code.iconify.design/2/2.1.0/iconify.min.js"></script>

@@ -193,7 +193,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="block-enchere-in-progress">
             <div class="bundel text-center">
                 <h4>Enchères futures</h4>
@@ -231,20 +231,17 @@
                                             <div class="col-5">
                                                 <div class="block-cat">
                                                     <p>Catégorie :</p>
-                                                    <h1  style="font-size: 74px;
-                                                    font-weight: bolder;
-                                                    color: green;" class="border">2$</h1>
+
                                                     <h5 class="mb-0">
                                                         {{ $article->paquet->libelle ?? '' }}</h5>
                                                 </div>
-                                                {{-- <div class="bg-pr" style="">
-                                                    <img src="{{asset('images/polygone.png')}}"  alt="" srcset="">
-                                                </div> --}}
                                                 <div class="block-cat">
+                                                    <div class="bg-pr" style="">
+                                                        <img src="{{asset('images/polygone.png')}}"  alt="" srcset="">
+                                                    </div>
                                                     <p>Prix CongoBid :</p>
-                                                    <h5>{{ $article->prix }}$</h5>
-                                                    <div class="box">Contenu à animer</div>
-                                                    
+                                                    <h5 class="price-bid">{{ $article->prix }}$</h5>
+                                                    <h5 style="opacity: 0">{{ $article->prix }}$</h5>
                                                     <p>Prix du Marché :</p>
                                                     <h5 class="text-hidden mb-0">
                                                         {{ $article->prix_marche }}$ </h5>
@@ -341,22 +338,22 @@
                                                         @if ($salon->pivotclientsalon?->where('user_id',Auth::user()->id)->first() === null)
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modalEnchereSalon_{{$key}}" class="btn btn-3d-rounded-sm">
                                                                 <i class="fi fi-rr-plus"></i> Demander l'accès au
-                                                                salon 
+                                                                salon
                                                             </a>
                                                         @else
                                                         <a href="#" data-bs-toggle="modal" data-bs-target="#modalEnchereAnnuler_{{$key}}" class="btn btn-3d-rounded-sm">
                                                             <i class="fi fi-rr-plus"></i> Decliener l'accès au
-                                                            salon 
-                                                        </a> 
-                                                            
+                                                            salon
+                                                        </a>
+
                                                         @endif
                                                     @else
                                                         <a href="/login" data-bs-toggle="modal" class="btn btn-3d-rounded-sm">
                                                             <i class="fi fi-rr-plus"></i> Decliener l'accès au
-                                                            salon 
-                                                        </a> 
+                                                            salon
+                                                        </a>
                                                     @endif
-                                                    
+
                                                 </div>
                                             </div>
                                         </div>
@@ -372,7 +369,7 @@
         </div>
     </div>
     @foreach ($salons as $key=> $salon)
-       
+
         {{-- modal participer --}}
         <div wire:ignore.self class="modal fade" id="modalEnchereSalon_{{$key}}"
             tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
