@@ -283,9 +283,9 @@
             <div class="container">
                 <div class="row g-3">
                     @foreach ($salons as $key => $salon)
-                    {{-- @dd($salon->pivotclientsalon) --}}
+                    {{-- @dd() --}}
                         <div class="col-12 col-md-6">
-                            <div class="card card-product card-salon">
+                            <div class="card card-product {{Auth::user() ? $salon->pivotclientsalon->where('user_id',Auth::user()->id)->first()== null ? 'card-salon' :'card-salon-me' : 'card-salon'}}">
                                 <div class="container-fluid px-0">
                                     <div class="row g-2 justify-content-center align-items-center">
                                         <div class="col-4 d-flex">
@@ -391,6 +391,7 @@
                     <div class="modal-footer d-flex justify-content-between align-items-center">
                         <button type="button" class="btn btn-non" data-bs-dismiss="modal"
                             aria-label="close">Annuler</button>
+                       
                         @if (Auth::user() && Auth::user()->bideurs->first()->balance >= $salon->montant)
                             <a type="button"
                                 href="{{ route('detail.article.salon', ['articleid' => $salon->article->id, 'salonid' => $salon->id,'enchereid' => $salon->article->enchere->id ,'paquet'=>$salon->article->paquet->id,'name' => Str::slug($salon->article->titre) ]) }}"

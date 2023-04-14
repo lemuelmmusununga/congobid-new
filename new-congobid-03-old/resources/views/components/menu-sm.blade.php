@@ -8,13 +8,16 @@
         </div>
         <ul>
             <li>
+                <a href="/">Acceuil</a>
+            </li>
+            <li>
                 <a href="/articles">Nos aticles</a>
             </li>
             <li>
                 <a href="/tarif">Tarifs</a>
             </li>
             <li>
-                <a href="/salons">Enchères clôturées</a>
+                <a href="{{route('show.enchers-ferme')}}">Enchères clôturées</a>
             </li>
             <li>
                 <a href="/salons">Salons</a>

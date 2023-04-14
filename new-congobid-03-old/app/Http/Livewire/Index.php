@@ -38,7 +38,7 @@ use WithPagination;
     public function mount(){
         // dd(Auth::user()->pivotbideurenchere->first()->roi ?? '');
         // $this->article = Article::all();
-        $this->salons = Salon::where('state',0)->get();
+        $this->salons = Salon::where('created_at','>',now()->addDays(1)->format('d-m-y H:i:s'))->get();
         if (Auth::user()) {
             $this->addbid = User::where('id',Auth::user()->id)->first();
             $bideur = Bideur::where('user_id',Auth::user()->id)->first();

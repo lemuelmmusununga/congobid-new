@@ -35,7 +35,7 @@
     <body>
         {{-- @include('components.side-menu') --}}
         {{-- @include('components.side-filter') --}}
-        @includeWhen($contentNavbar, 'components.navbar-page')
+        @include('components.navbar-page')
         <div class="overplay"></div>
         {{-- @include('components.header-index') --}}
         <div class="global-div">

@@ -29,9 +29,9 @@ class IndexController extends Controller
         }
         $paquets = Paquet::where('statut_id', '3')->get();
         $articles = Article::where('statut_id', '3')->where('salon', 0)->get();
-        $salons = Salon::whereDay('created_at','<=',now()->subDays(1)->format('d-m-y h:i:s'))->get();
-        $verifyDateSalons = Salon::where('created_at','>',now()->subDays(1)->format('d-m-y h:i:s'))->get();
-        if ($verifyDateSalons->count() > 0 ) {
+        $salons = Salon::where('created_at','>',now()->addDays(1)->format('d-m-y H:i:s'))->get();
+        $verifyDateSalons = Salon::where('created_at','<=',now()->addDays(1)->format('d-m-y H:i:s'))->get();
+        if ($verifyDateSalons->count() > 0) {
             foreach ($verifyDateSalons as $key => $salon) {
             $checkPivots=PivotClientsSalon::where('salon_id',$salon->id)->get();
                 foreach ($checkPivots as $key => $checkPivot) {

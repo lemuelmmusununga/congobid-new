@@ -46,9 +46,8 @@ class FavorisController extends Controller
     }
     public function delete($id,$name){
         $favoris=Favoris::where('enchere_id',$id)->where('user_id',Auth::user()->id)->first();
-        $favoris->update([
-            'favoris'=>0
-        ]);
+        // dd($favoris);
+        $favoris->delete();
         return redirect()->back()->with('success','Favori supprimer avec succes');
     }
 }

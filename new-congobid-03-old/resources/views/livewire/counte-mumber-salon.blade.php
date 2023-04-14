@@ -12,7 +12,7 @@
             <div class="col-12">
                 {{-- <input type="text" wire:model="getcount" class="form-control" name="participant" placeholder="Entrez le nombre de bideurs"> --}}
                 <input type="number"  wire:model="getcount"  class="form-control" name="participant" placeholder="Entrez le nombre de bideurs">
-                <input type="hidden" class="form-control" name="nombre"  value="{{$article->prix}}" wire:model="prises">
+                <input type="hidden" class="form-control" name="nombre" wire:model="count">
                 <input type="hidden"  wire:model="prises" value="{{$article->prix}}">
                 <input type="hidden" class="form-control" name="articleid" value="{{$article->id}}">
                 <input type="hidden" class="form-control" name="enchereid" value="{{$article->enchere->id}}">

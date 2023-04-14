@@ -90,7 +90,7 @@
                           <div class="col-4 text-center">
                             
                               @if ($article->enchere?->pivotclientsSalon->where('user_id',Auth::user()->id)->count() == 1)
-                                <a href="#" class="btn btn-3d-rounded-sm w-100 h-100" data-bs-toggle="modal" data-bs-target="#modalsalonpers{{$key}}">
+                                <a href="#" class="btn btn-3d-rounded-sm w-100 h-100 card-salon-me text-black" data-bs-toggle="modal" data-bs-target="#modalsalonpers{{$key}}">
                                     Annuler votre salon
                                 </a>
                               @else
@@ -106,14 +106,15 @@
                                   $favori_enchere =App\Models\Favoris::where('enchere_id', $article->enchere?->id)->where('user_id', Auth::user()->id)->first() ?? null;
                                 ?>
                                 @if ($favori_enchere != null )
-                                  @if (Auth::user() )
-                                      <a href="{{route('delete.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100 text-black {{ $favori_enchere == null ?'card-salon':'card-salon-me'}}">
-                                          <i class="fi fi-rr-plus"></i> Favorie
-                                      </a>
-                                  @else
-                                      <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
-                                          <i class="fi fi-rr-plus"></i> Ajouter aux favories
-                                      </a>
+                                  @if ($favori_enchere == null )
+                                    <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
+                                      <i class="fi fi-rr-plus"></i> Ajouter aux favories
+                                    </a>
+                                    @else
+                                    <a href="{{route('delete.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100 text-black {{ $favori_enchere == null ?'card-salon':'card-salon-me'}}">
+                                        <i class="fi fi-rr-plus"></i> Favorie
+                                    </a>
+                                      
                                   @endif
                                 @else
                                   <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
