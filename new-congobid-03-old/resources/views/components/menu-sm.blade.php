@@ -34,11 +34,18 @@
         </ul>
 
         {{-- action="" method="POST" --}}
-        <form action="{{ route('logout') }}" method="post">
-            @csrf   
-            <button type="submit" href="{{ route('logout') }}" class="btn btn-action">
+        @if (Auth::user())
+            <form action="{{ route('logout') }}" method="post">
+                @csrf   
+                <button type="submit" href="{{ route('logout') }}" class="btn btn-action">
+                    Déconnexion
+                </button>
+            </form>
+        @else
+           <a  href="{{ route('login') }}" class="btn btn-action">
                 Déconnexion
-            </button>
-        </form>
+           </a>
+        @endif
+        
     </div>
 </div>

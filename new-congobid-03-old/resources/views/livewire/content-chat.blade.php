@@ -27,12 +27,12 @@
                     <div class="msg-row mb-2">
                         <div class="avatar-block">
                             <div class="avatar">
-                                <img src="{{asset('images/users/' . ($message->user->avatar == null ? 'default.png' : $message->user->avatar  ) ) }} " alt="">
+                                <img src="{{asset('images/users/' . ($message->user?->avatar == null ? 'default.png' : $message->user?->avatar  ) ) }} " alt="">
                             </div>
                         </div>
                         <div class="msg-text">
                             <h3 class="name-user">{{$message->user->username ?? ''}}</h3>
-                {{-- @dump(Auth::user()->created_at->format('d-m-Y') ,$message->created_at->format('d-m-Y')) --}}
+                            {{-- @dump(Auth::user()->created_at->format('d-m-Y') ,$message->created_at->format('d-m-Y')) --}}
 
                             <p>{{$message->libelle}}</p>
                             <div class="date text-end">
