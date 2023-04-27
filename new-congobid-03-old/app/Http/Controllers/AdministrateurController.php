@@ -63,7 +63,6 @@ class AdministrateurController extends Controller
     public function store(Request $request)
     {
         try {
-            dd($request);
             $user = User::create([
                 'role_id' => $request->role_id,
                 'nom' => $request->nom,
@@ -79,15 +78,17 @@ class AdministrateurController extends Controller
             if ($request->hasFile('avatar')) {
                 # code...
                 $request->file('avatar')->move(public_path('images/users/'), $user->id . '.webp');
+                $user->update([
+                    'avatar' => $user->id . '.webp'
+                ]);
             }
-            $last = User::latest()->first();
             // dd($last->id,$request);
             Administrateur::create([
                 'identification_fiscale' => $request->identification_fiscale,
                 'poste' => $request->poste,
                 'interne' => $request->interne,
                 'statut_id' => '3',
-                'user_id' => $last->id,
+                'user_id' => $user->id,
                 'administrateur_id' => Auth::user()->id,
             ]);
 
@@ -99,7 +100,7 @@ class AdministrateurController extends Controller
                 'user_id' => Auth::user()->id,
             ]);
 
-            return redirect()->route('agents.index');
+            return redirect()->route('agents.index')->with('success', 'Agent créé avec succès');
         } catch (\Exception $e) {
             return back()->with('Erreur survenue lors de la création du compte d\'agent.');
         }

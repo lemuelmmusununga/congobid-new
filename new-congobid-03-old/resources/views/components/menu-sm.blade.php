@@ -36,16 +36,16 @@
         {{-- action="" method="POST" --}}
         @if (Auth::user())
             <form action="{{ route('logout') }}" method="post">
-                @csrf   
+                @csrf
                 <button type="submit" href="{{ route('logout') }}" class="btn btn-action">
                     Déconnexion
                 </button>
             </form>
         @else
            <a  href="{{ route('login') }}" class="btn btn-action">
-                Déconnexion
+                Se Connecter
            </a>
         @endif
-        
+
     </div>
 </div>
