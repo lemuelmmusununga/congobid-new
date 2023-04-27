@@ -170,8 +170,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/suppressions/notification/{id}', [ArticlesController::class, 'sup'])->name('destroy.notif');
 
         Route::get('/articles/{id}/{id_paquet}/{nom}', [ArticlesController::class, 'liste'])->name('all.articles');
-       
+
         Route::get('/articles', [ArticlesController::class, 'articles'])->name('show.articles');
+        Route::get('/article/{id}', [ArticlesController::class, 'article'])->name('show.article');
         Route::get('/articles/categorie/{id}', [ArticlesController::class, 'ArticlesCategorie'])->name('sous-categorie');
         Route::get('/articles/voir_detail/produit/{id}/{name}', [ArticlesController::class, 'detailArticle'])->name('show.detail.article');
 

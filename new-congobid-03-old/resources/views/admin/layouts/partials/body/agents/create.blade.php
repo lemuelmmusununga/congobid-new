@@ -24,7 +24,14 @@
                             <div class="row">
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Nom complet</label>
+                                        <label for="smallInput">Prénom</label>
+                                        <input type="text" name="prenom" class="form-control "
+                                            id="smallInput" placeholder="Entrez son prénom" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+                                        <label for="smallInput">Nom</label>
                                         <input type="text" name="nom" class="form-control "
                                             id="smallInput" placeholder="Entrez son nom" required>
                                     </div>
@@ -66,7 +73,7 @@
                                     <div class="form-group">
                                         <label for="smallInput">Téléphone</label>
                                         <input type="text" name="telephone" class="form-control "
-                                            id="smallInput" placeholder="Entrez son téléphone commençant par 243" required>
+                                            id="smallInput" placeholder="Entrez son téléphone commençant par +243" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
