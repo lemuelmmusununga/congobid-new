@@ -31,6 +31,10 @@ class ArticlesController extends Controller
         $articles= Article::OrderBy('id','DESC')->paginate(1);
         return view('pages.articles',compact('articles','categories','paquets'));
     }
+    public function article($id){
+        $article= Article::find($id);
+        return view('pages.article',compact('article'));
+    }
 
     public function ArticlesCategorie($id){
         $id_paquet = $id;
@@ -49,7 +53,7 @@ class ArticlesController extends Controller
     }
     // l'id provient de la page detail categorie
     public function liste($id,$id_paquet,$nom){
-      
+
         // $articles  = Article::where('salon',1)->get();
         $articles  = Article::where('categorie_id',$id)->where('paquet_id',$id_paquet)->orderby('id','DESC')->get();
         return view('pages.article-categories',compact('articles','nom'));

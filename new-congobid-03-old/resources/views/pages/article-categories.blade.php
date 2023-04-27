@@ -63,7 +63,7 @@
                                 @endif
                               </div>
                           </div>
-                       
+
                           <div class="col-5">
                               <div class="block-cat">
                               <p>Catégorie :</p>
@@ -77,9 +77,9 @@
                               </div>
                           </div>
                           <div class="col-7">
-                              <div class="card-img">
+                              <a  href="{{route('show.article', $article->id)}}" class="card-img" target="_blank">
                                   <img src="{{ asset('images/articles/' . ($article->images->first()->lien == null ? '' : $article->images->first()->lien) ) }}" alt="">
-                              </div>
+                              </a>
                           </div>
                           <div class="col-12 text-center">
                             <h2>{{ $article->titre }}</h2>
@@ -88,7 +88,7 @@
                                 class="link">Voir plus</a>
                           </div>
                           <div class="col-4 text-center">
-                            
+
                               @if ($article->enchere?->pivotclientsSalon->where('user_id',Auth::user()->id)->count() == 1)
                                 <a href="#" class="btn btn-3d-rounded-sm w-100 h-100 card-salon-me text-black" data-bs-toggle="modal" data-bs-target="#modalsalonpers{{$key}}">
                                     Annuler votre salon
@@ -98,7 +98,7 @@
                                   Ouvrir un salon
                                 </a>
                               @endif
-                              
+
                           </div>
                           <div class="col-4 text-center">
                             @if (Auth::user())
@@ -114,7 +114,7 @@
                                     <a href="{{route('delete.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100 text-black {{ $favori_enchere == null ?'card-salon':'card-salon-me'}}">
                                         <i class="fi fi-rr-plus"></i> Favorie
                                     </a>
-                                      
+
                                   @endif
                                 @else
                                   <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
@@ -126,7 +126,7 @@
                                     <i class="fi fi-rr-plus"></i> Ajouter aux favories
                                 </a>
                             @endif
-                          
+
                           </div>
                             <div class="col-4 text-center">
                               <a href="#" class="btn btn-3d-rounded-sm w-100 h-100 ">
@@ -150,7 +150,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                  @livewire('counte-mumber-salon',['article'=>$article]) 
+                  @livewire('counte-mumber-salon',['article'=>$article])
                 </div>
             </div>
         </div>
@@ -158,5 +158,5 @@
     @endforeach
   </div>
 
-  
+
 @endsection
