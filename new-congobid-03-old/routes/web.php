@@ -192,33 +192,30 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/favoris/supprimer/{id}/{name}',[FavorisController::class, 'delete'])->name('delete.favoris');
         Route::get('/favoris/ajouter/{id}/{name}',[FavorisController::class, 'addfavoris'])->name('add.favoris');
 
-                // bouclier achat
+        // bouclier achat
         Route::get('achat/articles/detail/produit/bouclier/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'bouclier'])->name('bouclier');
         // roi achat
         Route::get('achat-roi/articles/detail/produit/roi/{enchere}/{paquet}/{name}/achat_roi', [DetailEnchereController::class, 'roi'])->name('roi');
         Route::get('/articles/detail/{duree}/produit/bloquer_enchere/{enchere}/{paquet}/{achat}', [DetailEnchereController::class, 'roiBlock'])->name('roi.block');
         // foundre achat
         Route::get('achat/articles/detail/produit/foudre/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'foudre'])->name('foudre');
-
-            // click
-            Route::get('achat-click/articles/detail/produit/click/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'AchatClickAuto'])->name('click');
-            Route::get('active-click/articles/detail/produit/active-click/{name}/{enchere}', [DetailEnchereController::class, 'activeBidAuto'])->name('Active.click');
-            Route::get('/articles-produit/achat-click/automatique/{name}/{enchere}/{prix}', [DetailEnchereController::class, 'achatBidAuto'])->name('Achat.click.Auto');
+        // click
+        Route::get('achat-click/articles/detail/produit/click/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'AchatClickAuto'])->name('click');
+        Route::get('active-click/articles/detail/produit/active-click/{name}/{enchere}', [DetailEnchereController::class, 'activeBidAuto'])->name('Active.click');
+        Route::get('/articles-produit/achat-click/automatique/{name}/{enchere}/{prix}', [DetailEnchereController::class, 'achatBidAuto'])->name('Achat.click.Auto');
     // Route::get('/articles/auto_click/detail/{enchere}/produit/click/{paquet}/{name}', [DetailEnchereController::class, 'click_auto'])->name('click_auto');
         // active bouclier
         Route::get('active-bouclier/articles/detail/produit/active-click/{name}/{enchere}', [DetailEnchereController::class, 'activeBouclier'])->name('Active.bouclier');
-
         Route::get('/mes-salons/{id}/{name}', [SalonController::class, 'mesSalons'])->name('clients.messalons');
         Route::get('/salons', [SalonController::class, 'index'])->name('clients.salons.index');
         Route::post('/creation-salons', [SalonController::class, 'salonCreate'])->name('createSalon');
-    // sanction
-    Route::get('/enchere/sanction/{id}/{enchere}/{sanction}/{name}/{bid_cut}',[DetailEnchereController::class, 'sanction'])->name('sanction');
-    // deblocage
+        // sanction
+        Route::get('/enchere/sanction/{id}/{enchere}/{sanction}/{name}/{bid_cut}',[DetailEnchereController::class, 'sanction'])->name('sanction');
+        // deblocage
     // achat_click
         Route::get('/enchere/sanction/{id}/{name}/{enchere_id}',[DetailEnchereController::class, 'achatClick'])->name('achat.click');
         // bid_auto
         Route::get('/activation/bid-auto/{name}',[DetailEnchereController::class, 'activationBid'])->name('bid.auto');
-
         Route::get('/achat/bid/{id}/{valeur}',[AchatController::class, 'achatBid'])->name('achat.bids');
         Route::get('/profil', [ProfileController::class, 'index'])->name('profil');
         // update profil
