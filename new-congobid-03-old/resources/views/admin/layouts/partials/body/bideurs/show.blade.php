@@ -51,20 +51,8 @@
                             <div class="title"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Non transferable</span></span></div>
                         </div>
                     </div>
-                    <div class="row user-stats text-center">
-                        <div class="col">
-                            <div class="number"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> {{ $bideur->balance }} </span></span></div>
-                            <div class="title"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Balance</span></span></div>
-                        </div>
-                        <div class="col">
-                            <div class="number"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> {{ $bideur->bonus }} </span></span></div>
-                            <div class="title"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Bonus</span></span></div>
-                        </div>
-                        <div class="col">
-                            <div class="number"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> {{ $bideur->nontransferable }} </span></span></div>
-                            <div class="title"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Non transferable</span></span></div>
-                        </div>
-                    </div>
+
+                   
                 </div>
             </div>
         </div>

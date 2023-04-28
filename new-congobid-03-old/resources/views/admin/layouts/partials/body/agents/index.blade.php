@@ -55,7 +55,9 @@
                                     <td>
                                         <a href="{{ route('agents.edit', [$agent->id ??  '' ]) }}" class="btn btn-success">Editer</a> |
                                         @if ($agent->statut->id == 1)
-                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 1]) }}"class="btn btn-warnig">Activer</a>
+
+                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 1]) }}"class="btn btn-warning">Activer</a>
+
                                         @elseif ($agent->statut->id == 2)
                                             <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 2]) }}"class="btn btn-secondary">Réactiver</a>
                                         @elseif ($agent->statut->id == 3)
