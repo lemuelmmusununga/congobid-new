@@ -35,7 +35,29 @@
     <body>
         {{-- @include('components.side-menu') --}}
         {{-- @include('components.side-filter') --}}
-        @includeWhen($contentNavbar, 'components.navbar-page')
+        <div id="page-load">
+            <div class="backdrop fade"></div>
+            <div class="parent-modal">
+                <div class="dialog dialog-centered">
+                    <div class="content-modal">
+                        <div class="body">
+                            <div class="d-flex align-items-center">
+                                <div class="load-spiner">
+                                </div>
+                                <div class="text-star">
+                                    <h6 class="mb-0" style="color:var(--colorTitre)!important;">
+                                        Veuillez patienter Svp ...
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        @include('components.navbar-page')
         <div class="overplay"></div>
         {{-- @include('components.header-index') --}}
         <div class="global-div">
@@ -110,6 +132,14 @@
         {{-- @include('components.footer-page') --}}
         {{-- @include('components.menu-chat-select') --}}
         {{-- @stack('modals') --}}
+        <script>
+            $(document).ready(function() {
+                @if (Auth::guest())
+                    $('#welcome-modal').addClass('show');
+                @endif
+            });
+            $('#page-load').addClass('d-none');
+        </script>
         <script>
             var video= document.querySelector(".video")
 

@@ -29,12 +29,12 @@ class AdministrateurController extends Controller
         $statuts = Statut::orderBy('id', 'desc')->get();
         $categories = Categorie::all();
         $gagnants = Gagnant::all();
-        return view('admin.agents', compact('agents', 'chats','statuts','categories','gagnants'));
+        return view('admin.agents', compact('agents', 'chats', 'statuts', 'categories', 'gagnants'));
     }
 
     public function indexfilter($id)
     {
-        $agents = Administrateur::where('administrateur_id',  $id)->orderBy('id', 'desc')->get();
+        $agents = Administrateur::where('administrateur_id', $id)->orderBy('id', 'desc')->get();
         $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
 
         return view('admin.agents', compact('agents', 'chats'));
@@ -62,31 +62,33 @@ class AdministrateurController extends Controller
      */
     public function store(Request $request)
     {
-        // try{
-            $telephone = $request->pays_index . $request->telephone;
-
-
-            $request->file('avatar')->move(public_path('images/users/'), $telephone.'.webp');
+        try {
             $user = User::create([
                 'role_id' => $request->role_id,
                 'nom' => $request->nom,
+                'prenom' => $request->prenom,
                 'username' => $request->username,
-                'telephone' => $telephone,
+                'telephone' => $request->telephone,
                 'sexe' => $request->sexe,
                 'email' => $request->email,
-                'avatar' => $telephone.'.webp',
                 'date_naissance' => $request->date_naissance,
                 'password' => Hash::make($request->password),
                 'statut_id' => '3',
             ]);
-            $last = User::latest()->first();
+            if ($request->hasFile('avatar')) {
+                # code...
+                $request->file('avatar')->move(public_path('images/users/'), $user->id . '.webp');
+                $user->update([
+                    'avatar' => $user->id . '.webp'
+                ]);
+            }
             // dd($last->id,$request);
             Administrateur::create([
                 'identification_fiscale' => $request->identification_fiscale,
                 'poste' => $request->poste,
                 'interne' => $request->interne,
                 'statut_id' => '3',
-                'user_id' => $last->id,
+                'user_id' => $user->id,
                 'administrateur_id' => Auth::user()->id,
             ]);
 
@@ -98,10 +100,10 @@ class AdministrateurController extends Controller
                 'user_id' => Auth::user()->id,
             ]);
 
-            return redirect()->route('agents.index');
-        // } catch(\Exception $e){
-        //     return back()->with('Erreur survenue lors de la création du compte d\'agent.');
-        // }
+            return redirect()->route('agents.index')->with('success', 'Agent créé avec succès');
+        } catch (\Exception $e) {
+            return back()->with('Erreur survenue lors de la création du compte d\'agent.');
+        }
 
     }
 
@@ -147,7 +149,7 @@ class AdministrateurController extends Controller
     public function update(Request $request, Administrateur $administrateur)
     {
         // dd($request->user_id);
-        try{
+        try {
             $telephone = $request->pays_index . $request->telephone;
             if ($request->avatar != null) {
                 $request->file('avatar')->move(public_path('images/profil/'), $telephone . '.webp');
@@ -163,7 +165,7 @@ class AdministrateurController extends Controller
                     'password' => Hash::make($telephone),
                     'statut_id' => $request->statut_id,
                 ]);
-            }else{
+            } else {
                 $user = User::where('id', $request->user_id)->update([
                     'role_id' => $request->role_id,
                     'nom' => $request->nom,
@@ -194,7 +196,7 @@ class AdministrateurController extends Controller
             ]);
 
             return redirect()->route('agents.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
 
@@ -208,7 +210,7 @@ class AdministrateurController extends Controller
      */
     public function destroy($user_id, $state)
     {
-        try{
+        try {
             $user = User::where('id', $user_id)->update([
                 'statut_id' => $state == '3' ? 2 : 3,
                 'deleted_at' => $state == '3' ? now() : NULL,
@@ -225,9 +227,9 @@ class AdministrateurController extends Controller
 
             if ($state == 3) {
                 $action = 'Suppression du compte agent';
-            } else if($state == 2) {
+            } else if ($state == 2) {
                 $action = 'Réactivation du compte agent';
-            }else {
+            } else {
                 $action = 'Activation du compte agent';
             }
 
@@ -240,7 +242,7 @@ class AdministrateurController extends Controller
             ]);
 
             return back();
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }

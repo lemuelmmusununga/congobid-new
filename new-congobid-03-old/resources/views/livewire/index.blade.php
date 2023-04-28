@@ -72,7 +72,7 @@
                                 </div>
                             </div>
                             <div class="col-12 d-flex justify-content-center">
-                                <a href="/articles" class="btn btn-3d-rounded-sm btn-article">
+                                <a href="#" class="btn btn-3d-rounded-sm btn-article" data-bs-toggle="modal" data-bs-target="#modalarticle">
                                     Nos articles
                                 </a>
                             </div>
@@ -125,7 +125,6 @@
                                 // dd(date('d-m-Y', strtotime($article->enchere?->date_debut)),now()->format('d-m-Y'),($article->enchere?->state),$article->titre);
                             @endphp
 
-                            {{-- @dump(($article->enchere?->munite == null ? 0 :*60+$article->enchere?->seconde >= 0) && (date('d-m-Y', strtotime($article->enchere?->date_debut)) == now()->format('d-m-Y')) && (date('H:i:s',strtotime($article->enchere?->date_debut)) <= now(' Africa/kinshasa')->format('H:i') )); --}}
                             @if ($article->enchere?->munite* 60 + $article->enchere?->seconde > 0 && $article->enchere?->state == 0 &&
                                 date('d-m-Y', strtotime($article->enchere?->date_debut)) == now()->format('d-m-Y') &&
                                 date('d-m-Y H:i',strtotime($article->enchere?->date_debut)) <= now(' Africa/kinshasa')->format('d-m-Y H:i'))
@@ -283,9 +282,9 @@
             <div class="container">
                 <div class="row g-3">
                     @foreach ($salons as $key => $salon)
-                    {{-- @dd($salon->pivotclientsalon) --}}
+                    {{-- @dd() --}}
                         <div class="col-12 col-md-6">
-                            <div class="card card-product card-salon">
+                            <div class="card card-product {{Auth::user() ? $salon->pivotclientsalon->where('user_id',Auth::user()->id)->first()== null ? 'card-salon' :'card-salon-me' : 'card-salon'}}">
                                 <div class="container-fluid px-0">
                                     <div class="row g-2 justify-content-center align-items-center">
                                         <div class="col-4 d-flex">
@@ -391,6 +390,7 @@
                     <div class="modal-footer d-flex justify-content-between align-items-center">
                         <button type="button" class="btn btn-non" data-bs-dismiss="modal"
                             aria-label="close">Annuler</button>
+
                         @if (Auth::user() && Auth::user()->bideurs->first()->balance >= $salon->montant)
                             <a type="button"
                                 href="{{ route('detail.article.salon', ['articleid' => $salon->article->id, 'salonid' => $salon->id,'enchereid' => $salon->article->enchere->id ,'paquet'=>$salon->article->paquet->id,'name' => Str::slug($salon->article->titre) ]) }}"
@@ -467,6 +467,30 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalarticle" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="col justify-content-center ">
+                        {{-- <h3> Nos Articles </h3> --}}
+                        <div class="row m-2">
+                            <a href="{{route('show.articles')}}" class="btn btn-3d-rounded-sm btn-article">
+                               Categories
+                            </a>
+                        </div>
+                        <div class="row m-2">
+                            <a href="{{route('show.enchers')}}" class="btn btn-3d-rounded-sm btn-article">
+                                Enchères
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </div>
 
         {{-- <script src="js/app.js"></script>
         <script src="js/bootstrap.bundle.min.js"></script>

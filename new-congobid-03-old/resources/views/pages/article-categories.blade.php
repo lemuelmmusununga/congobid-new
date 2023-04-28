@@ -23,6 +23,7 @@
       </div>
     </div>
 </div>
+
 <div class="block-all-enchere mt-3 pb-4">
     <div class="block-enchere-in-progress">
       <div class="container">
@@ -62,6 +63,7 @@
                                 @endif
                               </div>
                           </div>
+
                           <div class="col-5">
                               <div class="block-cat">
                               <p>Catégorie :</p>
@@ -75,9 +77,9 @@
                               </div>
                           </div>
                           <div class="col-7">
-                              <div class="card-img">
-                              <img src="{{ asset('images/articles/' . ($article->images->first()->lien == null ? '' : $article->images->first()->lien) ) }}" alt="">
-                              </div>
+                              <a  href="{{route('show.article', $article->id)}}" class="card-img" target="_blank">
+                                  <img src="{{ asset('images/articles/' . ($article->images->first()->lien == null ? '' : $article->images->first()->lien) ) }}" alt="">
+                              </a>
                           </div>
                           <div class="col-12 text-center">
                             <h2>{{ $article->titre }}</h2>
@@ -86,24 +88,33 @@
                                 class="link">Voir plus</a>
                           </div>
                           <div class="col-4 text-center">
-                              <a href="#" class="btn btn-3d-rounded-sm w-100 h-100" data-bs-toggle="modal" data-bs-target="#modalsalonpers{{$key}}">
-                              Ouvrir un salon
-                              </a>
+
+                              @if ($article->enchere?->pivotclientsSalon->where('user_id',Auth::user()->id)->count() == 1)
+                                <a href="#" class="btn btn-3d-rounded-sm w-100 h-100 card-salon-me text-black" data-bs-toggle="modal" data-bs-target="#modalsalonpers{{$key}}">
+                                    Annuler votre salon
+                                </a>
+                              @else
+                                <a href="#" class="btn btn-3d-rounded-sm w-100 h-100" data-bs-toggle="modal" data-bs-target="#modalsalonpers{{$key}}">
+                                  Ouvrir un salon
+                                </a>
+                              @endif
+
                           </div>
                           <div class="col-4 text-center">
                             @if (Auth::user())
                                 <?php
-                                    $favori_enchere =App\Models\Favoris::where('enchere_id', $article->enchere?->id)->where('user_id', Auth::user()->id)->first() ?? null;
+                                  $favori_enchere =App\Models\Favoris::where('enchere_id', $article->enchere?->id)->where('user_id', Auth::user()->id)->first() ?? null;
                                 ?>
                                 @if ($favori_enchere != null )
-                                  @if (Auth::user() )
-                                      <a href="{{route('delete.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100 text-black {{ $favori_enchere == null ?'card-salon':'card-salon-me'}}">
-                                          <i class="fi fi-rr-plus"></i> Favorie
-                                      </a>
-                                  @else
-                                      <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
-                                          <i class="fi fi-rr-plus"></i> Ajouter aux favories
-                                      </a>
+                                  @if ($favori_enchere == null )
+                                    <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
+                                      <i class="fi fi-rr-plus"></i> Ajouter aux favories
+                                    </a>
+                                    @else
+                                    <a href="{{route('delete.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100 text-black {{ $favori_enchere == null ?'card-salon':'card-salon-me'}}">
+                                        <i class="fi fi-rr-plus"></i> Favorie
+                                    </a>
+
                                   @endif
                                 @else
                                   <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
@@ -115,7 +126,7 @@
                                     <i class="fi fi-rr-plus"></i> Ajouter aux favories
                                 </a>
                             @endif
-                          
+
                           </div>
                             <div class="col-4 text-center">
                               <a href="#" class="btn btn-3d-rounded-sm w-100 h-100 ">
@@ -139,15 +150,13 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-
-                    
+                  @livewire('counte-mumber-salon',['article'=>$article])
                 </div>
             </div>
         </div>
       </div>
     @endforeach
-    {{-- @livewire('counte-mumber-salon',['articles'=>$articles]) --}}
   </div>
 
-  
+
 @endsection

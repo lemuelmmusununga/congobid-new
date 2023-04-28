@@ -8,13 +8,16 @@
         </div>
         <ul>
             <li>
+                <a href="/">Acceuil</a>
+            </li>
+            <li>
                 <a href="/articles">Nos aticles</a>
             </li>
             <li>
                 <a href="/tarif">Tarifs</a>
             </li>
             <li>
-                <a href="/salons">Enchères clôturées</a>
+                <a href="{{route('show.enchers-ferme')}}">Enchères clôturées</a>
             </li>
             <li>
                 <a href="/salons">Salons</a>
@@ -31,11 +34,18 @@
         </ul>
 
         {{-- action="" method="POST" --}}
-        <form action="{{ route('logout') }}" method="post">
-            @csrf   
-            <button type="submit" href="{{ route('logout') }}" class="btn btn-action">
-                Déconnexion
-            </button>
-        </form>
+        @if (Auth::user())
+            <form action="{{ route('logout') }}" method="post">
+                @csrf
+                <button type="submit" href="{{ route('logout') }}" class="btn btn-action">
+                    Déconnexion
+                </button>
+            </form>
+        @else
+           <a  href="{{ route('login') }}" class="btn btn-action">
+                Se Connecter
+           </a>
+        @endif
+
     </div>
 </div>

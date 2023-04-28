@@ -38,6 +38,27 @@
 </head>
 
 <body>
+    <div id="page-load">
+        <div class="backdrop fade"></div>
+        <div class="parent-modal">
+            <div class="dialog dialog-centered">
+                <div class="content-modal">
+                    <div class="body">
+                        <div class="d-flex align-items-center">
+                            <div class="load-spiner">
+                            </div>
+                            <div class="text-star">
+                                <h6 class="mb-0" style="color:var(--colorTitre)!important;">
+                                    Veuillez patienter Svp ...
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
     {{-- @include('components.side-menu') --}}
     {{-- @include('components.side-filter') --}}
     @include('components.navbar-home')
@@ -118,12 +139,16 @@
     {{-- @stack('modals') --}}
     @livewireScripts
     <script src="{{ asset('js/app.js') }}"></script>
+
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous">
     </script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/scriptcarousel.js') }}"></script>
+    <script>
+        $('#page-load').addClass('d-none');
+    </script>
     <script>
         $(document).ready(function() {
 

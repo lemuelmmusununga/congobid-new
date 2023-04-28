@@ -13,83 +13,55 @@
 @endif
 @endforeach
 <div class="panel-header bg-primary-gradient">
-    <div class="page-inner py-5">
+    <div class="page-inner py-2">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <div>
-                <h2 class="text-white pb-2 fw-bold">Bienvenue sur votre <br> <span> Tableau de bord </span> </h2>
+                <h2 class="text-white fw-bold">Bienvenue sur votre <br> <span> Tableau de bord </span> </h2>
                 {{-- <h5 class="text-white op-7 mb-2">Free Bootstrap 4 Admin Dashboard</h5> --}}
             </div>
-            <div class="button ml-md-auto py-2 py-md-0">
+            {{-- <div class="button ml-md-auto py-2 py-md-0"> --}}
 
-                <a href="#" class="btn btn-white btn-border btn-round mr-2"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Ajouter une enchère</a>
                 {{-- <a href="#" class="btn btn-secondary btn-round text-white">Ajouter un produit</a> --}}
-            </div>
+            {{-- </div> --}}
         </div>
     </div>
 </div>
-<div class="page-inner mt-4">
-    <div class="row mt--2">
-        <div class="col-md-3" >
+<div class="page-inner py-2">
+
+    <div class="row m-2 align-items-center flex-md-row">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <a href="#" class="btn btn-white btn-border btn-round mr-2"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Ouvrir une enchère</a>
+        </div>
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+            <a href="{{route('bids.index')}}" class="btn btn-white btn-border btn-round mr-2">Bids</a>
+        </div>
+    </div>
+
+    <div class="row mt-2">
+        <div class="col-md-4" >
             <div class="card card-passe full-height">
                 <div class="card-body">
-                    <div class="card-user ">Nombres d'utilisateurs</div>
-                    {{-- <div class="card-category">Ces informations sont affichées en temps réel</div> --}}
-                    <div class="d-flex flex-wrap pb-2">
-                        <div class=" pb-2 pb-md-0">
-                            <h1 style="font-size: 80px;">{{ count($users)  }}</h1>
-                        </div>
-                    </div>
+                    <canvas id="userChart" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3" >
-            <div class="card card-connected full-height" style="border-radius: 24px;">
-                <div class="card-body">
-                    <div class="card-connect ">Utilisateurs Connecté</div>
-                    <div class=" pb-2 pb-md-0 ">
-                        <h1 style= "font-size: 90px;">{{ $i }}</h1>
-                    </div>
-
-                    {{-- <div class="card-category">Ces informations sont affichées en temps réel</div> --}}
-                    {{-- <div class="d-flex flex-wrap justify-content-around pb-2 pt-4">
-                        <div class="px-2 pb-2 pb-md-0 text-center">
-                            <div id="circles-2"></div>
-                        </div>
-                    </div> --}}
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3" >
-            <div class="card inactif full-height">
-                <div class="card-body">
-                    <div class="card-inactif ">Utilisateurs Inactifs</div>
-                    {{-- <div class="card-category">Ces informations sont affichées en temps réel</div> --}}
-                    <div class="d-flex flex-wrap pb-2">
-                        <div class=" pb-2 pb-md-0">
-                            <h1 style="font-size: 80px;">{{ count($users) - $i}}</h1>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-3" >
+        <div class="col-md-4" >
             <div class="card card-article full-height">
                 <div class="card-body">
-                    <div class="card-article">Nombres d'articles</div>
-                    {{-- <div class="card-category">Ces informations sont affichées en temps réel</div> --}}
-                    <div class="d-flex flex-wrap pb-2">
-                        <div class=" pb-2 pb-md-0">
-                            <h1 style="font-size: 80px;">{{ count($articles) }}</h1>
-                        </div>
-                    </div>
+                    <canvas id="paymentSystemsChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4" >
+            <div class="card card-article full-height">
+                <div class="card-body">
+                    <canvas id="articleChart" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="card">
                 <div class="card-body ">
                     <div class="card-title fw-mediumbold">Demande des Bids</div>
@@ -372,7 +344,7 @@
                     <div class="chart-container" style="min-height: 375px">
                         <canvas id="statisticsChart"></canvas>
                     </div>
-                    <div id="myChartLegend"></div>
+                    <div id="userChartLegend"></div>
                 </div>
             </div>
         </div> --}}
@@ -566,5 +538,177 @@
             </div>
         </div>
     </div>
-
+    <script>
+        window.onload = function() {
+            var ctx = document.getElementById('userChart').getContext('2d');
+            var ctx1 = document.getElementById('paymentSystemsChart').getContext('2d');
+            var ctx2 = document.getElementById('articleChart').getContext('2d');
+            var userChart = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: ['Utilisateurs {{count($users)}}  ', 'Connecté {{$i}}', 'Inactifs {{count($users) - $i}}'],
+                    datasets: [{
+                        label: 'Nombre d\'utilisateurs',
+                        data: [{{ count($users) }}, {{ $i }}, {{ count($users) - $i }}],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.4)',
+                            'rgba(54, 162, 235, 0.4)',
+                            'rgba(255, 206, 86, 0.4)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            fontColor: '#333',
+                            fontSize: 14,
+                            boxWidth: 20,
+                            padding: 20
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: 'Répartition des utilisateurs',
+                        fontColor: '#333',
+                        fontSize: 18,
+                        padding: 20
+                    }
+                }
+            });
+            var paymentSystemsChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['PayPal', 'Stripe', 'Square'],
+                    datasets: [{
+                        label: 'Nombre d\'utilisateurs',
+                        data: [500, 700, 300],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: false
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Répartition des systèmes de paiement',
+                        fontColor: '#333',
+                        fontSize: 18,
+                        padding: 20
+                    }
+                }
+            });
+            var paymentSystemsChart = new Chart(ctx1, {
+                type: 'bar',
+                data: {
+                    labels: ['PayPal', 'Stripe', 'Square'],
+                    datasets: [{
+                        label: 'USA',
+                        data: [500, 700, 300],
+                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        borderColor: 'rgba(255, 99, 132, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'France',
+                        data: [200, 400, 100],
+                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                        borderColor: 'rgba(54, 162, 235, 1)',
+                        borderWidth: 1
+                    }, {
+                        label: 'Allemagne',
+                        data: [300, 500, 200],
+                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        borderColor: 'rgba(255, 206, 86, 1)',
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    legend: {
+                        display: true,
+                        position: 'bottom'
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }]
+                    },
+                    title: {
+                        display: true,
+                        text: 'Répartition des systèmes de paiement par pays',
+                        fontColor: '#333',
+                        fontSize: 18,
+                        padding: 20
+                    }
+                }
+            });
+            var articleChart = new Chart(ctx2, {
+                type: 'doughnut', // Type de charte (bar, line, pie, etc.)
+                data: {
+                labels: ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin'],
+                datasets: [{
+                    label: 'Ventes mensuelles',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+                },
+                options: {
+                scales: {
+                    yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                    }]
+                }
+                }
+            });
+        };
+    </script>
 </div>

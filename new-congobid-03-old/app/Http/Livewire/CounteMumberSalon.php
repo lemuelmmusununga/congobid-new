@@ -2,21 +2,23 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\User;
 use Livewire\Component;
 
 class CounteMumberSalon extends Component
 {
-    public $articles ,$getcount=1,$count = 0;
-    public $prises;
-    public function mount($articles){
-        $this->articles = $articles;
+    public $getcount = 1, $count,$salon_type;
+    public $prises, $article, $users;
+    public function mount($article)
+    {
+        $this->prises = $article->prix_marche;
+        $this->users = User::select('id', 'username')->get();
     }
 
     public function render()
-    {   
-        dump($this->prises);
-        $this->count += round((10*(($this->prises >1 ? $this->prix : 1 )/($this->getcount >=1 ? $this->getcount : 1 )))) ;
-       
+    {
+        $this->count = ceil((100 * (($this->prises) * 5 / ($this->getcount >= 1 ? $this->getcount : 1))));
+
         return view('livewire.counte-mumber-salon');
     }
 }

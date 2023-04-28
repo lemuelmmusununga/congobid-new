@@ -47,4 +47,6 @@ class Article extends Model
     {
         return $this->belongsTo(Paquet::class);
     }
+
+  
 }
