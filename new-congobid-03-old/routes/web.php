@@ -114,7 +114,12 @@ Route::get('/valid-account', function () {
     return view('pages.valid-account');
 });
 
-
+Route::get('/chatbox', function () {
+    return view('pages.chatbox');
+});
+Route::get('/chatbox-reponse', function () {
+    return view('pages.chatbox-reponse');
+});
 Route::get('/', [IndexController::class, 'index'])->name('index');
 
 Route::get('/comment-ca-marche', [InstructionController::class, 'index'])->name('clients.instructions.index');

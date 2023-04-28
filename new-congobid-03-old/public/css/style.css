@@ -16,6 +16,23 @@
   --blueColor: #0d6efd;
 }
 
+#confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: #f44336;
+  border-radius: 50%;
+}
+
 body {
   overflow-x: hidden;
   position: relative;
@@ -207,7 +224,6 @@ a {
 .global-div {
   width: 100%;
   min-height: 100vh;
-  overflow-x: hidden;
   position: relative;
   background: var(--linearBg);
 }
@@ -219,7 +235,6 @@ a {
 .wrapper {
   width: 100%;
   height: 100%;
-  overflow: hidden;
   position: relative;
 }
 
@@ -228,6 +243,13 @@ a {
   -webkit-transition: .3s;
   transition: .3s;
   background: var(--yellowColor);
+}
+
+.navbar .title {
+  font-size: 16px;
+  margin-bottom: 0;
+  color: var(--blackColor);
+  font-weight: 700;
 }
 
 .navbar .block-avatar {
@@ -357,6 +379,14 @@ a {
 
 .navbar .block-tools a:last-child {
   margin-right: 0;
+}
+
+.nav-chat {
+  background: transparent;
+}
+
+.nav-chat.bg {
+  background: #fae3b2;
 }
 
 .nav-page {
@@ -1725,6 +1755,121 @@ footer .bundel-bottom p {
   color: var(--blackColor) !important;
   font-size: 14px;
   background: none !important;
+}
+
+.block-page .content-chatbox {
+  min-height: 100vh;
+  padding-top: 10px;
+  margin-bottom: 70px;
+}
+
+.block-page .content-chatbox .card-chat {
+  background: transparent;
+  border: none;
+}
+
+.block-page .content-chatbox .card-chat .content-chat .avatar {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 100%;
+  border: 1px solid var(--colorGold);
+  margin-right: 10px;
+}
+
+.block-page .content-chatbox .card-chat .content-chat .avatar img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.block-page .content-chatbox .card-chat .content-chat .content-name h5 {
+  margin-bottom: 0;
+  font-size: 14px;
+  color: var(--colorGold);
+  font-weight: 600;
+}
+
+.block-page .content-chatbox .card-chat .content-chat .content-name .date {
+  font-size: 10px;
+  color: var(--colorGold);
+  margin-left: 5px;
+}
+
+.block-page .content-chatbox .card-chat .content-chat .content-name p {
+  font-size: 13px;
+  color: var(--colorGold);
+}
+
+.block-page .content-chatbox .card-chat .content-chat .content-name .read {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--colorGold);
+}
+
+.block-page .writing-block-chat .content-writing {
+  background: #fae3b2;
+  padding: 10px;
+}
+
+.block-page .writing-block-chat .content-writing .avatar {
+  width: 34px;
+  height: 34px;
+  position: relative;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  overflow: hidden;
+  border-radius: 100%;
+  border: 1px solid var(--colorGold);
+  margin-right: 10px;
+}
+
+.block-page .writing-block-chat .content-writing .avatar img {
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.block-page .writing-block-chat .content-writing .btn-send {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 auto;
+          flex: 0 0 auto;
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  color: var(--colorGold);
+  border: 1px solid var(--colorGold);
+  margin-left: 10px;
+  border-radius: 100%;
+}
+
+.block-page .writing-block-chat .content-writing .form-control {
+  background: #ffffffb2;
+  border: none;
+  resize: none;
+  height: 34px;
 }
 
 .block-page .title {
