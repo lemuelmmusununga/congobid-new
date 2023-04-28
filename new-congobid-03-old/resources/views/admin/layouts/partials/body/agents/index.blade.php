@@ -42,7 +42,11 @@
                                     <td>
                                         <a href="{{ route('agents.edit', [$agent->id ??  '' ]) }}">Editer</a> |
                                         @if ($agent->statut->id == 1)
+<<<<<<< Updated upstream
                                             <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 1]) }}">Activer</a>
+=======
+                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 1]) }}"class="btn btn-warning">Activer</a>
+>>>>>>> Stashed changes
                                         @elseif ($agent->statut->id == 2)
                                             <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 2]) }}">Réactiver</a>
                                         @elseif ($agent->statut->id == 3)

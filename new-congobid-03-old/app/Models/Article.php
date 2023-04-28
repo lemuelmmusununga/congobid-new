@@ -13,6 +13,35 @@ class Article extends Model
 
     protected $guarded = [];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function ($article) {
+            $prix = $article->prix;
+            function isInInterval($number, $interval)
+            {
+                [$min, $max] = explode('-', $interval);
+                return $number >= $min && $number <= $max;
+            }
+            if (isInInterval($prix, '0-200')) {
+                $article->paquet_id = 1;
+            } elseif (isInInterval($prix, '201-500')) {
+                $article->paquet_id = 2;
+            } elseif (isInInterval($prix, '501-1500')) {
+                $article->paquet_id = 3;
+            } elseif (isInInterval($prix, '1501-2500')) {
+                $article->paquet_id = 4;
+            } elseif (isInInterval($prix, '2501-5000')) {
+                $article->paquet_id = 5;
+            } elseif (isInInterval($prix, '5001-1000')) {
+                $article->paquet_id = 6;
+            } else {
+                $article->paquet_id = 0;
+            }
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -20,12 +49,12 @@ class Article extends Model
 
     public function enchere()
     {
-        return $this->hasOne(Enchere::class);
+        return $this->belongsTo(Enchere::class);
     }
 
     public function salon()
     {
-        return $this->hasOne(Salon::class);
+        return $this->belongsTo(Salon::class);
     }
 
     public function images()
@@ -48,5 +77,5 @@ class Article extends Model
         return $this->belongsTo(Paquet::class);
     }
 
-  
+
 }

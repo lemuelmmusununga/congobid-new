@@ -244,7 +244,7 @@
                 <div class="col-md-12">
                     <div class="card table-size-seconde">
                         <div class="card-body ">
-                            <div class="card-title fw-mediumbold">Encheres encours...</div>
+                            {{-- <div class="card-title fw-mediumbold">Encheres encours...</div>
                                 @foreach ($articles as $article)
                                     @php
                                         $enchere_encours = ($article->enchere->munite * 60 + $article->enchere->seconde >= 0 && $article->enchere->state == 0 &&
@@ -267,16 +267,16 @@
                                                 {{-- <button class="btn btn-icon btn-primary btn-round btn-xs">
                                                     <i class="fa fa-plus"></i>
                                                 </button> --}}
-                                            </div>
+                                            {{-- </div>
                                         </div>
 
                                     @endif
                                 @endforeach
-                            </div>
-                        </div>
+                            </div> --}}
+                        {{-- </div>
                     </div>
-                </div>
-                <div class="col-md-12">
+                </div> --}}
+                {{-- <div class="col-md-12">
                     <div class="card">
                         <div class="card-body ">
                             <div class="card-title fw-mediumbold">Encheres Futures</div>
@@ -302,20 +302,20 @@
                                                     {{-- <button class="btn btn-icon btn-primary btn-round btn-xs">
                                                         <i class="fa fa-plus"></i>
                                                     </button> --}}
-                                                </div>
+                                                {{-- </div>
                                             </div>
 
                                         @endif
 
 
-                                    @endforeach
+                                    @endforeach --}}
                                     {{-- @if ($enchere_future == null)
                                         <h1 class="text-danger text-center fw-bold my-5">Pas d'enchère future</h1>
                                     @endif --}}
-                            </div>
+                            {{-- </div>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
             </div>
         </div>

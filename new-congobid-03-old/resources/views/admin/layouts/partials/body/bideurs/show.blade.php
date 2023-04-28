@@ -51,6 +51,23 @@
                             <div class="title"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Non transferable</span></span></div>
                         </div>
                     </div>
+<<<<<<< Updated upstream
+=======
+                    <div class="row user-stats text-center">
+                        <div class="col">
+                            <div class="number"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> {{ $bideur->roi }} </span></span></div>
+                            <div class="title"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Roi</span></span></div>
+                        </div>
+                        <div class="col">
+                            <div class="number"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> {{ $bideur->foudre }} </span></span></div>
+                            <div class="title"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Foudre</span></span></div>
+                        </div>
+                        <div class="col">
+                            <div class="number"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> {{ $bideur->bouclier }} </span></span></div>
+                            <div class="title"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Bouclier</span></span></div>
+                        </div>
+                    </div>
+>>>>>>> Stashed changes
                 </div>
             </div>
         </div>

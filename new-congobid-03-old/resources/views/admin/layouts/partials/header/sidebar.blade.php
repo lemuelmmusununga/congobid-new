@@ -102,6 +102,27 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item {{ request()->is('tableau-de-bord/creation/article') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/articles') ? 'active' : ''}}">
+                    <a data-toggle="collapse" href="#articles">
+                        <i class="fas fa-home"></i>
+                        <p>Gestion des Enchères</p>
+                        <span class="caret"></span>
+                    </a>
+                    <div class="collapse" id="articles">
+                        <ul class="nav nav-collapse">
+                            <li>
+                                <a href="{{ route('articles.create') }}">
+                                    <span class="sub-item">Ajouter une enchère</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('articles.index') }}">
+                                    <span class="sub-item">Voir les enchère</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
                 <li class="nav-item {{ request()->is('tableau-de-bord/creation/categorie') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/sous-categories') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/categories') ? 'active' : ''}} " >
                     <a data-toggle="collapse" href="#categories">
                         <i class="fas fa-layer-group"></i>

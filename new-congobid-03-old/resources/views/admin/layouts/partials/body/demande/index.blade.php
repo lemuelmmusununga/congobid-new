@@ -45,13 +45,13 @@
 
                                             <td>{{ $article->statut->libelle ?? '' }}</td>
                                             <td>
-                                                <a href="{{ route('articles.edit', [$article->id]) ?? '' }}">Editer</a> |
+                                                <a href="{{ route('articles.edit', [$article->id]) ?? '' }}" class="btn btn-success">Editer</a> |
                                                 @if ($article->statut->id == 1)
-                                                    <a href="{{ route('articles.destroy', [$article->id, 1]) ?? '' }}">Activer</a>
+                                                    <a href="{{ route('articles.destroy', [$article->id, 1]) ?? '' }}" class="btn btn-warning">Activer</a>
                                                 @elseif ($article->statut->id == 2)
-                                                    <a href="{{ route('articles.destroy', [$article->id, 2]) ?? '' }}">Réactiver</a>
+                                                    <a href="{{ route('articles.destroy', [$article->id, 2]) ?? '' }}"class="btn btn-secondary">Réactiver</a>
                                                 @elseif ($article->statut->id == 3)
-                                                    <a href="{{ route('articles.destroy', [$article->id, 3]) ?? '' }}">Supprimer</a>
+                                                    <a href="{{ route('articles.destroy', [$article->id, 3]) ?? '' }}"class="btn btn-danger">Supprimer</a>
                                                 @endif
                                             </td>
                                         </tr>

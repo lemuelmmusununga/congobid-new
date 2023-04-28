@@ -14,6 +14,7 @@ use App\Models\Chat;
 use App\Models\Enchere;
 use App\Models\Paquet;
 use Illuminate\Support\Str;
+
 class ArticleController extends Controller
 {
     /**
@@ -59,101 +60,38 @@ class ArticleController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->state === 'on' ? 1 :0);
 
-         //try{
+        try {
             $articlesCount = Article::all()->count();
-            $request->code_produit = $request->categorie_id.Auth::user()->id.now()->format('dmY').now()->format('His').$articlesCount+1 ;
-            $paquets = Paquet::where('statut_id', '3')->get();
-
-            $paquet_id = 1;
-
-            foreach ($paquets as $key => $paquet) {
-                if ((($request->prix) >= $paquet->min) && (($request->prix) <= $paquet->max)) {
-                    $paquet_id = $paquet->id;
-                }
-            }
+            $code_produit = $request->categorie_id . Auth::user()->id . now()->format('dmY') . now()->format('His') . $articlesCount + 1;
 
             $article = Article::create([
                 'titre' => $request->titre,
-                // 'image' => ($image == 'true') ? $request->titre . '.webp' : null,
                 'marque' => $request->marque,
                 'promouvoir' => $request->promouvoir == "on" ? 1 : 0,
-                'code_produit' => $request->code_produit ,
+                'code_produit' => $code_produit,
                 'description' => $request->description,
                 'prix' => $request->prix,
                 'prix_marche' => $request->prix_marche,
-                'prix_precedent' => $request->prix_marche,
-                'prix_min' => $request->prix_marche / 3,
-                'prix_max' => $request->prix_marche / 2,
-                'cout_livraison' => $request->cout_livraison,
-                'infos_livraison' => $request->infos_livraison,
-                'meta_description' => $request->meta_description,
-                'meta_keywords' => $request->meta_keywords,
-                'limite_enchere_auto' => $request->limite_enchere_auto,
-                'credit_enchere_auto' => $request->credit_enchere_auto,
-                'code_produit' => $request->code_produit,
                 'quantite' => $request->quantite,
                 'categorie_id' => $request->categorie_id,
-                // 'categorie_id' => $request->categorie_id,
                 'statut_id' => $request->statut_id,
                 'user_id' => Auth::user()->id,
-                'paquet_id' => $paquet_id,
-                'salon'=>$request->state === 'on' ? 0 :1,
-
             ]);
 
-            if($request->file('image') != null){
+            if ($request->file('image') != null) {
+                foreach ($request->file('image') as $key => $image) {
+                    $ext = $image->getClientOriginalExtension();
+                    # code...
+                    Image::create([
+                        'lien' => $article->id . '_' . $key . '.' . $ext,
+                        'statut_id' => "1",
+                        'user_id' => Auth::user()->id,
+                        'article_id' => $article->id,
+                    ]);
 
-                Image::create([
-                    'lien' =>  $request->titre.'.webp',
-                    'statut_id' => $request->statut_id,
-                    'user_id' => Auth::user()->id,
-                    'article_id' => $article->id,
-                ]);
-
-                $request->file('image')->move(public_path('images/articles/'), $request->titre. '.webp');
-
-            }
-            if ($request->state === 'on') {
-                # code...
-
-                Salon::create([
-                   'libelle' => 'Salon #'.$article->id,
-                   'statut_id' => $request->statut_id,
-                   'article_id' => $article->id,
-                   'state'=>0,
-                   'user_id'=>null,
-                   'limite' => $request->nombre ??  $request->nombre_salon,
-                ]);
-
-                Enchere::create([
-                    'click' => 0,
-                    'date_debut' => null,
-                    'munite' => Str::substr($request->fin_enchere, 0, 2) ,
-                    'seconde' => Str::substr($request->fin_enchere, 4, 8) ,
-                    'state' => 0,
-                    'favoris' => 0,
-                    'statut_id' => $request->statut_id,
-                    'article_id' => $article->id,
-                    'paquet_id' => $paquet_id,
-                    'favori_salon'=>0,
-                    'prix'=>$request->prix
-                ]);
-            }else{
-                Enchere::create([
-                    'click' => 0,
-                    'date_debut' => $request->debut_enchere,
-                    'munite' => Str::substr($request->fin_enchere, 0, 2) ,
-                    'seconde' => Str::substr($request->fin_enchere, 4, 8) ,
-                    'state' => 0,
-                    'favoris' => 0,
-                    'statut_id' => $request->statut_id,
-                    'article_id' => $article->id,
-                    'paquet_id' => $paquet_id,
-                    'favori_salon'=>0,
-                    'prix'=>$request->prix
-                ]);
+                    $image->move(public_path('images/articles/'), $article->id . '_' . $key . '.' . $ext);
+                }
             }
 
 
@@ -166,9 +104,10 @@ class ArticleController extends Controller
             ]);
 
             return redirect()->route('articles.index');
-       // } catch(\Exception $e){
-       // return back()->with('');
-     //}
+        } catch (\Exception $e) {
+            dd($e);
+            return back()->with('');
+        }
     }
 
     /**
@@ -211,83 +150,82 @@ class ArticleController extends Controller
     public function update(Request $request)
     {
         // try{
-            $articlesCount = Article::all()->count();
-            $request->code_produit = $request->categorie_id.Auth::user()->id.now()->format('dmY').now()->format('His').$articlesCount+1 ;
-            $paquets = Paquet::where('statut_id', '3')->get();
+        $articlesCount = Article::all()->count();
+        $request->code_produit = $request->categorie_id . Auth::user()->id . now()->format('dmY') . now()->format('His') . $articlesCount + 1;
+        $paquets = Paquet::where('statut_id', '3')->get();
 
-            $paquet_id = 1;
+        $paquet_id = 1;
 
-            foreach ($paquets as $key => $paquet) {
-                if ((($request->prix) >= $paquet->min) && (($request->prix) <= $paquet->max)) {
-                    $paquet_id = $paquet->id;
-                }
+        foreach ($paquets as $key => $paquet) {
+            if ((($request->prix) >= $paquet->min) && (($request->prix) <= $paquet->max)) {
+                $paquet_id = $paquet->id;
+            }
+        }
+
+        $article = Article::where('id', $request->article_id)->update([
+            'titre' => $request->titre,
+            'marque' => $request->marque,
+            'promouvoir' => $request->promouvoir == "on" ? 1 : 0,
+            'code_produit' => $request->code_produit,
+            'description' => $request->description,
+            'prix' => $request->prix,
+            'prix_marche' => $request->prix_marche,
+            'prix_min' => $request->prix_marche / 3,
+            'prix_max' => $request->prix_marche / 2,
+            'cout_livraison' => $request->cout_livraison,
+            'infos_livraison' => $request->infos_livraison,
+            'meta_description' => $request->meta_description,
+            'meta_keywords' => $request->meta_keywords,
+
+            'limite_enchere_auto' => $request->limite_enchere_auto,
+            'credit_enchere_auto' => $request->credit_enchere_auto,
+            'code_produit' => $request->code_produit,
+            'quantite' => $request->quantite,
+            'categorie_id' => $request->categorie_id,
+            'statut_id' => $request->statut_id,
+            'user_id' => Auth::user()->id,
+            'paquet_id' => $paquet_id,
+        ]);
+
+        if ($request->file('image') != null) {
+
+            foreach ($request->file('image') as $key => $image) {
+                # code...
             }
 
-            $article = Article::where('id', $request->article_id)->update([
-                'titre' => $request->titre,
-                'marque' => $request->marque,
-                'promouvoir' => $request->promouvoir == "on" ? 1 : 0,
-                'code_produit' => $request->code_produit ,
-                'description' => $request->description,
-                'prix' => $request->prix,
-                'prix_marche' => $request->prix_marche,
-                'prix_min' => $request->prix_marche / 3,
-                'prix_max' => $request->prix_marche / 2,
-                'cout_livraison' => $request->cout_livraison,
-                'infos_livraison' => $request->infos_livraison,
-                'meta_description' => $request->meta_description,
-                'meta_keywords' => $request->meta_keywords,
 
-                'limite_enchere_auto' => $request->limite_enchere_auto,
-                'credit_enchere_auto' => $request->credit_enchere_auto,
-                'code_produit' => $request->code_produit,
-                'quantite' => $request->quantite,
-                'categorie_id' => $request->categorie_id,
-                'statut_id' => $request->statut_id,
-                'user_id' => Auth::user()->id,
-                'paquet_id' => $paquet_id,
-            ]);
 
-            if($request->file('image') != null){
+            $request->file('image')->move(public_path('images/articles/'), $request->titre . '.webp');
 
-                Image::where('article_id', $request->article_id)->update([
-                    'lien' =>  $request->titre.'_'.$request->article_id.'.webp',
-                    'statut_id' => $request->statut_id,
-                    'user_id' => Auth::user()->id,
-                    'article_id' => $request->article_id,
-                ]);
+        }
 
-                $request->file('image')->move(public_path('images/articles/'), $request->titre. '.webp');
+        Salon::where('article_id', $request->article_id)->update([
+            'libelle' => 'Salon #' . $request->article_id,
+            'statut_id' => $request->statut_id,
+            'article_id' => $request->article_id,
+        ]);
 
-            }
+        Enchere::where('article_id', $request->article_id)->update([
+            'click' => 0,
+            'date_debut' => $request->debut_enchere,
 
-            Salon::where('article_id', $request->article_id)->update([
-                'libelle' => 'Salon #'.$request->article_id,
-                'statut_id' => $request->statut_id,
-                'article_id' => $request->article_id,
-            ]);
+            'munite' => Str::substr($request->fin_enchere, 0, 2),
+            'seconde' => Str::substr($request->fin_enchere, 4, 8),
+            'state' => 0,
+            'statut_id' => $request->statut_id,
+            'article_id' => $request->article_id,
+            'paquet_id' => $paquet_id,
+        ]);
 
-            Enchere::where('article_id', $request->article_id)->update([
-                'click' => 0,
-                'date_debut' => $request->debut_enchere,
+        Historique::create([
+            'action' => 'Modification d\'un article',
+            'type' => '5',
+            'destination_id' => $request->article_id,
+            'statut_id' => '3',
+            'user_id' => Auth::user()->id,
+        ]);
 
-                'munite' => Str::substr($request->fin_enchere, 0, 2) ,
-                'seconde' => Str::substr($request->fin_enchere, 4, 8) ,
-                'state' => 0,
-                'statut_id' => $request->statut_id,
-                'article_id' => $request->article_id,
-                'paquet_id' => $paquet_id,
-            ]);
-
-            Historique::create([
-                'action' => 'Modification d\'un article',
-                'type' => '5',
-                'destination_id' => $request->article_id,
-                'statut_id' => '3',
-                'user_id' => Auth::user()->id,
-            ]);
-
-            return redirect()->route('articles.index');
+        return redirect()->route('articles.index');
         // } catch(\Exception $e){
         //     return back()->with('');
         // }
@@ -302,52 +240,52 @@ class ArticleController extends Controller
     public function destroy($id, $state)
     {
         // try{
-            Article::where('id', $id)->update([
-                'statut_id' => $state == '3' ? 2 : 3,
-                'deleted_at' => $state == '3' ? now() : NULL,
-                'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
-                'id_updated_at' => Auth::user()->id,
-            ]);
+        Article::where('id', $id)->update([
+            'statut_id' => $state == '3' ? 2 : 3,
+            'deleted_at' => $state == '3' ? now() : NULL,
+            'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
+            'id_updated_at' => Auth::user()->id,
+        ]);
 
-            Image::where('article_id', $id)->update([
-                'statut_id' => $state == '3' ? 2 : 3,
-                'deleted_at' => $state == '3' ? now() : NULL,
-                'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
-                'id_updated_at' => Auth::user()->id,
-            ]);
+        Image::where('article_id', $id)->update([
+            'statut_id' => $state == '3' ? 2 : 3,
+            'deleted_at' => $state == '3' ? now() : NULL,
+            'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
+            'id_updated_at' => Auth::user()->id,
+        ]);
 
-            Salon::where('article_id', $id)->update([
-                'statut_id' => $state == '3' ? 2 : 3,
-                'deleted_at' => $state == '3' ? now() : NULL,
-                'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
-                'id_updated_at' => Auth::user()->id,
-            ]);
-            $enchere = Enchere::where('article_id', $id)->first();
-            $enchere->update([
-                'statut_id' => $state == '3' ? 2 : 3,
-                'deleted_at' => $state == '3' ? now() : NULL,
-                'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
-                'id_updated_at' => Auth::user()->id,
-                'state'=> $enchere->state == 1 ? '0' : '1'
-            ]);
+        Salon::where('article_id', $id)->update([
+            'statut_id' => $state == '3' ? 2 : 3,
+            'deleted_at' => $state == '3' ? now() : NULL,
+            'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
+            'id_updated_at' => Auth::user()->id,
+        ]);
+        $enchere = Enchere::where('article_id', $id)->first();
+        $enchere->update([
+            'statut_id' => $state == '3' ? 2 : 3,
+            'deleted_at' => $state == '3' ? now() : NULL,
+            'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
+            'id_updated_at' => Auth::user()->id,
+            'state' => $enchere->state == 1 ? '0' : '1'
+        ]);
 
-            if ($state == 3) {
-                $action = 'Suppression d\'un article';
-            } else if($state == 2) {
-                $action = 'Réactivation d\'un article';
-            }else {
-                $action = 'Activation d\'un article';
-            }
+        if ($state == 3) {
+            $action = 'Suppression d\'un article';
+        } else if ($state == 2) {
+            $action = 'Réactivation d\'un article';
+        } else {
+            $action = 'Activation d\'un article';
+        }
 
-            Historique::create([
-                'action' => $action,
-                'type' => '5',
-                'destination_id' => $id,
-                'statut_id' => '3',
-                'user_id' => Auth::user()->id,
-            ]);
+        Historique::create([
+            'action' => $action,
+            'type' => '5',
+            'destination_id' => $id,
+            'statut_id' => '3',
+            'user_id' => Auth::user()->id,
+        ]);
 
-            return redirect()->route('articles.index');
+        return redirect()->route('articles.index');
         // } catch(\Exception $e){
         //     return back()->with('');
         // }
