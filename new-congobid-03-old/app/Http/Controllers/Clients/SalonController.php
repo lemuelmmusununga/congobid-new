@@ -219,7 +219,7 @@ class SalonController extends Controller
     }
     public function salonCreate(Request $request)
     {
-        dd($request);
+       
         // $bideur = PivotClientsSalon::where('user_id',Auth::user()->id)->where('enchere_id',$id)->first();
         // $article = Article::where('id', $articleid)->where('statut_id', '3')->first();
         // $paquets = Paquet::where('id',$paquet)->where('statut_id', '3')->get();
@@ -264,25 +264,27 @@ class SalonController extends Controller
                 $conte = PivotClientsSalon::where('enchere_id', $request->enchereid)->get();
                 $salon = Salon::where('article_id', $request->articleid)->first();
                 $enchere = Enchere::where('article_id', $request->articleid)->first();
-                $getdate = now('Africa/kinshasa')->format('Y-m');
-                $gethours = now('Africa/kinshasa')->format('d') + 1;
-                $getmunite = now('Africa/kinshasa')->format('15:30:00');
+                $getdate = $request->date;
+                $gethours = $request->heure;
+                $getmunite = $request->munite;
                 $enchere->update([
-                    'participant' => $request->participant
+                    'participant' => $request->participant,
+                    'date_debut' => $getdate.'-'.$gethours,
+                    'munite'=>$getmunite,
                 ]);
                 Notification::create([
                     'message' => Auth::user()->username . ' Participation  au salon ' . $request->name . ' effectuer',
                     'user_id' => null,
                     'notification_id' => Auth::user()->id,
                 ]);
-                // if ($conte->count() == $salon->limite) {
-                //     $salon->update([
-                //         'state'=>1
-                //     ]);52
-                //     $enchere->update([
-                //         'date_debut' => $getdate.'-'.$gethours.' '.$getmunite
-                //     ]);
-                // }
+                if ($conte->count() == $salon->limite) {
+                    $salon->update([
+                        'state'=>1
+                    ]);
+                    // $enchere->update([
+                    //     'date_debut' => $getdate.'-'.$gethours.' '.$getmunite
+                    // ]);
+                }
                 return back()->with('success', 'Création effectué avec succès');
             } else {
                 return back()->with('danger', 'Votre compte est insuffisant');
