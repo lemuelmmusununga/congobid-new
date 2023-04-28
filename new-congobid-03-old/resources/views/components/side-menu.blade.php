@@ -150,16 +150,19 @@
                         </a>
                     </li>
                     <li>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            <a href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                <span class="iconify" data-icon="uiw:logout"></span>
-                                <span class="title">
+                        @if (Auth::user())
+                            <form action="{{ route('logout') }}" method="post">
+                                @csrf
+                                <button type="submit" href="{{ route('logout') }}" class="btn btn-action">
                                     Déconnexion
-                                </span>
-                            </a>
-                        </form>
+                                </button>
+                            </form>
+                        @else
+                        <a  href="{{ route('login') }}" class="btn btn-action">
+                                Se Connecter
+                        </a>
+                        @endif
+
                     </li>
                 </ul>
             @else

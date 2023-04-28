@@ -47,7 +47,9 @@ require __DIR__ . '/auth.php';
 Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
 // ours rooutes
-
+Route::get('/bid-action', function () {
+    return view('pages.bid-action');
+});
 Route::get('/detail-article', function () {
     return view('pages.detail-article');
 });
