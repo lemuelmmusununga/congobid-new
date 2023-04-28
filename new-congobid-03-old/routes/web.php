@@ -133,26 +133,20 @@ Route::post('/contact/requette/', [indexController::class, 'sendContact'])->name
 Route::get('/nos-gagnants', [GagnantController::class, 'index'])->name('clients.gagnants.index');
 
 Route::middleware(['clients'])->group(function () {
-
     # Socialite URLs
-
     // La page où on présente les liens de redirection vers les providers
     // Route::get("login-register",[SocialiteController::class,'loginRegister']);
 
     // La redirection vers le provider
     Route::get("login/google", [LoginController::class, 'redirectTogoogle'])->name('login.google');
-
     // Le callback du provider
     Route::get("login/google/callback", [LoginController::class, 'handleGoogleCallback'])->name('google.callback');
-
     // end
 
     // La redirection vers le provider
     Route::get("login/facebook", [LoginController::class, 'redirectTofacebook'])->name('login.facebook');
-
     // Le callback du provider
     Route::get("login/facebook/callback", [LoginController::class, 'handleFacebookCallback'])->name('facebook.callback');
-
     // end
     //page ouvrire enchere
     Route::get('/encheres-en-cours', [EnchersController::class, 'index'])->name('show.enchers');
