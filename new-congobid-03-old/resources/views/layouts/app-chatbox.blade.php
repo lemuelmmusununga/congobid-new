@@ -40,11 +40,11 @@
 <body>
     {{-- @include('components.side-menu') --}}
     {{-- @include('components.side-filter') --}}
-    @include('components.navbar-bid')
     <div class="overplay"></div>
     {{-- @include('components.header-index') --}}
-    <div class="global-div no-linear">
+    <div class="global-div">
         <div class="wrapper">
+            @include('components.navbar-chatbox')
             @yield('content')
         </div>
 
@@ -137,135 +137,19 @@
                 $('.back-drop-menu').removeClass('show');
                 $('.menu-sm').removeClass('show');
             })
-            // Crée un tableau de confettis
-// const confetti = [];
 
-// // Défini le nombre de confettis à utiliser
-// const numberOfConfetti = 100;
+            $(window).scroll(function() {
 
-// // Récupère le conteneur
-// const container1 = document.getElementById('confetti-container');
+                if ($(this).scrollTop() > 40) {
+                    $(".navbar").addClass('bg');
 
-// // Crée des confettis et les ajoute au tableau
-// for (let i = 0; i < numberOfConfetti; i++) {
-//   const c = document.createElement('div');
-//   c.className = 'confetti';
-//   confetti.push(c);
-//   container1.appendChild(c);
-// }
-
-// // Anime les confettis
-// function animateConfetti() {
-//   confetti.forEach(c => {
-//     c.style.transform = `translate(${c.translationX}px, ${c.translationY}px) rotate(${c.rotation}deg)`;
-//     c.translationY += c.speed;
-//     c.rotation += c.rotationSpeed;
-//     if (c.translationY >= window.innerHeight) {
-//       c.translationX = Math.random() * window.innerWidth;
-//       c.translationY = -10 - Math.random() * 100;
-//     }
-//   });
-//   requestAnimationFrame(animateConfetti);
-// }
-
-// // Initialise les propriétés de chaque confetti
-// confetti.forEach(c => {
-//   c.translationX = Math.random() * window.innerWidth;
-//   c.translationY = Math.random() * window.innerHeight;
-//   c.speed = Math.random() * 5 + 5;
-//   c.rotation = Math.random() * 360;
-//   c.rotationSpeed = Math.random() * 5;
-// });
-
-// // Lance l'animation
-// animateConfetti();
-            var button = document.querySelectorAll('.btn-mobile');
-            var container = document.querySelector('body');
-            var startX, startY, deltaX, deltaY, newLeft, newTop;
-
-            // button.addEventListener('touchstart', function(event) {
-            //   event.preventDefault();
-            //   startX = event.touches[0].pageX;
-            //   startY = event.touches[0].pageY;
-            //   lastX = startX;
-            //   lastY = startY;
-            // });
-
-            // button.addEventListener('touchmove', function(event) {
-            //   event.preventDefault();
-            //   deltaX = event.touches[0].pageX - lastX;
-            //   deltaY = event.touches[0].pageY - lastY;
-            //   lastX = event.touches[0].pageX;
-            //   lastY = event.touches[0].pageY;
-            //   newLeft = button.offsetLeft + deltaX;
-            //   newTop = button.offsetTop + deltaY;
-            //   if (newLeft > 0 && newLeft + button.offsetWidth < container.offsetWidth) {
-            //     button.style.left = newLeft + 'px';
-            //   }
-            //   if (newTop > 0 && newTop + button.offsetHeight < container.offsetHeight) {
-            //     button.style.top = newTop + 'px';
-            //   }
-            // });
-            button.forEach(btn_mobile => {
-                btn_mobile.addEventListener('touchstart', function(event) {
-                    event.preventDefault();
-                    startX = event.touches[0].pageX;
-                    startY = event.touches[0].pageY;
-                    lastX = startX;
-                    lastY = startY;
-                });
-            })
-            button.forEach(btn_mobile => {
-                btn_mobile.addEventListener('touchmove', function(event) {
-                event.preventDefault();
-                deltaX = event.touches[0].pageX - lastX;
-                deltaY = event.touches[0].pageY - lastY;
-                lastX = event.touches[0].pageX;
-                lastY = event.touches[0].pageY;
-                newLeft = btn_mobile.offsetLeft + deltaX;
-                newTop = btn_mobile.offsetTop + deltaY;
-                if (newLeft > 0 && newLeft + btn_mobile.offsetWidth < container.offsetWidth) {
-                    btn_mobile.style.left = newLeft + 'px';
                 }
-                if (newTop > 0 && newTop + btn_mobile.offsetHeight < container.offsetHeight) {
-                    btn_mobile.style.top = newTop + 'px';
-                }
-                if (newTop + btn_mobile.offsetHeight > container.offsetHeight) {
-                    btn_mobile.style.top = (container.offsetHeight - btn_mobile.offsetHeight) + 'px';
+                else {
+                    $(".navbar").removeClass('bg');
                 }
             });
-            })
 
-
-            // const fullscreenBtn = document.getElementById('fullscreen-btn');
-
-            // fullscreenBtn.addEventListener('click', () => {
-            //     const element = document.documentElement; // Sélectionne l'élément racine de la page
-            //     if (element.requestFullscreen) {
-            //         element.requestFullscreen();
-            //     } else if (element.webkitRequestFullscreen) {
-            //         // Pour Safari/Chrome sur les anciennes versions
-            //         element.webkitRequestFullscreen();
-            //     }
-            // });
         })
-        // var video= document.querySelector(".video")
-
-        //     $(".modal .btn-close").click(function(){
-        //         video.pause();
-        //         video.currentTime = 0;
-        //     })
-
-
-        //     $(document).ready(function(){
-        //     @if (session()->has('success'))
-        //         $('.modal-success').addClass('show')
-        //     @endif
-
-        //     $('.close-modal-sm').click(function(){
-        //         $('.modal-success').removeClass('show')
-        //     })
-        // });
     </script>
 </body>
 
