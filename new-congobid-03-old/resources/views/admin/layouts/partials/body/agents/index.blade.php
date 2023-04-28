@@ -33,24 +33,35 @@
                             @foreach ($agents as $key => $agent)
                                 <tr>
                                     <td> <a href="{{ route('agents.show', [$agent->id ??  '' ]) }}"> # {{ $key + 1 }} </a> </td>
-                                    <td> <a href="{{ route('agents.show', [$agent->id ??  '' ]) }}"> {{ $agent->user->nom ??  ''  }} </a> </td>
+                                    <td>
+                                        <a href="{{ route('agents.show', [$agent->id ??  '' ]) }}">
+                                            <div class="avatar">
+                                                <img src="{{ asset('images/users/'.$agent->user->avatar) }}" alt="..." class="avatar-img rounded-circle">
+                                            </div>
+                                            {{ $agent->user->nom ??  ''  }}  {{ $agent->user->prenom ??  ''  }}
+                                        </a>
+                                    </td>
                                     <td>{{ $agent->identification_fiscale ??  ''   }}</td>
                                     <td>{{ $agent->user->username ??  ''  }}</td>
                                     <td>{{ $agent->user->telephone ??  '' }} </td>
                                     {{-- <td>{{ $agent->user->articles->count() {{  }}}}</td> --}}
-                                    <td>{{ $agent->statut->libelle ??  ''  }}</td>
+                                    @if ($agent->statut_id == '3')
+                                        <td class="text-success">{{ $agent->statut->libelle ?? '' }}</td>
+                                    @elseif ($agent->statut_id == '2')
+                                        <td class="text-danger">{{ $agent->statut->libelle ?? '' }}</td>
+                                    @else
+                                        <td class="text-warning">{{ $agent->statut->libelle ?? '' }}</td>
+                                    @endif
                                     <td>
-                                        <a href="{{ route('agents.edit', [$agent->id ??  '' ]) }}">Editer</a> |
+                                        <a href="{{ route('agents.edit', [$agent->id ??  '' ]) }}" class="btn btn-success">Editer</a> |
                                         @if ($agent->statut->id == 1)
-<<<<<<< Updated upstream
-                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 1]) }}">Activer</a>
-=======
+
                                             <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 1]) }}"class="btn btn-warning">Activer</a>
->>>>>>> Stashed changes
+
                                         @elseif ($agent->statut->id == 2)
-                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 2]) }}">Réactiver</a>
+                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 2]) }}"class="btn btn-secondary">Réactiver</a>
                                         @elseif ($agent->statut->id == 3)
-                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 3]) }}">Supprimer</a>
+                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 3]) }}"class="btn btn-danger">Supprimer</a>
                                         @endif
                                     </td>
                                 </tr>

@@ -150,34 +150,22 @@ class AdministrateurController extends Controller
     {
         // dd($request->user_id);
         try {
-            $telephone = $request->pays_index . $request->telephone;
             if ($request->avatar != null) {
-                $request->file('avatar')->move(public_path('images/profil/'), $telephone . '.webp');
-                $user = User::where('id', $request->user_id)->update([
-                    'role_id' => $request->role_id,
-                    'nom' => $request->nom,
-                    'username' => $request->username,
-                    'telephone' => $telephone,
-                    'sexe' => $request->sexe,
-                    'email' => $request->email,
-                    'avatar' => $telephone . '.webp',
-                    'date_naissance' => $request->date_naissance,
-                    'password' => Hash::make($telephone),
-                    'statut_id' => $request->statut_id,
-                ]);
-            } else {
-                $user = User::where('id', $request->user_id)->update([
-                    'role_id' => $request->role_id,
-                    'nom' => $request->nom,
-                    'username' => $request->username,
-                    'telephone' => $telephone,
-                    'sexe' => $request->sexe,
-                    'email' => $request->email,
-                    'date_naissance' => $request->date_naissance,
-                    'password' => Hash::make($telephone),
-                    'statut_id' => $request->statut_id,
-                ]);
+                $request->file('avatar')->move(public_path('images/users/'), $request->user_id . '.webp', true);
             }
+            User::where('id', $request->user_id)->update([
+                'role_id' => $request->role_id,
+                'nom' => $request->nom,
+                'username' => $request->username,
+                'telephone' => $request->telephone,
+                'sexe' => $request->sexe,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'date_naissance' => $request->date_naissance,
+                'statut_id' => $request->statut_id,
+                'avatar' => $request->user->id . '.webp'
+            ]);
+
 
             Administrateur::where('user_id', $request->user_id)->update([
                 'identification_fiscale' => $request->identification_fiscale,

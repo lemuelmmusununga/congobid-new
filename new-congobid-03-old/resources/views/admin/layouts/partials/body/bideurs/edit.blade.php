@@ -25,15 +25,19 @@
                             <div class="row">
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Nom complet</label>
+                                        <label for="smallInput">Nom<span class="text-danger">*</span></label>
                                         <input type="hidden" name="user_id" class="form-control " id="smallInput" required value="{{ $bideur->user->id }}">
                                         <input type="text" name="nom" class="form-control " id="smallInput" placeholder="Entrez son nom" required value="{{ $bideur->user->nom }}">
                                     </div>
                                     <div class="form-group">
+                                        <label for="smallInput">Prénom<span class="text-danger">*</span></label>
+                                        <input type="text" name="prenom" class="form-control " id="smallInput" placeholder="Entrez son prénom" required value="{{ $bideur->user->prenom }}">
+                                    </div>
+                                    <div class="form-group">
                                         <label for="smallInput">Sexe</label>
                                         <select class="form-control " id="smallSelect" name="sexe">
-                                            <option value="Féminin">Féminin</option>
-                                            <option value="Masculin">Masculin</option>
+                                            <option value="Féminin" {{ $bideur->user->sexe == "Féminin" ? 'selected' : '' }}>Féminin</option>
+                                            <option value="Masculin" {{ $bideur->user->sexe == "Masculin" ? 'selected' : '' }}>Masculin</option>
                                         </select>
                                     </div>
                                     <div class="form-group">
@@ -54,10 +58,11 @@
                                         <label for="smallSelect">Statut</label>
                                         <select class="form-control " id="smallSelect" name="statut_id">
                                             @foreach ($statuts as $statut)
-                                                <option value="{{ $statut->id }}" {{ $bideur->statut_id == $statut->id ? 'selected' : '' }}>{{ $statut->libelle }}</option>
+                                            <option value="{{ $statut->id }}" {{ $bideur->statut_id == $statut->id ? 'selected' : '' }}>{{ $statut->libelle }}</option>
                                             @endforeach
                                         </select>
                                     </div>
+
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
@@ -68,12 +73,15 @@
                                         <label for="smallInput">Date de naissance</label>
                                         <input type="date" name="date_naissance" class="form-control " id="smallInput" value="{{ $bideur->user->date_naissance }}">
                                     </div>
+                                    <div class="form-group">
+                                        <label for="smallInput">Mot de passe</label>
+                                        <input type="password" name="password" class="form-control " id="smallInput" placeholder="Mot de passe par défaut" required value="{{ $bideur->user->password }}">
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card-action">
-                            <button class="btn btn-primary float-right px-5" style="border-radius: 20px;">Enregistrer</button>
-                            
+                            <button class="text-white btn btn-congo float-right px-5" style="border-radius: 20px;">Enregistrer</button>
                         </div>
                     </div>
                 </form>
