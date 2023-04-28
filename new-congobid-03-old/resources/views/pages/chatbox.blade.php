@@ -21,118 +21,11 @@
                                     <p class="mb-2">
                                         Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil distinctio alias, assumenda ex molestiae facilis quisquam ea pariatur velit natus aspernatur quasi dicta temporibus modi odit. Architecto id alias eligendi!
                                     </p>
-                                    <a href="#" class="read">4 réponses</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-12">
-                    <div class="card card-chat">
-                        <div class="content-chat d-flex">
-                            <div class="avatar">
-                                <img src="{{asset('images/bg3.jpg')}}" alt="">
-                            </div>
-                            <div class="content-name">
-                                <div class="d-flex align-items-center mt-2 mb-2">
-                                    <h5>Caleb Kudesisa</h5>
-                                    <span class="date">Il y a 3min</span>
-                                </div>
-                                <div class="message">
-                                    <p class="mb-2">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil distinctio alias, assumenda ex molestiae facilis quisquam ea pariatur velit natus aspernatur quasi dicta temporibus modi odit. Architecto id alias eligendi!
-                                    </p>
-                                    <a href="#" class="read">4 réponses</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="card card-chat">
-                        <div class="content-chat d-flex">
-                            <div class="avatar">
-                                <img src="{{asset('images/bg3.jpg')}}" alt="">
-                            </div>
-                            <div class="content-name">
-                                <div class="d-flex align-items-center mt-2 mb-2">
-                                    <h5>Caleb Kudesisa</h5>
-                                    <span class="date">Il y a 3min</span>
-                                </div>
-                                <div class="message">
-                                    <p class="mb-2">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil distinctio alias, assumenda ex molestiae facilis quisquam ea pariatur velit natus aspernatur quasi dicta temporibus modi odit. Architecto id alias eligendi!
-                                    </p>
-                                    <a href="#" class="read">4 réponses</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="card card-chat">
-                        <div class="content-chat d-flex">
-                            <div class="avatar">
-                                <img src="{{asset('images/bg3.jpg')}}" alt="">
-                            </div>
-                            <div class="content-name">
-                                <div class="d-flex align-items-center mt-2 mb-2">
-                                    <h5>Caleb Kudesisa</h5>
-                                    <span class="date">Il y a 3min</span>
-                                </div>
-                                <div class="message">
-                                    <p class="mb-2">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil distinctio alias, assumenda ex molestiae facilis quisquam ea pariatur velit natus aspernatur quasi dicta temporibus modi odit. Architecto id alias eligendi!
-                                    </p>
-                                    <a href="#" class="read">4 réponses</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="card card-chat">
-                        <div class="content-chat d-flex">
-                            <div class="avatar">
-                                <img src="{{asset('images/bg3.jpg')}}" alt="">
-                            </div>
-                            <div class="content-name">
-                                <div class="d-flex align-items-center mt-2 mb-2">
-                                    <h5>Caleb Kudesisa</h5>
-                                    <span class="date">Il y a 3min</span>
-                                </div>
-                                <div class="message">
-                                    <p class="mb-2">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil distinctio alias, assumenda ex molestiae facilis quisquam ea pariatur velit natus aspernatur quasi dicta temporibus modi odit. Architecto id alias eligendi!
-                                    </p>
-                                    <a href="#" class="read">4 réponses</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <div class="card card-chat">
-                        <div class="content-chat d-flex">
-                            <div class="avatar">
-                                <img src="{{asset('images/bg3.jpg')}}" alt="">
-                            </div>
-                            <div class="content-name">
-                                <div class="d-flex align-items-center mt-2 mb-2">
-                                    <h5>Caleb Kudesisa</h5>
-                                    <span class="date">Il y a 3min</span>
-                                </div>
-                                <div class="message">
-                                    <p class="mb-2">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nihil distinctio alias, assumenda ex molestiae facilis quisquam ea pariatur velit natus aspernatur quasi dicta temporibus modi odit. Architecto id alias eligendi!
-                                    </p>
-                                    <a href="#" class="read">4 réponses</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
             </div>
           </div>
           <div class="writing-block-chat fixed-bottom">
@@ -151,5 +44,5 @@
         </div>
       </div>
     </div>
-  </div>
+</div>
 @endsection

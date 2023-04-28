@@ -1,23 +1,15 @@
 <div>
-    <div class="nav-chat">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-10" class="message">
-                    <textarea name="message" wire:model="message" id="text" class="form-control" placeholder="Message"></textarea>
-                </div>
-                <div class="col-2 d-flex justify-content-end ps-0">
-                    @if (Auth::user())
-                        <button class="btn" wire:click.prevent="send()" id="send">
-                            <span class="iconify" data-icon="fluent:send-16-regular"></span>
-                        </button>
-                    @else
-                        <a class="btn" href="/login">
-                            <span class="iconify" data-icon="fluent:send-16-regular"></span>
-                        </a>
-                    @endif
-                </div>
+    <div class="writing-block-chat fixed-bottom">
+        <div class="content-writing d-flex align-items-center">
+            <div class="avatar">
+                <img src="{{asset('images/bg3.jpg')}}" alt="">
             </div>
-
+            <div class="block-textarea">
+                <textarea name="message" wire:model="message" id="message" cols="30" rows="2" class="form-control" placeholder="Tapez du texte"></textarea>
+            </div>
+            <button class="btn btn-send">
+                <i class="fi fi-rr-paper-plane" wire:click.prevent="send()" id="send"></i>
+            </button>
         </div>
     </div>
 </div>
