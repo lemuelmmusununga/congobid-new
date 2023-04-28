@@ -24,22 +24,22 @@
                             <div class="row">
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Prénom</label>
+                                        <label for="smallInput">Prénom<span class="text-danger">*</span></label>
                                         <input type="text" name="prenom" class="form-control "
                                             id="smallInput" placeholder="Entrez son prénom" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Nom</label>
+                                        <label for="smallInput">Nom<span class="text-danger">*</span></label>
                                         <input type="text" name="nom" class="form-control "
                                             id="smallInput" placeholder="Entrez son nom" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Sexe</label>
-                                        <select class="form-control " id="smallSelect" name="sexe">
+                                        <label for="smallInput">Sexe <span class="text-danger">*</span></label>
+                                        <select class="form-control " id="smallSelect" name="sexe" required>
                                             <option value="Féminin">Féminin</option>
                                             <option value="Masculin">Masculin</option>
                                         </select>
@@ -54,8 +54,8 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallSelect">Priviliège</label>
-                                        <select class="form-control " id="smallSelect" name="role_id">
+                                        <label for="smallSelect">Priviliège<span class="text-danger">*</span></label>
+                                        <select class="form-control " id="smallSelect" name="role_id" required>
                                             @foreach ($roles as $role)
                                                 <option value="{{ $role->id }}">{{ $role->display_name }}</option>
                                             @endforeach
@@ -64,29 +64,29 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Pseudonyme</label>
+                                        <label for="smallInput">Pseudonyme<span class="text-danger">*</span></label>
                                         <input type="text" name="username" class="form-control "
                                             id="smallInput" placeholder="Entrez son pseudonyme" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Téléphone</label>
+                                        <label for="smallInput">Téléphone<span class="text-danger">*</span></label>
                                         <input type="text" name="telephone" class="form-control "
                                             id="smallInput" placeholder="Entrez son téléphone commençant par +243" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Mot de passe</label>
+                                        <label for="smallInput">Mot de passe<span class="text-danger">*</span></label>
                                         <input type="text" name="password" class="form-control "
                                             id="smallInput" placeholder="Entrez son Mot de passe" maxlength="10" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallSelect">Type d'agent</label>
-                                        <select class="form-control " id="smallSelect" name="interne">
+                                        <label for="smallSelect">Type d'agent<span class="text-danger">*</span></label>
+                                        <select class="form-control " id="smallSelect" name="interne" required>
                                             <option value="1">Interne</option>
                                             <option value="0">Externe</option>
                                         </select>
@@ -107,14 +107,14 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Poste</label>
+                                        <label for="smallInput">Poste<span class="text-danger">*</span></label>
                                         <input type="text" name="poste" class="form-control "
                                             id="smallInput" placeholder="Entrez son poste" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Numéro de l'identification fiscale</label>
+                                        <label for="smallInput">Numéro de l'identification fiscale<span class="text-danger">*</span></label>
                                         <input type="text" name="identification_fiscale" class="form-control "
                                             id="smallInput" placeholder="Entrez le nom de l'identification fiscale" required>
                                     </div>
