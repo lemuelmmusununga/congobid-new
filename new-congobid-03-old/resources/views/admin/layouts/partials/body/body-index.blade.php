@@ -38,29 +38,34 @@
     </div>
 
     <div class="row mt-2">
-        <div class="col-md-4" >
+        <div class="col-md-6" >
             <div class="card card-passe full-height">
                 <div class="card-body">
                     <canvas id="userChart" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-4" >
-            <div class="card card-article full-height">
-                <div class="card-body">
-                    <canvas id="paymentSystemsChart" width="400" height="400"></canvas>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4" >
+        <div class="col-md-6" >
             <div class="card card-article full-height">
                 <div class="card-body">
                     <canvas id="articleChart" width="400" height="400"></canvas>
                 </div>
             </div>
         </div>
-
+        <div class="col-md-6" >
+            <div class="card card-article full-height">
+                <div class="card-body">
+                    <canvas id="paymentSystemsChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6" >
+            <div class="card card-article full-height">
+                <div class="card-body">
+                    <canvas id="paymentCountryChart" width="400" height="400"></canvas>
+                </div>
+            </div>
+        </div>
         <div class="col-md-4">
             <div class="card">
                 <div class="card-body ">
@@ -542,6 +547,7 @@
         window.onload = function() {
             var ctx = document.getElementById('userChart').getContext('2d');
             var ctx1 = document.getElementById('paymentSystemsChart').getContext('2d');
+            var ctx3 = document.getElementById('paymentCountryChart').getContext('2d');
             var ctx2 = document.getElementById('articleChart').getContext('2d');
             var userChart = new Chart(ctx, {
                 type: 'pie',
@@ -552,12 +558,12 @@
                         data: [{{ count($users) }}, {{ $i }}, {{ count($users) - $i }}],
                         backgroundColor: [
                             'rgba(255, 99, 132, 0.4)',
-                            'rgba(54, 162, 235, 0.4)',
+                            'rgba(54, 255, 235, 0.4)',
                             'rgba(255, 206, 86, 0.4)'
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 255, 235, 1)',
                             'rgba(255, 206, 86, 1)'
                         ],
                         borderWidth: 1
@@ -587,18 +593,18 @@
             var paymentSystemsChart = new Chart(ctx1, {
                 type: 'bar',
                 data: {
-                    labels: ['PayPal', 'Stripe', 'Square'],
+                    labels: ['M-pesa', 'Airtel money', 'Orange Money'],
                     datasets: [{
                         label: 'Nombre d\'utilisateurs',
                         data: [500, 700, 300],
                         backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)'
+                            'rgba(255, 99, 132, 0.4)',
+                            'rgba(54, 255, 235, 0.4)',
+                            'rgba(255, 206, 86, 0.4)'
                         ],
                         borderColor: [
                             'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
+                            'rgba(54, 255, 235, 1)',
                             'rgba(255, 206, 86, 1)'
                         ],
                         borderWidth: 1
@@ -626,26 +632,26 @@
                     }
                 }
             });
-            var paymentSystemsChart = new Chart(ctx1, {
+            var paymentCountryChart = new Chart(ctx3, {
                 type: 'bar',
                 data: {
-                    labels: ['PayPal', 'Stripe', 'Square'],
+                    labels: ['M-pesa', 'Airtel money', 'Orange money'],
                     datasets: [{
-                        label: 'USA',
+                        label: 'RDC',
                         data: [500, 700, 300],
-                        backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                        backgroundColor: 'rgba(255, 99, 132, 0.4)',
                         borderColor: 'rgba(255, 99, 132, 1)',
                         borderWidth: 1
                     }, {
-                        label: 'France',
+                        label: 'Congo',
                         data: [200, 400, 100],
-                        backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                        borderColor: 'rgba(54, 162, 235, 1)',
+                        backgroundColor: 'rgba(54, 255, 235, 0.4)',
+                        borderColor: 'rgba(54, 255, 235, 1)',
                         borderWidth: 1
                     }, {
-                        label: 'Allemagne',
+                        label: 'Cameroun',
                         data: [300, 500, 200],
-                        backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                        backgroundColor: 'rgba(255, 206, 86, 0.4)',
                         borderColor: 'rgba(255, 206, 86, 1)',
                         borderWidth: 1
                     }]
@@ -681,16 +687,16 @@
                     label: 'Ventes mensuelles',
                     data: [12, 19, 3, 5, 2, 3],
                     backgroundColor: [
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(255, 99, 132, 0.4)',
+                    'rgba(54, 162, 235, 0.4)',
+                    'rgba(255, 206, 86, 0.4)',
+                    'rgba(75, 192, 192, 0.4)',
+                    'rgba(153, 102, 255, 0.4)',
+                    'rgba(255, 159, 64, 0.4)'
                     ],
                     borderColor: [
                     'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
+                    'rgba(54, 255, 235, 1)',
                     'rgba(255, 206, 86, 1)',
                     'rgba(75, 192, 192, 1)',
                     'rgba(153, 102, 255, 1)',

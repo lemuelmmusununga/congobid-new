@@ -25,12 +25,17 @@
                             <div class="row">
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Nom complet</label>
+                                        <label for="smallInput">Nom <span class="text-danger">*</span></label>
                                         <input type="text" name="nom" class="form-control "
                                             id="smallInput" placeholder="Entrez son nom" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="smallInput">Sexe</label>
+                                        <label for="smallInput">Prénom<span class="text-danger">*</span></label>
+                                        <input type="text" name="prenom" class="form-control "
+                                            id="smallInput" placeholder="Entrez son prenom" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="smallInput">Sexe<span class="text-danger">*</span></label>
                                         <select class="form-control " id="smallSelect" name="sexe">
                                             <option value="Féminin">Féminin</option>
                                             <option value="Masculin">Masculin</option>
@@ -43,14 +48,14 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Pseudonyme</label>
+                                        <label for="smallInput">Pseudonyme<span class="text-danger">*</span></label>
                                         <input type="text" name="username" class="form-control "
                                             id="smallInput" placeholder="Entrez son pseudonyme" required>
                                     </div>
                                     <div class="form-group">
-                                        <label for="smallInput">Téléphone</label>
+                                        <label for="smallInput">Téléphone<span class="text-danger">*</span></label>
                                         <input type="text" name="telephone" class="form-control "
-                                            id="smallInput" placeholder="Entrez son téléphone commençant par 243" required>
+                                            id="smallInput" placeholder="+243XXXXXXXX" required>
                                     </div>
                                     <div class="form-group">
                                         <label for="smallSelect">Statut</label>
@@ -73,9 +78,8 @@
                                             id="smallInput">
                                     </div>
                                     <div class="form-group">
-                                        <label for="smallInput">Mot de Passe</label>
+                                        <label for="smallInput">Mot de Passe<span class="text-danger">*</span></label>
                                         <input type="password" name="password" class="form-control " >
-
                                     </div>
                                 </div>
                             </div>
