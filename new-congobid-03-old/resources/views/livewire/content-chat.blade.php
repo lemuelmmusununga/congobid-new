@@ -1,7 +1,4 @@
 <div class="w-100" wire:poll.keep-alive>
- 
-    
-
         <div class="row justify-content-center">
           <div class="col-lg-9">
             <div class="content-chatbox">
