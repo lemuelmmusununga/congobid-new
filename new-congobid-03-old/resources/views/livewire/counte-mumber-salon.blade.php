@@ -37,13 +37,13 @@
                 </div>
             @endif
             <div class="col-12">
-                <label for="time">Durée de l'enchère (en seconde)</label>
-                <select name="time" id="time" class="form-control">
-                    <option value="1" selected>15 minutes</option>
-                    <option value="2">30 minutes</option>
-                    <option value="3">45 minutes</option>
-                    <option value="4">1 heure</option>
-                    <option value="5">2 heures</option>
+                <label for="munite">Durée de l'enchère</label>
+                <select name="munite" id="munite" class="form-control">
+                    <option value="15" selected>15 minutes</option>
+                    <option value="30">30 minutes</option>
+                    <option value="45">45 minutes</option>
+                    <option value="60">1 heure</option>
+                    <option value="120">2 heures</option>
                 </select>
             </div>
             <div class="col-12">

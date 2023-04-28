@@ -1,5 +1,7 @@
 @extends('layouts.app-bid')
 @section('content')
+        <div id="confetti-container"></div>
+
     <div class="block-bid">
         <div class="btn-mobile btn-message" id="mobile">
             <i class="fi fi-rr-comment-alt"></i>
@@ -312,15 +314,15 @@
                                     <span>0</span>
                                 </button>
                                 <button class="btn btn-rounded">
-                                    <img src="{{asset('images/crown.png')}}" alt="">
-                                    <span>0</span>
+                                    <img src="{{asset('images/tunder.png')}}" alt="">
+                                    <span>12</span>
                                 </button>
                                 <button class="btn btn-rounded">
-                                    <img src="{{asset('images/crown.png')}}" alt="">
-                                    <span>0</span>
+                                    <img src="{{asset('images/save.png')}}" alt="">
+                                    <span>5</span>
                                 </button>
                                 <button class="btn btn-rounded">
-                                    <img src="{{asset('images/crown.png')}}" alt="">
+                                    <img src="{{asset('images/click.png')}}" alt="">
                                     <span>0</span>
                                 </button>
                                 <button class="btn btn-achat">
