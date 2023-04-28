@@ -10,7 +10,7 @@
                                     <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="">
 
                                 @else
-                                    
+
                                 <img src="{{ asset('images/users/default.png') }}" alt="">
                                 @endif
                             </a>
@@ -22,11 +22,11 @@
                     </div>
                 </div>
                 <div class="col-6 d-flex justify-content-center">
-                    {{-- <div class="logo-site d-flex align-items-center">
+                    <div class="logo-site d-flex align-items-center">
                         <a href="/" class="block-logo d-flex">
-                            <img src="images/users/default.png" alt="">
+                            <img src="{{asset('images/logo.png')}}" alt="">
                         </a>
-                    </div> --}}
+                    </div>
 
                 </div>
                 <div class="col-3 d-flex justify-content-end">

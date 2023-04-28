@@ -47,7 +47,9 @@ require __DIR__ . '/auth.php';
 Route::get('lang/{lang}', [LanguageController::class, 'switchLang'])->name('lang.switch');
 
 // ours rooutes
-
+Route::get('/bid-action', function () {
+    return view('pages.bid-action');
+});
 Route::get('/detail-article', function () {
     return view('pages.detail-article');
 });
@@ -173,7 +175,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/counter', function () {
             return view('welcome');
         });
-        
+
         Route::get('/historique',[ProfileController::class,'ListeBloked'])->name('liste.bloque');
         Route::get('/encheres-gagnees', [EnchersController::class, 'gagne'])->name('show.enchers-gagne');
         Route::get('/encheres-fermees', [EnchersController::class, 'ferme'])->name('show.enchers-ferme');
