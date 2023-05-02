@@ -40,46 +40,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="user d-flex align-items-start">
-                        <div class="me-1">
-                            Alex:
-                        </div>
-                        <div>
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="user d-flex align-items-start">
-                        <div class="me-1">
-                            Alex:
-                        </div>
-                        <div>
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="user d-flex align-items-start">
-                        <div class="me-1">
-                            Alex:
-                        </div>
-                        <div>
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="user d-flex align-items-start">
-                        <div class="me-1">
-                            Alex:
-                        </div>
-                        <div>
-                            <p>
-                                Lorem ipsum dolor sit amet.
-                            </p>
-                        </div>
-                    </div>
+                    
                 </div>
             </div>
             <div class="block-first card mb-2">
@@ -128,7 +89,7 @@
                     </div>
                     <div class="item d-flex flex-column align-items-center justify-content-center text-center">
                         <span>
-                         141
+                            {{Auth::user()->pivotbideurenchere->where('enchere_id',$article_enchere)->first()->foudre  ?? 0}}
                         </span>
                         <span>
                             Ton nombre de clics
@@ -139,7 +100,7 @@
                             <i class="fi fi-rr-alarm-clock"></i>
                         </span>
                         <span style="font-size: 9px">
-                         03:00
+                            @livewire('decrematation', ['getart'=>$getart])
                         </span>
                      </div>
                 </div>
@@ -182,134 +143,8 @@
                             </div>
                             <div class="right d-flex align-items-center justify-content-end">
                                 <img src="{{asset('images/click.png')}}" alt="">
-                                <div class="num-click">
-                                    141
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items">
-                        <div class="num">
-                            1
-                        </div>
-                        <div class="content-user d-flex align-items-center justify-content-between">
-                            <div class="left d-flex align-items-center">
-                                <div class="avatar">
-                                    <img src="{{asset('images/bg7.jpg')}}" alt="">
-                                </div>
-                                <div class="name">
-                                    PRO
-                                </div>
-                            </div>
-                            <div class="right d-flex align-items-center justify-content-end">
                                 <img src="{{asset('images/click.png')}}" alt="">
                                 <img src="{{asset('images/click.png')}}" alt="">
-                                <img src="{{asset('images/click.png')}}" alt="">
-                                <img src="{{asset('images/click.png')}}" alt="">
-                                <div class="num-click">
-                                    141
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items">
-                        <div class="num">
-                            1
-                        </div>
-                        <div class="content-user d-flex align-items-center justify-content-between">
-                            <div class="left d-flex align-items-center">
-                                <div class="avatar">
-                                    <img src="{{asset('images/bg7.jpg')}}" alt="">
-                                </div>
-                                <div class="name">
-                                    PRO
-                                </div>
-                            </div>
-                            <div class="right d-flex align-items-center justify-content-end">
-                                <img src="{{asset('images/click.png')}}" alt="">
-                                <div class="num-click">
-                                    141
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items">
-                        <div class="num">
-                            1
-                        </div>
-                        <div class="content-user d-flex align-items-center justify-content-between">
-                            <div class="left d-flex align-items-center">
-                                <div class="avatar">
-                                    <img src="{{asset('images/bg7.jpg')}}" alt="">
-                                </div>
-                                <div class="name">
-                                    PRO
-                                </div>
-                            </div>
-                            <div class="right d-flex align-items-center justify-content-end">
-                                <img src="{{asset('images/click.png')}}" alt="">
-                                <div class="num-click">
-                                    141
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items">
-                        <div class="num">
-                            1
-                        </div>
-                        <div class="content-user d-flex align-items-center justify-content-between">
-                            <div class="left d-flex align-items-center">
-                                <div class="avatar">
-                                    <img src="{{asset('images/bg7.jpg')}}" alt="">
-                                </div>
-                                <div class="name">
-                                    PRO
-                                </div>
-                            </div>
-                            <div class="right d-flex align-items-center justify-content-end">
-                                <img src="{{asset('images/click.png')}}" alt="">
-                                <div class="num-click">
-                                    141
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items">
-                        <div class="num">
-                            1
-                        </div>
-                        <div class="content-user d-flex align-items-center justify-content-between">
-                            <div class="left d-flex align-items-center">
-                                <div class="avatar">
-                                    <img src="{{asset('images/bg7.jpg')}}" alt="">
-                                </div>
-                                <div class="name">
-                                    PRO
-                                </div>
-                            </div>
-                            <div class="right d-flex align-items-center justify-content-end">
-                                <img src="{{asset('images/click.png')}}" alt="">
-                                <div class="num-click">
-                                    141
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="items">
-                        <div class="num">
-                            1
-                        </div>
-                        <div class="content-user d-flex align-items-center justify-content-between">
-                            <div class="left d-flex align-items-center">
-                                <div class="avatar">
-                                    <img src="{{asset('images/bg7.jpg')}}" alt="">
-                                </div>
-                                <div class="name">
-                                    PRO
-                                </div>
-                            </div>
-                            <div class="right d-flex align-items-center justify-content-end">
                                 <img src="{{asset('images/click.png')}}" alt="">
                                 <div class="num-click">
                                     141

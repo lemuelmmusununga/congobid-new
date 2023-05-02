@@ -371,8 +371,49 @@
             </div>
         </div> 
         @foreach ($articles as $key=> $article)
-        {{-- modal participer --}}
-            <div wire:ignore.self class="modal fade" id="modalEncheresy_{{$key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            {{-- click --}}
+            <div wire:ignore.self class="modal fade" id="achat_click_{{ $article->id }}"
+                tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="icon">
+                                <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                            </div>
+                            @php
+                                $prix_click = App\Models\Click_auto::where('paquet_id', $article->paquet->id)->first()->bid_prix;
+                            @endphp
+                            {{ $article->paquet->id }}
+                            <div class="text-center">
+                                <h5>Pour acheter il vous faut {{ $prix_click }} bids pour cette
+                                    enchere Voulez-vous Acheter ?</h5>
+                                @if ($pivot != null)
+                                    @if (Auth::user()->bideurs->first()->balance >= $prix_click)
+                                        <a type="button"
+                                            href="{{ route('click', ['enchere' => $article->enchere->id, 'paquet' => $prix_click, 'name' => Auth::user()->nom]) }}"
+                                            class="btn btn-ok w-50">Acheter</a>
+                                    @else
+                                        <a type="button" href="{{ route('clients.achat.bid') }}"
+                                            class="btn btn-ok w-50 ">Acheter</a>
+                                    @endif
+                                @else
+                                    <a type="button" href="#" data-bs-dismiss="modal"
+                                        data-bs-toggle="modal" aria-label="close"
+                                        data-bs-target="#modalEnchere_{{ $article->id }}"
+                                        class="btn btn-ok w-50 ">Participer a l'enchere</a>
+                                @endif
+                            </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center align-items-center">
+                            <button type="button" class="btn btn-non" data-bs-dismiss="modal"
+                                aria-label="close">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- modal participer --}}
+            <div wire:ignore.self class="modal fade" id="modalEnchere_{{$key}}"
+                tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-body">
@@ -380,18 +421,85 @@
                                 <span class="iconify" data-icon="ant-design:info-outlined"></span>
                             </div>
                             <div class="text-center">
-                                <h5>Voulez-vous participer au Salon ?</h5>
+
+                                <h5>Voulez-vous participer à cette enchère ? </h5>
                                 {{-- @if (Auth::user()) --}}
                                 <p> Pour y participer, veuillez souscrire à la catégorie
-                                    {{-- "{{ $salon->article->paquet->libelle }}"  --}}
-                                    en payent bids.</p>
+                                    "{{ $article->paquet->libelle }}" en
+                                    payent {{ $article->paquet->prix }} bids.</p>
                                 {{-- @endif --}}
                             </div>
                         </div>
-                        
+
+                        <div class="modal-footer d-flex justify-content-between align-items-center">
+                            <button type="button" class="btn btn-non" data-bs-dismiss="modal"
+                                aria-label="close">Annuler</button>
+                            @if (Auth::user())
+                                <a type="button"
+                                    href="{{ route('detail.article', ['id' => $article->id, 'name' => $article->titre]) }}"
+                                    class="btn btn-ok">Accepter</a>
+                            @else
+                                <a type="button" href="/login" class="btn btn-ok">Accepter</a>
+                            @endif
+                        </div>
                     </div>
                 </div>
             </div>
+            {{-- modale --}}
+            <div wire:ignore.self class="modal fade" id="modalEnchereDetail_{{$key}}"
+                tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="icon">
+                                <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                            </div>
+                            <div class="text-center">
+                                <h5>Enchère en attente</h5>
+                                @if (Auth::user())
+                                    <p>Cette enchère va commencer le
+                                        {{ $article->enchere->date_debut . ' à ' . $article->enchere->heure_debut }}
+                                    </p>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="modal-footer d-flex justify-content-between align-items-center">
+                            <button type="button" class="btn btn-no"
+                                data-bs-dismiss="modal">Annuler</button>
+                            <a type="button"
+                                href="{{ route('detail.article', ['id' => $article->id, 'name' => $article->titre]) }}"
+                                class="btn btn-ok">Accepter</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- modal like --}}
+            <div class="modal fade" id="modalArticle" tabindex="-1"
+                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="icon">
+                                <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                            </div>
+                            <div class="text-center">
+                                <input type="text" wire:model="participer">
+                                <h5>Voulez-vous aimer cet article ?</h5>
+                                <p> Si vous aimez cet article, il passe à la prochaine
+                                    enchère.</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-between align-items-center">
+                            <button type="button" class="btn btn-no"
+                                data-bs-dismiss="modal">Annuler</button>
+                            <button type="button" class="btn btn-ok"><span class="iconify"
+                                    data-icon="ant-design:heart-filled"></span> J'aime</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {{-- end modal --}}
         @endforeach
     </div>
     @foreach ($salons as $key=> $salon)

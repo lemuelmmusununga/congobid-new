@@ -1,4 +1,4 @@
-@extends('layouts.detail-profil')
+@extends('layouts.app-bid')
 @section('content')
     <script>
         setTimeout(() => {
@@ -10,7 +10,6 @@
         <div class="block-detail-enchere">
             <div class="container-fluid">
                 <div class="row justify-content-center">
-
                     <div class="col-lg-5">
                         <div class="text-center ">
                             <h3 class="name-article text-center">{{$article->titre ?? ''}}</h3>

@@ -11,14 +11,14 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Click_auto;
 class Decrematation extends Component
 {
-    public $munite,$times=0,$interval ,$progresse,$click_auto, $val,$heure_enchere,$solde_bonus,$getart,$click_live,$incrementation_prix,$enchere,$temps_auto,$date_enchere,$heures_enchere ,$somme_temps_passer,$incrementation=0,$listes,$add;
+    public $munite,$munites,$times=0,$interval ,$progresse,$click_auto, $val,$heure_enchere,$solde_bonus,$getart,$click_live,$incrementation_prix,$enchere,$temps_auto,$date_enchere,$heures_enchere ,$somme_temps_passer,$incrementation=0,$listes,$add;
     // public function mount($getart){
     //     $this->enchere = Enchere::where('id',$this->getart)->first();
 
     //     $this->$getart = $getart;
     // }
     public function mount(){
-
+       
         if ($this->somme_temps_passer == 0  ) {
             $bideur =PivotBideurEnchere::where('enchere_id', $this->getart)->orderby('valeur','DESC')->first();
             $gagnant = Encheregagner::where('enchere_id', $this->getart)->first();
@@ -45,40 +45,39 @@ class Decrematation extends Component
         $this->munite = $this->enchere->munite ?? '';
         
         $this->listes= PivotBideurEnchere::where('enchere_id', $this->getart)->orderby('valeur','DESC')->get();
-        $this->click_auto = Click_auto::where('paquet_id',$this->enchere->paquet->id)->first();
+        $this->click_auto = Click_auto::where('paquet_id',$this->enchere?->paquet?->id)->first();
     }
     public function render()
     {
-        $this->enchere = Enchere::where('id',$this->getart)->first();
-        $this->date_enchere = $this->enchere->date_debut ;
-        $this->heure_enchere = $this->enchere->heure_debut  ;
+        $this->enchere = Enchere::where('article_id',$this->getart)->first();
+        $this->date_enchere = $this->enchere->date_debut ?? '' ;
+        $this->heure_enchere = $this->enchere->heure_debut  ?? '' ;
 
         if (Auth::user() ) {
             $this->click_live = PivotBideurEnchere::where('user_id',auth()->user()->id)->where('enchere_id',$this->getart)->first();
 
         }
-        $this->munites = $this->enchere->munite;
+        $this->munites = $this->enchere->munite ?? '';
         $this->interval = 1000;
-        // $this->times = $this->enchere->seconde;
-        $heur = now()->format('H') - date('H',strtotime($this->enchere->heure_debut));
-        $munites =now()->format('i') - date('i',strtotime($this->enchere->heure_debut)) ;
-        $secondes = now()->format('s') - date('s',strtotime($this->enchere->heure_debut));
-        $this->somme_temps_passer = $this->times +$this->munites*60;
+        // intval($this->times) = $this->enchere->seconde;
+       
+        $this->somme_temps_passer = intval($this->times) + intval($this->munites) * 60;
+       
         $option = [];
         if ($this->somme_temps_passer >=1  ) {
             # code...
             // mis a jour du temps restant
-            if($this->times == 0){
+            if(intval($this->times) == 0){
                 $this->times =59;
                 $this->munite =$this->enchere->munite - 1;
                     $this->enchere->update([
                     'munite' =>$this->enchere->munite - 1,
-                    'seconde'=>$this->times,
+                    'seconde'=>intval($this->times),
                 ]);
             }else{
-                $this->times =$this->times-1;
+                $this->times =intval($this->times)-1;
                 $this->enchere->update([
-                    'seconde'=>$this->times,
+                    'seconde'=>intval($this->times),
                 ]);
 
                 if ($this->click_live != null) {
@@ -121,11 +120,11 @@ class Decrematation extends Component
                     $this->temps_auto = $this->temps_auto - 1;
                     $this->enchere->update([
                         'munite' =>$this->munite,
-                        'seconde'=>$this->times,
+                        'seconde'=>intval($this->times),
                     ]);
                 }
             }
-        $this->progresse = (($this->enchere->munite * 60 + ($this->enchere->seconde )) /($this->enchere->paquet->duree * 60) ) *100  ;
+            $this->progresse = (($this->enchere->munite * 60 + ($this->enchere->seconde )) /($this->enchere->paquet->duree * 60) ) *100  ;
         }else{
             $this->enchere->update([
                 'state' =>0,
@@ -134,7 +133,7 @@ class Decrematation extends Component
         }
         // $this->counter = $valeur->valeur ?? '0';
         if (Auth::user()) {
-           $this->incrementation =$this->enchere->article->prix;
+           $this->incrementation =$this->enchere?->article?->prix;
         # code...
         $this->solde_bonus = Bideur::where('user_id',Auth::user()->id)->first();
         $echeance_bid_auto = Auth::user()->pivotbideurenchere->where('enchere_id',$this->getart)->first()->time_bid_auto ?? '';

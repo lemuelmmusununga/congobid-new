@@ -40,11 +40,9 @@ class DetailEnchereController extends Controller
         $total_heure_restant =  $temps_restant_heure .":". $temps_restant_minute .":". $temps_restant_seconde;
 
         // $enchere_fini = ($temps_restant_total <= 0) ? 'true' : 'false';
-
         // couper les nombres de bids
         if (Auth::user()) {
             $pivots = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $article->enchere->id)->first();
-
             // verification du balance
             if (Auth::user()->bideurs->first()->balance >= $article->paquet->prix) {
                $cutebid= Bideur::where('user_id', Auth::user()->id)->first();
@@ -52,7 +50,6 @@ class DetailEnchereController extends Controller
                    $cutebid->update([
                         'balance' => Auth::user()->bideurs->first()->balance - $article->paquet->prix,
                     ]);
-
                     PivotBideurEnchere::create([
                         'valeur' => '0',
                         'statut_id' => '3',
@@ -61,14 +58,12 @@ class DetailEnchereController extends Controller
                     ]);
                 }
                 $block = 0;
-                return back()->with('success','Souscription effectué avec succée');
-                // return view('pages.detail-enchere', compact('article', 'paquets','block','total_heure_restant','sanction'))->with('danger','Vous participer deje');
+                // return back()->with('success','Souscription effectué avec succée');
+                return view('pages.detail-enchere', compact('article', 'paquets','block','total_heure_restant','sanction'))->with('danger','Vous participer deje');
             }else{
                 return back()->with('danger','Votre compte est insuffisant');
-
             }
         }else{
-
             $block = 0;
             return view('pages.detail-enchere', compact('article', 'paquets','block','total_heure_restant','sanction'))->with('danger','Vous participer deje');
         }
