@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class Bid extends Model
 {
     use HasFactory;
-    
+
 
     protected $guarded = [];
 
@@ -21,6 +21,11 @@ class Bid extends Model
     public function coupon()
     {
         return $this->belongsTo(Coupon::class);
+    }
+
+    public function bidstatut()
+    {
+        return $this->belongsTo(BidStatut::class);
     }
 
     public function statut()

@@ -49,7 +49,7 @@ class Article extends Model
 
     public function enchere()
     {
-        return $this->belongsTo(Enchere::class);
+        return $this->hasMany(Enchere::class);
     }
 
     public function salon()
@@ -76,6 +76,4 @@ class Article extends Model
     {
         return $this->belongsTo(Paquet::class);
     }
-
-
 }

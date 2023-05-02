@@ -43,7 +43,7 @@ class CategorieController extends Controller
         $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
         $statuts = Statut::orderBy('id', 'desc')->get();
         $paquets = Paquet::all();
-        return view('admin.layouts.partials.body.categories.create', compact('chats', 'statuts' ,'paquets'));
+        return view('admin.layouts.partials.body.categories.create', compact('chats', 'statuts', 'paquets'));
     }
 
     /**
@@ -57,26 +57,25 @@ class CategorieController extends Controller
         // try{
 
 
-            $paquet = Categorie::create([
-                'libelle' => $request->libelle,
-                'statut_id' => $request->statut_id,
-                'user_id' => Auth::user()->id,
-                'categorie_id'=>$request->categorie
-            ]);
+        $paquet = Categorie::create([
+            'libelle' => $request->libelle,
+            'statut_id' => $request->statut_id,
+            'user_id' => Auth::user()->id,
+            'categorie_id' => $request->categorie
+        ]);
 
-            Historique::create([
-                'action' => 'Création d\'une sous-catégorie',
-                'type' => '4',
-                'destination_id' => $paquet->id,
-                'statut_id' => '3',
-                'user_id' => Auth::user()->id,
-            ]);
+        Historique::create([
+            'action' => 'Création d\'une sous-catégorie',
+            'type' => '4',
+            'destination_id' => $paquet->id,
+            'statut_id' => '3',
+            'user_id' => Auth::user()->id,
+        ]);
 
-            return redirect()->route('categories.index');
+        return redirect()->route('categories.index');
         // } catch(\Exception $e){
         //     return back()->with('');
         // }
-        dd($request->libelle);
     }
 
     /**
@@ -101,8 +100,9 @@ class CategorieController extends Controller
         $categorie = Categorie::find($id);
         $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
         $statuts = Statut::orderBy('id', 'desc')->get();
+        $paquets = Paquet::all();
 
-        return view('admin.layouts.partials.body.categories.edit', compact('categorie', 'chats', 'statuts'));
+        return view('admin.layouts.partials.body.categories.edit', compact('categorie', 'chats', 'statuts', 'paquets'));
     }
 
     /**
@@ -114,7 +114,7 @@ class CategorieController extends Controller
      */
     public function update(Request $request)
     {
-        try{
+        try {
             // dd($request->categorie_id);
             $categorie = Categorie::where('id', $request->categorie_id)->update([
                 'libelle' => $request->libelle,
@@ -131,7 +131,7 @@ class CategorieController extends Controller
             ]);
 
             return redirect()->route('categories.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }
@@ -144,7 +144,7 @@ class CategorieController extends Controller
      */
     public function destroy($id, $state)
     {
-        try{
+        try {
             Categorie::where('id', $id)->update([
                 'statut_id' => $state == '3' ? 2 : 3,
                 'deleted_at' => $state == '3' ? now() : NULL,
@@ -154,9 +154,9 @@ class CategorieController extends Controller
 
             if ($state == 3) {
                 $action = 'Suppression d\'une sous-catégorie';
-            } else if($state == 2) {
+            } else if ($state == 2) {
                 $action = 'Réactivation d\'une sous-catégorie';
-            }else {
+            } else {
                 $action = 'Activation d\'une sous-catégorie';
             }
 
@@ -169,7 +169,7 @@ class CategorieController extends Controller
             ]);
 
             return redirect()->route('categories.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }

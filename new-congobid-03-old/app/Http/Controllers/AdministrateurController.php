@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Administrateur;
+use App\Models\BidStatut;
 use App\Models\Pays;
 use App\Models\Role;
 use App\Models\Statut;
 use App\Models\Chat;
 use App\Models\User;
 use App\Models\Categorie;
+use App\Models\Envoie;
 use App\Models\Gagnant;
 use App\Models\Historique;
 use Illuminate\Http\Request;
@@ -104,7 +106,6 @@ class AdministrateurController extends Controller
         } catch (\Exception $e) {
             return back()->with('Erreur survenue lors de la création du compte d\'agent.');
         }
-
     }
 
     /**
@@ -187,7 +188,6 @@ class AdministrateurController extends Controller
         } catch (\Exception $e) {
             return back()->with('');
         }
-
     }
 
     /**
@@ -233,5 +233,31 @@ class AdministrateurController extends Controller
         } catch (\Exception $e) {
             return back()->with('');
         }
+    }
+
+    public function envoiebid(Request $request)
+    {
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        $users = User::where('role_id', '>', '3')->orderBy('username', 'asc')->get();
+        $bidstatuts = BidStatut::all();
+
+        return view('admin.layouts.partials.body.envoie.create', compact('chats', 'users', 'bidstatuts'));
+    }
+    public function listenvoie(Request $request)
+    {
+        $envoies = Envoie::orderBy('id', 'desc')->get();
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+
+
+        return view('admin.envoie', compact('chats', 'envoies'));
+    }
+    public function storeenvoie(Request $request)
+    {
+        $envoie = Envoie::create([
+            'number' => $request->number,
+            'bid_statut_id' => $request->bid_statut_id,
+            'admin_id' => Auth::user()->id,
+            'user_id' => $request->user_id
+        ]);
     }
 }

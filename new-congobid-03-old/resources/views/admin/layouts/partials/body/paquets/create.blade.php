@@ -4,13 +4,12 @@
 @endsection
 
 @section('body')
-
     <div class="panel-header bg-primary-gradient">
-    <div class="page-inner py-2">
-        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+        <div class="page-inner py-2">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Ajouter une catégorie d'utilisateur</h2>
+                    <h2 class="text-white pb-2 fw-bold">Ajouter un Paquet</h2>
                 </div>
             </div>
         </div>
@@ -33,9 +32,9 @@
                                 </div>
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
-                                        <label for="smallInput">Nombre d'enchère</label>
-                                        <input type="number" name="nombre_enchere" class="form-control "
-                                            id="smallInput" placeholder="Entrez le nombre d'enchère" required>
+                                        <label for="smallInput">Nombre max d'enchère</label>
+                                        <input type="number" name="nombre_enchere" class="form-control " id="smallInput"
+                                            placeholder="Entrez le nombre d'enchère" required>
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
@@ -82,7 +81,8 @@
                                 </div>
                             </div>
                             <div class="card-action">
-                                <button class="text-white btn btn-congo float-right px-5" style="border-radius: 20px;">Enregistrer</button>
+                                <button class="text-white btn btn-congo float-right px-5"
+                                    style="border-radius: 20px;">Enregistrer</button>
 
                             </div>
                         </div>
@@ -94,7 +94,6 @@
 
 
     @include('admin.layouts.partials.footer.footer')
-
 @endsection
 
 @section('javascript')

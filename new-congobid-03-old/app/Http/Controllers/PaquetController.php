@@ -53,7 +53,7 @@ class PaquetController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+        try {
             $paquet = Paquet::create([
                 'libelle' => $request->libelle,
                 'nombre_enchere' => $request->nombre_enchere,
@@ -74,7 +74,7 @@ class PaquetController extends Controller
             ]);
 
             return redirect()->route('paquets.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }
@@ -113,9 +113,9 @@ class PaquetController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Paquet $paquet)
+    public function update(Request $request)
     {
-        try{
+        try {
             $paquet = Paquet::where('id', $request->paquet_id)->update([
                 'libelle' => $request->libelle,
                 'nombre_enchere' => $request->nombre_enchere,
@@ -136,7 +136,7 @@ class PaquetController extends Controller
             ]);
 
             return redirect()->route('paquets.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }
@@ -149,7 +149,7 @@ class PaquetController extends Controller
      */
     public function destroy($id, $state)
     {
-        try{
+        try {
             Paquet::where('id', $id)->update([
                 'statut_id' => $state == '3' ? 2 : 3,
                 'deleted_at' => $state == '3' ? now() : NULL,
@@ -159,9 +159,9 @@ class PaquetController extends Controller
 
             if ($state == 3) {
                 $action = 'Suppression d\'une catégorie';
-            } else if($state == 2) {
+            } else if ($state == 2) {
                 $action = 'Réactivation d\'une catégorie';
-            }else {
+            } else {
                 $action = 'Activation d\'une catégorie';
             }
 
@@ -174,7 +174,7 @@ class PaquetController extends Controller
             ]);
 
             return redirect()->route('paquets.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }

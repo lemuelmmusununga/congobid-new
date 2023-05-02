@@ -33,15 +33,19 @@ class Paquet extends Model
         return $this->HasMany(Article::class);
     }
 
+    public function nombreEnchere()
+    {
+        return $this->HasMany(Enchere::class)->count();
+    }
+
     public function pivotbideurpaquet()
     {
         return $this->hasMany(PivotBideurPaquet::class);
     }
 
-   /**
-    * Get the user that owns the Paquet
-    *
-    * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-    */
-  
+    /**
+     * Get the user that owns the Paquet
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
 }

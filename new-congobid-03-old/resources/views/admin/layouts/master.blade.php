@@ -6,6 +6,8 @@
 
     @include('admin.layouts.partials.meta.stylesheet')
 
+    @livewireStyles
+
     @yield('css')
 </head>
 
@@ -23,7 +25,7 @@
 
         <div class="main-panel">
             <div class="content">
-
+                @livewireScripts
                 @yield('body')
 
             </div>

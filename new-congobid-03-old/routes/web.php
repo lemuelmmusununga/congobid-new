@@ -177,7 +177,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/articles/categorie/{id}', [ArticlesController::class, 'ArticlesCategorie'])->name('sous-categorie');
         Route::get('/articles/voir_detail/produit/{id}/{name}', [ArticlesController::class, 'detailArticle'])->name('show.detail.article');
 
-        Route::get('/historique',[ProfileController::class,'ListeBloked'])->name('liste.bloque');
+        Route::get('/historique', [ProfileController::class, 'ListeBloked'])->name('liste.bloque');
         Route::get('/encheres-gagnees', [EnchersController::class, 'gagne'])->name('show.enchers-gagne');
         Route::get('/encheres-fermees', [EnchersController::class, 'ferme'])->name('show.enchers-ferme');
 
@@ -185,11 +185,11 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/chat', function () {
             return view('pages.chat');
         });
-        Route::get('/enchere/deblocage/{enchere}/{sanction}/{name}/{bid_cut}/{id}',[DetailEnchereController::class, 'debloquer'])->name('debloquer');
+        Route::get('/enchere/deblocage/{enchere}/{sanction}/{name}/{bid_cut}/{id}', [DetailEnchereController::class, 'debloquer'])->name('debloquer');
         // favorie
-        Route::get('/favoris',[FavorisController::class, 'favoris'])->name('favoris');
-        Route::get('/favoris/supprimer/{id}/{name}',[FavorisController::class, 'delete'])->name('delete.favoris');
-        Route::get('/favoris/ajouter/{id}/{name}',[FavorisController::class, 'addfavoris'])->name('add.favoris');
+        Route::get('/favoris', [FavorisController::class, 'favoris'])->name('favoris');
+        Route::get('/favoris/supprimer/{id}/{name}', [FavorisController::class, 'delete'])->name('delete.favoris');
+        Route::get('/favoris/ajouter/{id}/{name}', [FavorisController::class, 'addfavoris'])->name('add.favoris');
 
         // bouclier achat
         Route::get('achat/articles/detail/produit/bouclier/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'bouclier'])->name('bouclier');
@@ -202,26 +202,26 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('achat-click/articles/detail/produit/click/{enchere}/{paquet}/{name}', [DetailEnchereController::class, 'AchatClickAuto'])->name('click');
         Route::get('active-click/articles/detail/produit/active-click/{name}/{enchere}', [DetailEnchereController::class, 'activeBidAuto'])->name('Active.click');
         Route::get('/articles-produit/achat-click/automatique/{name}/{enchere}/{prix}', [DetailEnchereController::class, 'achatBidAuto'])->name('Achat.click.Auto');
-    // Route::get('/articles/auto_click/detail/{enchere}/produit/click/{paquet}/{name}', [DetailEnchereController::class, 'click_auto'])->name('click_auto');
+        // Route::get('/articles/auto_click/detail/{enchere}/produit/click/{paquet}/{name}', [DetailEnchereController::class, 'click_auto'])->name('click_auto');
         // active bouclier
         Route::get('active-bouclier/articles/detail/produit/active-click/{name}/{enchere}', [DetailEnchereController::class, 'activeBouclier'])->name('Active.bouclier');
         Route::get('/mes-salons/{id}/{name}', [SalonController::class, 'mesSalons'])->name('clients.messalons');
         Route::get('/salons', [SalonController::class, 'index'])->name('clients.salons.index');
         Route::post('/creation-salons', [SalonController::class, 'salonCreate'])->name('createSalon');
         // sanction
-        Route::get('/enchere/sanction/{id}/{enchere}/{sanction}/{name}/{bid_cut}',[DetailEnchereController::class, 'sanction'])->name('sanction');
+        Route::get('/enchere/sanction/{id}/{enchere}/{sanction}/{name}/{bid_cut}', [DetailEnchereController::class, 'sanction'])->name('sanction');
         // deblocage
-    // achat_click
-        Route::get('/enchere/sanction/{id}/{name}/{enchere_id}',[DetailEnchereController::class, 'achatClick'])->name('achat.click');
+        // achat_click
+        Route::get('/enchere/sanction/{id}/{name}/{enchere_id}', [DetailEnchereController::class, 'achatClick'])->name('achat.click');
         // bid_auto
-        Route::get('/activation/bid-auto/{name}',[DetailEnchereController::class, 'activationBid'])->name('bid.auto');
-        Route::get('/achat/bid/{id}/{valeur}',[AchatController::class, 'achatBid'])->name('achat.bids');
+        Route::get('/activation/bid-auto/{name}', [DetailEnchereController::class, 'activationBid'])->name('bid.auto');
+        Route::get('/achat/bid/{id}/{valeur}', [AchatController::class, 'achatBid'])->name('achat.bids');
         Route::get('/profil', [ProfileController::class, 'index'])->name('profil');
         // update profil
-        Route::get('/profil/update/{name}/{id}',[ProfileController::class, 'update'])->name('update.profil');
-        Route::post('/profil/update/',[ProfileController::class, 'updateProfile'])->name('update.profile');
-        Route::post('/profil/update/profile',[ProfileController::class, 'updateMyProfile'])->name('update.my.profile');
-        Route::post('/profil/update/mot-de-passe',[ProfileController::class, 'updateProfileMot'])->name('update.profile.mot');
+        Route::get('/profil/update/{name}/{id}', [ProfileController::class, 'update'])->name('update.profil');
+        Route::post('/profil/update/', [ProfileController::class, 'updateProfile'])->name('update.profile');
+        Route::post('/profil/update/profile', [ProfileController::class, 'updateMyProfile'])->name('update.my.profile');
+        Route::post('/profil/update/mot-de-passe', [ProfileController::class, 'updateProfileMot'])->name('update.profile.mot');
         Route::get('/detail-salon/{id}/{name}', [DetailEnchereController::class, 'openSalon'])->name('show.detail.salon');
         // profil
         Route::get('/achat-bid', [AchatController::class, 'index'])->name('clients.achat.bid');
@@ -229,10 +229,10 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/achat-bid/success/{id}', [AchatController::class, 'success'])->name('achat.success');
         Route::get('/newtech-rdc/supprimer/profil', [App\Http\Controllers\AccueilController::class, 'destroyProfil'])->name('sup.profil');
         // envoie options
-        Route::post('/profil/envoie-des-bids',[EnchersController::class,'sendBid'])->name('send.bid');
-        Route::post('/profil/envoie-des-options',[EnchersController::class,'sendOption'])->name('send.option');
-        Route::get('/profil/tranfert-options',[EnchersController::class,'trans'])->name('trans.options');
-        Route::get('/profil/option',[EnchersController::class,'liste'])->name('liste.option');
+        Route::post('/profil/envoie-des-bids', [EnchersController::class, 'sendBid'])->name('send.bid');
+        Route::post('/profil/envoie-des-options', [EnchersController::class, 'sendOption'])->name('send.option');
+        Route::get('/profil/tranfert-options', [EnchersController::class, 'trans'])->name('trans.options');
+        Route::get('/profil/option', [EnchersController::class, 'liste'])->name('liste.option');
     });
 
     Route::group(['middleware' => ['admin']], function () {
@@ -249,6 +249,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
 
         Route::get('/tableau-de-bord/demande/bid', [App\Http\Controllers\BideurController::class, 'demande'])->name('demande.index');
         Route::post('/tableau-de-bord/demande/bid', [App\Http\Controllers\BideurController::class, 'storeDemande'])->name('demande.store');
+
+        Route::get('/tableau-de-bord/envoie/bid', [App\Http\Controllers\AdministrateurController::class, 'envoiebid'])->name('envoie.create');
+        Route::get('/tableau-de-bord/envoie/bid/list', [App\Http\Controllers\AdministrateurController::class, 'listenvoie'])->name('envoie.index');
+        Route::post('/tableau-de-bord/envoie/bid', [App\Http\Controllers\AdministrateurController::class, 'storeenvoie'])->name('envoie.store');
+
+
         Route::get('/tableau-de-bord/bideurs', [App\Http\Controllers\BideurController::class, 'index'])->name('bideurs.index');
         Route::get('/tableau-de-bord/afficher/bideurs/agent/{id}', [App\Http\Controllers\BideurController::class, 'indexfilter'])->name('bideurs.indexfilter');
         Route::get('/tableau-de-bord/afficher/bideur/{id}', [App\Http\Controllers\BideurController::class, 'show'])->name('bideurs.show');
@@ -377,7 +383,6 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/tableau-de-bord/retrait/bid/{numero}/{valeur}', [App\Http\Controllers\AccueilController::class, 'retrait'])->name('retrait.bid');
         Route::get('/tableau-de-bord/delete/bid/{numero}/{valeur}', [App\Http\Controllers\AccueilController::class, 'delete'])->name('delete.bid');
         Route::get('/tableau-de-bord/delete/contact/{id}', [App\Http\Controllers\AccueilController::class, 'deleteContact'])->name('delete.contact');
-
     });
 });
 

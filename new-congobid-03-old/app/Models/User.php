@@ -100,7 +100,7 @@ class User extends \TCG\Voyager\Models\User
 
     public function options()
     {
-        return $this->hasMany(Option::class,'user_id');
+        return $this->hasMany(Option::class, 'user_id');
     }
 
     public function gagnants()
@@ -216,6 +216,11 @@ class User extends \TCG\Voyager\Models\User
     public function typescoupons()
     {
         return $this->hasMany(TypesCoupon::class);
+    }
+
+    public function bidreceived()
+    {
+        return $this->hasMany(Envoie::class);
     }
 
     public function statut()

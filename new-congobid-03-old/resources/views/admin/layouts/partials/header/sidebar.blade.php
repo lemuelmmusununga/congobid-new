@@ -5,13 +5,19 @@
             <div class="user">
                 <div class="avatar-sm float-left mr-4">
 
-                    @if ((Auth::user()->avatar == "default.png") || (Auth::user()->avatar == "default.jpg") || (Auth::user()->avatar == "users/default.png") || (Auth::user()->avatar == "") || (Auth::user()->avatar == null))
+                    @if (Auth::user()->avatar == 'default.png' ||
+                            Auth::user()->avatar == 'default.jpg' ||
+                            Auth::user()->avatar == 'users/default.png' ||
+                            Auth::user()->avatar == '' ||
+                            Auth::user()->avatar == null)
                         <div class="avatar">
-                            <img src="{{ asset('images/users/avatar2.png') }}" alt="{{ Auth::user()->nom }}" class="avatar-img rounded-circle mr-2">
+                            <img src="{{ asset('images/users/avatar2.png') }}" alt="{{ Auth::user()->nom }}"
+                                class="avatar-img rounded-circle mr-2">
                         </div>
                     @else
                         <div class="avatar">
-                            <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->nom }}" class="avatar-img rounded-circle mr-2">
+                            <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="{{ Auth::user()->nom }}"
+                                class="avatar-img rounded-circle mr-2">
                         </div>
                     @endif
                 </div>
@@ -32,13 +38,14 @@
                 </div>
             </div>
             <ul class="nav nav-primary">
-                <li class="nav-item  {{ request()->is('tableau-de-bord/administrator') ? 'active' : ''}}">
+                <li class="nav-item  {{ request()->is('tableau-de-bord/administrator') ? 'active' : '' }}">
                     <a href="{{ route('admin.index') }}">
                         <i class="fas fa-home"></i>
                         <p>Tableau de bord</p>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/creation/agent') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/agents') ? 'active' : ''}} " >
+                <li
+                    class="nav-item {{ request()->is('tableau-de-bord/creation/agent') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/agents') ? 'active' : '' }} ">
                     <a data-toggle="collapse" href="#agents">
                         <i class="fas fa-user"></i>
                         <p>Gestion des Agents</p>
@@ -47,7 +54,7 @@
                     <div class="collapse" id="agents">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ route('agents.create',) }}">
+                                <a href="{{ route('agents.create') }}">
                                     <span class="sub-item">Ajouter un agent</span>
                                 </a>
                             </li>
@@ -59,7 +66,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/creation/bideur') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/bideurs') ? 'active' : ''}} " ">
+                <li class="nav-item {{ request()->is('tableau-de-bord/creation/bideur') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/bideurs') ? 'active' : '' }} " ">
                     <a data-toggle="collapse" href="#bideurs">
                         {{-- <i class="fas fa-layer-group"></i> --}}
                         <i class="fas fa-hands"></i>
@@ -69,7 +76,7 @@
                     <div class="collapse" id="bideurs">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ route('bideurs.create',) }}">
+                                <a href="{{ route('bideurs.create') }}">
                                     <span class="sub-item">Ajouter un bideur</span>
                                 </a>
                             </li>
@@ -81,7 +88,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/creation/article') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/articles') ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/creation/article') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/articles') ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#articles">
                         <i class="fas fa-home"></i>
                         <p>Gestion des Articles</p>
@@ -102,7 +109,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/creation/enchere') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/encheres') ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/creation/enchere') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/encheres') ? 'active' : '' }}">
                     <a href="{{ route('encheres.index') }}">
                         <i class="fas fa-home"></i>
                         <p>Gestion des Enchères</p>
@@ -123,39 +130,39 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/creation/categorie') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/sous-categories') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/categories') ? 'active' : ''}} " >
+                <li class="nav-item {{ request()->is('tableau-de-bord/creation/categorie') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/sous-categories') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/categories') ? 'active' : '' }} " >
                     <a data-toggle="collapse" href="#categories">
                         <i class="fas fa-layer-group"></i>
-                        <p>Gestions des Catégories</p>
+                        <p>Paquets & Catégories</p>
                         <span class="caret"></span>
                     </a>
                     <div class="collapse" id="categories">
                         <ul class="nav nav-collapse">
                             <li>
                                 <a href="{{ route('paquets.create') }}">
-                                    <span class="sub-item">Ajouter une catégorie</span>
+                                    <span class="sub-item">Ajouter un Paquet</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('categories.index') }}">
-                                    <span class="sub-item">Voir les sous-catégories</span>
+                                    <span class="sub-item">Voir les Catégories</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="{{ route('paquets.index') }}">
-                                    <span class="sub-item">Voir les catégories</span>
+                                    <span class="sub-item">Voir les Paquets</span>
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/demande/bid') ? 'active' : ''}}">
-                    <a href="{{ route('demande.index') }}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/demande/bid') ? 'active' : '' }}">
+                    <a href="{{ route('envoie.index') }}">
                         <i class="fas fa-coins"></i>
-                        <p>Demande des bids</p>
+                        <p>Envoie des bids</p>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/creation/bid') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/bids') ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/creation/bid') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/bids') ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#bids">
                         <i class="fas fa-home"></i>
                         <p>Gestion des bids</p>
@@ -176,19 +183,19 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/gagnants') ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/gagnants') ? 'active' : '' }}">
                     <a href="{{ route('gagnants.index') }}">
                         <i class="fas fa-home"></i>
                         <p>Gestion des Gagnants</p>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/comment-ca-marche') ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/comment-ca-marche') ? 'active' : '' }}">
                     <a href="{{ route('commentcamarche.index') }}">
                         <i class="fas fa-home"></i>
                         <p>Comment ça marche ?</p>
                     </a>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/creation/politique') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/politiques') ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/creation/politique') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/politiques') ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#politiques">
                         <i class="fas fa-home"></i>
                         <p>Conditions d'utilisation</p>
@@ -209,7 +216,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/creation/faq') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/faqs') ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/creation/faq') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/faqs') ? 'active' : '' }}">
                     <a data-toggle="collapse" href="#faqs">
                         <i class="fas fa-home"></i>
                         <p>FAQ</p>
@@ -230,14 +237,14 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/newsletters') ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/newsletters') ? 'active' : '' }}">
                     <a href="{{ route('newsletters.index') }}">
                         <i class="fas fa-newspaper"></i>
                         <p>Newsletters</p>
                     </a>
                 </li>
 
-                <li class="nav-item {{ request()->is('tableau-de-bord/historiques') ? 'active' : ''}}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/historiques') ? 'active' : '' }}">
                     <a href="{{ route('historiques.index') }}">
                         <i class="fas fa-home"></i>
                         <p>Historiques</p>

@@ -17,34 +17,36 @@ use App\Models\Notification;
 use App\Models\PivotClientsSalon;
 use App\Models\Salon;
 use Illuminate\Support\Facades\Auth;
+
 class IndexController extends Controller
 {
-    public function index(){
-        $publics = Notification::where('public',1)->get();
+    public function index()
+    {
+        $publics = Notification::where('public', 1)->get();
 
-        if(Auth::user()){
-            $notifications  = Notification::where('notification_id',Auth::user()->id)->get();
-        }else{
+        if (Auth::user()) {
+            $notifications  = Notification::where('notification_id', Auth::user()->id)->get();
+        } else {
             $notifications = '';
         }
         $paquets = Paquet::where('statut_id', '3')->get();
         $articles = Article::where('statut_id', '3')->where('salon', 0)->get();
-        $salons = Salon::where('created_at','>',now()->addDays(1)->format('d-m-y H:i:s'))->get();
-        $verifyDateSalons = Salon::where('created_at','<=',now()->addDays(1)->format('d-m-y H:i:s'))->get();
+        $salons = Salon::where('created_at', '>', now()->addDays(1)->format('d-m-y H:i:s'))->get();
+        $verifyDateSalons = Salon::where('created_at', '<=', now()->addDays(1)->format('d-m-y H:i:s'))->get();
         if ($verifyDateSalons->count() > 0) {
             foreach ($verifyDateSalons as $key => $salon) {
-            $checkPivots=PivotClientsSalon::where('salon_id',$salon->id)->get();
+                $checkPivots = PivotClientsSalon::where('salon_id', $salon->id)->get();
                 foreach ($checkPivots as $key => $checkPivot) {
-                    $getBideur = Bideur::where('user_id',$checkPivot->user_id)->first();
-                    $getmoney = PivotClientsSalon::where('id',$checkPivot->id)->first();
+                    $getBideur = Bideur::where('user_id', $checkPivot->user_id)->first();
+                    $getmoney = PivotClientsSalon::where('id', $checkPivot->id)->first();
                     $getBideur->update([
-                        'balance'=>$getmoney->montant + $getBideur->balance
+                        'balance' => $getmoney->montant + $getBideur->balance
                     ]);
-                    $notification  = Notification::where('notification_id',$checkPivot->user_id)->first();
+                    $notification  = Notification::where('notification_id', $checkPivot->user_id)->first();
                     $notification->create([
-                        'public'=>0,
-                        'user_id'=>$checkPivot->user_id,
-                        'message'=>'Vous etiez participant a l\'enchere du lot '.$salon->id.' de '.$salon->article->titre.' Malheuresement le quota de '.$salon->limite.' personnes n\'a pas éte atteint la retenu de '.$salon->montant.' bibs a été retourné sur votre compte.' ,
+                        'public' => 0,
+                        'user_id' => $checkPivot->user_id,
+                        'message' => 'Vous etiez participant a l\'enchere du lot ' . $salon->id . ' de ' . $salon->article->titre . ' Malheuresement le quota de ' . $salon->limite . ' personnes n\'a pas éte atteint la retenu de ' . $salon->montant . ' bibs a été retourné sur votre compte.',
                     ]);
                     $getmoney->delete();
                 }
@@ -53,34 +55,38 @@ class IndexController extends Controller
         }
 
         $page = 2;
-        return view('pages.index',compact('articles', 'notifications','publics','page', 'paquets','salons'));
+        return view('pages.index', compact('articles', 'notifications', 'publics', 'page', 'paquets', 'salons'));
     }
 
-    public function faq(){
-        $faqs = Faq :: all();
+    public function faq()
+    {
+        $faqs = Faq::all();
 
-        return view('pages.faq',compact('faqs'));
-
+        return view('pages.faq', compact('faqs'));
     }
-    public function politique(){
-        $polis = Politique :: all();
-        return view('pages.politique',compact('polis'));
+    public function politique()
+    {
+        $polis = Politique::all();
+        return view('pages.politique', compact('polis'));
     }
-    public function condition(){
+    public function condition()
+    {
         $condis = Condition::all();
-        return view('pages.termes',compact('condis'));
+        return view('pages.termes', compact('condis'));
     }
 
-    public function contact(){
+    public function contact()
+    {
         return view('pages.contact');
     }
-    public function sendContact( Request $request){
+    public function sendContact(Request $request)
+    {
         $user = Contact::create([
-            'nom'=>$request->get('nom'),
-            'telephone'=>$request->get('telephone'),
-            'content'=>$request->get('content'),
-            'email'=>$request->get('email'),
+            'nom' => $request->get('nom'),
+            'telephone' => $request->get('telephone'),
+            'content' => $request->get('content'),
+            'email' => $request->get('email'),
         ]);
-        return redirect()->back()->with('success','La requette a ete envoyer a vec succes');
+        return redirect()->back()->with('success', 'La requette a ete envoyer a vec succes');
     }
 }

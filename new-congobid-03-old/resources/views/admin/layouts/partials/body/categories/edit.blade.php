@@ -4,13 +4,12 @@
 @endsection
 
 @section('body')
-
     <div class="panel-header bg-primary-gradient">
-    <div class="page-inner py-2">
-        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+        <div class="page-inner py-2">
+            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Ajouter une sous-catégorie</h2>
+                    <h2 class="text-white pb-2 fw-bold">Ajouter Catégorie</h2>
                 </div>
             </div>
         </div>
@@ -27,8 +26,24 @@
                                 <div class="col-md-6 col-lg-4">
                                     <div class="form-group">
                                         <label for="smallInput">Nom</label>
-                                        <input type="hidden" name="categorie_id" class="form-control " id="smallInput" required value="{{ $categorie->id }}">
-                                        <input type="text" name="libelle" class="form-control " id="smallInput" placeholder="Entrez le nom de la catégorie" required value="{{ $categorie->libelle }}">
+                                        <input type="hidden" name="categorie_id" class="form-control " id="smallInput"
+                                            required value="{{ $categorie->id }}">
+                                        <input type="text" name="libelle" class="form-control " id="smallInput"
+                                            placeholder="Entrez le nom de la catégorie" required
+                                            value="{{ $categorie->libelle }}">
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-4">
+                                    <div class="form-group">
+                                        <label for="smallInput">Paquet</label>
+                                        <select name="categorie" id="" class="form-control " required>
+                                            @foreach ($paquets as $paquet)
+                                                <option value="{{ $paquet->id }}"
+                                                    {{ $paquet->id == $categorie->categorie_id ? 'selected' : '' }}>
+                                                    {{ $paquet->libelle }}</option>
+                                            @endforeach
+                                        </select>
+
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-lg-4">
@@ -36,7 +51,9 @@
                                         <label for="smallSelect">Statut</label>
                                         <select class="form-control " id="smallSelect" name="statut_id">
                                             @foreach ($statuts as $statut)
-                                                <option value="{{ $statut->id }}" {{ $categorie->statut_id == $statut->id ? 'selected' : '' }}>{{ $statut->libelle }}</option>
+                                                <option value="{{ $statut->id }}"
+                                                    {{ $categorie->statut_id == $statut->id ? 'selected' : '' }}>
+                                                    {{ $statut->libelle }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -44,7 +61,8 @@
                             </div>
                         </div>
                         <div class="card-action">
-                            <button class="text-white btn btn-congo float-right px-5 mb-4" style="border-radius: 20px;">Enregistrer</button>
+                            <button class="text-white btn btn-congo float-right px-5 mb-4"
+                                style="border-radius: 20px;">Enregistrer</button>
 
                         </div>
                     </form>
@@ -52,7 +70,6 @@
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('javascript')

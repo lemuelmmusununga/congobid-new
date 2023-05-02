@@ -12,15 +12,18 @@ class Administrateur extends Model
 
     protected $guarded = [];
 
-    public function statut(){
+    public function statut()
+    {
         return $this->belongsTo(Statut::class);
     }
 
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
-    public function admin(){
+    public function admin()
+    {
         return $this->belongsTo(User::class, 'administrateur_id');
     }
 
@@ -28,5 +31,8 @@ class Administrateur extends Model
     {
         return $this->hasMany(Gagnant::class);
     }
-
+    public function envoie()
+    {
+        return $this->hasMany(Envoie::class);
+    }
 }

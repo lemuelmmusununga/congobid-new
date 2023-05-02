@@ -188,8 +188,9 @@ class BideurController extends Controller
     public function demande()
     {
         $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        $users = User::where('role_id', '>', '3')->orderBy('username', 'asc')->get();
 
-        return view('admin.layouts.partials.body.demande.create', compact('chats'));
+        return view('admin.layouts.partials.body.demande.create', compact('chats', 'users'));
     }
     public function storeDemande(Request $request)
     {
@@ -203,7 +204,7 @@ class BideurController extends Controller
         } else {
             Demande::create([
                 'admin' => Auth::user()->id,
-                'name' => $request->user,
+                'name' => $request->user_id,
                 'telephone' => $request->telephone,
                 'nombre' => $request->nombre,
                 'payement' => $request->paie,
