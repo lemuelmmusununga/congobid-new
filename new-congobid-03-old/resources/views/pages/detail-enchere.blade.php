@@ -2,8 +2,8 @@
 @section('content')
     <script>
         setTimeout(() => {
-    document.location.reload();
-    }, 30000);
+            document.location.reload();
+        }, 30000);
     </script>
     <div class="content-block">
 
@@ -53,7 +53,6 @@
             </div>
         </div>
     </div>
-
     <div class="modal fade" id="modalparticipant" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -388,9 +387,10 @@
         </div>
         </div>
     </div>
-
 @endsection
-
 @section('javascript')
 @stack('script')
 @endsection
+
+
+

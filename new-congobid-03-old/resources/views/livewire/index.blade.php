@@ -183,13 +183,17 @@
                                                     l'enchère
                                                 </a>
                                             </div> --}}
+                                                    
                                         </div>
                                     </div>
+                           
                                 </div>
                             @endif
                         @endforeach
                     </div>
+                   
                 </div>
+              
             </div>
         </div>
 
@@ -365,7 +369,30 @@
                     @endforeach
                 </div>
             </div>
-        </div>
+        </div> 
+        @foreach ($articles as $key=> $article)
+        {{-- modal participer --}}
+            <div wire:ignore.self class="modal fade" id="modalEncheresy_{{$key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <div class="icon">
+                                <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                            </div>
+                            <div class="text-center">
+                                <h5>Voulez-vous participer au Salon ?</h5>
+                                {{-- @if (Auth::user()) --}}
+                                <p> Pour y participer, veuillez souscrire à la catégorie
+                                    {{-- "{{ $salon->article->paquet->libelle }}"  --}}
+                                    en payent bids.</p>
+                                {{-- @endif --}}
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </div>
     @foreach ($salons as $key=> $salon)
 
@@ -434,6 +461,7 @@
             </div>
         </div>
     @endforeach
+   
     <div class="block-all-bids">
         <div class="container">
             <div class="row justify-content-center">
@@ -490,11 +518,6 @@
                 </div>
             </div>
         </div>
-      </div>
-
-        {{-- <script src="js/app.js"></script>
-        <script src="js/bootstrap.bundle.min.js"></script>
-        <script src="js/owl.carousel.min.js"></script>
-        <script src="js/scriptcarousel.js"></script> --}}
+    </div>
 </div>
 
