@@ -6,8 +6,9 @@
 @section('body')
 
     <div class="panel-header bg-primary-gradient">
-        <div class="page-inner py-5">
-            <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+    <div class="page-inner py-2">
+        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+
                 <div>
                     <h2 class="text-white pb-2 fw-bold">Editer un bideur</h2>
                 </div>

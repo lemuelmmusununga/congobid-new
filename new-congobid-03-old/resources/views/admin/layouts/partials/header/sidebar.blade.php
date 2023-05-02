@@ -102,21 +102,21 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/creation/article') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/articles') ? 'active' : ''}}">
-                    <a data-toggle="collapse" href="#articles">
+                <li class="nav-item {{ request()->is('tableau-de-bord/creation/enchere') ? 'active' : ''}} ?? {{ request()->is('tableau-de-bord/encheres') ? 'active' : ''}}">
+                    <a href="{{ route('encheres.index') }}">
                         <i class="fas fa-home"></i>
                         <p>Gestion des Enchères</p>
                         <span class="caret"></span>
                     </a>
-                    <div class="collapse" id="articles">
+                    <div class="collapse" id="#encheres">
                         <ul class="nav nav-collapse">
                             <li>
-                                <a href="{{ route('articles.create') }}">
+                                <a href="{{ route('encheres.create') }}">
                                     <span class="sub-item">Ajouter une enchère</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('articles.index') }}">
+                                <a href="{{ route('encheres.index') }}">
                                     <span class="sub-item">Voir les enchère</span>
                                 </a>
                             </li>

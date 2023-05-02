@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Article;
 use App\Models\Enchere;
 use Illuminate\Http\Request;
 use App\Models\Chat;
+use App\Models\Statut;
 
 class EnchereController extends Controller
 {
@@ -15,7 +17,9 @@ class EnchereController extends Controller
      */
     public function index()
     {
-        //
+        $encheres = Enchere::orderBy('id', 'desc')->get();
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        return view('admin.encheres', compact('encheres','chats'));
     }
 
     /**
@@ -25,7 +29,12 @@ class EnchereController extends Controller
      */
     public function create()
     {
-        //
+        $statuts = Statut::orderBy('id', 'desc')->get();
+        $articles = Article::orderBy('titre','asc')->get();
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+
+        return view('admin.layouts.partials.body.encheres.create', compact('statuts', 'chats','articles'));
+    
     }
 
     /**

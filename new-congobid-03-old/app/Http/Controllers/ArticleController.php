@@ -118,7 +118,7 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = Article::where('id', $id)->get();
+        $article = Article::find($id);
         $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
 
         return view('admin.layouts.partials.body.articles.show', compact('article', 'chats'));
@@ -149,9 +149,10 @@ class ArticleController extends Controller
      */
     public function update(Request $request)
     {
-        // try{
+        // dd($request);
+        try{
         $articlesCount = Article::all()->count();
-        $request->code_produit = $request->categorie_id . Auth::user()->id . now()->format('dmY') . now()->format('His') . $articlesCount + 1;
+        $code_produit = $request->categorie_id . Auth::user()->id . now()->format('dmY') . now()->format('His') . $articlesCount + 1;
         $paquets = Paquet::where('statut_id', '3')->get();
 
         $paquet_id = 1;
@@ -162,73 +163,53 @@ class ArticleController extends Controller
             }
         }
 
-        $article = Article::where('id', $request->article_id)->update([
+        $article = Article::find($request->article_id);
+        
+        $article->update([
             'titre' => $request->titre,
             'marque' => $request->marque,
             'promouvoir' => $request->promouvoir == "on" ? 1 : 0,
-            'code_produit' => $request->code_produit,
+            'code_produit' => $code_produit,
             'description' => $request->description,
             'prix' => $request->prix,
             'prix_marche' => $request->prix_marche,
-            'prix_min' => $request->prix_marche / 3,
-            'prix_max' => $request->prix_marche / 2,
-            'cout_livraison' => $request->cout_livraison,
-            'infos_livraison' => $request->infos_livraison,
-            'meta_description' => $request->meta_description,
-            'meta_keywords' => $request->meta_keywords,
-
-            'limite_enchere_auto' => $request->limite_enchere_auto,
-            'credit_enchere_auto' => $request->credit_enchere_auto,
-            'code_produit' => $request->code_produit,
             'quantite' => $request->quantite,
             'categorie_id' => $request->categorie_id,
             'statut_id' => $request->statut_id,
             'user_id' => Auth::user()->id,
-            'paquet_id' => $paquet_id,
+            'paquet_id'=> $paquet_id
         ]);
 
         if ($request->file('image') != null) {
-
             foreach ($request->file('image') as $key => $image) {
+                $ext = $image->getClientOriginalExtension();
+                $nb = $article->images->count();
+                $key = $nb;
                 # code...
+                Image::create([
+                    'lien' => $article->id . '_' . $key . '.' . $ext,
+                    'statut_id' => "1",
+                    'user_id' => Auth::user()->id,
+                    'article_id' => $article->id,
+                ]);
+
+                $image->move(public_path('images/articles/'), $article->id . '_' . $key . '.' . $ext,true);
             }
-
-
-
-            $request->file('image')->move(public_path('images/articles/'), $request->titre . '.webp');
-
         }
 
-        Salon::where('article_id', $request->article_id)->update([
-            'libelle' => 'Salon #' . $request->article_id,
-            'statut_id' => $request->statut_id,
-            'article_id' => $request->article_id,
-        ]);
-
-        Enchere::where('article_id', $request->article_id)->update([
-            'click' => 0,
-            'date_debut' => $request->debut_enchere,
-
-            'munite' => Str::substr($request->fin_enchere, 0, 2),
-            'seconde' => Str::substr($request->fin_enchere, 4, 8),
-            'state' => 0,
-            'statut_id' => $request->statut_id,
-            'article_id' => $request->article_id,
-            'paquet_id' => $paquet_id,
-        ]);
 
         Historique::create([
-            'action' => 'Modification d\'un article',
+            'action' => 'Modification de l\'article '.$article->titre,
             'type' => '5',
-            'destination_id' => $request->article_id,
+            'destination_id' => $article->id,
             'statut_id' => '3',
             'user_id' => Auth::user()->id,
         ]);
 
-        return redirect()->route('articles.index');
-        // } catch(\Exception $e){
-        //     return back()->with('');
-        // }
+        return redirect()->route('articles.index')->with('success','La modification a réussi');
+        } catch(\Exception $e){
+            return back()->with('error', 'Une erreur est survenue');
+        }
     }
 
     /**

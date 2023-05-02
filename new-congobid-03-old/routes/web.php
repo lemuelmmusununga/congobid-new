@@ -292,6 +292,16 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/tableau-de-bord/sauvegarder/article', [App\Http\Controllers\ArticleController::class, 'update'])->name('articles.update');
         Route::get('/tableau-de-bord/supprimer/article/{id}/{state}', [App\Http\Controllers\ArticleController::class, 'destroy'])->name('articles.destroy');
 
+        Route::get('/tableau-de-bord/encheres', [App\Http\Controllers\EnchereController::class, 'index'])->name('encheres.index');
+        // Route::get('/tableau-de-bord/afficher/encheres/agent/{id}', [App\Http\Controllers\EnchereController::class, 'indexfilter'])->name('encheres.indexfilter');
+        Route::get('/tableau-de-bord/afficher/enchere/{id}', [App\Http\Controllers\EnchereController::class, 'show'])->name('encheres.show');
+        Route::get('/tableau-de-bord/creation/enchere', [App\Http\Controllers\EnchereController::class, 'create'])->name('encheres.create');
+        Route::post('/tableau-de-bord/enregistrer/enchere', [App\Http\Controllers\EnchereController::class, 'store'])->name('encheres.store');
+        Route::get('/tableau-de-bord/editer/enchere/{id}', [App\Http\Controllers\EnchereController::class, 'edit'])->name('encheres.edit');
+        Route::post('/tableau-de-bord/sauvegarder/enchere', [App\Http\Controllers\EnchereController::class, 'update'])->name('encheres.update');
+        Route::get('/tableau-de-bord/supprimer/enchere/{id}/{state}', [App\Http\Controllers\EnchereController::class, 'destroy'])->name('encheres.destroy');
+
+
         Route::get('/tableau-de-bord/bids', [App\Http\Controllers\BidController::class, 'index'])->name('bids.index');
         Route::get('/tableau-de-bord/afficher/bids/agent/{id}', [App\Http\Controllers\BidController::class, 'indexfilter'])->name('bids.indexfilter');
         Route::get('/tableau-de-bord/afficher/bid/{id}', [App\Http\Controllers\BidController::class, 'show'])->name('bids.show');
