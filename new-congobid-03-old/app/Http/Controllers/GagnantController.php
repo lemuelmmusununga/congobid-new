@@ -22,7 +22,7 @@ class GagnantController extends Controller
      */
     public function index()
     {
-        $gagnants = Encheregagner::orderBy('id', 'desc')->get();
+        $gagnants = Gagnant::orderBy('id', 'desc')->get();
         $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
 
         return view('admin.gagnants', compact('gagnants', 'chats'));
@@ -87,7 +87,10 @@ class GagnantController extends Controller
      */
     public function show($id)
     {
-        //
+        $gagnant = Gagnant::find($id);
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        return view('admin.layouts.partials.body.gagnants.show', compact('chats','gagnant'));
+        
     }
 
     /**
@@ -98,12 +101,14 @@ class GagnantController extends Controller
      */
     public function edit($id)
     {
-        $myenchere = Encheregagner::where('id', $id)->first();
-        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
-        $encheres = PivotBideurEnchere::all();
-        $statuts = Statut::orderBy('id', 'desc')->get();
+        
+        $gagnant = Gagnant::find($id);
+        $gagnant->update([
+            'state' => 1
+        ]);
 
-        return view('admin.layouts.partials.body.gagnants.edit', compact('chats', 'encheres', 'myenchere', 'statuts'));
+        return back()->with('success','Gagnant payé avec succes');
+        // return view('admin.layouts.partials.body.gagnants.edit', compact('chats', 'encheres', 'myenchere', 'statuts'));
     }
 
     /**

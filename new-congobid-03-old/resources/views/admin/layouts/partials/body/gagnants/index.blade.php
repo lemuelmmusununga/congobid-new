@@ -4,12 +4,12 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Liste des vidéos de gagnants</h2>
+                    <h2 class="text-white pb-2 fw-bold">Liste des Gagnants</h2>
                 </div>
-                <div class="ml-md-auto py-2 py-md-0">
+                {{-- <div class="ml-md-auto py-2 py-md-0">
                     <a href="{{ route('gagnants.create') }}" class="btn btn-white btn-border btn-round mr-2">Ajouter une
                         des gagnant</a>
-                </div>
+                </div> --}}
             </div>
         </div>
     </div>
@@ -25,9 +25,9 @@
                                 <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Enchère</th>
                                         <th>Gagnant</th>
-                                        <th>Username</th>
+                                        <th>Enchère</th>
+                                        <th>Date</th>
                                         <th>Code de livraison</th>
                                         <th>Statut</th>
                                         <th>Actions</th>
@@ -38,23 +38,20 @@
 
                                         <tr>
                                             <td> #{{ $key + 1 }} </td>
+                                            <td>{{'@'.$gagnant->user->username ?? ''  }}</td>
                                             <td>{{ $gagnant->enchere->article->titre ?? '' }}</td>
-                                            <td>{{ $gagnant->user->nom ?? ''  }}</td>
-                                            <td>{{ $gagnant->user->username ?? ''  }}</td>
+                                            <td>{{ $gagnant->enchere->date_debut ?? ''  }}</td>
                                             <td>{{ $gagnant->code }}</td>
-                                            <td>{{ $gagnant->user->statut->libelle ?? '' }}</td>
+                                            @if ($gagnant->state == 0)
+                                                <td class="text-warning">En Attente</td>
+                                            @else
+                                                <td class="text-success">Livré</td>
+                                            @endif
                                             <td>
-                                                <a href="{{ route('gagnants.edit', [$gagnant->id]) }}">Editer</a> |
                                                 @if ($gagnant->state == 0)
-
-                                                    <a href="" class="fs-7 text-muted px-3">
-                                                        <i class="bi bi-patch-check"></i><span class="px-2">En entente</span>
-                                                    </a>
+                                                    <a href="{{ route('gagnants.edit', [$gagnant->id]) }}" class="btn btn-sm btn-success">Payer</a> 
                                                 @else
-                                                <a href="" class="fs-7 px-3">
-                                                    <i class="bi bi-patch-check-fill"></i><span class="px-2">Payé</span>
-                                                </a>
-
+                                                    <a href="{{ route('gagnants.show', [$gagnant->id]) }}" class="btn btn-sm btn-warning">Voir</a> 
                                                 @endif
                                             </td>
                                         </tr>

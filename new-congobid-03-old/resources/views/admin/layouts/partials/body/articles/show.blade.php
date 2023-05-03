@@ -33,13 +33,13 @@
                             <div class="desc"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> Paquet : {{ $article->paquet->libelle }}</span></span></div>
                             <div class="desc"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> Ajouté par : <a href="{{ route('agents.show', $article->user->id) }}"> {{ $article->user->prenom }} {{ $article->user->nom }} </a> </span></span></div>
                         <div class="view-profile d-flex justify-content-center px-5">
-                            <a href="{{ route('articles.edit', [$article->id]) }}" class="btn btn-primary  px-5 mx-3 rounded-3"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Editer</span></span></a>
+                            <a href="{{ route('articles.edit', [$article->id]) }}" class="btn btn-sm btn-success  px-5 mx-3 rounded-3"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Editer</span></span></a>
                             @if ($article->statut->id == 1)
-                                <a href="{{ route('articles.destroy', [$article->id, 1]) }}" class="btn btn-success  px-5"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Activer</span></span></a>
+                                <a href="{{ route('articles.destroy', [$article->id, 1]) }}" class="btn btn-sm btn-warning  px-5"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Activer</span></span></a>
                             @elseif ($article->statut->id == 2)
-                                <a href="{{ route('articles.destroy', [$article->id, 2]) }}" class="btn btn-success  px-5"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Réactiver</span></span></a>
+                                <a href="{{ route('articles.destroy', [$article->id, 2]) }}" class="btn btn-sm btn-secondary  px-5"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Réactiver</span></span></a>
                             @elseif ($article->statut->id == 3)
-                                <a href="{{ route('articles.destroy', [$article->id, 3]) }}" class="btn btn-danger  px-5"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Supprimer</span></span></a>
+                                <a href="{{ route('articles.destroy', [$article->id, 3]) }}" class="btn btn-sm btn-danger  px-5"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Supprimer</span></span></a>
                             @endif
                         </div>
                         <div class="view-profile d-flex justify-content-center px-5">

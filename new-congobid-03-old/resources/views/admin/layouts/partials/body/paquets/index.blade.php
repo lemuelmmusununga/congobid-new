@@ -55,12 +55,12 @@
                                 style="border-radius: 24px;">Editer</a>
                             @if ($paquet->statut->id == 1)
                                 <a href="{{ route('paquets.destroy', [$paquet->id, 1]) }}"
-                                    class="btn btn-success btn-block" style="border-radius: 24px;">Activer</a>
+                                    class="btn btn-sm btn-success btn-block" style="border-radius: 24px;">Activer</a>
                             @elseif ($paquet->statut->id == 2)
                                 <a href="{{ route('paquets.destroy', [$paquet->id, 2]) }}"
-                                    class="btn btn-warning btn-block" style="border-radius: 24px;">Réactiver</a>
+                                    class="btn btn-sm btn-warning btn-block" style="border-radius: 24px;">Réactiver</a>
                             @elseif ($paquet->statut->id == 3)
-                                <a href="{{ route('paquets.destroy', [$paquet->id, 3]) }}" class="btn btn-danger btn-block"
+                                <a href="{{ route('paquets.destroy', [$paquet->id, 3]) }}" class="btn btn-sm btn-danger btn-block"
                                     style="border-radius: 24px;">Supprimer</a>
                             @endif
                         </div>
@@ -99,11 +99,11 @@
                             <div class="card-footer">
                                 <a href="{{ route('paquets.edit', [$paquet->id]) }}" class="btn btn-light btn-block">Editer</a>
                                 @if ($paquet->statut->id == 1)
-                                    <a href="{{ route('paquets.destroy', [$paquet->id, 1]) }}" class="btn btn-success btn-block">Activer</a>
+                                    <a href="{{ route('paquets.destroy', [$paquet->id, 1]) }}" class="btn btn-sm btn-success btn-block">Activer</a>
                                 @elseif ($paquet->statut->id == 2)
-                                    <a href="{{ route('paquets.destroy', [$paquet->id, 2]) }}" class="btn btn-success btn-block">Réactiver</a>
+                                    <a href="{{ route('paquets.destroy', [$paquet->id, 2]) }}" class="btn btn-sm btn-success btn-block">Réactiver</a>
                                 @elseif ($paquet->statut->id == 3)
-                                    <a href="{{ route('paquets.destroy', [$paquet->id, 3]) }}" class="btn btn-danger btn-block">Supprimer</a>
+                                    <a href="{{ route('paquets.destroy', [$paquet->id, 3]) }}" class="btn btn-sm btn-danger btn-block">Supprimer</a>
                                 @endif
                             </div>
                         </div>

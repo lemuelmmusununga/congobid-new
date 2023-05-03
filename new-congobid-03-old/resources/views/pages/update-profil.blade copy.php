@@ -144,7 +144,7 @@
                 @endif
             </div>
             <div class="modal-footer d-flex justify-content-between">
-                <p  class="text-white btn btn-danger" data-bs-dismiss="modal" style="font-size: 16px">Supprimer</p>
+                <p  class="text-white btn btn-sm btn-danger" data-bs-dismiss="modal" style="font-size: 16px">Supprimer</p>
                 <x-button type="button" class="btn btn-primary" type="submit">Sauvegarder</x-button>
             </div>
         </form>

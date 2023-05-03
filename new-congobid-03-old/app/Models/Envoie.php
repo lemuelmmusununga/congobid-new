@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Envoie extends Model
 {
     use HasFactory;
+    protected $guarded = [];
 
     // Relation avec l'utilisateur admin
     public function admin()
     {
-        return $this->belongsTo(Administrateur::class);
+        return $this->belongsTo(User::class,'admin_id');
     }
 
     // Relation avec l'utilisateur normal
@@ -23,6 +24,6 @@ class Envoie extends Model
 
     public function bidtype()
     {
-        return $this->belongsTo(BidStatut::class);
+        return $this->belongsTo(BidStatut::class,'bid_statut_id');
     }
 }

@@ -233,31 +233,10 @@ class AdministrateurController extends Controller
         } catch (\Exception $e) {
             return back()->with('');
         }
-    }
+}    }
 
-    public function envoiebid(Request $request)
-    {
-        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
-        $users = User::where('role_id', '>', '3')->orderBy('username', 'asc')->get();
-        $bidstatuts = BidStatut::all();
+   
 
-        return view('admin.layouts.partials.body.envoie.create', compact('chats', 'users', 'bidstatuts'));
-    }
-    public function listenvoie(Request $request)
-    {
-        $envoies = Envoie::orderBy('id', 'desc')->get();
-        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+    
 
-
-        return view('admin.envoie', compact('chats', 'envoies'));
-    }
-    public function storeenvoie(Request $request)
-    {
-        $envoie = Envoie::create([
-            'number' => $request->number,
-            'bid_statut_id' => $request->bid_statut_id,
-            'admin_id' => Auth::user()->id,
-            'user_id' => $request->user_id
-        ]);
-    }
-}
+    

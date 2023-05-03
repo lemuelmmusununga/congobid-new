@@ -52,13 +52,13 @@
                                         <td class="text-warning">{{ $bideur->statut->libelle ?? '' }}</td>
                                     @endif
                                     <td>
-                                        <a href="{{ route('bideurs.edit', [$bideur->id]) }}" class="btn btn-success">Editer</a> |
+                                        <a href="{{ route('bideurs.edit', [$bideur->id]) }}" class="btn btn-sm btn-success">Editer</a> |
                                         @if ($bideur->statut->id == 1)
-                                            <a href="{{ route('bideurs.destroy', [$bideur->user->id ?? '', 1]) }}" class="btn btn-warning">Activer</a>
+                                            <a href="{{ route('bideurs.destroy', [$bideur->user->id ?? '', 1]) }}" class="btn btn-sm btn-warning">Activer</a>
                                         @elseif ($bideur->statut->id == 2)
-                                            <a href="{{ route('bideurs.destroy', [$bideur->user->id ?? '' , 2]) }}" class="btn btn-secondary">Réactiver</a>
+                                            <a href="{{ route('bideurs.destroy', [$bideur->user->id ?? '' , 2]) }}" class="btn btn-sm btn-secondary">Réactiver</a>
                                         @elseif ($bideur->statut->id == 3)
-                                            <a href="{{ route('bideurs.destroy', [$bideur->user->id ?? '', 3]) }}" class="btn btn-danger">Supprimer</a>
+                                            <a href="{{ route('bideurs.destroy', [$bideur->user->id ?? '', 3]) }}" class="btn btn-sm btn-danger">Supprimer</a>
                                         @endif
                                     </td>
                                 </tr>

@@ -45,7 +45,7 @@
                     </div>
                     <div class="card-action">
                         <button class="text-white btn btn-congo">Enregistrer</button>
-                        <a href="{{ route('admin.index') }}" class="btn btn-danger">Annuler</a>
+                        <a href="{{ route('admin.index') }}" class="btn btn-sm btn-danger">Annuler</a>
                     </div>
                 </div>
             </form>

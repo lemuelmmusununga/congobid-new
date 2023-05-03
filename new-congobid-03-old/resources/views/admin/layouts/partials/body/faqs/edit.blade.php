@@ -47,8 +47,8 @@
                         </div>
                     </div>
                     <div class="card-action">
-                        <button class="btn btn-success">Enregistrer</button>
-                        <a href="{{ route('admin.index') }}" class="btn btn-danger">Annuler</a>
+                        <button class="btn btn-sm btn-success">Enregistrer</button>
+                        <a href="{{ route('admin.index') }}" class="btn btn-sm btn-danger">Annuler</a>
                     </div>
                 </div>
             </form>

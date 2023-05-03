@@ -21,7 +21,7 @@
             </div>
             {{-- <div class="button ml-md-auto py-2 py-md-0"> --}}
 
-                {{-- <a href="#" class="btn btn-secondary btn-round text-white">Ajouter un produit</a> --}}
+                {{-- <a href="#" class="btn btn-sm btn-secondary btn-round text-white">Ajouter un produit</a> --}}
             {{-- </div> --}}
         </div>
     </div>

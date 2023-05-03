@@ -30,7 +30,7 @@ class Enchere extends Model
 
     public function gagnant()
     {
-        return $this->hasMany(Gagnant::class);
+        return $this->belongsTo(Gagnant::class);
     }
 
     public function salon()

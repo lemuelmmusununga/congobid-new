@@ -9,7 +9,7 @@
             <div class="d-flex justify-content-between">
               <input type="text" class="form-control me-1" placeholder="Recherche">
               <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle btn-filter-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-sm btn-secondary dropdown-toggle btn-filter-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Filtrer
                 </button>
                 <ul class="dropdown-menu">

@@ -281,7 +281,7 @@
                 @endif
             </div>
             <div class="modal-footer d-flex justify-content-between">
-                <a href="{{ route('sup.profil') }}" class="text-white btn btn-danger"  style="font-size: 16px">Supprimer</a>
+                <a href="{{ route('sup.profil') }}" class="text-white btn btn-sm btn-danger"  style="font-size: 16px">Supprimer</a>
                 <x-button type="button" class="btn btn-primary" type="submit">Sauvegarder</x-button>
             </div>
         </form>

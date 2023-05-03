@@ -59,16 +59,16 @@
                                             @endif
                                             <td>
                                                 <a href="{{ route('encheres.edit', [$enchere->id]) ?? '' }}"
-                                                    class="btn btn-success">Editer</a> |
+                                                    class="btn btn-sm btn-success">Editer</a> |
                                                 @if ($enchere->statut->id == 1)
                                                     <a href="{{ route('encheres.destroy', [$enchere->id, 1]) ?? '' }}"
-                                                        class="btn btn-warning">Activer</a>
+                                                        class="btn btn-sm btn-warning">Activer</a>
                                                 @elseif ($enchere->statut->id == 2)
                                                     <a
-                                                        href="{{ route('encheres.destroy', [$enchere->id, 2]) ?? '' }}"class="btn btn-secondary">Réactiver</a>
+                                                        href="{{ route('encheres.destroy', [$enchere->id, 2]) ?? '' }}"class="btn btn-sm btn-secondary">Réactiver</a>
                                                 @elseif ($enchere->statut->id == 3)
                                                     <a
-                                                        href="{{ route('encheres.destroy', [$enchere->id, 3]) ?? '' }}"class="btn btn-danger">Supprimer</a>
+                                                        href="{{ route('encheres.destroy', [$enchere->id, 3]) ?? '' }}"class="btn btn-sm btn-danger">Supprimer</a>
                                                 @endif
                                             </td>
                                         </tr>

@@ -38,13 +38,13 @@
                                             <td>{{ $bid->valeur }}</td>
                                             <td>{{ $bid->statut->libelle }}</td>
                                             <td>
-                                                <a href="{{ route('bids.edit', [$bid->id]) }}">Editer</a> |
+                                                <a href="{{ route('bids.edit', [$bid->id]) }}" class="btn btn-sm btn-success">Editer</a> |
                                                 @if ($bid->statut->id == 1)
-                                                    <a href="{{ route('bids.destroy', [$bid->id, 1]) }}">Activer</a>
+                                                    <a href="{{ route('bids.destroy', [$bid->id, 1]) }}" class="btn btn-sm btn-warning">Activer</a>
                                                 @elseif ($bid->statut->id == 2)
-                                                    <a href="{{ route('bids.destroy', [$bid->id, 2]) }}">Réactiver</a>
+                                                    <a href="{{ route('bids.destroy', [$bid->id, 2]) }}" class="btn btn-sm btn-secondary">Réactiver</a>
                                                 @elseif ($bid->statut->id == 3)
-                                                    <a href="{{ route('bids.destroy', [$bid->id, 3]) }}">Supprimer</a>
+                                                    <a href="{{ route('bids.destroy', [$bid->id, 3]) }}" class="btn btn-sm btn-danger">Supprimer</a>
                                                 @endif
                                             </td>
                                         </tr>

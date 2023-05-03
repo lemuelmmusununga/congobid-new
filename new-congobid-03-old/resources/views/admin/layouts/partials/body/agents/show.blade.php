@@ -26,11 +26,11 @@
                         <div class="view-profile d-flex justify-content-center">
                             <a href="{{ route('agents.edit', [$agent->id]) }}" class="btn btn-primary rounded-3 mx-2"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Editer</span></span></a>
                             @if ($agent->statut->id == 1)
-                                <a href="{{ route('agents.destroy', [$agent->user->id, 1]) }}" class="btn btn-success rounded-3 mx-2"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Activer</span></span></a>
+                                <a href="{{ route('agents.destroy', [$agent->user->id, 1]) }}" class="btn btn-sm btn-success rounded-3 mx-2"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Activer</span></span></a>
                             @elseif ($agent->statut->id == 2)
-                                <a href="{{ route('agents.destroy', [$agent->user->id, 2]) }}" class="btn btn-success rounded-3 mx-2"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Réactiver</span></span></a>
+                                <a href="{{ route('agents.destroy', [$agent->user->id, 2]) }}" class="btn btn-sm btn-success rounded-3 mx-2"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Réactiver</span></span></a>
                             @elseif ($agent->statut->id == 3)
-                                <a href="{{ route('agents.destroy', [$agent->user->id, 3]) }}" class="btn btn-danger rounded-3 mx-2"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Supprimer</span></span></a>
+                                <a href="{{ route('agents.destroy', [$agent->user->id, 3]) }}" class="btn btn-sm btn-danger rounded-3 mx-2"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Supprimer</span></span></a>
                             @endif
                         </div>
                     </div>

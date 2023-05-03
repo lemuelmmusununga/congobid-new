@@ -8,7 +8,7 @@
           <div class="all-message">
             <div class="d-flex justify-content-end">
               <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle btn-filter-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <button class="btn btn-sm btn-secondary dropdown-toggle btn-filter-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Filtrer
                 </button>
                 <ul class="dropdown-menu">

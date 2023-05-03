@@ -29,7 +29,7 @@
                                         <th>Nombre</th>
                                         <th>User</th>
                                         <th>Admin</th>
-                                        {{-- <th>Actions</th> --}}
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -43,8 +43,8 @@
                                             <td>{{ $envoie->bidtype->libelle }}</td>
                                             <td>{{ $envoie->number ?? '' }}</td>
                                             <td>{{ $envoie->user->username ?? '' }} </td>
-                                            <td>{{ $envoie->admin->user->prenom ?? '' }}
-                                                {{ $envoie->admin->user->nom ?? '' }}</td>
+                                            <td>{{ $envoie->admin->prenom ?? '' }}
+                                                {{ $envoie->admin->nom ?? '' }}</td>
 
                                             {{-- @if ($envoie->statut_id == '3')
                                                 <td class="text-success">{{ $envoie->statut->libelle ?? '' }}</td>
@@ -53,20 +53,13 @@
                                             @else
                                                 <td class="text-warning">{{ $envoie->statut->libelle ?? '' }}</td>
                                             @endif --}}
-                                            {{-- <td>
-                                                <a href="{{ route('envoies.edit', [$envoie->id]) ?? '' }}"
-                                                    class="btn btn-success">Editer</a> |
-                                                @if ($envoie->statut->id == 1)
-                                                    <a href="{{ route('envoies.destroy', [$envoie->id, 1]) ?? '' }}"
-                                                        class="btn btn-warning">Activer</a>
-                                                @elseif ($envoie->statut->id == 2)
-                                                    <a
-                                                        href="{{ route('envoies.destroy', [$envoie->id, 2]) ?? '' }}"class="btn btn-secondary">Réactiver</a>
-                                                @elseif ($envoie->statut->id == 3)
-                                                    <a
-                                                        href="{{ route('envoies.destroy', [$envoie->id, 3]) ?? '' }}"class="btn btn-danger">Supprimer</a>
-                                                @endif
-                                            </td> --}}
+                                            <td>
+                                                <a href="{{ route('envoie.edit', [$envoie->id]) ?? '' }}"
+                                                    class="btn btn-sm btn-success">Editer</a> |
+                                                    <a href="{{ route('envoie.destroy', $envoie->id) ?? '' }}"
+                                                        class="btn btn-sm btn-danger">Supprimer</a>
+                                                
+                                            </td>
                                         </tr>
                                     @endforeach
                                 </tbody>

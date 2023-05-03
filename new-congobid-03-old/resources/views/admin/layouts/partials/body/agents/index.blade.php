@@ -54,15 +54,15 @@
                                         <td class="text-warning">{{ $agent->statut->libelle ?? '' }}</td>
                                     @endif
                                     <td>
-                                        <a href="{{ route('agents.edit', [$agent->id ??  '' ]) }}" class="btn btn-success">Editer</a> |
+                                        <a href="{{ route('agents.edit', [$agent->id ??  '' ]) }}" class="btn btn-sm btn-success">Editer</a> |
                                         @if ($agent->statut->id == 1)
 
-                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 1]) }}"class="btn btn-warning">Activer</a>
+                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 1]) }}"class="btn btn-sm btn-warning">Activer</a>
 
                                         @elseif ($agent->statut->id == 2)
-                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 2]) }}"class="btn btn-secondary">Réactiver</a>
+                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 2]) }}"class="btn btn-sm btn-secondary">Réactiver</a>
                                         @elseif ($agent->statut->id == 3)
-                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 3]) }}"class="btn btn-danger">Supprimer</a>
+                                            <a href="{{ route('agents.destroy', [$agent->user->id ??  '' , 3]) }}"class="btn btn-sm btn-danger">Supprimer</a>
                                         @endif
                                     </td>
                                 </tr>

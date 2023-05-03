@@ -26,11 +26,11 @@
                         <div class="view-profile">
                             <a href="{{ route('articles.edit', [$article->id]) }}" class="btn btn-primary btn-block"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Editer</font></font></a>
                             @if ($article->statut->id == 1)
-                                <a href="{{ route('articles.destroy', [$article->user->id, 1]) }}" class="btn btn-success btn-block"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Activer</font></font></a>
+                                <a href="{{ route('articles.destroy', [$article->user->id, 1]) }}" class="btn btn-sm btn-success btn-block"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Activer</font></font></a>
                             @elseif ($article->statut->id == 2)
-                                <a href="{{ route('articles.destroy', [$article->user->id, 2]) }}" class="btn btn-success btn-block"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Réactiver</font></font></a>
+                                <a href="{{ route('articles.destroy', [$article->user->id, 2]) }}" class="btn btn-sm btn-success btn-block"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Réactiver</font></font></a>
                             @elseif ($article->statut->id == 3)
-                                <a href="{{ route('articles.destroy', [$article->user->id, 3]) }}" class="btn btn-danger btn-block"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Supprimer</font></font></a>
+                                <a href="{{ route('articles.destroy', [$article->user->id, 3]) }}" class="btn btn-sm btn-danger btn-block"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Supprimer</font></font></a>
                             @endif
                         </div>
                     </div>

@@ -14,7 +14,7 @@
                         </div>
                         {{-- <div class="ml-md-auto py-2 py-md-0">
                             <a href="#" class="btn btn-white btn-border btn-round mr-2">Ajouter une enchère</a>
-                            <a href="#" class="btn btn-secondary btn-round">Ajouter un produit</a>
+                            <a href="#" class="btn btn-sm btn-secondary btn-round">Ajouter un produit</a>
                         </div> --}}
                     </div>
                 </div>
@@ -46,8 +46,8 @@
                                 </div>
                             </div>
                             <div class="card-action">
-                                <button class="btn btn-success">Enregistrer</button>
-                                <a href="{{ route('admin.index') }}" class="btn btn-danger">Annuler</a>
+                                <button class="btn btn-sm btn-success">Enregistrer</button>
+                                <a href="{{ route('admin.index') }}" class="btn btn-sm btn-danger">Annuler</a>
                             </div>
                         </div>
                     </form>

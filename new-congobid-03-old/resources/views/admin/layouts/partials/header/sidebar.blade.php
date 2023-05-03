@@ -156,7 +156,7 @@
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item {{ request()->is('tableau-de-bord/demande/bid') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('tableau-de-bord/envoie/bid/list') ? 'active' : '' }}">
                     <a href="{{ route('envoie.index') }}">
                         <i class="fas fa-coins"></i>
                         <p>Envoie des bids</p>

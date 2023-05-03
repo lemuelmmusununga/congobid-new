@@ -250,9 +250,12 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/tableau-de-bord/demande/bid', [App\Http\Controllers\BideurController::class, 'demande'])->name('demande.index');
         Route::post('/tableau-de-bord/demande/bid', [App\Http\Controllers\BideurController::class, 'storeDemande'])->name('demande.store');
 
-        Route::get('/tableau-de-bord/envoie/bid', [App\Http\Controllers\AdministrateurController::class, 'envoiebid'])->name('envoie.create');
-        Route::get('/tableau-de-bord/envoie/bid/list', [App\Http\Controllers\AdministrateurController::class, 'listenvoie'])->name('envoie.index');
-        Route::post('/tableau-de-bord/envoie/bid', [App\Http\Controllers\AdministrateurController::class, 'storeenvoie'])->name('envoie.store');
+        Route::get('/tableau-de-bord/envoie/bid/list', [App\Http\Controllers\EnvoieController::class, 'index'])->name('envoie.index');
+        Route::get('/tableau-de-bord/envoie/bid', [App\Http\Controllers\EnvoieController::class, 'create'])->name('envoie.create');
+        Route::post('/tableau-de-bord/envoie/bid', [App\Http\Controllers\EnvoieController::class, 'store'])->name('envoie.store');
+        Route::get('/tableau-de-bord/envoie/bid/edit/{id}', [App\Http\Controllers\EnvoieController::class, 'edit'])->name('envoie.edit');
+        Route::post('/tableau-de-bord/envoie/bid/update', [App\Http\Controllers\EnvoieController::class, 'update'])->name('envoie.update');
+        Route::post('/tableau-de-bord/envoie/bid/supprimer/{id}', [App\Http\Controllers\EnvoieController::class, 'destroy'])->name('envoie.destroy');
 
 
         Route::get('/tableau-de-bord/bideurs', [App\Http\Controllers\BideurController::class, 'index'])->name('bideurs.index');

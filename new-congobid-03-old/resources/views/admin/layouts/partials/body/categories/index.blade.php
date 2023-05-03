@@ -45,16 +45,16 @@
                                             @endif
                                             <td>
                                                 <a href="{{ route('categories.edit', [$categorie->id]) ?? '' }}"
-                                                    class="btn btn-success">Editer</a> |
+                                                    class="btn btn-sm btn-success">Editer</a> |
                                                 @if ($categorie->statut->id == 1)
                                                     <a href="{{ route('categories.destroy', [$categorie->id, 1]) ?? '' }}"
-                                                        class="btn btn-warning">Activer</a>
+                                                        class="btn btn-sm btn-warning">Activer</a>
                                                 @elseif ($categorie->statut->id == 2)
                                                     <a
-                                                        href="{{ route('categories.destroy', [$categorie->id, 2]) ?? '' }}"class="btn btn-secondary">Réactiver</a>
+                                                        href="{{ route('categories.destroy', [$categorie->id, 2]) ?? '' }}"class="btn btn-sm btn-secondary">Réactiver</a>
                                                 @elseif ($categorie->statut->id == 3)
                                                     <a
-                                                        href="{{ route('categories.destroy', [$categorie->id, 3]) ?? '' }}"class="btn btn-danger">Supprimer</a>
+                                                        href="{{ route('categories.destroy', [$categorie->id, 3]) ?? '' }}"class="btn btn-sm btn-danger">Supprimer</a>
                                                 @endif
                                             </td>
                                         </tr>
