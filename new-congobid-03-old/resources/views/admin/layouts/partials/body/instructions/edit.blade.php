@@ -10,7 +10,7 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Ajouter une instruction</h2>
+                    <h2 class="text-white pb-2 fw-bold">Modifier une instruction</h2>
                 </div>
             </div>
         </div>

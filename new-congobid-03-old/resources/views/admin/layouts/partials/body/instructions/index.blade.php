@@ -36,13 +36,13 @@
                                     <td>{{ $instruction->user->nom ?? '' }}</td>
                                     <td>{{ $instruction->statut->libelle }}</td>
                                     <td>
-                                        <a href="{{ route('commentcamarche.edit', [$instruction->id]) }}">Editer</a> |
+                                        <a href="{{ route('commentcamarche.edit', [$instruction->id]) }}" class="btn btn-sm btn-success">Editer</a> |
                                         @if ($instruction->statut->id == 1)
-                                            <a href="{{ route('commentcamarche.destroy', [$instruction->id, 1]) }}">Activer</a>
+                                            <a href="{{ route('commentcamarche.destroy', [$instruction->id, 1]) }}" class="btn btn-sm btn-warning">Activer</a>
                                         @elseif ($instruction->statut->id == 2)
-                                            <a href="{{ route('commentcamarche.destroy', [$instruction->id, 2]) }}">Réactiver</a>
+                                            <a href="{{ route('commentcamarche.destroy', [$instruction->id, 2]) }}" class="btn btn-sm btn-secondary">Réactiver</a>
                                         @elseif ($instruction->statut->id == 3)
-                                            <a href="{{ route('commentcamarche.destroy', [$instruction->id, 3]) }}">Supprimer</a>
+                                            <a href="{{ route('commentcamarche.destroy', [$instruction->id, 3]) }}" class="btn btn-sm btn-danger">Supprimer</a>
                                         @endif
                                     </td>
                                 </tr>

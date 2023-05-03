@@ -2,10 +2,10 @@
 -- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
--- Hôte : localhost:8889
--- Généré le : mar. 02 mai 2023 à 16:42
--- Version du serveur : 5.7.39
--- Version de PHP : 8.2.0
+-- Hôte : 127.0.0.1
+-- Généré le : jeu. 04 mai 2023 à 01:22
+-- Version du serveur : 10.4.24-MariaDB
+-- Version de PHP : 8.1.6
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -25,7 +25,7 @@ CREATE TABLE `administrateurs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `identification_fiscale` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `poste` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `interne` int(11) NOT NULL DEFAULT '1',
+  `interne` int(11) NOT NULL DEFAULT 1,
   `online` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -55,7 +55,7 @@ CREATE TABLE `articles` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `titre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `marque` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `promouvoir` int(11) NOT NULL DEFAULT '0',
+  `promouvoir` int(11) NOT NULL DEFAULT 0,
   `code_produit` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `prix` int(11) NOT NULL,
@@ -65,7 +65,7 @@ CREATE TABLE `articles` (
   `prix_max` int(11) DEFAULT NULL,
   `cout_livraison` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `infos_livraison` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `meta_keywords` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `limite_enchere_auto` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `credit_enchere_auto` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -99,11 +99,11 @@ INSERT INTO `articles` (`id`, `titre`, `marque`, `promouvoir`, `code_produit`, `
 CREATE TABLE `bideurs` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `balance` int(11) NOT NULL,
-  `nontransferable` int(11) NOT NULL DEFAULT '0',
-  `bonus` int(11) NOT NULL DEFAULT '0',
-  `roi` int(11) NOT NULL DEFAULT '0',
-  `foudre` int(11) NOT NULL DEFAULT '0',
-  `bouclier` int(11) NOT NULL DEFAULT '0',
+  `nontransferable` int(11) NOT NULL DEFAULT 0,
+  `bonus` int(11) NOT NULL DEFAULT 0,
+  `roi` int(11) NOT NULL DEFAULT 0,
+  `foudre` int(11) NOT NULL DEFAULT 0,
+  `bouclier` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -111,7 +111,7 @@ CREATE TABLE `bideurs` (
   `id_deleted_at` int(11) DEFAULT NULL,
   `statut_id` bigint(20) UNSIGNED NOT NULL,
   `user_id` bigint(20) UNSIGNED NOT NULL,
-  `paquet_id` bigint(20) UNSIGNED NOT NULL DEFAULT '1',
+  `paquet_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1,
   `admin_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -181,7 +181,7 @@ CREATE TABLE `bids` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `quantite` int(11) NOT NULL,
   `valeur` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bid_statut_id` bigint(20) NOT NULL DEFAULT '1',
+  `bid_statut_id` bigint(20) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -196,8 +196,9 @@ CREATE TABLE `bids` (
 --
 
 INSERT INTO `bids` (`id`, `quantite`, `valeur`, `bid_statut_id`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
-(3, 10, '1', 1, '2022-03-09 21:28:45', '2022-08-11 00:36:47', NULL, 40, NULL, 3, 1),
-(4, 80, '5', 1, '2022-03-09 21:39:42', '2022-03-09 21:39:42', NULL, NULL, NULL, 3, 1);
+(3, 10, '1', 1, '2022-03-09 21:28:45', '2023-05-02 22:29:56', '2023-05-02 22:29:56', 96, 96, 2, 1),
+(4, 80, '5', 1, '2022-03-09 21:39:42', '2022-03-09 21:39:42', NULL, NULL, NULL, 3, 1),
+(5, 10, '1', 1, '2023-05-02 22:29:48', '2023-05-02 22:29:48', NULL, NULL, NULL, 3, 96);
 
 -- --------------------------------------------------------
 
@@ -306,7 +307,7 @@ CREATE TABLE `chats` (
 CREATE TABLE `chat_encheres` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `content` text,
+  `content` text DEFAULT NULL,
   `libelle` text NOT NULL,
   `enchere_id` int(11) NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -436,7 +437,7 @@ CREATE TABLE `contacts` (
   `telephone` varchar(50) NOT NULL,
   `content` text NOT NULL,
   `email` varchar(50) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -484,14 +485,14 @@ CREATE TABLE `data_rows` (
   `field` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `required` tinyint(1) NOT NULL DEFAULT '0',
-  `browse` tinyint(1) NOT NULL DEFAULT '1',
-  `read` tinyint(1) NOT NULL DEFAULT '1',
-  `edit` tinyint(1) NOT NULL DEFAULT '1',
-  `add` tinyint(1) NOT NULL DEFAULT '1',
-  `delete` tinyint(1) NOT NULL DEFAULT '1',
-  `details` text COLLATE utf8mb4_unicode_ci,
-  `order` int(11) NOT NULL DEFAULT '1'
+  `required` tinyint(1) NOT NULL DEFAULT 0,
+  `browse` tinyint(1) NOT NULL DEFAULT 1,
+  `read` tinyint(1) NOT NULL DEFAULT 1,
+  `edit` tinyint(1) NOT NULL DEFAULT 1,
+  `add` tinyint(1) NOT NULL DEFAULT 1,
+  `delete` tinyint(1) NOT NULL DEFAULT 1,
+  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `order` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -511,9 +512,9 @@ CREATE TABLE `data_types` (
   `policy_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `controller` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `generate_permissions` tinyint(1) NOT NULL DEFAULT '0',
-  `server_side` tinyint(4) NOT NULL DEFAULT '0',
-  `details` text COLLATE utf8mb4_unicode_ci,
+  `generate_permissions` tinyint(1) NOT NULL DEFAULT 0,
+  `server_side` tinyint(4) NOT NULL DEFAULT 0,
+  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -533,7 +534,7 @@ CREATE TABLE `demandes` (
   `state` int(11) DEFAULT NULL,
   `payement` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -577,7 +578,7 @@ CREATE TABLE `encheregagners` (
   `code` varchar(255) DEFAULT NULL,
   `state` int(11) DEFAULT NULL,
   `payed_by` int(11) DEFAULT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -712,7 +713,7 @@ CREATE TABLE `encheres` (
   `favori_salon` int(11) NOT NULL,
   `date_debut` timestamp NULL DEFAULT NULL,
   `heure_debut` time DEFAULT NULL,
-  `state` int(11) NOT NULL DEFAULT '0',
+  `state` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -733,8 +734,8 @@ CREATE TABLE `encheres` (
 --
 
 INSERT INTO `encheres` (`id`, `click`, `favoris`, `favori_salon`, `date_debut`, `heure_debut`, `state`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `article_id`, `paquet_id`, `participant`, `munite`, `seconde`, `prix`, `prix_enchere`) VALUES
-(1, '0', 0, 0, '2023-05-03 13:15:00', '14:15:00', 0, '2023-05-02 13:16:02', '2023-05-02 13:16:02', NULL, NULL, NULL, 3, 54, 1, 5, NULL, NULL, NULL, NULL),
-(2, '0', 0, 0, '2023-05-05 13:16:00', '14:16:00', 0, '2023-05-02 13:16:21', '2023-05-02 13:40:05', NULL, NULL, NULL, 3, 53, 5, 22, NULL, NULL, NULL, NULL);
+(1, '0', 0, 0, '2023-05-03 13:15:00', '14:15:00', 0, '2023-05-02 13:16:02', '2023-05-02 13:16:02', NULL, NULL, NULL, 3, 54, 1, 5, NULL, NULL, NULL, 300),
+(2, '0', 0, 0, '2023-05-05 13:16:00', '14:16:00', 0, '2023-05-02 13:16:21', '2023-05-02 13:40:05', NULL, NULL, NULL, 3, 53, 5, 22, NULL, NULL, NULL, 500);
 
 -- --------------------------------------------------------
 
@@ -752,6 +753,14 @@ CREATE TABLE `envoies` (
   `user_id` bigint(20) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Déchargement des données de la table `envoies`
+--
+
+INSERT INTO `envoies` (`id`, `created_at`, `updated_at`, `number`, `admin_id`, `bid_statut_id`, `user_id`) VALUES
+(1, '2023-05-02 20:43:00', '2023-05-02 20:43:00', 20, '96', 2, 88),
+(2, '2023-05-02 20:43:40', '2023-05-02 22:25:22', 14, '96', 2, 88);
+
 -- --------------------------------------------------------
 
 --
@@ -765,7 +774,7 @@ CREATE TABLE `failed_jobs` (
   `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -869,7 +878,7 @@ INSERT INTO `foudres` (`id`, `paquet_id`, `prix`, `prix_deblocage`, `bid_debloca
 
 CREATE TABLE `gagnants` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `lien` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `code` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `state` int(11) NOT NULL,
   `paye_by` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -887,8 +896,8 @@ CREATE TABLE `gagnants` (
 -- Déchargement des données de la table `gagnants`
 --
 
-INSERT INTO `gagnants` (`id`, `lien`, `state`, `paye_by`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`, `enchere_id`, `administrateur_id`) VALUES
-(1, 'adad', 1, 0, '2022-03-10 23:50:19', '2022-03-10 23:50:19', NULL, NULL, NULL, 3, 11, 1, 1);
+INSERT INTO `gagnants` (`id`, `code`, `state`, `paye_by`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`, `enchere_id`, `administrateur_id`) VALUES
+(1, '235365', 1, 0, '2022-03-10 23:50:19', '2023-05-02 23:16:51', NULL, NULL, NULL, 3, 95, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -906,7 +915,7 @@ CREATE TABLE `historiques` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `id_updated_at` int(11) DEFAULT NULL,
   `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL DEFAULT '3',
+  `statut_id` bigint(20) UNSIGNED NOT NULL DEFAULT 3,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -939,7 +948,10 @@ INSERT INTO `historiques` (`id`, `action`, `type`, `destination_id`, `created_at
 (22, 'Modification d\'une sous-catégorie', 4, 6, '2023-05-02 13:59:53', '2023-05-02 13:59:53', NULL, NULL, NULL, 3, 96),
 (23, 'Suppression d\'une sous-catégorie', 4, 9, '2023-05-02 14:02:45', '2023-05-02 14:02:45', NULL, NULL, NULL, 3, 96),
 (24, 'Réactivation d\'une sous-catégorie', 4, 9, '2023-05-02 14:02:49', '2023-05-02 14:02:49', NULL, NULL, NULL, 3, 96),
-(25, 'Suppression d\'une sous-catégorie', 4, 9, '2023-05-02 14:02:50', '2023-05-02 14:02:50', NULL, NULL, NULL, 3, 96);
+(25, 'Suppression d\'une sous-catégorie', 4, 9, '2023-05-02 14:02:50', '2023-05-02 14:02:50', NULL, NULL, NULL, 3, 96),
+(26, 'Enregistrement d\'un taux de conversion', 6, 5, '2023-05-02 22:29:48', '2023-05-02 22:29:48', NULL, NULL, NULL, 3, 96),
+(27, 'Suppression d\'un taux de conversion', 6, 3, '2023-05-02 22:29:56', '2023-05-02 22:29:56', NULL, NULL, NULL, 3, 96),
+(28, 'Modificaion d\'une instruction', 12, 1, '2023-05-02 23:53:47', '2023-05-02 23:53:47', NULL, NULL, NULL, 3, 96);
 
 -- --------------------------------------------------------
 
@@ -1009,7 +1021,7 @@ CREATE TABLE `instructions` (
 --
 
 INSERT INTO `instructions` (`id`, `titre`, `description`, `lien`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
-(1, 'Comment bider ?', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus nam nisi ducimus itaque? Exercitationem mollitia amet id similique ipsum cum corrupti incidunt. Tempore commodi a eum dolor nihil reprehenderit repellat!Animi, voluptas laboriosam. Ipsum iusto reiciendis aperiam cum explicabo vero cupiditate id animi eligendi quod. Libero, ducimus dolorum consequuntur incidunt quidem natus molestiae praesentium officia, reiciendis accusantium a, deleniti voluptatem!', 'commer', '2022-03-16 03:25:47', '2022-03-16 03:25:47', NULL, NULL, NULL, 3, 1);
+(1, 'Comment bider ?', 'Frem ipsum dolor sit amet consectetur adipisicing elit. Temporibus nam nisi ducimus itaque? Exercitationem mollitia amet id similique ipsum cum corrupti incidunt. Tempore commodi a eum dolor nihil reprehenderit repellat!Animi, voluptas laboriosam. Ipsum iusto reiciendis aperiam cum explicabo vero cupiditate id animi eligendi quod. Libero, ducimus dolorum consequuntur incidunt quidem natus molestiae praesentium officia, reiciendis accusantium a, deleniti voluptatem!', 'commer', '2022-03-16 03:25:47', '2023-05-02 23:53:47', NULL, NULL, NULL, 3, 96);
 
 -- --------------------------------------------------------
 
@@ -1043,7 +1055,7 @@ CREATE TABLE `menu_items` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `route` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parameters` text COLLATE utf8mb4_unicode_ci
+  `parameters` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1055,7 +1067,7 @@ CREATE TABLE `menu_items` (
 CREATE TABLE `messages` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `libelle` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `read` int(11) NOT NULL DEFAULT '0',
+  `read` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1195,7 +1207,7 @@ CREATE TABLE `newsletters` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `id_updated_at` int(11) DEFAULT NULL,
   `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL DEFAULT '5',
+  `statut_id` bigint(20) UNSIGNED NOT NULL DEFAULT 5,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1227,7 +1239,7 @@ INSERT INTO `newsletters` (`id`, `email`, `created_at`, `updated_at`, `deleted_a
 CREATE TABLE `notifications` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `public` int(11) NOT NULL DEFAULT '0',
+  `public` int(11) NOT NULL DEFAULT 0,
   `type` int(11) DEFAULT NULL,
   `notification_id` int(11) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1293,8 +1305,8 @@ CREATE TABLE `options` (
   `user_id` int(11) NOT NULL,
   `temps_option` time NOT NULL,
   `temps_restant` time NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -1331,7 +1343,7 @@ CREATE TABLE `paquets` (
   `treve` int(11) NOT NULL,
   `guerre` int(11) NOT NULL,
   `prix` int(11) NOT NULL,
-  `prix_intervalle` text COLLATE utf8mb4_unicode_ci,
+  `prix_intervalle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `min` int(11) DEFAULT NULL,
   `click` int(11) DEFAULT NULL,
   `roi` time(2) NOT NULL,
@@ -1435,7 +1447,7 @@ CREATE TABLE `personal_access_tokens` (
   `tokenable_id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci,
+  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1449,13 +1461,13 @@ CREATE TABLE `personal_access_tokens` (
 
 CREATE TABLE `pivot_bideur_encheres` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `valeur` int(11) NOT NULL DEFAULT '0',
-  `click_seconde` int(11) NOT NULL DEFAULT '0',
-  `roi` int(11) NOT NULL DEFAULT '0',
-  `foudre` int(11) NOT NULL DEFAULT '0',
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `bouclier` int(11) NOT NULL DEFAULT '0',
-  `favoris` int(11) NOT NULL DEFAULT '0',
+  `valeur` int(11) NOT NULL DEFAULT 0,
+  `click_seconde` int(11) NOT NULL DEFAULT 0,
+  `roi` int(11) NOT NULL DEFAULT 0,
+  `foudre` int(11) NOT NULL DEFAULT 0,
+  `clicks` int(11) NOT NULL DEFAULT 0,
+  `bouclier` int(11) NOT NULL DEFAULT 0,
+  `favoris` int(11) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1465,8 +1477,8 @@ CREATE TABLE `pivot_bideur_encheres` (
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `enchere_id` bigint(20) UNSIGNED NOT NULL,
   `time_bid_auto` timestamp NULL DEFAULT NULL,
-  `automatique` int(11) NOT NULL DEFAULT '0',
-  `temps_bid_auto` int(11) DEFAULT '0',
+  `automatique` int(11) NOT NULL DEFAULT 0,
+  `temps_bid_auto` int(11) DEFAULT 0,
   `time_bouclier` int(11) DEFAULT NULL,
   `time_roi` timestamp NULL DEFAULT NULL,
   `time_foudre` int(11) DEFAULT NULL
@@ -1495,7 +1507,7 @@ INSERT INTO `pivot_bideur_encheres` (`id`, `valeur`, `click_seconde`, `roi`, `fo
 
 CREATE TABLE `pivot_bideur_paquets` (
   `id` bigint(20) UNSIGNED NOT NULL,
-  `state` int(11) NOT NULL DEFAULT '1',
+  `state` int(11) NOT NULL DEFAULT 1,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1527,15 +1539,15 @@ CREATE TABLE `pivot_clients_salons` (
   `deleted_at` timestamp NULL DEFAULT NULL,
   `id_updated_at` int(11) DEFAULT NULL,
   `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL DEFAULT '3',
+  `statut_id` bigint(20) UNSIGNED NOT NULL DEFAULT 3,
   `user_id` bigint(20) UNSIGNED NOT NULL,
   `salon_id` bigint(20) UNSIGNED NOT NULL,
   `enchere_id` int(11) NOT NULL,
   `valeur` int(11) NOT NULL,
-  `roi` int(11) NOT NULL DEFAULT '0',
-  `foudre` int(11) NOT NULL DEFAULT '0',
-  `clicks` int(11) NOT NULL DEFAULT '0',
-  `bouclier` int(11) NOT NULL DEFAULT '0',
+  `roi` int(11) NOT NULL DEFAULT 0,
+  `foudre` int(11) NOT NULL DEFAULT 0,
+  `clicks` int(11) NOT NULL DEFAULT 0,
+  `bouclier` int(11) NOT NULL DEFAULT 0,
   `time_bouclier` timestamp NULL DEFAULT NULL,
   `time_roi` timestamp NULL DEFAULT NULL,
   `time_foudre` timestamp NULL DEFAULT NULL,
@@ -1582,14 +1594,14 @@ CREATE TABLE `posts` (
   `category_id` int(11) DEFAULT NULL,
   `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `seo_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `excerpt` text COLLATE utf8mb4_unicode_ci,
+  `excerpt` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci,
-  `meta_keywords` text COLLATE utf8mb4_unicode_ci,
+  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_keywords` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status` enum('PUBLISHED','DRAFT','PENDING') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'DRAFT',
-  `featured` tinyint(1) NOT NULL DEFAULT '0',
+  `featured` tinyint(1) NOT NULL DEFAULT 0,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1676,7 +1688,7 @@ INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`) V
 CREATE TABLE `salons` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `libelle` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `limite` int(11) DEFAULT '20',
+  `limite` int(11) DEFAULT 20,
   `debut_enchere` time DEFAULT NULL,
   `fin_enchere` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -1686,7 +1698,7 @@ CREATE TABLE `salons` (
   `id_deleted_at` int(11) DEFAULT NULL,
   `statut_id` bigint(20) UNSIGNED NOT NULL,
   `article_id` bigint(20) UNSIGNED NOT NULL,
-  `state` int(11) NOT NULL DEFAULT '0',
+  `state` int(11) NOT NULL DEFAULT 0,
   `montant` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1702,7 +1714,7 @@ CREATE TABLE `salon_likes` (
   `salon_id` int(11) NOT NULL,
   `favoris` int(11) NOT NULL,
   `enchere_id` int(11) NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -1726,7 +1738,7 @@ CREATE TABLE `sanctions` (
   `enchere_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `santance` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
   `duree` time NOT NULL,
-  `tous` int(11) NOT NULL DEFAULT '0',
+  `tous` int(11) NOT NULL DEFAULT 0,
   `suspendu_by` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
@@ -1915,7 +1927,7 @@ CREATE TABLE `sessions` (
   `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` bigint(20) UNSIGNED DEFAULT NULL,
   `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci,
+  `user_agent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `payload` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_activity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1941,10 +1953,10 @@ CREATE TABLE `settings` (
   `id` int(10) UNSIGNED NOT NULL,
   `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `display_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci,
-  `details` text COLLATE utf8mb4_unicode_ci,
+  `value` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order` int(11) NOT NULL DEFAULT '1',
+  `order` int(11) NOT NULL DEFAULT 1,
   `group` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -2066,10 +2078,10 @@ CREATE TABLE `users` (
   `date_naissance` date DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `two_factor_secret` text COLLATE utf8mb4_unicode_ci,
-  `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci,
+  `two_factor_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `settings` text COLLATE utf8mb4_unicode_ci,
+  `settings` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `current_team_id` bigint(20) UNSIGNED DEFAULT NULL,
   `profile_photo_path` varchar(2048) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -2107,7 +2119,7 @@ INSERT INTO `users` (`id`, `role_id`, `nom`, `prenom`, `username`, `provider_id`
 (93, 5, 'JHFDKGFJ', NULL, 'HD', NULL, '0999999991', '', NULL, '', NULL, NULL, '$2y$10$57c1fIgzvcvPPY.IR.hsWu1avhRqBVutQvGEszmn9gpIiO0yA5TOS', NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-09 15:09:32', '2022-12-09 16:25:14', NULL, NULL, NULL, 3, '2022-12-09 15:09:32', '2022-12-09 16:25:14', NULL),
 (94, 5, 'G', NULL, 'O', NULL, '88888888888888', '', NULL, '', NULL, NULL, '$2y$10$AotGy9/SF5Q/2n5bxIQ3O.u6DqY5BXLGIW0PfBOyT6/MJgcJ8k6Rm', NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-13 16:04:11', '2022-12-14 13:25:28', NULL, NULL, NULL, 3, '2022-12-13 16:04:12', '2022-12-14 13:25:28', NULL),
 (95, 5, 'Ntumba', NULL, 'Jayntmb', NULL, '990579420', '', NULL, '', NULL, NULL, '$2y$10$lPyZajwZb6utwRd0OWF5gu7NwEgJrJINk61eKmZnJnF7JAiGwKauC', NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-13 16:42:25', '2022-12-13 16:46:19', NULL, NULL, NULL, 3, '2022-12-13 16:42:26', '2022-12-13 16:46:19', NULL),
-(96, 1, 'Lord', NULL, 'Lordyke12', NULL, '828580212', '', NULL, '', NULL, NULL, '$2y$10$3ajpHSR5hm3oj8qT2J3nTe46hLfs2htLCviddhKpUSOwLbEfB9KLW', NULL, NULL, NULL, NULL, NULL, NULL, '2023-04-24 14:25:13', '2023-05-02 16:37:18', NULL, NULL, NULL, 3, '2023-04-28 09:51:43', '2023-05-02 16:37:18', NULL),
+(96, 1, 'Lord', NULL, 'Lordyke12', NULL, '828580212', '', NULL, '', NULL, NULL, '$2y$10$3ajpHSR5hm3oj8qT2J3nTe46hLfs2htLCviddhKpUSOwLbEfB9KLW', NULL, NULL, NULL, NULL, NULL, NULL, '2023-04-24 14:25:13', '2023-05-03 14:57:44', NULL, NULL, NULL, 3, '2023-04-28 09:51:43', '2023-05-03 14:57:44', NULL),
 (97, 3, 'Siméon zilou', NULL, 'simszilou', NULL, '0903600740', 'Masculin', 'simszilou@conbid.cd', '0903600740.webp', '1989-04-28', NULL, '$2y$10$f8krhlLM/N7oVx/hIU5wH.kqEhEa7KDheYO20W5Q2MFm7fpLlagCK', NULL, NULL, NULL, NULL, NULL, NULL, '2023-04-27 11:48:19', '2023-04-27 11:48:19', NULL, NULL, NULL, 3, NULL, NULL, NULL),
 (98, 4, 'Bla', 'Lenny', 'bidens008', NULL, '0903600749', 'Masculin', 'lennybla@pharmansdrc.com', '98.webp', '1999-03-29', NULL, '$2y$10$HqrOw6lU5J9hybZbybxc0eVRUTlGGE9SwsTRbVBrTcoal15SDzwwK', NULL, NULL, NULL, NULL, NULL, NULL, '2023-04-28 07:34:38', '2023-04-28 10:36:26', NULL, 96, NULL, 3, NULL, NULL, NULL),
 (99, 5, 'Paul', 'Jean', 'jp243', NULL, '+24390389088', 'Masculin', NULL, '99.webp', '1993-04-14', NULL, '$2y$10$g3eBQjgBIEB/AktrZp5/.etGj8FmE9yZRkYWwJx6d7RuQnJ7wLCrK', NULL, NULL, NULL, NULL, NULL, NULL, '2023-04-28 09:51:39', '2023-04-28 11:05:11', NULL, 96, NULL, 3, NULL, NULL, NULL);
@@ -2312,6 +2324,12 @@ ALTER TABLE `favoris`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `gagnants`
+--
+ALTER TABLE `gagnants`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Index pour la table `historiques`
 --
 ALTER TABLE `historiques`
@@ -2415,7 +2433,7 @@ ALTER TABLE `bideurs`
 -- AUTO_INCREMENT pour la table `bids`
 --
 ALTER TABLE `bids`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pour la table `bid_statuts`
@@ -2493,7 +2511,7 @@ ALTER TABLE `encheres`
 -- AUTO_INCREMENT pour la table `envoies`
 --
 ALTER TABLE `envoies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pour la table `favoris`
@@ -2502,10 +2520,16 @@ ALTER TABLE `favoris`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
 
 --
+-- AUTO_INCREMENT pour la table `gagnants`
+--
+ALTER TABLE `gagnants`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT pour la table `historiques`
 --
 ALTER TABLE `historiques`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT pour la table `images`

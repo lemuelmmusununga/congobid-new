@@ -48,20 +48,25 @@ class CommentCaMarche extends Controller
     public function store(Request $request)
     {
         try{
-            $count = Instruction::all()->count();
-            // dd($count);
-
-            $count = $count + 1;
+            
 
             $instruction = Instruction::create([
                 'titre' => $request->titre,
                 'description' => $request->description,
-                'lien' => $count,
+                'lien' => null,
                 'statut_id' => $request->statut_id,
                 'user_id' => Auth::user()->id,
             ]);
 
-            $request->file('videos')->move(public_path('videos/instructions/'), $count. '.mp4');
+            if ($request->file('videos') != null) {
+                # code...
+                $ext = $request->file('videos')->getClientOriginalExtension();
+                $request->file('videos')->move(public_path('videos/instructions/'), $instruction->id. '.'.$ext);
+                $instruction->update([
+                    'lien'=> $instruction->id. '.'.$ext
+                ]);
+            }
+
 
             Historique::create([
                 'action' => 'Enregistrement d\'une instruction',
