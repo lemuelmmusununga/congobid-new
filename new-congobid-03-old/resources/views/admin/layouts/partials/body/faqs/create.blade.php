@@ -10,7 +10,7 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Ajouter un bideur</h2>
+                    <h2 class="text-white pb-2 fw-bold">Ajouter une FAQ</h2>
                 </div>
             </div>
         </div>
@@ -46,7 +46,7 @@
                     </div>
                     <div class="card-action">
                         <button class="text-white btn btn-congo">Enregistrer</button>
-                        <a href="{{ route('admin.index') }}" class="btn btn-sm btn-danger">Annuler</a>
+                        <a href="{{  url()->previous() }}" class="btn btn-sm btn-danger">Annuler</a>
                     </div>
                 </div>
             </form>

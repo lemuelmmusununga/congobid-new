@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Newsletter;
 use App\Models\Statut;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\Chat;
 use App\Models\Historique;
@@ -29,10 +30,10 @@ class NewsletterController extends Controller
     public function indexfilter($id)
     {
         $newsletters = Newsletter::orderBy('id', 'desc')->get();
-        $promotions = Promotion::where('user_id', $id)->orderBy('id', 'desc')->get();
+        // $promotions = Promotion::where('user_id', $id)->orderBy('id', 'desc')->get();
         $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
 
-        return view('admin.newsletters', compact('newsletters', 'promotions', 'chats'));
+        return view('admin.newsletters', compact('newsletters', 'chats'));
     }
 
     /**
@@ -56,35 +57,36 @@ class NewsletterController extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            $mail = Promotion::create([
-                "sujet" => $request->sujet,
+        try {
+            // dd($request);
+            Newsletter::create([
+                "subject" => $request->subject,
                 "message" => $request->message,
-                "statut_id" => 3,
+                "statut_id" => $request->statut_id,
                 "user_id" => Auth::user()->id,
             ]);
 
-            $contenu = [
-                'title' => $request->sujet,
-                'body' => $request->message,
-            ];
+            // $contenu = [
+            //     'title' => $request->sujet,
+            //     'body' => $request->message,
+            // ];
 
-            $emails = Newsletter::where('statut_id', '3')->get();
+            // $emails = Newsletter::where('statut_id', '3')->get();
 
-            foreach ($emails as $key => $email) {
-                \Mail::to($email->email)->send(new \App\Mail\NewsletterMail($contenu));
-            }
+            // foreach ($emails as $key => $email) {
+            //     \Mail::to($email->email)->send(new \App\Mail\NewsletterMail($contenu));
+            // }
 
-            Historique::create([
-                'action' => $request->statut_id == '3' ? 'Envoie d\'un e-mail' : 'Enregistrement d\'un e-mail',
-                'type' => '6',
-                'destination_id' => $mail->id,
-                'statut_id' => '3',
-                'user_id' => Auth::user()->id,
-            ]);
+            // Historique::create([
+            //     'action' => $request->statut_id == '3' ? 'Envoie d\'un e-mail' : 'Enregistrement d\'un e-mail',
+            //     'type' => '6',
+            //     'destination_id' => $mail->id,
+            //     'statut_id' => '3',
+            //     'user_id' => Auth::user()->id,
+            // ]);
 
             return redirect()->route('newsletters.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }
@@ -97,7 +99,11 @@ class NewsletterController extends Controller
      */
     public function show($id)
     {
-        //
+        $newsletter = Newsletter::find($id);
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        $users = User::all();
+
+        return view('admin.layouts.partials.body.newsletters.show', compact('newsletter', 'chats', 'users'));
     }
 
     /**
@@ -108,7 +114,11 @@ class NewsletterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $newsletter = newsletter::find($id);
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        $statuts = Statut::orderBy('id', 'desc')->get();
+
+        return view('admin.layouts.partials.body.newsletters.edit', compact('newsletter', 'chats', 'statuts'));
     }
 
     /**
@@ -118,9 +128,22 @@ class NewsletterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        try {
+            $newsletter = Newsletter::find($request->newsletter_id);
+            $newsletter->update([
+                "subject" => $request->subject,
+                "message" => $request->message,
+                "statut_id" => $request->statut_id,
+            ]);
+            return redirect()->route('newsletters.index');
+
+        } catch (\Throwable $th) {
+            //throw $th;
+            dd($th);
+            return back()->with('');
+        }
     }
 
     /**
@@ -129,9 +152,215 @@ class NewsletterController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
+    public function sendnews(Request $request)
+    {
+        try {
+            //code...
+            // dd($request);
+            $newsletter = Newsletter::find($request->newsletter_id);
+            $contenu = [
+                'title' => $newsletter->subject,
+                'body' => $newsletter->message,
+            ];
+            if ($request->type == 'user') {
+                if ($newsletter->destination == null) {
+                    # code...
+                    $destination = [];
+                    $destination[] = $request->user_id;
+                    $newsletter->update([
+                        'destination' => json_encode($destination)
+                    ]);
+                    $user = User::find($request->user_id);
+                    // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
+                    // Historique::create([
+                    //     'action' => 'Envoie d\'un e-mail',
+                    //     'type' => '6',
+                    //     'destination_id' => $user->id,
+                    //     'statut_id' => '3',
+                    //     'user_id' => Auth::user()->id,
+                    // ]);
+                } else {
+                    # code...
+                    $destination = json_decode($newsletter->destination);
+                    $destination[] = $request->user_id;
+                    $newsletter->update([
+                        'destination' => json_encode($destination)
+                    ]);
+                    $user = User::find($request->user_id);
+                    // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
+                    // Historique::create([
+                    //     'action' => 'Envoie d\'un e-mail',
+                    //     'type' => '6',
+                    //     'destination_id' => $user->id,
+                    //     'statut_id' => '3',
+                    //     'user_id' => Auth::user()->id,
+                    // ]);
+                }
+            } else {
+                if ($newsletter->destination == null) {
+                    # code...
+                    $destination = [];
+                    switch ($destination) {
+                        case '1':
+                            $users = User::where('role_id', '>', '3')->get();
+                            dd(1, $users);
+                            foreach ($users as $user) {
+                                # code...
+                                // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
+                                // Historique::create([
+                                //     'action' => 'Envoie d\'un e-mail',
+                                //     'type' => '6',
+                                //     'destination_id' => $user->id,
+                                //     'statut_id' => '3',
+                                //     'user_id' => Auth::user()->id,
+                                // ]);
+                                $destination[] = $user->id;
+                            }
+                            break;
+                        case '2':
+                            $users = User::where('last_login', '>=', now()->startOfDay())->get();
+                            dd(2, $users);
+                            foreach ($users as $user) {
+                                # code...
+                                // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
+                                // Historique::create([
+                                //     'action' => 'Envoie d\'un e-mail',
+                                //     'type' => '6',
+                                //     'destination_id' => $user->id,
+                                //     'statut_id' => '3',
+                                //     'user_id' => Auth::user()->id,
+                                // ]);
+                                $destination[] = $user->id;
+                            }
+                            break;
+                        case '3':
+                            $users = User::whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->get();
+                            dd(3, $users);
+                            foreach ($users as $user) {
+                                # code...
+                                // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
+                                // Historique::create([
+                                //     'action' => 'Envoie d\'un e-mail',
+                                //     'type' => '6',
+                                //     'destination_id' => $user->id,
+                                //     'statut_id' => '3',
+                                //     'user_id' => Auth::user()->id,
+                                // ]);
+                                $destination[] = $user->id;
+                            }
+                            break;
+                        case '4':
+                            $users = User::where('last_login', '<', now()->subMonth())->get();
+                            dd(4, $users);
+                            foreach ($users as $user) {
+                                # code...
+                                // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
+                                // Historique::create([
+                                //     'action' => 'Envoie d\'un e-mail',
+                                //     'type' => '6',
+                                //     'destination_id' => $user->id,
+                                //     'statut_id' => '3',
+                                //     'user_id' => Auth::user()->id,
+                                // ]);
+                                $destination[] = $user->id;
+                            }
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
+                    $newsletter->update([
+                        'destination' => json_encode($destination)
+                    ]);
+                } else {
+                    # code...
+                    $destination = json_decode($newsletter->destination);
+
+                    switch ($destination) {
+                        case '1':
+                            $users = User::where('role_id', '>', '3')->get();
+                            dd(1, $users);
+                            foreach ($users as $user) {
+                                # code...
+                                // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
+                                // Historique::create([
+                                //     'action' => 'Envoie d\'un e-mail',
+                                //     'type' => '6',
+                                //     'destination_id' => $user->id,
+                                //     'statut_id' => '3',
+                                //     'user_id' => Auth::user()->id,
+                                // ]);
+                                $destination[] = $user->id;
+                            }
+                            break;
+                        case '2':
+                            $users = User::where('last_login', '>=', now()->startOfDay())->get();
+                            dd(2, $users);
+                            foreach ($users as $user) {
+                                # code...
+                                // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
+                                // Historique::create([
+                                //     'action' => 'Envoie d\'un e-mail',
+                                //     'type' => '6',
+                                //     'destination_id' => $user->id,
+                                //     'statut_id' => '3',
+                                //     'user_id' => Auth::user()->id,
+                                // ]);
+                                $destination[] = $user->id;
+                            }
+                            break;
+                        case '3':
+                            $users = User::whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->get();
+                            dd(3, $users);
+                            foreach ($users as $user) {
+                                # code...
+                                // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
+                                // Historique::create([
+                                //     'action' => 'Envoie d\'un e-mail',
+                                //     'type' => '6',
+                                //     'destination_id' => $user->id,
+                                //     'statut_id' => '3',
+                                //     'user_id' => Auth::user()->id,
+                                // ]);
+                                $destination[] = $user->id;
+                            }
+                            break;
+                        case '4':
+                            $users = User::where('last_login', '<', now()->subMonth())->get();
+                            dd(4, $users);
+                            foreach ($users as $user) {
+                                # code...
+                                // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
+                                // Historique::create([
+                                //     'action' => 'Envoie d\'un e-mail',
+                                //     'type' => '6',
+                                //     'destination_id' => $user->id,
+                                //     'statut_id' => '3',
+                                //     'user_id' => Auth::user()->id,
+                                // ]);
+                                $destination[] = $user->id;
+                            }
+                            break;
+                        default:
+                            # code...
+                            break;
+                    }
+                    $newsletter->update([
+                        ['destination' => json_encode($destination)]
+                    ]);
+                }
+            }
+            return redirect()->route('newsletters.index');
+        } catch (\Throwable $th) {
+            dd($th);
+            return back()->with('');
+            //throw $th;
+        }
+    }
     public function destroy($id, $state)
     {
-        try{
+        try {
             Newsletter::where('id', $id)->update([
                 'statut_id' => $state == '3' ? 2 : 3,
                 'deleted_at' => $state == '3' ? now() : NULL,
@@ -141,9 +370,9 @@ class NewsletterController extends Controller
 
             if ($state == 3) {
                 $action = 'Suppression d\'une adresse e-mail';
-            } else if($state == 2) {
+            } else if ($state == 2) {
                 $action = 'Réactivation d\'une adresse e-mail';
-            }else {
+            } else {
                 $action = 'Activation d\'une adresse e-mail';
             }
 
@@ -156,14 +385,14 @@ class NewsletterController extends Controller
             ]);
 
             return redirect()->route('newsletters.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }
 
     public function delete($id)
     {
-        try{
+        try {
             Newsletter::where('id', $id)->update([
                 'statut_id' => 2,
                 'deleted_at' => now(),
@@ -180,7 +409,7 @@ class NewsletterController extends Controller
             ]);
 
             return redirect()->route('newsletters.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }

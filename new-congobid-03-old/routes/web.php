@@ -332,6 +332,8 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/tableau-de-bord/newsletters', [App\Http\Controllers\NewsletterController::class, 'index'])->name('newsletters.index');
         Route::get('/tableau-de-bord/afficher/newsletters/agent/{id}', [App\Http\Controllers\NewsletterController::class, 'indexfilter'])->name('newsletters.indexfilter');
         Route::get('/tableau-de-bord/creation/newsletter', [App\Http\Controllers\NewsletterController::class, 'create'])->name('newsletters.create');
+        Route::get('/tableau-de-bord/afficher/newsletter/{id}', [App\Http\Controllers\NewsletterController::class, 'show'])->name('newsletters.show');
+        Route::post('/tableau-de-bord/send/newsletter', [App\Http\Controllers\NewsletterController::class, 'sendnews'])->name('newsletters.send');
         Route::post('/tableau-de-bord/enregistrer/newsletter', [App\Http\Controllers\NewsletterController::class, 'store'])->name('newsletters.store');
         Route::get('/tableau-de-bord/editer/newsletter/{id}', [App\Http\Controllers\NewsletterController::class, 'edit'])->name('newsletters.edit');
         Route::post('/tableau-de-bord/sauvegarder/newsletter', [App\Http\Controllers\NewsletterController::class, 'update'])->name('newsletters.update');
@@ -343,6 +345,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/tableau-de-bord/politiques', [App\Http\Controllers\PolitiqueController::class, 'index'])->name('politiques.index');
         Route::get('/tableau-de-bord/afficher/politiques/agent/{id}', [App\Http\Controllers\PolitiqueController::class, 'indexfilter'])->name('politiques.indexfilter');
         Route::get('/tableau-de-bord/creation/politique', [App\Http\Controllers\PolitiqueController::class, 'create'])->name('politiques.create');
+        Route::get('/tableau-de-bord/afficher/politique/{id}', [App\Http\Controllers\PolitiqueController::class, 'show'])->name('politiques.show');
         Route::post('/tableau-de-bord/enregistrer/politique', [App\Http\Controllers\PolitiqueController::class, 'store'])->name('politiques.store');
         Route::get('/tableau-de-bord/editer/politique/{id}', [App\Http\Controllers\PolitiqueController::class, 'edit'])->name('politiques.edit');
         Route::post('/tableau-de-bord/sauvegarder/politique', [App\Http\Controllers\PolitiqueController::class, 'update'])->name('politiques.update');
@@ -352,6 +355,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/tableau-de-bord/faqs', [App\Http\Controllers\FaqController::class, 'index'])->name('faqs.index');
         Route::get('/tableau-de-bord/afficher/faqs/agent/{id}', [App\Http\Controllers\FaqController::class, 'indexfilter'])->name('faqs.indexfilter');
         Route::get('/tableau-de-bord/creation/faq', [App\Http\Controllers\FaqController::class, 'create'])->name('faqs.create');
+        Route::get('/tableau-de-bord/creation/faq/{id}', [App\Http\Controllers\FaqController::class, 'show'])->name('faqs.show');
         Route::post('/tableau-de-bord/enregistrer/faq', [App\Http\Controllers\FaqController::class, 'store'])->name('faqs.store');
         Route::get('/tableau-de-bord/editer/faq/{id}', [App\Http\Controllers\FaqController::class, 'edit'])->name('faqs.edit');
         Route::post('/tableau-de-bord/sauvegarder/faq', [App\Http\Controllers\FaqController::class, 'update'])->name('faqs.update');

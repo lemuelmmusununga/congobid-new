@@ -10,7 +10,7 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Ajouter une nouvelle</h2>
+                    <h2 class="text-white pb-2 fw-bold">Ajouter une newsletter</h2>
                 </div>
             </div>
         </div>
@@ -22,10 +22,10 @@
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-6 col-lg-4">
+                            <div class="col">
                                 <div class="form-group">
                                     <label for="smallInput">Sujet</label>
-                                    <input type="text" name="sujet" class="form-control form-control-sm" id="smallInput"
+                                    <input type="text" name="subject" class="form-control form-control-sm" id="smallInput"
                                         placeholder="Entrez son nom" required>
                                 </div>
                                 <div class="form-group">
@@ -33,14 +33,22 @@
                                     <textarea class="form-control" name="message" id="message"
                                         rows="5"></textarea>
                                 </div>
+                                <div class="form-group">
+                                    <label for="smallSelect">Statut</label>
+                                    <select class="form-control form-control-sm" id="smallSelect" name="statut_id">
+                                        @foreach ($statuts as $statut)
+                                            <option value="{{ $statut->id }}">{{ $statut->libelle }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
                         </div>
                     </div>
                     <div class="card-action">
                         <button class="btn btn-sm btn-success">Enregistrer</button>
-                        <a href="{{ route('admin.index') }}" class="btn btn-sm btn-danger">Annuler</a>
+                        <a href="{{  url()->previous() }}" class="btn btn-sm btn-danger">Annuler</a>
+                        </div>
                     </div>
-                </div>
             </form>
         </div>
     </div>
@@ -52,4 +60,8 @@
 @endsection
 
 @section('javascript')
+    <script src="{{ asset('vendor/ckeditor/ckeditor.js') }}"></script>
+    <script>
+        CKEDITOR.replace( 'message');
+    </script>
 @endsection

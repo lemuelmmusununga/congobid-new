@@ -47,8 +47,8 @@ class CommentCaMarche extends Controller
      */
     public function store(Request $request)
     {
-        try{
-            
+        try {
+
 
             $instruction = Instruction::create([
                 'titre' => $request->titre,
@@ -61,9 +61,9 @@ class CommentCaMarche extends Controller
             if ($request->file('videos') != null) {
                 # code...
                 $ext = $request->file('videos')->getClientOriginalExtension();
-                $request->file('videos')->move(public_path('videos/instructions/'), $instruction->id. '.'.$ext);
+                $request->file('videos')->move(public_path('videos/instructions/'), $instruction->id . '.' . $ext);
                 $instruction->update([
-                    'lien'=> $instruction->id. '.'.$ext
+                    'lien' => $instruction->id . '.' . $ext
                 ]);
             }
 
@@ -77,7 +77,7 @@ class CommentCaMarche extends Controller
             ]);
 
             return redirect()->route('commentcamarche.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }
@@ -90,7 +90,12 @@ class CommentCaMarche extends Controller
      */
     public function show($id)
     {
-        //
+        $instruction = Instruction::find($id);
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        $statuts = Statut::orderBy('id', 'desc')->get();
+
+        return view('admin.layouts.partials.body.instructions.show', compact('chats', 'statuts', 'instruction'));
+
     }
 
     /**
@@ -116,38 +121,38 @@ class CommentCaMarche extends Controller
      */
     public function update(Request $request)
     {
-        // try{
+        try {
+            $instruction = Instruction::find($request->instruction_id);
 
-            if ($request->videos != null) {
-                Instruction::where('id', $request->instruction_id)->update([
-                    'titre' => $request->titre,
-                    'description' => $request->description,
-                    'lien' => $request->instruction_id,
-                    'statut_id' => $request->statut_id,
-                    'user_id' => Auth::user()->id,
-                ]);
-                $request->file('videos')->move(public_path('videos/instructions/'), $request->id. '.mp4');
-            } else {
-                Instruction::where('id', $request->instruction_id)->update([
-                    'titre' => $request->titre,
-                    'description' => $request->description,
-                    'statut_id' => $request->statut_id,
-                    'user_id' => Auth::user()->id,
+            $instruction->update([
+                'titre' => $request->titre,
+                'description' => $request->description,
+                'statut_id' => $request->statut_id,
+                'user_id' => Auth::user()->id,
+            ]);
+
+            if ($request->file('videos') != null) {
+                # code...
+                $ext = $request->file('videos')->getClientOriginalExtension();
+                $request->file('videos')->move(public_path('videos/instructions/'), $instruction->id . '.' . $ext, true);
+                $instruction->update([
+                    'lien' => $instruction->id . '.' . $ext
                 ]);
             }
 
+
             Historique::create([
-                'action' => 'Modificaion d\'une instruction',
+                'action' => 'Enregistrement d\'une instruction',
                 'type' => '12',
-                'destination_id' => $request->instruction_id,
+                'destination_id' => $instruction->id,
                 'statut_id' => '3',
                 'user_id' => Auth::user()->id,
             ]);
 
             return redirect()->route('commentcamarche.index');
-        // } catch(\Exception $e){
-        //     return back()->with('');
-        // }
+        } catch (\Exception $e) {
+            return back()->with('error');
+        }
     }
 
     /**
@@ -158,7 +163,7 @@ class CommentCaMarche extends Controller
      */
     public function destroy($id, $state)
     {
-        try{
+        try {
             Instruction::where('id', $id)->update([
                 'statut_id' => $state == '3' ? 2 : 3,
                 'deleted_at' => $state == '3' ? now() : NULL,
@@ -168,9 +173,9 @@ class CommentCaMarche extends Controller
 
             if ($state == 3) {
                 $action = 'Suppression d\'une nstruction';
-            } else if($state == 2) {
+            } else if ($state == 2) {
                 $action = 'Réactivation d\'une nstruction';
-            }else {
+            } else {
                 $action = 'Activation d\'une nstruction';
             }
 
@@ -183,7 +188,7 @@ class CommentCaMarche extends Controller
             ]);
 
             return redirect()->route('instructions.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }

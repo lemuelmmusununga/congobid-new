@@ -45,7 +45,7 @@ class PolitiqueController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+        try {
             // dd($request->libelle);
             $politique = Politique::create([
                 'titre' => $request->titre,
@@ -63,7 +63,7 @@ class PolitiqueController extends Controller
             ]);
 
             return redirect()->route('politiques.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }
@@ -76,7 +76,11 @@ class PolitiqueController extends Controller
      */
     public function show($id)
     {
-        //
+        $politique = Politique::find($id);
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        $statuts = Statut::orderBy('id', 'desc')->get();
+
+        return view('admin.layouts.partials.body.politiques.show', compact('politique', 'chats', 'statuts'));
     }
 
     /**
@@ -103,7 +107,7 @@ class PolitiqueController extends Controller
      */
     public function update(Request $request, Politique $politique)
     {
-        try{
+        try {
             // dd($request->libelle);
             Politique::where('id', $request->politique_id)->update([
                 'titre' => $request->titre,
@@ -121,7 +125,7 @@ class PolitiqueController extends Controller
             ]);
 
             return redirect()->route('politiques.index');
-        } catch(\Exception $e){
+        } catch (\Throwable $e) {
             return back()->with('');
         }
     }
@@ -135,30 +139,30 @@ class PolitiqueController extends Controller
     public function destroy($id, $state)
     {
         // try{
-            Politique::where('id', $id)->update([
-                'statut_id' => $state == '3' ? 2 : 3,
-                'deleted_at' => $state == '3' ? now() : NULL,
-                'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
-                'id_updated_at' => Auth::user()->id,
-            ]);
+        Politique::where('id', $id)->update([
+            'statut_id' => $state == '3' ? 2 : 3,
+            'deleted_at' => $state == '3' ? now() : NULL,
+            'id_deleted_at' => $state == '3' ? Auth::user()->id : NULL,
+            'id_updated_at' => Auth::user()->id,
+        ]);
 
-            if ($state == 3) {
-                $action = 'Suppression d\'une condition d\'utilisation';
-            } else if($state == 2) {
-                $action = 'Réactivation d\'une condition d\'utilisation';
-            }else {
-                $action = 'Activation d\'une condition d\'utilisation';
-            }
+        if ($state == 3) {
+            $action = 'Suppression d\'une condition d\'utilisation';
+        } else if ($state == 2) {
+            $action = 'Réactivation d\'une condition d\'utilisation';
+        } else {
+            $action = 'Activation d\'une condition d\'utilisation';
+        }
 
-            Historique::create([
-                'action' => $action,
-                'type' => '11',
-                'destination_id' => $id,
-                'statut_id' => '3',
-                'user_id' => Auth::user()->id,
-            ]);
+        Historique::create([
+            'action' => $action,
+            'type' => '11',
+            'destination_id' => $id,
+            'statut_id' => '3',
+            'user_id' => Auth::user()->id,
+        ]);
 
-            return redirect()->route('politiques.index');
+        return redirect()->route('politiques.index');
         // } catch(\Exception $e){
         //     return back()->with('');
         // }

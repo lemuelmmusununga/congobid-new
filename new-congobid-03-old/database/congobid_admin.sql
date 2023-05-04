@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.0.2
 -- https://www.phpmyadmin.net/
 --
--- Hôte : 127.0.0.1
--- Généré le : jeu. 04 mai 2023 à 01:22
--- Version du serveur : 10.4.24-MariaDB
--- Version de PHP : 8.1.6
+-- Hôte : 127.0.0.1:3306
+-- Généré le : jeu. 04 mai 2023 à 16:32
+-- Version du serveur :  8.0.21
+-- Version de PHP : 7.3.21
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -21,21 +21,26 @@ SET time_zone = "+00:00";
 -- Structure de la table `administrateurs`
 --
 
-CREATE TABLE `administrateurs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `identification_fiscale` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `poste` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `interne` int(11) NOT NULL DEFAULT 1,
-  `online` varchar(1) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+DROP TABLE IF EXISTS `administrateurs`;
+CREATE TABLE IF NOT EXISTS `administrateurs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `identification_fiscale` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `poste` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `interne` int NOT NULL DEFAULT '1',
+  `online` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `administrateur_id` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `administrateur_id` bigint UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `administrateurs_statut_id_foreign` (`statut_id`),
+  KEY `administrateurs_user_id_foreign` (`user_id`),
+  KEY `administrateurs_administrateur_id_foreign` (`administrateur_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `administrateurs`
@@ -51,36 +56,43 @@ INSERT INTO `administrateurs` (`id`, `identification_fiscale`, `poste`, `interne
 -- Structure de la table `articles`
 --
 
-CREATE TABLE `articles` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `titre` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `marque` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `promouvoir` int(11) NOT NULL DEFAULT 0,
-  `code_produit` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `prix` int(11) NOT NULL,
+DROP TABLE IF EXISTS `articles`;
+CREATE TABLE IF NOT EXISTS `articles` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `titre` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `marque` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `promouvoir` int NOT NULL DEFAULT '0',
+  `code_produit` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prix` int NOT NULL,
   `prix_precedent` float DEFAULT NULL,
-  `prix_marche` int(11) NOT NULL,
-  `prix_min` int(11) DEFAULT NULL,
-  `prix_max` int(11) DEFAULT NULL,
-  `cout_livraison` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `infos_livraison` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_keywords` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `limite_enchere_auto` varchar(3) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `credit_enchere_auto` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `quantite` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prix_marche` int NOT NULL,
+  `prix_min` int DEFAULT NULL,
+  `prix_max` int DEFAULT NULL,
+  `cout_livraison` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `infos_livraison` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `meta_keywords` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `limite_enchere_auto` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `credit_enchere_auto` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `quantite` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `salon` int(11) DEFAULT NULL,
-  `categorie_id` bigint(20) UNSIGNED NOT NULL,
-  `paquet_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `salon` int DEFAULT NULL,
+  `categorie_id` bigint UNSIGNED NOT NULL,
+  `paquet_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `articles_code_produit_unique` (`code_produit`),
+  KEY `articles_statut_id_foreign` (`statut_id`),
+  KEY `articles_user_id_foreign` (`user_id`),
+  KEY `articles_categorie_id_foreign` (`categorie_id`),
+  KEY `articles_paquet_id_foreign` (`paquet_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=55 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `articles`
@@ -96,24 +108,29 @@ INSERT INTO `articles` (`id`, `titre`, `marque`, `promouvoir`, `code_produit`, `
 -- Structure de la table `bideurs`
 --
 
-CREATE TABLE `bideurs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `balance` int(11) NOT NULL,
-  `nontransferable` int(11) NOT NULL DEFAULT 0,
-  `bonus` int(11) NOT NULL DEFAULT 0,
-  `roi` int(11) NOT NULL DEFAULT 0,
-  `foudre` int(11) NOT NULL DEFAULT 0,
-  `bouclier` int(11) NOT NULL DEFAULT 0,
+DROP TABLE IF EXISTS `bideurs`;
+CREATE TABLE IF NOT EXISTS `bideurs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `balance` int NOT NULL,
+  `nontransferable` int NOT NULL DEFAULT '0',
+  `bonus` int NOT NULL DEFAULT '0',
+  `roi` int NOT NULL DEFAULT '0',
+  `foudre` int NOT NULL DEFAULT '0',
+  `bouclier` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `paquet_id` bigint(20) UNSIGNED NOT NULL DEFAULT 1,
-  `admin_id` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `paquet_id` bigint UNSIGNED NOT NULL DEFAULT '1',
+  `admin_id` int DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bideurs_statut_id_foreign` (`statut_id`),
+  KEY `bideurs_user_id_foreign` (`user_id`),
+  KEY `bideurs_paquet_id_foreign` (`paquet_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `bideurs`
@@ -177,19 +194,23 @@ INSERT INTO `bideurs` (`id`, `balance`, `nontransferable`, `bonus`, `roi`, `foud
 -- Structure de la table `bids`
 --
 
-CREATE TABLE `bids` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `quantite` int(11) NOT NULL,
-  `valeur` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `bid_statut_id` bigint(20) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `bids`;
+CREATE TABLE IF NOT EXISTS `bids` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `quantite` int NOT NULL,
+  `valeur` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bid_statut_id` bigint NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `bids_statut_id_foreign` (`statut_id`),
+  KEY `bids_user_id_foreign` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `bids`
@@ -206,12 +227,14 @@ INSERT INTO `bids` (`id`, `quantite`, `valeur`, `bid_statut_id`, `created_at`, `
 -- Structure de la table `bid_statuts`
 --
 
-CREATE TABLE `bid_statuts` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `bid_statuts`;
+CREATE TABLE IF NOT EXISTS `bid_statuts` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `bid_statuts`
@@ -228,14 +251,16 @@ INSERT INTO `bid_statuts` (`id`, `libelle`, `created_at`, `updated_at`) VALUES
 -- Structure de la table `boucliers`
 --
 
-CREATE TABLE `boucliers` (
-  `id` int(11) NOT NULL,
-  `paquet_id` int(11) NOT NULL,
-  `benefice` int(11) NOT NULL,
-  `prix` int(11) NOT NULL,
-  `bid_prix` int(11) NOT NULL,
-  `temps_blocage` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `boucliers`;
+CREATE TABLE IF NOT EXISTS `boucliers` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `paquet_id` int NOT NULL,
+  `benefice` int NOT NULL,
+  `prix` int NOT NULL,
+  `bid_prix` int NOT NULL,
+  `temps_blocage` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `boucliers`
@@ -255,18 +280,22 @@ INSERT INTO `boucliers` (`id`, `paquet_id`, `benefice`, `prix`, `bid_prix`, `tem
 -- Structure de la table `categories`
 --
 
-CREATE TABLE `categories` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `categorie_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `categories`;
+CREATE TABLE IF NOT EXISTS `categories` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categorie_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `categories_statut_id_foreign` (`statut_id`),
+  KEY `categories_user_id_foreign` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `categories`
@@ -285,18 +314,22 @@ INSERT INTO `categories` (`id`, `libelle`, `categorie_id`, `created_at`, `update
 -- Structure de la table `chats`
 --
 
-CREATE TABLE `chats` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` text COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `chats`;
+CREATE TABLE IF NOT EXISTS `chats` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `libelle` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `destinateur_id` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `destinateur_id` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `chats_statut_id_foreign` (`statut_id`),
+  KEY `chats_user_id_foreign` (`user_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -304,15 +337,17 @@ CREATE TABLE `chats` (
 -- Structure de la table `chat_encheres`
 --
 
-CREATE TABLE `chat_encheres` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `content` text DEFAULT NULL,
+DROP TABLE IF EXISTS `chat_encheres`;
+CREATE TABLE IF NOT EXISTS `chat_encheres` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `content` text,
   `libelle` text NOT NULL,
-  `enchere_id` int(11) NOT NULL,
+  `enchere_id` int NOT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `chat_encheres`
@@ -327,14 +362,16 @@ INSERT INTO `chat_encheres` (`id`, `user_id`, `content`, `libelle`, `enchere_id`
 -- Structure de la table `clicks`
 --
 
-CREATE TABLE `clicks` (
-  `id` int(11) NOT NULL,
-  `paquet_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `clicks`;
+CREATE TABLE IF NOT EXISTS `clicks` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `paquet_id` int NOT NULL,
   `prix` float NOT NULL,
-  `prix_bid` int(11) NOT NULL,
-  `benefice` int(11) NOT NULL,
-  `temps_blocage` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `prix_bid` int NOT NULL,
+  `benefice` int NOT NULL,
+  `temps_blocage` time NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `clicks`
@@ -354,14 +391,16 @@ INSERT INTO `clicks` (`id`, `paquet_id`, `prix`, `prix_bid`, `benefice`, `temps_
 -- Structure de la table `click_autos`
 --
 
-CREATE TABLE `click_autos` (
-  `id` int(11) NOT NULL,
-  `paquet_id` int(11) NOT NULL,
-  `bid_prix` int(11) NOT NULL,
-  `prix` int(11) NOT NULL,
-  `benefice` int(11) NOT NULL,
-  `temps_bidage` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `click_autos`;
+CREATE TABLE IF NOT EXISTS `click_autos` (
+  `id` int NOT NULL,
+  `paquet_id` int NOT NULL,
+  `bid_prix` int NOT NULL,
+  `prix` int NOT NULL,
+  `benefice` int NOT NULL,
+  `temps_bidage` int NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `click_autos`
@@ -381,16 +420,20 @@ INSERT INTO `click_autos` (`id`, `paquet_id`, `bid_prix`, `prix`, `benefice`, `t
 -- Structure de la table `communiques`
 --
 
-CREATE TABLE `communiques` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `communiques`;
+CREATE TABLE IF NOT EXISTS `communiques` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `communiques_statut_id_foreign` (`statut_id`),
+  KEY `communiques_user_id_foreign` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -399,18 +442,23 @@ CREATE TABLE `communiques` (
 -- Structure de la table `comptes`
 --
 
-CREATE TABLE `comptes` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `nom` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `comptes`;
+CREATE TABLE IF NOT EXISTS `comptes` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `nom` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `types_compte_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `types_compte_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `comptes_statut_id_foreign` (`statut_id`),
+  KEY `comptes_user_id_foreign` (`user_id`),
+  KEY `comptes_types_compte_id_foreign` (`types_compte_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -419,11 +467,13 @@ CREATE TABLE `comptes` (
 -- Structure de la table `conditions`
 --
 
-CREATE TABLE `conditions` (
-  `id` int(11) NOT NULL,
-  `titre` int(11) NOT NULL,
-  `description` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `conditions`;
+CREATE TABLE IF NOT EXISTS `conditions` (
+  `id` int NOT NULL,
+  `titre` int NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -431,23 +481,25 @@ CREATE TABLE `conditions` (
 -- Structure de la table `contacts`
 --
 
-CREATE TABLE `contacts` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `contacts`;
+CREATE TABLE IF NOT EXISTS `contacts` (
+  `id` int NOT NULL AUTO_INCREMENT,
   `nom` varchar(50) NOT NULL,
   `telephone` varchar(50) NOT NULL,
   `content` text NOT NULL,
   `email` varchar(50) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `contacts`
 --
 
-INSERT INTO `contacts` (`id`, `nom`, `telephone`, `content`, `email`, `created_at`, `updated_at`) VALUES
-(4, 'Claude kalondji', '243818086893', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur dignissimos adipisci necessitatibus, illo, officiis sequi harum, quod explicabo ipsam aut odit natus voluptate atque! Dolore explicabo omnis nisi vitae deleniti.', 'lem.musunga@gmail.com', '2023-05-02 09:31:59', '2022-08-11 14:02:16'),
-(5, 'Claude kalondji', '0811246071', 'bonjour monsieur', 'lem.musunga@gmail.com', '2023-05-02 09:31:59', '2022-08-30 15:31:32');
+INSERT INTO `contacts` (`id`, `nom`, `telephone`, `content`, `email`, `updated_at`) VALUES
+(4, 'Claude kalondji', '243818086893', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur dignissimos adipisci necessitatibus, illo, officiis sequi harum, quod explicabo ipsam aut odit natus voluptate atque! Dolore explicabo omnis nisi vitae deleniti.', 'lem.musunga@gmail.com', '2022-08-11 14:02:16'),
+(5, 'Claude kalondji', '0811246071', 'bonjour monsieur', 'lem.musunga@gmail.com', '2022-08-30 15:31:32');
 
 -- --------------------------------------------------------
 
@@ -455,22 +507,27 @@ INSERT INTO `contacts` (`id`, `nom`, `telephone`, `content`, `email`, `created_a
 -- Structure de la table `coupons`
 --
 
-CREATE TABLE `coupons` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `code` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `economie` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `usage_unique` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT '0',
-  `un_compte` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT '0',
+DROP TABLE IF EXISTS `coupons`;
+CREATE TABLE IF NOT EXISTS `coupons` (
+  `id` bigint UNSIGNED NOT NULL,
+  `code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `economie` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `usage_unique` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
+  `un_compte` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
   `date_expiration` date NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `types_coupon_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `types_coupon_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `coupons_statut_id_foreign` (`statut_id`),
+  KEY `coupons_user_id_foreign` (`user_id`),
+  KEY `coupons_types_coupon_id_foreign` (`types_coupon_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -479,20 +536,23 @@ CREATE TABLE `coupons` (
 -- Structure de la table `data_rows`
 --
 
-CREATE TABLE `data_rows` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `data_type_id` int(10) UNSIGNED NOT NULL,
-  `field` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `required` tinyint(1) NOT NULL DEFAULT 0,
-  `browse` tinyint(1) NOT NULL DEFAULT 1,
-  `read` tinyint(1) NOT NULL DEFAULT 1,
-  `edit` tinyint(1) NOT NULL DEFAULT 1,
-  `add` tinyint(1) NOT NULL DEFAULT 1,
-  `delete` tinyint(1) NOT NULL DEFAULT 1,
-  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `order` int(11) NOT NULL DEFAULT 1
+DROP TABLE IF EXISTS `data_rows`;
+CREATE TABLE IF NOT EXISTS `data_rows` (
+  `id` int UNSIGNED NOT NULL,
+  `data_type_id` int UNSIGNED NOT NULL,
+  `field` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `required` tinyint(1) NOT NULL DEFAULT '0',
+  `browse` tinyint(1) NOT NULL DEFAULT '1',
+  `read` tinyint(1) NOT NULL DEFAULT '1',
+  `edit` tinyint(1) NOT NULL DEFAULT '1',
+  `add` tinyint(1) NOT NULL DEFAULT '1',
+  `delete` tinyint(1) NOT NULL DEFAULT '1',
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `order` int NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `data_rows_data_type_id_foreign` (`data_type_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -501,22 +561,24 @@ CREATE TABLE `data_rows` (
 -- Structure de la table `data_types`
 --
 
-CREATE TABLE `data_types` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_name_singular` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_name_plural` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `icon` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `model_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `policy_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `controller` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `generate_permissions` tinyint(1) NOT NULL DEFAULT 0,
-  `server_side` tinyint(4) NOT NULL DEFAULT 0,
-  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+DROP TABLE IF EXISTS `data_types`;
+CREATE TABLE IF NOT EXISTS `data_types` (
+  `id` int UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name_singular` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name_plural` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `icon` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `model_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `policy_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `controller` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `generate_permissions` tinyint(1) NOT NULL DEFAULT '0',
+  `server_side` tinyint NOT NULL DEFAULT '0',
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -525,25 +587,27 @@ CREATE TABLE `data_types` (
 -- Structure de la table `demandes`
 --
 
-CREATE TABLE `demandes` (
-  `id` int(11) NOT NULL,
-  `admin` int(11) NOT NULL,
+DROP TABLE IF EXISTS `demandes`;
+CREATE TABLE IF NOT EXISTS `demandes` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `admin` int NOT NULL,
   `name` varchar(255) NOT NULL,
   `telephone` varchar(255) NOT NULL,
-  `nombre` int(11) NOT NULL,
-  `state` int(11) DEFAULT NULL,
+  `nombre` int NOT NULL,
+  `state` int DEFAULT NULL,
   `payement` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `demandes`
 --
 
-INSERT INTO `demandes` (`id`, `admin`, `name`, `telephone`, `nombre`, `state`, `payement`, `description`, `created_at`, `updated_at`) VALUES
-(2, 40, 'root', '0811246072', 50, 1, 'MPSA', 'bonjour', '2023-05-02 09:31:59', '2022-08-11 06:14:08');
+INSERT INTO `demandes` (`id`, `admin`, `name`, `telephone`, `nombre`, `state`, `payement`, `description`, `updated_at`) VALUES
+(2, 40, 'root', '0811246072', 50, 1, 'MPSA', 'bonjour', '2022-08-11 06:14:08');
 
 -- --------------------------------------------------------
 
@@ -551,17 +615,21 @@ INSERT INTO `demandes` (`id`, `admin`, `name`, `telephone`, `nombre`, `state`, `
 -- Structure de la table `departements`
 --
 
-CREATE TABLE `departements` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+DROP TABLE IF EXISTS `departements`;
+CREATE TABLE IF NOT EXISTS `departements` (
+  `id` bigint UNSIGNED NOT NULL,
+  `libelle` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `departements_statut_id_foreign` (`statut_id`),
+  KEY `departements_user_id_foreign` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -570,135 +638,137 @@ CREATE TABLE `departements` (
 -- Structure de la table `encheregagners`
 --
 
-CREATE TABLE `encheregagners` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `enchere_id` int(11) NOT NULL,
-  `valeur_click` int(11) NOT NULL,
+DROP TABLE IF EXISTS `encheregagners`;
+CREATE TABLE IF NOT EXISTS `encheregagners` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `enchere_id` int NOT NULL,
+  `valeur_click` int NOT NULL,
   `code` varchar(255) DEFAULT NULL,
-  `state` int(11) DEFAULT NULL,
-  `payed_by` int(11) DEFAULT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `state` int DEFAULT NULL,
+  `payed_by` int DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=802 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `encheregagners`
 --
 
-INSERT INTO `encheregagners` (`id`, `user_id`, `enchere_id`, `valeur_click`, `code`, `state`, `payed_by`, `updated_at`, `created_at`) VALUES
-(689, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-25 17:23:01'),
-(690, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-27 17:56:06'),
-(691, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-27 17:58:20'),
-(692, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-28 12:17:02'),
-(693, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-28 18:40:26'),
-(694, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-28 18:40:38'),
-(695, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-28 18:52:58'),
-(696, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-28 22:18:37'),
-(697, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-28 22:19:55'),
-(698, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-28 22:20:13'),
-(699, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-28 23:12:22'),
-(700, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 14:23:29'),
-(701, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 14:24:59'),
-(702, 0, 0, 0, '', 1, NULL, '2023-05-02 09:31:59', '2022-09-29 14:26:07'),
-(703, 0, 0, 0, '', 1, NULL, '2023-05-02 09:31:59', '2022-09-29 14:26:44'),
-(704, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 15:18:26'),
-(705, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 16:56:33'),
-(706, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 16:56:36'),
-(707, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 16:56:44'),
-(708, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 16:56:47'),
-(709, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 16:56:57'),
-(710, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 16:57:52'),
-(711, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 16:57:55'),
-(712, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 17:00:30'),
-(713, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 17:00:56'),
-(714, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 17:10:15'),
-(715, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 17:11:23'),
-(716, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-29 17:12:34'),
-(717, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 21:00:16'),
-(718, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 21:01:02'),
-(719, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 21:01:11'),
-(720, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:05:17'),
-(721, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:05:17'),
-(722, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:05:26'),
-(723, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:05:26'),
-(724, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:06:02'),
-(725, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:06:02'),
-(726, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:06:11'),
-(727, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:06:11'),
-(728, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:06:37'),
-(729, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:06:37'),
-(730, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:06:47'),
-(731, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:06:47'),
-(732, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:07:08'),
-(733, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:07:08'),
-(734, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:07:19'),
-(735, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:07:20'),
-(736, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:08:18'),
-(737, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:53:15'),
-(738, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:53:35'),
-(739, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:54:41'),
-(740, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:56:01'),
-(741, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:58:12'),
-(742, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:58:43'),
-(743, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 22:59:26'),
-(744, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 23:00:00'),
-(745, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 23:01:00'),
-(746, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 23:01:50'),
-(747, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 23:02:43'),
-(748, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 23:02:54'),
-(749, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 23:02:59'),
-(750, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 23:05:26'),
-(751, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 23:08:12'),
-(752, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-09-30 23:10:27'),
-(754, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-04 15:01:59'),
-(755, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-04 15:04:04'),
-(756, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-04 15:04:15'),
-(757, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 12:24:49'),
-(758, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 12:24:56'),
-(759, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 12:25:10'),
-(760, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 12:28:31'),
-(761, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 12:41:45'),
-(762, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 12:47:53'),
-(763, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 12:48:40'),
-(764, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 13:25:41'),
-(765, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 14:00:15'),
-(766, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 14:00:43'),
-(767, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 14:00:59'),
-(768, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 14:01:46'),
-(769, 83, 29, 6015, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-13 14:04:41'),
-(770, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-14 19:02:37'),
-(771, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-14 19:02:52'),
-(772, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-14 19:03:31'),
-(773, 89, 30, 1470, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-14 19:03:39'),
-(774, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-14 20:20:55'),
-(775, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-14 20:21:54'),
-(776, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-14 20:22:07'),
-(777, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-10-14 20:24:19'),
-(778, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-11-15 15:25:00'),
-(779, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-11-15 15:26:11'),
-(780, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-11-15 15:26:35'),
-(781, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-11-15 15:31:19'),
-(782, 85, 31, 368, '', 1, 77, '2023-05-02 09:31:59', '2022-11-15 15:31:44'),
-(783, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-11-29 13:23:58'),
-(784, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-11-29 13:34:10'),
-(785, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-11-29 13:34:51'),
-(786, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-11-29 13:55:45'),
-(787, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-12-02 23:46:15'),
-(788, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-12-02 23:46:43'),
-(789, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-12-09 15:02:30'),
-(790, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-12-09 15:02:43'),
-(791, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-12-13 16:38:35'),
-(792, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-12-13 16:39:05'),
-(793, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-12-13 16:39:14'),
-(794, 85, 33, 117, '', NULL, NULL, '2023-05-02 09:31:59', '2022-12-13 16:39:22'),
-(795, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2022-12-14 17:28:46'),
-(796, 85, 32, 567, '', NULL, NULL, '2023-05-02 09:31:59', '2022-12-14 17:29:01'),
-(797, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2023-04-26 12:39:05'),
-(798, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2023-04-26 12:39:07'),
-(799, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2023-04-26 12:39:08'),
-(800, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2023-04-26 12:39:33'),
-(801, 0, 0, 0, '', NULL, NULL, '2023-05-02 09:31:59', '2023-04-26 12:42:46');
+INSERT INTO `encheregagners` (`id`, `user_id`, `enchere_id`, `valeur_click`, `code`, `state`, `payed_by`, `created_at`) VALUES
+(689, 0, 0, 0, '', NULL, NULL, '2022-09-25 17:23:01'),
+(690, 0, 0, 0, '', NULL, NULL, '2022-09-27 17:56:06'),
+(691, 0, 0, 0, '', NULL, NULL, '2022-09-27 17:58:20'),
+(692, 0, 0, 0, '', NULL, NULL, '2022-09-28 12:17:02'),
+(693, 0, 0, 0, '', NULL, NULL, '2022-09-28 18:40:26'),
+(694, 0, 0, 0, '', NULL, NULL, '2022-09-28 18:40:38'),
+(695, 0, 0, 0, '', NULL, NULL, '2022-09-28 18:52:58'),
+(696, 0, 0, 0, '', NULL, NULL, '2022-09-28 22:18:37'),
+(697, 0, 0, 0, '', NULL, NULL, '2022-09-28 22:19:55'),
+(698, 0, 0, 0, '', NULL, NULL, '2022-09-28 22:20:13'),
+(699, 0, 0, 0, '', NULL, NULL, '2022-09-28 23:12:22'),
+(700, 0, 0, 0, '', NULL, NULL, '2022-09-29 14:23:29'),
+(701, 0, 0, 0, '', NULL, NULL, '2022-09-29 14:24:59'),
+(702, 0, 0, 0, '', 1, NULL, '2022-09-29 14:26:07'),
+(703, 0, 0, 0, '', 1, NULL, '2022-09-29 14:26:44'),
+(704, 0, 0, 0, '', NULL, NULL, '2022-09-29 15:18:26'),
+(705, 0, 0, 0, '', NULL, NULL, '2022-09-29 16:56:33'),
+(706, 0, 0, 0, '', NULL, NULL, '2022-09-29 16:56:36'),
+(707, 0, 0, 0, '', NULL, NULL, '2022-09-29 16:56:44'),
+(708, 0, 0, 0, '', NULL, NULL, '2022-09-29 16:56:47'),
+(709, 0, 0, 0, '', NULL, NULL, '2022-09-29 16:56:57'),
+(710, 0, 0, 0, '', NULL, NULL, '2022-09-29 16:57:52'),
+(711, 0, 0, 0, '', NULL, NULL, '2022-09-29 16:57:55'),
+(712, 0, 0, 0, '', NULL, NULL, '2022-09-29 17:00:30'),
+(713, 0, 0, 0, '', NULL, NULL, '2022-09-29 17:00:56'),
+(714, 0, 0, 0, '', NULL, NULL, '2022-09-29 17:10:15'),
+(715, 0, 0, 0, '', NULL, NULL, '2022-09-29 17:11:23'),
+(716, 0, 0, 0, '', NULL, NULL, '2022-09-29 17:12:34'),
+(717, 0, 0, 0, '', NULL, NULL, '2022-09-30 21:00:16'),
+(718, 0, 0, 0, '', NULL, NULL, '2022-09-30 21:01:02'),
+(719, 0, 0, 0, '', NULL, NULL, '2022-09-30 21:01:11'),
+(720, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:05:17'),
+(721, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:05:17'),
+(722, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:05:26'),
+(723, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:05:26'),
+(724, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:06:02'),
+(725, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:06:02'),
+(726, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:06:11'),
+(727, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:06:11'),
+(728, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:06:37'),
+(729, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:06:37'),
+(730, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:06:47'),
+(731, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:06:47'),
+(732, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:07:08'),
+(733, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:07:08'),
+(734, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:07:19'),
+(735, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:07:20'),
+(736, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:08:18'),
+(737, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:53:15'),
+(738, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:53:35'),
+(739, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:54:41'),
+(740, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:56:01'),
+(741, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:58:12'),
+(742, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:58:43'),
+(743, 0, 0, 0, '', NULL, NULL, '2022-09-30 22:59:26'),
+(744, 0, 0, 0, '', NULL, NULL, '2022-09-30 23:00:00'),
+(745, 0, 0, 0, '', NULL, NULL, '2022-09-30 23:01:00'),
+(746, 0, 0, 0, '', NULL, NULL, '2022-09-30 23:01:50'),
+(747, 0, 0, 0, '', NULL, NULL, '2022-09-30 23:02:43'),
+(748, 0, 0, 0, '', NULL, NULL, '2022-09-30 23:02:54'),
+(749, 0, 0, 0, '', NULL, NULL, '2022-09-30 23:02:59'),
+(750, 0, 0, 0, '', NULL, NULL, '2022-09-30 23:05:26'),
+(751, 0, 0, 0, '', NULL, NULL, '2022-09-30 23:08:12'),
+(752, 0, 0, 0, '', NULL, NULL, '2022-09-30 23:10:27'),
+(754, 0, 0, 0, '', NULL, NULL, '2022-10-04 15:01:59'),
+(755, 0, 0, 0, '', NULL, NULL, '2022-10-04 15:04:04'),
+(756, 0, 0, 0, '', NULL, NULL, '2022-10-04 15:04:15'),
+(757, 0, 0, 0, '', NULL, NULL, '2022-10-13 12:24:49'),
+(758, 0, 0, 0, '', NULL, NULL, '2022-10-13 12:24:56'),
+(759, 0, 0, 0, '', NULL, NULL, '2022-10-13 12:25:10'),
+(760, 0, 0, 0, '', NULL, NULL, '2022-10-13 12:28:31'),
+(761, 0, 0, 0, '', NULL, NULL, '2022-10-13 12:41:45'),
+(762, 0, 0, 0, '', NULL, NULL, '2022-10-13 12:47:53'),
+(763, 0, 0, 0, '', NULL, NULL, '2022-10-13 12:48:40'),
+(764, 0, 0, 0, '', NULL, NULL, '2022-10-13 13:25:41'),
+(765, 0, 0, 0, '', NULL, NULL, '2022-10-13 14:00:15'),
+(766, 0, 0, 0, '', NULL, NULL, '2022-10-13 14:00:43'),
+(767, 0, 0, 0, '', NULL, NULL, '2022-10-13 14:00:59'),
+(768, 0, 0, 0, '', NULL, NULL, '2022-10-13 14:01:46'),
+(769, 83, 29, 6015, '', NULL, NULL, '2022-10-13 14:04:41'),
+(770, 0, 0, 0, '', NULL, NULL, '2022-10-14 19:02:37'),
+(771, 0, 0, 0, '', NULL, NULL, '2022-10-14 19:02:52'),
+(772, 0, 0, 0, '', NULL, NULL, '2022-10-14 19:03:31'),
+(773, 89, 30, 1470, '', NULL, NULL, '2022-10-14 19:03:39'),
+(774, 0, 0, 0, '', NULL, NULL, '2022-10-14 20:20:55'),
+(775, 0, 0, 0, '', NULL, NULL, '2022-10-14 20:21:54'),
+(776, 0, 0, 0, '', NULL, NULL, '2022-10-14 20:22:07'),
+(777, 0, 0, 0, '', NULL, NULL, '2022-10-14 20:24:19'),
+(778, 0, 0, 0, '', NULL, NULL, '2022-11-15 15:25:00'),
+(779, 0, 0, 0, '', NULL, NULL, '2022-11-15 15:26:11'),
+(780, 0, 0, 0, '', NULL, NULL, '2022-11-15 15:26:35'),
+(781, 0, 0, 0, '', NULL, NULL, '2022-11-15 15:31:19'),
+(782, 85, 31, 368, '', 1, 77, '2022-11-15 15:31:44'),
+(783, 0, 0, 0, '', NULL, NULL, '2022-11-29 13:23:58'),
+(784, 0, 0, 0, '', NULL, NULL, '2022-11-29 13:34:10'),
+(785, 0, 0, 0, '', NULL, NULL, '2022-11-29 13:34:51'),
+(786, 0, 0, 0, '', NULL, NULL, '2022-11-29 13:55:45'),
+(787, 0, 0, 0, '', NULL, NULL, '2022-12-02 23:46:15'),
+(788, 0, 0, 0, '', NULL, NULL, '2022-12-02 23:46:43'),
+(789, 0, 0, 0, '', NULL, NULL, '2022-12-09 15:02:30'),
+(790, 0, 0, 0, '', NULL, NULL, '2022-12-09 15:02:43'),
+(791, 0, 0, 0, '', NULL, NULL, '2022-12-13 16:38:35'),
+(792, 0, 0, 0, '', NULL, NULL, '2022-12-13 16:39:05'),
+(793, 0, 0, 0, '', NULL, NULL, '2022-12-13 16:39:14'),
+(794, 85, 33, 117, '', NULL, NULL, '2022-12-13 16:39:22'),
+(795, 0, 0, 0, '', NULL, NULL, '2022-12-14 17:28:46'),
+(796, 85, 32, 567, '', NULL, NULL, '2022-12-14 17:29:01'),
+(797, 0, 0, 0, '', NULL, NULL, '2023-04-26 12:39:05'),
+(798, 0, 0, 0, '', NULL, NULL, '2023-04-26 12:39:07'),
+(799, 0, 0, 0, '', NULL, NULL, '2023-04-26 12:39:08'),
+(800, 0, 0, 0, '', NULL, NULL, '2023-04-26 12:39:33'),
+(801, 0, 0, 0, '', NULL, NULL, '2023-04-26 12:42:46');
 
 -- --------------------------------------------------------
 
@@ -706,28 +776,30 @@ INSERT INTO `encheregagners` (`id`, `user_id`, `enchere_id`, `valeur_click`, `co
 -- Structure de la table `encheres`
 --
 
-CREATE TABLE `encheres` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `click` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
-  `favoris` int(11) NOT NULL,
-  `favori_salon` int(11) NOT NULL,
+DROP TABLE IF EXISTS `encheres`;
+CREATE TABLE IF NOT EXISTS `encheres` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `click` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '0',
+  `favoris` int NOT NULL,
+  `favori_salon` int NOT NULL,
   `date_debut` timestamp NULL DEFAULT NULL,
   `heure_debut` time DEFAULT NULL,
-  `state` int(11) NOT NULL DEFAULT 0,
+  `state` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `article_id` bigint(20) UNSIGNED NOT NULL,
-  `paquet_id` bigint(20) UNSIGNED NOT NULL,
-  `participant` int(11) DEFAULT NULL,
-  `munite` int(11) DEFAULT NULL,
-  `seconde` int(11) DEFAULT NULL,
-  `prix` int(11) DEFAULT NULL,
-  `prix_enchere` float DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `article_id` bigint UNSIGNED NOT NULL,
+  `paquet_id` bigint UNSIGNED NOT NULL,
+  `participant` int DEFAULT NULL,
+  `munite` int DEFAULT NULL,
+  `seconde` int DEFAULT NULL,
+  `prix` int DEFAULT NULL,
+  `prix_enchere` float DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `encheres`
@@ -743,15 +815,17 @@ INSERT INTO `encheres` (`id`, `click`, `favoris`, `favori_salon`, `date_debut`, 
 -- Structure de la table `envoies`
 --
 
-CREATE TABLE `envoies` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `envoies`;
+CREATE TABLE IF NOT EXISTS `envoies` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `number` bigint(20) NOT NULL,
-  `admin_id` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `bid_statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `number` bigint NOT NULL,
+  `admin_id` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `bid_statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `envoies`
@@ -767,14 +841,16 @@ INSERT INTO `envoies` (`id`, `created_at`, `updated_at`, `number`, `admin_id`, `
 -- Structure de la table `failed_jobs`
 --
 
-CREATE TABLE `failed_jobs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `uuid` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `connection` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `queue` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `payload` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exception` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `failed_at` timestamp NOT NULL DEFAULT current_timestamp()
+DROP TABLE IF EXISTS `failed_jobs`;
+CREATE TABLE IF NOT EXISTS `failed_jobs` (
+  `id` bigint UNSIGNED NOT NULL,
+  `uuid` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `connection` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `queue` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `payload` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `exception` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `failed_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -783,18 +859,27 @@ CREATE TABLE `failed_jobs` (
 -- Structure de la table `faqs`
 --
 
-CREATE TABLE `faqs` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `questions` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `reponses` text COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `faqs`;
+CREATE TABLE IF NOT EXISTS `faqs` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `questions` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `reponses` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Déchargement des données de la table `faqs`
+--
+
+INSERT INTO `faqs` (`id`, `questions`, `reponses`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
+(1, 'tets again', 'test ok again', '2023-05-04 10:36:19', '2023-05-04 10:50:11', NULL, NULL, NULL, 3, 96);
 
 -- --------------------------------------------------------
 
@@ -802,14 +887,16 @@ CREATE TABLE `faqs` (
 -- Structure de la table `favoris`
 --
 
-CREATE TABLE `favoris` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `favoris` int(11) NOT NULL,
-  `enchere_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `favoris`;
+CREATE TABLE IF NOT EXISTS `favoris` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `favoris` int NOT NULL,
+  `enchere_id` int NOT NULL,
   `updated_at` datetime NOT NULL,
-  `created_at` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `favoris`
@@ -847,15 +934,16 @@ INSERT INTO `favoris` (`id`, `user_id`, `favoris`, `enchere_id`, `updated_at`, `
 -- Structure de la table `foudres`
 --
 
-CREATE TABLE `foudres` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `paquet_id` int(11) NOT NULL,
-  `prix` int(11) NOT NULL,
+DROP TABLE IF EXISTS `foudres`;
+CREATE TABLE IF NOT EXISTS `foudres` (
+  `id` bigint UNSIGNED NOT NULL,
+  `paquet_id` int NOT NULL,
+  `prix` int NOT NULL,
   `prix_deblocage` float NOT NULL,
-  `bid_deblocage` int(11) NOT NULL,
-  `bid_prix` int(11) NOT NULL,
-  `benefice` int(11) NOT NULL,
-  `temps_blocage` int(11) NOT NULL
+  `bid_deblocage` int NOT NULL,
+  `bid_prix` int NOT NULL,
+  `benefice` int NOT NULL,
+  `temps_blocage` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -876,21 +964,23 @@ INSERT INTO `foudres` (`id`, `paquet_id`, `prix`, `prix_deblocage`, `bid_debloca
 -- Structure de la table `gagnants`
 --
 
-CREATE TABLE `gagnants` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `code` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `state` int(11) NOT NULL,
-  `paye_by` int(11) NOT NULL,
+DROP TABLE IF EXISTS `gagnants`;
+CREATE TABLE IF NOT EXISTS `gagnants` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `code` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `state` int NOT NULL,
+  `paye_by` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `enchere_id` bigint(20) UNSIGNED NOT NULL,
-  `administrateur_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `enchere_id` bigint UNSIGNED NOT NULL,
+  `administrateur_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `gagnants`
@@ -905,19 +995,21 @@ INSERT INTO `gagnants` (`id`, `code`, `state`, `paye_by`, `created_at`, `updated
 -- Structure de la table `historiques`
 --
 
-CREATE TABLE `historiques` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `action` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `type` int(11) NOT NULL,
-  `destination_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `historiques`;
+CREATE TABLE IF NOT EXISTS `historiques` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `action` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type` int NOT NULL,
+  `destination_id` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL DEFAULT 3,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL DEFAULT '3',
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `historiques`
@@ -951,7 +1043,15 @@ INSERT INTO `historiques` (`id`, `action`, `type`, `destination_id`, `created_at
 (25, 'Suppression d\'une sous-catégorie', 4, 9, '2023-05-02 14:02:50', '2023-05-02 14:02:50', NULL, NULL, NULL, 3, 96),
 (26, 'Enregistrement d\'un taux de conversion', 6, 5, '2023-05-02 22:29:48', '2023-05-02 22:29:48', NULL, NULL, NULL, 3, 96),
 (27, 'Suppression d\'un taux de conversion', 6, 3, '2023-05-02 22:29:56', '2023-05-02 22:29:56', NULL, NULL, NULL, 3, 96),
-(28, 'Modificaion d\'une instruction', 12, 1, '2023-05-02 23:53:47', '2023-05-02 23:53:47', NULL, NULL, NULL, 3, 96);
+(28, 'Modificaion d\'une instruction', 12, 1, '2023-05-02 23:53:47', '2023-05-02 23:53:47', NULL, NULL, NULL, 3, 96),
+(29, 'Enregistrement d\'une instruction', 12, 1, '2023-05-04 09:17:10', '2023-05-04 09:17:10', NULL, NULL, NULL, 3, 96),
+(30, 'Création d\'une condition d\'utilisation', 11, 2, '2023-05-04 09:54:22', '2023-05-04 09:54:22', NULL, NULL, NULL, 3, 96),
+(31, 'Modification d\'une condition d\'utilisation', 11, 2, '2023-05-04 09:59:56', '2023-05-04 09:59:56', NULL, NULL, NULL, 3, 96),
+(32, 'Réactivation d\'une condition d\'utilisation', 11, 96, '2023-05-04 10:00:05', '2023-05-04 10:00:05', NULL, NULL, NULL, 3, 96),
+(33, 'Modification d\'une condition d\'utilisation', 11, 2, '2023-05-04 10:00:21', '2023-05-04 10:00:21', NULL, NULL, NULL, 3, 96),
+(34, 'Création d\'une question et réponse', 10, 1, '2023-05-04 10:36:19', '2023-05-04 10:36:19', NULL, NULL, NULL, 3, 96),
+(35, 'Modification d\'une question et réponse', 10, 1, '2023-05-04 10:49:46', '2023-05-04 10:49:46', NULL, NULL, NULL, 3, 96),
+(36, 'Modification d\'une question et réponse', 10, 1, '2023-05-04 10:50:11', '2023-05-04 10:50:11', NULL, NULL, NULL, 3, 96);
 
 -- --------------------------------------------------------
 
@@ -959,18 +1059,20 @@ INSERT INTO `historiques` (`id`, `action`, `type`, `destination_id`, `created_at
 -- Structure de la table `images`
 --
 
-CREATE TABLE `images` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `lien` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `images`;
+CREATE TABLE IF NOT EXISTS `images` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `lien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `article_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `article_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `images`
@@ -1002,26 +1104,28 @@ INSERT INTO `images` (`id`, `lien`, `created_at`, `updated_at`, `deleted_at`, `i
 -- Structure de la table `instructions`
 --
 
-CREATE TABLE `instructions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lien` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `instructions`;
+CREATE TABLE IF NOT EXISTS `instructions` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `titre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lien` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `instructions`
 --
 
 INSERT INTO `instructions` (`id`, `titre`, `description`, `lien`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
-(1, 'Comment bider ?', 'Frem ipsum dolor sit amet consectetur adipisicing elit. Temporibus nam nisi ducimus itaque? Exercitationem mollitia amet id similique ipsum cum corrupti incidunt. Tempore commodi a eum dolor nihil reprehenderit repellat!Animi, voluptas laboriosam. Ipsum iusto reiciendis aperiam cum explicabo vero cupiditate id animi eligendi quod. Libero, ducimus dolorum consequuntur incidunt quidem natus molestiae praesentium officia, reiciendis accusantium a, deleniti voluptatem!', 'commer', '2022-03-16 03:25:47', '2023-05-02 23:53:47', NULL, NULL, NULL, 3, 96);
+(1, 'Comment bider ?', 'Frem ipsum dolor sit amet consectetur adipisicing elit. Temporibus nam nisi ducimus itaque? Exercitationem mollitia amet id similique ipsum cum corrupti incidunt. Tempore commodi a eum dolor nihil reprehenderit repellat!Animi, voluptas laboriosam. Ipsum iusto reiciendis aperiam cum explicabo vero cupiditate id animi eligendi quod. Libero, ducimus dolorum consequuntur incidunt quidem natus molestiae praesentium officia, reiciendis accusantium a, deleniti voluptatem!', '1.mp4', '2022-03-16 03:25:47', '2023-05-02 23:53:47', NULL, NULL, NULL, 3, 96);
 
 -- --------------------------------------------------------
 
@@ -1029,9 +1133,10 @@ INSERT INTO `instructions` (`id`, `titre`, `description`, `lien`, `created_at`, 
 -- Structure de la table `menus`
 --
 
-CREATE TABLE `menus` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `menus`;
+CREATE TABLE IF NOT EXISTS `menus` (
+  `id` int UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1042,20 +1147,21 @@ CREATE TABLE `menus` (
 -- Structure de la table `menu_items`
 --
 
-CREATE TABLE `menu_items` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `menu_id` int(10) UNSIGNED DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `url` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `target` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '_self',
-  `icon_class` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `color` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parent_id` int(11) DEFAULT NULL,
-  `order` int(11) NOT NULL,
+DROP TABLE IF EXISTS `menu_items`;
+CREATE TABLE IF NOT EXISTS `menu_items` (
+  `id` int UNSIGNED NOT NULL,
+  `menu_id` int UNSIGNED DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `target` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '_self',
+  `icon_class` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parent_id` int DEFAULT NULL,
+  `order` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  `route` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `parameters` text COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `route` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `parameters` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1064,19 +1170,21 @@ CREATE TABLE `menu_items` (
 -- Structure de la table `messages`
 --
 
-CREATE TABLE `messages` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `read` int(11) NOT NULL DEFAULT 0,
+DROP TABLE IF EXISTS `messages`;
+CREATE TABLE IF NOT EXISTS `messages` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `libelle` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `read` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `salon_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED DEFAULT NULL,
+  `salon_id` bigint UNSIGNED DEFAULT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `messages`
@@ -1098,10 +1206,11 @@ INSERT INTO `messages` (`id`, `libelle`, `read`, `created_at`, `updated_at`, `de
 -- Structure de la table `migrations`
 --
 
-CREATE TABLE `migrations` (
-  `id` int(11) NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
+DROP TABLE IF EXISTS `migrations`;
+CREATE TABLE IF NOT EXISTS `migrations` (
+  `id` int NOT NULL,
+  `migration` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1179,18 +1288,19 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- Structure de la table `news`
 --
 
-CREATE TABLE `news` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `contenu` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `news`;
+CREATE TABLE IF NOT EXISTS `news` (
+  `id` bigint UNSIGNED NOT NULL,
+  `titre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `contenu` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1199,36 +1309,29 @@ CREATE TABLE `news` (
 -- Structure de la table `newsletters`
 --
 
-CREATE TABLE `newsletters` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+DROP TABLE IF EXISTS `newsletters`;
+CREATE TABLE IF NOT EXISTS `newsletters` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `subject` varchar(1000) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `destination` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `type` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL DEFAULT 5,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL DEFAULT '5',
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `newsletters`
 --
 
-INSERT INTO `newsletters` (`id`, `email`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
-(1, 'roger@gmail.com', '2022-03-10 09:12:14', '2022-03-10 08:12:39', '2022-03-10 08:12:39', 1, 1, 2, NULL),
-(2, NULL, '2022-07-26 12:20:15', '2022-07-26 12:20:15', NULL, NULL, NULL, 3, 41),
-(3, NULL, '2022-07-26 12:32:12', '2022-07-26 12:32:12', NULL, NULL, NULL, 3, 42),
-(4, NULL, '2022-07-26 20:53:40', '2022-07-26 20:53:40', NULL, NULL, NULL, 3, 43),
-(5, NULL, '2022-07-26 21:08:39', '2022-07-26 21:08:39', NULL, NULL, NULL, 3, 44),
-(6, NULL, '2022-09-28 22:47:30', '2022-09-28 22:47:30', NULL, NULL, NULL, 3, 70),
-(7, NULL, '2022-09-28 22:48:24', '2022-09-28 22:48:24', NULL, NULL, NULL, 3, 71),
-(8, NULL, '2022-10-07 19:41:11', '2022-10-07 19:41:11', NULL, NULL, NULL, 3, 83),
-(9, NULL, '2022-10-20 23:21:21', '2022-10-20 23:21:21', NULL, NULL, NULL, 3, 90),
-(10, NULL, '2022-10-20 23:24:42', '2022-10-20 23:24:42', NULL, NULL, NULL, 3, 91),
-(11, NULL, '2022-12-09 15:09:32', '2022-12-09 15:09:32', NULL, NULL, NULL, 3, 93),
-(12, NULL, '2022-12-13 16:04:11', '2022-12-13 16:04:11', NULL, NULL, NULL, 3, 94),
-(13, NULL, '2022-12-13 16:42:25', '2022-12-13 16:42:25', NULL, NULL, NULL, 3, 95);
+INSERT INTO `newsletters` (`id`, `subject`, `message`, `destination`, `type`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
+(1, 'Test', '<p><strong>Testing </strong>???</p>', '[\"77\",\"96\",\"85\",\"88\",\"93\"]', NULL, '2023-05-04 12:18:17', '2023-05-04 15:30:32', NULL, NULL, NULL, 3, 96);
 
 -- --------------------------------------------------------
 
@@ -1236,20 +1339,22 @@ INSERT INTO `newsletters` (`id`, `email`, `created_at`, `updated_at`, `deleted_a
 -- Structure de la table `notifications`
 --
 
-CREATE TABLE `notifications` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `public` int(11) NOT NULL DEFAULT 0,
-  `type` int(11) DEFAULT NULL,
-  `notification_id` int(11) DEFAULT NULL,
+DROP TABLE IF EXISTS `notifications`;
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `public` int NOT NULL DEFAULT '0',
+  `type` int DEFAULT NULL,
+  `notification_id` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED DEFAULT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `notifications`
@@ -1299,15 +1404,16 @@ INSERT INTO `notifications` (`id`, `message`, `public`, `type`, `notification_id
 -- Structure de la table `options`
 --
 
-CREATE TABLE `options` (
-  `id` int(11) NOT NULL,
-  `paquet_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `options`;
+CREATE TABLE IF NOT EXISTS `options` (
+  `id` int NOT NULL,
+  `paquet_id` int NOT NULL,
+  `user_id` int NOT NULL,
   `temps_option` time NOT NULL,
   `temps_restant` time NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -1315,18 +1421,19 @@ CREATE TABLE `options` (
 -- Structure de la table `pages`
 --
 
-CREATE TABLE `pages` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `nom` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `pages`;
+CREATE TABLE IF NOT EXISTS `pages` (
+  `id` bigint UNSIGNED NOT NULL,
+  `nom` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_titre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1335,28 +1442,30 @@ CREATE TABLE `pages` (
 -- Structure de la table `paquets`
 --
 
-CREATE TABLE `paquets` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `nombre_enchere` int(11) NOT NULL,
-  `duree` int(11) NOT NULL,
-  `treve` int(11) NOT NULL,
-  `guerre` int(11) NOT NULL,
-  `prix` int(11) NOT NULL,
-  `prix_intervalle` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `min` int(11) DEFAULT NULL,
-  `click` int(11) DEFAULT NULL,
+DROP TABLE IF EXISTS `paquets`;
+CREATE TABLE IF NOT EXISTS `paquets` (
+  `id` bigint UNSIGNED NOT NULL,
+  `libelle` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_enchere` int NOT NULL,
+  `duree` int NOT NULL,
+  `treve` int NOT NULL,
+  `guerre` int NOT NULL,
+  `prix` int NOT NULL,
+  `prix_intervalle` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `min` int DEFAULT NULL,
+  `click` int DEFAULT NULL,
   `roi` time(2) NOT NULL,
   `foudre` time(2) NOT NULL,
   `bouclier` time(2) NOT NULL,
-  `max` int(11) DEFAULT NULL,
+  `max` int DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1377,9 +1486,10 @@ INSERT INTO `paquets` (`id`, `libelle`, `nombre_enchere`, `duree`, `treve`, `gue
 -- Structure de la table `password_resets`
 --
 
-CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `password_resets`;
+CREATE TABLE IF NOT EXISTS `password_resets` (
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -1397,17 +1507,18 @@ INSERT INTO `password_resets` (`email`, `token`, `created_at`) VALUES
 -- Structure de la table `pays`
 --
 
-CREATE TABLE `pays` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `index` varchar(5) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `pays`;
+CREATE TABLE IF NOT EXISTS `pays` (
+  `id` bigint UNSIGNED NOT NULL,
+  `libelle` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `index` varchar(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1416,10 +1527,11 @@ CREATE TABLE `pays` (
 -- Structure de la table `permissions`
 --
 
-CREATE TABLE `permissions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `table_name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+DROP TABLE IF EXISTS `permissions`;
+CREATE TABLE IF NOT EXISTS `permissions` (
+  `id` bigint UNSIGNED NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `table_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1430,9 +1542,10 @@ CREATE TABLE `permissions` (
 -- Structure de la table `permission_role`
 --
 
-CREATE TABLE `permission_role` (
-  `permission_id` bigint(20) UNSIGNED NOT NULL,
-  `role_id` bigint(20) UNSIGNED NOT NULL
+DROP TABLE IF EXISTS `permission_role`;
+CREATE TABLE IF NOT EXISTS `permission_role` (
+  `permission_id` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1441,13 +1554,14 @@ CREATE TABLE `permission_role` (
 -- Structure de la table `personal_access_tokens`
 --
 
-CREATE TABLE `personal_access_tokens` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `tokenable_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `tokenable_id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abilities` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+DROP TABLE IF EXISTS `personal_access_tokens`;
+CREATE TABLE IF NOT EXISTS `personal_access_tokens` (
+  `id` bigint UNSIGNED NOT NULL,
+  `tokenable_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tokenable_id` bigint UNSIGNED NOT NULL,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abilities` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
   `last_used_at` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -1459,30 +1573,32 @@ CREATE TABLE `personal_access_tokens` (
 -- Structure de la table `pivot_bideur_encheres`
 --
 
-CREATE TABLE `pivot_bideur_encheres` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `valeur` int(11) NOT NULL DEFAULT 0,
-  `click_seconde` int(11) NOT NULL DEFAULT 0,
-  `roi` int(11) NOT NULL DEFAULT 0,
-  `foudre` int(11) NOT NULL DEFAULT 0,
-  `clicks` int(11) NOT NULL DEFAULT 0,
-  `bouclier` int(11) NOT NULL DEFAULT 0,
-  `favoris` int(11) NOT NULL DEFAULT 0,
+DROP TABLE IF EXISTS `pivot_bideur_encheres`;
+CREATE TABLE IF NOT EXISTS `pivot_bideur_encheres` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `valeur` int NOT NULL DEFAULT '0',
+  `click_seconde` int NOT NULL DEFAULT '0',
+  `roi` int NOT NULL DEFAULT '0',
+  `foudre` int NOT NULL DEFAULT '0',
+  `clicks` int NOT NULL DEFAULT '0',
+  `bouclier` int NOT NULL DEFAULT '0',
+  `favoris` int NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `enchere_id` bigint(20) UNSIGNED NOT NULL,
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `enchere_id` bigint UNSIGNED NOT NULL,
   `time_bid_auto` timestamp NULL DEFAULT NULL,
-  `automatique` int(11) NOT NULL DEFAULT 0,
-  `temps_bid_auto` int(11) DEFAULT 0,
-  `time_bouclier` int(11) DEFAULT NULL,
+  `automatique` int NOT NULL DEFAULT '0',
+  `temps_bid_auto` int DEFAULT '0',
+  `time_bouclier` int DEFAULT NULL,
   `time_roi` timestamp NULL DEFAULT NULL,
-  `time_foudre` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `time_foudre` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=114 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `pivot_bideur_encheres`
@@ -1505,17 +1621,18 @@ INSERT INTO `pivot_bideur_encheres` (`id`, `valeur`, `click_seconde`, `roi`, `fo
 -- Structure de la table `pivot_bideur_paquets`
 --
 
-CREATE TABLE `pivot_bideur_paquets` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `state` int(11) NOT NULL DEFAULT 1,
+DROP TABLE IF EXISTS `pivot_bideur_paquets`;
+CREATE TABLE IF NOT EXISTS `pivot_bideur_paquets` (
+  `id` bigint UNSIGNED NOT NULL,
+  `state` int NOT NULL DEFAULT '1',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `paquet_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  `paquet_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1532,29 +1649,31 @@ INSERT INTO `pivot_bideur_paquets` (`id`, `state`, `created_at`, `updated_at`, `
 -- Structure de la table `pivot_clients_salons`
 --
 
-CREATE TABLE `pivot_clients_salons` (
-  `id` bigint(20) UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `pivot_clients_salons`;
+CREATE TABLE IF NOT EXISTS `pivot_clients_salons` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL DEFAULT 3,
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `salon_id` bigint(20) UNSIGNED NOT NULL,
-  `enchere_id` int(11) NOT NULL,
-  `valeur` int(11) NOT NULL,
-  `roi` int(11) NOT NULL DEFAULT 0,
-  `foudre` int(11) NOT NULL DEFAULT 0,
-  `clicks` int(11) NOT NULL DEFAULT 0,
-  `bouclier` int(11) NOT NULL DEFAULT 0,
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL DEFAULT '3',
+  `user_id` bigint UNSIGNED NOT NULL,
+  `salon_id` bigint UNSIGNED NOT NULL,
+  `enchere_id` int NOT NULL,
+  `valeur` int NOT NULL,
+  `roi` int NOT NULL DEFAULT '0',
+  `foudre` int NOT NULL DEFAULT '0',
+  `clicks` int NOT NULL DEFAULT '0',
+  `bouclier` int NOT NULL DEFAULT '0',
   `time_bouclier` timestamp NULL DEFAULT NULL,
   `time_roi` timestamp NULL DEFAULT NULL,
   `time_foudre` timestamp NULL DEFAULT NULL,
   `time_bid_auto` timestamp NULL DEFAULT NULL,
-  `montant` int(11) DEFAULT NULL,
-  `creator` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `montant` int DEFAULT NULL,
+  `creator` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1562,25 +1681,28 @@ CREATE TABLE `pivot_clients_salons` (
 -- Structure de la table `politiques`
 --
 
-CREATE TABLE `politiques` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `titre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `content` text COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `politiques`;
+CREATE TABLE IF NOT EXISTS `politiques` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `titre` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `content` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `politiques`
 --
 
 INSERT INTO `politiques` (`id`, `titre`, `content`, `created_at`, `updated_at`, `deleted_at`, `id_updated_at`, `id_deleted_at`, `statut_id`, `user_id`) VALUES
-(1, 'dd', 'dad', '2022-03-24 00:43:51', '2022-03-24 00:43:51', NULL, NULL, NULL, 3, 1);
+(1, 'dd', 'dad', '2022-03-24 00:43:51', '2022-03-24 00:43:51', NULL, NULL, NULL, 3, 1),
+(2, 'testing', 'testing', '2023-05-04 09:54:22', '2023-05-04 10:00:21', NULL, NULL, NULL, 3, 96);
 
 -- --------------------------------------------------------
 
@@ -1588,20 +1710,21 @@ INSERT INTO `politiques` (`id`, `titre`, `content`, `created_at`, `updated_at`, 
 -- Structure de la table `posts`
 --
 
-CREATE TABLE `posts` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `author_id` int(11) NOT NULL,
-  `category_id` int(11) DEFAULT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `seo_title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `excerpt` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `image` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `slug` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `meta_description` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `meta_keywords` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `status` enum('PUBLISHED','DRAFT','PENDING') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'DRAFT',
-  `featured` tinyint(1) NOT NULL DEFAULT 0,
+DROP TABLE IF EXISTS `posts`;
+CREATE TABLE IF NOT EXISTS `posts` (
+  `id` int UNSIGNED NOT NULL,
+  `author_id` int NOT NULL,
+  `category_id` int DEFAULT NULL,
+  `title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `seo_title` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `excerpt` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `body` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `slug` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `meta_description` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `meta_keywords` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `status` enum('PUBLISHED','DRAFT','PENDING') CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'DRAFT',
+  `featured` tinyint(1) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -1612,17 +1735,18 @@ CREATE TABLE `posts` (
 -- Structure de la table `promotions`
 --
 
-CREATE TABLE `promotions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `sujet` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `message` text COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `promotions`;
+CREATE TABLE IF NOT EXISTS `promotions` (
+  `id` bigint UNSIGNED NOT NULL,
+  `sujet` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1631,16 +1755,17 @@ CREATE TABLE `promotions` (
 -- Structure de la table `rois`
 --
 
-CREATE TABLE `rois` (
-  `id` int(11) NOT NULL,
-  `paquet_id` int(11) NOT NULL,
-  `prix` int(11) NOT NULL,
+DROP TABLE IF EXISTS `rois`;
+CREATE TABLE IF NOT EXISTS `rois` (
+  `id` int NOT NULL,
+  `paquet_id` int NOT NULL,
+  `prix` int NOT NULL,
   `prix_deblocage` float NOT NULL,
-  `bid_deblocage` int(11) NOT NULL,
-  `bid_prix` int(11) NOT NULL,
+  `bid_deblocage` int NOT NULL,
+  `bid_prix` int NOT NULL,
   `temps_blocage` time NOT NULL,
-  `benefice` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `benefice` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `rois`
@@ -1660,13 +1785,15 @@ INSERT INTO `rois` (`id`, `paquet_id`, `prix`, `prix_deblocage`, `bid_deblocage`
 -- Structure de la table `roles`
 --
 
-CREATE TABLE `roles` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `roles`;
+CREATE TABLE IF NOT EXISTS `roles` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `roles`
@@ -1685,22 +1812,24 @@ INSERT INTO `roles` (`id`, `name`, `display_name`, `created_at`, `updated_at`) V
 -- Structure de la table `salons`
 --
 
-CREATE TABLE `salons` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` varchar(15) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `limite` int(11) DEFAULT 20,
+DROP TABLE IF EXISTS `salons`;
+CREATE TABLE IF NOT EXISTS `salons` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `libelle` varchar(15) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `limite` int DEFAULT '20',
   `debut_enchere` time DEFAULT NULL,
   `fin_enchere` timestamp NULL DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `article_id` bigint(20) UNSIGNED NOT NULL,
-  `state` int(11) NOT NULL DEFAULT 0,
-  `montant` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `article_id` bigint UNSIGNED NOT NULL,
+  `state` int NOT NULL DEFAULT '0',
+  `montant` int DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -1708,23 +1837,25 @@ CREATE TABLE `salons` (
 -- Structure de la table `salon_likes`
 --
 
-CREATE TABLE `salon_likes` (
-  `id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `salon_id` int(11) NOT NULL,
-  `favoris` int(11) NOT NULL,
-  `enchere_id` int(11) NOT NULL,
-  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `created_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+DROP TABLE IF EXISTS `salon_likes`;
+CREATE TABLE IF NOT EXISTS `salon_likes` (
+  `id` int NOT NULL,
+  `user_id` int NOT NULL,
+  `salon_id` int NOT NULL,
+  `favoris` int NOT NULL,
+  `enchere_id` int NOT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `created_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Déchargement des données de la table `salon_likes`
 --
 
-INSERT INTO `salon_likes` (`id`, `user_id`, `salon_id`, `favoris`, `enchere_id`, `updated_at`, `created_at`) VALUES
-(1, 54, 3, 1, 3, '2023-05-02 09:32:00', '2022-08-29 21:51:08'),
-(2, 54, 2, 0, 2, '2023-05-02 09:32:00', '2022-08-29 22:24:42');
+INSERT INTO `salon_likes` (`id`, `user_id`, `salon_id`, `favoris`, `enchere_id`, `created_at`) VALUES
+(1, 54, 3, 1, 3, '2022-08-29 21:51:08'),
+(2, 54, 2, 0, 2, '2022-08-29 22:24:42');
 
 -- --------------------------------------------------------
 
@@ -1732,24 +1863,26 @@ INSERT INTO `salon_likes` (`id`, `user_id`, `salon_id`, `favoris`, `enchere_id`,
 -- Structure de la table `sanctions`
 --
 
-CREATE TABLE `sanctions` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `paquet_id` int(11) NOT NULL,
-  `enchere_id` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `santance` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `sanctions`;
+CREATE TABLE IF NOT EXISTS `sanctions` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `paquet_id` int NOT NULL,
+  `enchere_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `santance` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `duree` time NOT NULL,
-  `tous` int(11) NOT NULL DEFAULT 0,
-  `suspendu_by` int(11) NOT NULL,
+  `tous` int NOT NULL DEFAULT '0',
+  `suspendu_by` int NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `statut` int(11) DEFAULT NULL,
-  `salon_id` int(11) DEFAULT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED DEFAULT NULL,
+  `statut` int DEFAULT NULL,
+  `salon_id` int DEFAULT NULL,
+  `user_id` bigint UNSIGNED NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=240 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `sanctions`
@@ -1923,13 +2056,14 @@ INSERT INTO `sanctions` (`id`, `paquet_id`, `enchere_id`, `santance`, `duree`, `
 -- Structure de la table `sessions`
 --
 
-CREATE TABLE `sessions` (
-  `id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `ip_address` varchar(45) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `user_agent` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payload` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `last_activity` int(11) NOT NULL
+DROP TABLE IF EXISTS `sessions`;
+CREATE TABLE IF NOT EXISTS `sessions` (
+  `id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint UNSIGNED DEFAULT NULL,
+  `ip_address` varchar(45) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_agent` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `payload` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `last_activity` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -1949,15 +2083,16 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 -- Structure de la table `settings`
 --
 
-CREATE TABLE `settings` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `key` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `display_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `details` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `order` int(11) NOT NULL DEFAULT 1,
-  `group` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+DROP TABLE IF EXISTS `settings`;
+CREATE TABLE IF NOT EXISTS `settings` (
+  `id` int UNSIGNED NOT NULL,
+  `key` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `display_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `details` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `order` int NOT NULL DEFAULT '1',
+  `group` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1966,17 +2101,18 @@ CREATE TABLE `settings` (
 -- Structure de la table `sources`
 --
 
-CREATE TABLE `sources` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `nom` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `supplementaire` varchar(1) COLLATE utf8mb4_unicode_ci DEFAULT '0',
+DROP TABLE IF EXISTS `sources`;
+CREATE TABLE IF NOT EXISTS `sources` (
+  `id` bigint UNSIGNED NOT NULL,
+  `nom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `supplementaire` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -1985,14 +2121,15 @@ CREATE TABLE `sources` (
 -- Structure de la table `statuts`
 --
 
-CREATE TABLE `statuts` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `statuts`;
+CREATE TABLE IF NOT EXISTS `statuts` (
+  `id` bigint UNSIGNED NOT NULL,
+  `libelle` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -2010,13 +2147,14 @@ INSERT INTO `statuts` (`id`, `libelle`, `created_at`, `updated_at`, `deleted_at`
 -- Structure de la table `translations`
 --
 
-CREATE TABLE `translations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `table_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `column_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `foreign_key` int(10) UNSIGNED NOT NULL,
-  `locale` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `value` text COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `translations`;
+CREATE TABLE IF NOT EXISTS `translations` (
+  `id` int UNSIGNED NOT NULL,
+  `table_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `column_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foreign_key` int UNSIGNED NOT NULL,
+  `locale` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -2027,16 +2165,17 @@ CREATE TABLE `translations` (
 -- Structure de la table `types_comptes`
 --
 
-CREATE TABLE `types_comptes` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` varchar(11) COLLATE utf8mb4_unicode_ci NOT NULL,
+DROP TABLE IF EXISTS `types_comptes`;
+CREATE TABLE IF NOT EXISTS `types_comptes` (
+  `id` bigint UNSIGNED NOT NULL,
+  `libelle` varchar(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2045,17 +2184,18 @@ CREATE TABLE `types_comptes` (
 -- Structure de la table `types_coupons`
 --
 
-CREATE TABLE `types_coupons` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `libelle` varchar(25) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+DROP TABLE IF EXISTS `types_coupons`;
+CREATE TABLE IF NOT EXISTS `types_coupons` (
+  `id` bigint UNSIGNED NOT NULL,
+  `libelle` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED NOT NULL,
-  `user_id` bigint(20) UNSIGNED NOT NULL
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED NOT NULL,
+  `user_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -2064,36 +2204,38 @@ CREATE TABLE `types_coupons` (
 -- Structure de la table `users`
 --
 
-CREATE TABLE `users` (
-  `id` bigint(20) UNSIGNED NOT NULL,
-  `role_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `nom` varchar(25) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `prenom` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `username` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `provider_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `telephone` varchar(14) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `sexe` varchar(8) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'users/default.png',
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE IF NOT EXISTS `users` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
+  `role_id` bigint UNSIGNED DEFAULT NULL,
+  `nom` varchar(25) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `prenom` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `username` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telephone` varchar(14) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sexe` varchar(8) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT 'users/default.png',
   `date_naissance` date DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `two_factor_secret` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `two_factor_recovery_codes` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `settings` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `current_team_id` bigint(20) UNSIGNED DEFAULT NULL,
-  `profile_photo_path` varchar(2048) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `two_factor_secret` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `two_factor_recovery_codes` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `remember_token` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `settings` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,
+  `current_team_id` bigint UNSIGNED DEFAULT NULL,
+  `profile_photo_path` varchar(2048) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `deleted_at` timestamp NULL DEFAULT NULL,
-  `id_updated_at` int(11) DEFAULT NULL,
-  `id_deleted_at` int(11) DEFAULT NULL,
-  `statut_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `id_updated_at` int DEFAULT NULL,
+  `id_deleted_at` int DEFAULT NULL,
+  `statut_id` bigint UNSIGNED DEFAULT NULL,
   `user_conneted_at` timestamp NULL DEFAULT NULL,
   `last_seen` timestamp NULL DEFAULT NULL,
-  `etat_civil` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  `etat_civil` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Déchargement des données de la table `users`
@@ -2119,7 +2261,7 @@ INSERT INTO `users` (`id`, `role_id`, `nom`, `prenom`, `username`, `provider_id`
 (93, 5, 'JHFDKGFJ', NULL, 'HD', NULL, '0999999991', '', NULL, '', NULL, NULL, '$2y$10$57c1fIgzvcvPPY.IR.hsWu1avhRqBVutQvGEszmn9gpIiO0yA5TOS', NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-09 15:09:32', '2022-12-09 16:25:14', NULL, NULL, NULL, 3, '2022-12-09 15:09:32', '2022-12-09 16:25:14', NULL),
 (94, 5, 'G', NULL, 'O', NULL, '88888888888888', '', NULL, '', NULL, NULL, '$2y$10$AotGy9/SF5Q/2n5bxIQ3O.u6DqY5BXLGIW0PfBOyT6/MJgcJ8k6Rm', NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-13 16:04:11', '2022-12-14 13:25:28', NULL, NULL, NULL, 3, '2022-12-13 16:04:12', '2022-12-14 13:25:28', NULL),
 (95, 5, 'Ntumba', NULL, 'Jayntmb', NULL, '990579420', '', NULL, '', NULL, NULL, '$2y$10$lPyZajwZb6utwRd0OWF5gu7NwEgJrJINk61eKmZnJnF7JAiGwKauC', NULL, NULL, NULL, NULL, NULL, NULL, '2022-12-13 16:42:25', '2022-12-13 16:46:19', NULL, NULL, NULL, 3, '2022-12-13 16:42:26', '2022-12-13 16:46:19', NULL),
-(96, 1, 'Lord', NULL, 'Lordyke12', NULL, '828580212', '', NULL, '', NULL, NULL, '$2y$10$3ajpHSR5hm3oj8qT2J3nTe46hLfs2htLCviddhKpUSOwLbEfB9KLW', NULL, NULL, NULL, NULL, NULL, NULL, '2023-04-24 14:25:13', '2023-05-03 14:57:44', NULL, NULL, NULL, 3, '2023-04-28 09:51:43', '2023-05-03 14:57:44', NULL),
+(96, 1, 'Lord', NULL, 'Lordyke12', NULL, '828580212', '', NULL, '', NULL, NULL, '$2y$10$3ajpHSR5hm3oj8qT2J3nTe46hLfs2htLCviddhKpUSOwLbEfB9KLW', NULL, NULL, NULL, NULL, NULL, NULL, '2023-04-24 14:25:13', '2023-05-04 15:31:01', NULL, NULL, NULL, 3, '2023-04-28 09:51:43', '2023-05-04 15:31:01', NULL),
 (97, 3, 'Siméon zilou', NULL, 'simszilou', NULL, '0903600740', 'Masculin', 'simszilou@conbid.cd', '0903600740.webp', '1989-04-28', NULL, '$2y$10$f8krhlLM/N7oVx/hIU5wH.kqEhEa7KDheYO20W5Q2MFm7fpLlagCK', NULL, NULL, NULL, NULL, NULL, NULL, '2023-04-27 11:48:19', '2023-04-27 11:48:19', NULL, NULL, NULL, 3, NULL, NULL, NULL),
 (98, 4, 'Bla', 'Lenny', 'bidens008', NULL, '0903600749', 'Masculin', 'lennybla@pharmansdrc.com', '98.webp', '1999-03-29', NULL, '$2y$10$HqrOw6lU5J9hybZbybxc0eVRUTlGGE9SwsTRbVBrTcoal15SDzwwK', NULL, NULL, NULL, NULL, NULL, NULL, '2023-04-28 07:34:38', '2023-04-28 10:36:26', NULL, 96, NULL, 3, NULL, NULL, NULL),
 (99, 5, 'Paul', 'Jean', 'jp243', NULL, '+24390389088', 'Masculin', NULL, '99.webp', '1993-04-14', NULL, '$2y$10$g3eBQjgBIEB/AktrZp5/.etGj8FmE9yZRkYWwJx6d7RuQnJ7wLCrK', NULL, NULL, NULL, NULL, NULL, NULL, '2023-04-28 09:51:39', '2023-04-28 11:05:11', NULL, 96, NULL, 3, NULL, NULL, NULL);
@@ -2130,464 +2272,9 @@ INSERT INTO `users` (`id`, `role_id`, `nom`, `prenom`, `username`, `provider_id`
 -- Structure de la table `user_roles`
 --
 
-CREATE TABLE `user_roles` (
-  `user_id` bigint(20) UNSIGNED NOT NULL,
-  `role_id` bigint(20) UNSIGNED NOT NULL
+DROP TABLE IF EXISTS `user_roles`;
+CREATE TABLE IF NOT EXISTS `user_roles` (
+  `user_id` bigint UNSIGNED NOT NULL,
+  `role_id` bigint UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Index pour les tables déchargées
---
-
---
--- Index pour la table `administrateurs`
---
-ALTER TABLE `administrateurs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `administrateurs_statut_id_foreign` (`statut_id`),
-  ADD KEY `administrateurs_user_id_foreign` (`user_id`),
-  ADD KEY `administrateurs_administrateur_id_foreign` (`administrateur_id`);
-
---
--- Index pour la table `articles`
---
-ALTER TABLE `articles`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `articles_code_produit_unique` (`code_produit`),
-  ADD KEY `articles_statut_id_foreign` (`statut_id`),
-  ADD KEY `articles_user_id_foreign` (`user_id`),
-  ADD KEY `articles_categorie_id_foreign` (`categorie_id`),
-  ADD KEY `articles_paquet_id_foreign` (`paquet_id`);
-
---
--- Index pour la table `bideurs`
---
-ALTER TABLE `bideurs`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `bideurs_statut_id_foreign` (`statut_id`),
-  ADD KEY `bideurs_user_id_foreign` (`user_id`),
-  ADD KEY `bideurs_paquet_id_foreign` (`paquet_id`);
-
---
--- Index pour la table `bids`
---
-ALTER TABLE `bids`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `bids_statut_id_foreign` (`statut_id`),
-  ADD KEY `bids_user_id_foreign` (`user_id`);
-
---
--- Index pour la table `bid_statuts`
---
-ALTER TABLE `bid_statuts`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `boucliers`
---
-ALTER TABLE `boucliers`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `categories`
---
-ALTER TABLE `categories`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `categories_statut_id_foreign` (`statut_id`),
-  ADD KEY `categories_user_id_foreign` (`user_id`);
-
---
--- Index pour la table `chats`
---
-ALTER TABLE `chats`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `chats_statut_id_foreign` (`statut_id`),
-  ADD KEY `chats_user_id_foreign` (`user_id`);
-
---
--- Index pour la table `chat_encheres`
---
-ALTER TABLE `chat_encheres`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `clicks`
---
-ALTER TABLE `clicks`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `click_autos`
---
-ALTER TABLE `click_autos`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `communiques`
---
-ALTER TABLE `communiques`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `communiques_statut_id_foreign` (`statut_id`),
-  ADD KEY `communiques_user_id_foreign` (`user_id`);
-
---
--- Index pour la table `comptes`
---
-ALTER TABLE `comptes`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `comptes_statut_id_foreign` (`statut_id`),
-  ADD KEY `comptes_user_id_foreign` (`user_id`),
-  ADD KEY `comptes_types_compte_id_foreign` (`types_compte_id`);
-
---
--- Index pour la table `conditions`
---
-ALTER TABLE `conditions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `contacts`
---
-ALTER TABLE `contacts`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `coupons`
---
-ALTER TABLE `coupons`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `coupons_statut_id_foreign` (`statut_id`),
-  ADD KEY `coupons_user_id_foreign` (`user_id`),
-  ADD KEY `coupons_types_coupon_id_foreign` (`types_coupon_id`);
-
---
--- Index pour la table `data_rows`
---
-ALTER TABLE `data_rows`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `data_rows_data_type_id_foreign` (`data_type_id`);
-
---
--- Index pour la table `data_types`
---
-ALTER TABLE `data_types`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `demandes`
---
-ALTER TABLE `demandes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `departements`
---
-ALTER TABLE `departements`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `departements_statut_id_foreign` (`statut_id`),
-  ADD KEY `departements_user_id_foreign` (`user_id`);
-
---
--- Index pour la table `encheregagners`
---
-ALTER TABLE `encheregagners`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `encheres`
---
-ALTER TABLE `encheres`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `envoies`
---
-ALTER TABLE `envoies`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `failed_jobs`
---
-ALTER TABLE `failed_jobs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `faqs`
---
-ALTER TABLE `faqs`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `favoris`
---
-ALTER TABLE `favoris`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `gagnants`
---
-ALTER TABLE `gagnants`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `historiques`
---
-ALTER TABLE `historiques`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `images`
---
-ALTER TABLE `images`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `messages`
---
-ALTER TABLE `messages`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `newsletters`
---
-ALTER TABLE `newsletters`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `notifications`
---
-ALTER TABLE `notifications`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `paquets`
---
-ALTER TABLE `paquets`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `pivot_bideur_encheres`
---
-ALTER TABLE `pivot_bideur_encheres`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `pivot_clients_salons`
---
-ALTER TABLE `pivot_clients_salons`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `roles`
---
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `salons`
---
-ALTER TABLE `salons`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `salon_likes`
---
-ALTER TABLE `salon_likes`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `sanctions`
---
-ALTER TABLE `sanctions`
-  ADD PRIMARY KEY (`id`);
-
---
--- Index pour la table `users`
---
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
-
---
--- AUTO_INCREMENT pour les tables déchargées
---
-
---
--- AUTO_INCREMENT pour la table `administrateurs`
---
-ALTER TABLE `administrateurs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT pour la table `articles`
---
-ALTER TABLE `articles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
-
---
--- AUTO_INCREMENT pour la table `bideurs`
---
-ALTER TABLE `bideurs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
-
---
--- AUTO_INCREMENT pour la table `bids`
---
-ALTER TABLE `bids`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT pour la table `bid_statuts`
---
-ALTER TABLE `bid_statuts`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT pour la table `boucliers`
---
-ALTER TABLE `boucliers`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT pour la table `categories`
---
-ALTER TABLE `categories`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT pour la table `chats`
---
-ALTER TABLE `chats`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT pour la table `chat_encheres`
---
-ALTER TABLE `chat_encheres`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
---
--- AUTO_INCREMENT pour la table `clicks`
---
-ALTER TABLE `clicks`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT pour la table `communiques`
---
-ALTER TABLE `communiques`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `comptes`
---
-ALTER TABLE `comptes`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT pour la table `contacts`
---
-ALTER TABLE `contacts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT pour la table `demandes`
---
-ALTER TABLE `demandes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `encheregagners`
---
-ALTER TABLE `encheregagners`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=802;
-
---
--- AUTO_INCREMENT pour la table `encheres`
---
-ALTER TABLE `encheres`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `envoies`
---
-ALTER TABLE `envoies`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT pour la table `favoris`
---
-ALTER TABLE `favoris`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=129;
-
---
--- AUTO_INCREMENT pour la table `gagnants`
---
-ALTER TABLE `gagnants`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT pour la table `historiques`
---
-ALTER TABLE `historiques`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
-
---
--- AUTO_INCREMENT pour la table `images`
---
-ALTER TABLE `images`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
-
---
--- AUTO_INCREMENT pour la table `messages`
---
-ALTER TABLE `messages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT pour la table `newsletters`
---
-ALTER TABLE `newsletters`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT pour la table `notifications`
---
-ALTER TABLE `notifications`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
-
---
--- AUTO_INCREMENT pour la table `pivot_bideur_encheres`
---
-ALTER TABLE `pivot_bideur_encheres`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=114;
-
---
--- AUTO_INCREMENT pour la table `pivot_clients_salons`
---
-ALTER TABLE `pivot_clients_salons`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
-
---
--- AUTO_INCREMENT pour la table `roles`
---
-ALTER TABLE `roles`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT pour la table `salons`
---
-ALTER TABLE `salons`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=45;
-
---
--- AUTO_INCREMENT pour la table `sanctions`
---
-ALTER TABLE `sanctions`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=240;
-
---
--- AUTO_INCREMENT pour la table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=100;
 COMMIT;

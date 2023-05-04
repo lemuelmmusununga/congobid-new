@@ -6,7 +6,7 @@
 @section('body')
 
     <div class="row justify-content-center">
-        <div class="col-sm-3 col-md-4 my-5">
+        <div class="col">
             <div class="page-inner">
                 <div class="card card-profile">
                     <div class="card-header" style="background-image: url('{{ asset('images/profil/'.$agent->avatar) }}')">

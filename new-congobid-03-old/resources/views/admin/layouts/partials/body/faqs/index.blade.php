@@ -4,11 +4,11 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Liste des faqs</h2>
+                    <h2 class="text-white pb-2 fw-bold">Liste de la FAQS </h2>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
-                    <a href="{{ route('faqs.create',) }}" class="btn btn-white btn-border btn-round mr-2">Ajouter un
-                        une question</a>
+                    <a href="{{ route('faqs.create',) }}" class="btn btn-white btn-border btn-round mr-2">Ajouter une
+                        FAQ</a>
                 </div>
             </div>
         </div>
@@ -35,15 +35,22 @@
                                     <td>{{ substr($faq->questions, 0, 100) }} {{ strlen($faq->questions) >= 100 ? '...' : '' }}</td>
                                     <td>{{ substr($faq->reponses, 0, 100) }} {{ strlen($faq->reponses) >= 100 ? '...' : '' }}</td>
                                     <td>{{ $faq->user->nom }}</td>
-                                    <td>{{ $faq->statut->libelle }}</td>
+                                    @if ($faq->statut_id == '3')
+                                        <td class="text-success">{{ $faq->statut->libelle ?? '' }}</td>
+                                    @elseif ($faq->statut_id == '2')
+                                        <td class="text-danger">{{ $faq->statut->libelle ?? '' }}</td>
+                                    @else
+                                        <td class="text-warning">{{ $faq->statut->libelle ?? '' }}</td>
+                                    @endif
                                     <td>
-                                        <a href="{{ route('faqs.edit', [$faq->id]) }}">Editer</a> |
+                                        <a href="{{ route('faqs.show', [$faq->id]) }}" class="btn btn-sm btn-warning">Voir</a> |
+                                        <a href="{{ route('faqs.edit', [$faq->id]) }}" class="btn btn-sm btn-success">Editer</a> |
                                         @if ($faq->statut->id == 1)
-                                            <a href="{{ route('faqs.destroy', [$faq->user->id, 1]) }}">Activer</a>
+                                            <a href="{{ route('faqs.destroy', [$faq->user->id, 1]) }}" class="btn btn-sm btn-warning">Activer</a>
                                         @elseif ($faq->statut->id == 2)
-                                            <a href="{{ route('faqs.destroy', [$faq->user->id, 2]) }}">Réactiver</a>
+                                            <a href="{{ route('faqs.destroy', [$faq->user->id, 2]) }}" class="btn btn-sm btn-secondary">Réactiver</a>
                                         @elseif ($faq->statut->id == 3)
-                                            <a href="{{ route('faqs.destroy', [$faq->user->id, 3]) }}">Supprimer</a>
+                                            <a href="{{ route('faqs.destroy', [$faq->user->id, 3]) }}" class="btn btn-sm btn-danger">Supprimer</a>
                                         @endif
                                     </td>
                                 </tr>

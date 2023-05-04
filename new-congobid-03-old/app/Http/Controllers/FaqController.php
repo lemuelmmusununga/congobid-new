@@ -45,7 +45,7 @@ class FaqController extends Controller
      */
     public function store(Request $request)
     {
-        try{
+        try {
             // dd($request->libelle);
             $faq = Faq::create([
                 'questions' => $request->questions,
@@ -63,7 +63,8 @@ class FaqController extends Controller
             ]);
 
             return redirect()->route('faqs.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
+            dd($e);
             return back()->with('');
         }
     }
@@ -74,9 +75,14 @@ class FaqController extends Controller
      * @param  \App\Models\Faq  $faq
      * @return \Illuminate\Http\Response
      */
-    public function show(Faq $faq)
+    public function show($id)
     {
-        //
+        $faq = Faq::find($id);
+        $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
+        $statuts = Statut::orderBy('id', 'desc')->get();
+
+        return view('admin.layouts.partials.body.faqs.show', compact('faq', 'chats', 'statuts'));
+
     }
 
     /**
@@ -103,13 +109,13 @@ class FaqController extends Controller
      */
     public function update(Request $request, Faq $faq)
     {
-        try{
-            // dd($request->libelle);
+        try {
+            // dd($request);
             Faq::where('id', $request->faq_id)->update([
                 'questions' => $request->questions,
                 'reponses' => $request->reponses,
                 'statut_id' => $request->statut_id,
-                'user_id' => Auth::user()->id,
+                // 'user_id' => Auth::user()->id,
             ]);
 
             Historique::create([
@@ -121,7 +127,8 @@ class FaqController extends Controller
             ]);
 
             return redirect()->route('faqs.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
+            dd($e);
             return back()->with('');
         }
     }
@@ -134,7 +141,7 @@ class FaqController extends Controller
      */
     public function destroy($id, $state)
     {
-        try{
+        try {
             Faq::where('id', $id)->update([
                 'statut_id' => $state == '3' ? 2 : 3,
                 'deleted_at' => $state == '3' ? now() : NULL,
@@ -144,9 +151,9 @@ class FaqController extends Controller
 
             if ($state == 3) {
                 $action = 'Suppression d\'une question et réponse';
-            } else if($state == 2) {
+            } else if ($state == 2) {
                 $action = 'Réactivation d\'une question et réponse';
-            }else {
+            } else {
                 $action = 'Activation d\'une question et réponse';
             }
 
@@ -159,7 +166,7 @@ class FaqController extends Controller
             ]);
 
             return redirect()->route('faqs.index');
-        } catch(\Exception $e){
+        } catch (\Exception $e) {
             return back()->with('');
         }
     }

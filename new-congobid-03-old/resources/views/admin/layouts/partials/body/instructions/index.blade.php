@@ -22,6 +22,7 @@
                                 <th>#</th>
                                 <th>Titre</th>
                                 <th>Description</th>
+                                <th>Lien</th>
                                 <th>Ajouté par</th>
                                 <th>Statut</th>
                                 <th>Actions</th>
@@ -33,9 +34,11 @@
                                     <td> #{{ $key + 1 }} </td>
                                     <td>{{ $instruction->titre ?? '' }}</td>
                                     <td>{{ substr($instruction->description, 0, 100) }} {{ strlen($instruction->description) >= 100 ? '...' : '' }}</td>
+                                    <td>{{ $instruction->lien ?? '' }}</td>
                                     <td>{{ $instruction->user->nom ?? '' }}</td>
                                     <td>{{ $instruction->statut->libelle }}</td>
                                     <td>
+                                        <a href="{{ route('commentcamarche.show', [$instruction->id]) }}" class="btn btn-sm btn-warning">Voir</a> |
                                         <a href="{{ route('commentcamarche.edit', [$instruction->id]) }}" class="btn btn-sm btn-success">Editer</a> |
                                         @if ($instruction->statut->id == 1)
                                             <a href="{{ route('commentcamarche.destroy', [$instruction->id, 1]) }}" class="btn btn-sm btn-warning">Activer</a>

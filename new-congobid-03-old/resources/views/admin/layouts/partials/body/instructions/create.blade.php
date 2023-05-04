@@ -37,7 +37,7 @@
                             <div class="col-md-6 col-lg-4">
                                 <div class="form-group">
                                     <label for="exampleFormControlFile1">Vidéos de l'instrction</label>
-                                    <input type="file" name="videos" class="form-control-file" id="exampleFormControlFile1" required>
+                                    <input type="file" name="videos" class="form-control-file" id="exampleFormControlFile1" accept="video/*" required>
                                 </div>
                                 <div class="form-group">
                                     <label for="smallSelect">Statut</label>
@@ -52,7 +52,7 @@
                     </div>
                     <div class="card-action">
                         <button class="btn btn-sm btn-success">Enregistrer</button>
-                        <a href="{{ route('admin.index') }}" class="btn btn-sm btn-danger">Annuler</a>
+                        <a href="{{  url()->previous() }}" class="btn btn-sm btn-danger">Annuler</a>
                     </div>
                 </form>
             </div>

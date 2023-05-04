@@ -7,8 +7,8 @@
                     <h2 class="text-white pb-2 fw-bold">Liste des conditions d'tilisation</h2>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
-                    <a href="{{ route('politiques.create',) }}" class="btn btn-white btn-border btn-round mr-2">Ajouter un
-                        une question</a>
+                    <a href="{{ route('politiques.create',) }}" class="btn btn-white btn-border btn-round mr-2">Ajouter une
+                         condition</a>
                 </div>
             </div>
         </div>
@@ -40,13 +40,14 @@
                                             <td>{{ $politique->user->nom ?? '' }}</td>
                                             <td>{{ $politique->statut->libelle }}</td>
                                             <td>
-                                                <a href="{{ route('politiques.edit', [$politique->id]) }}">Editer</a> |
+                                                <a href="{{ route('politiques.show', [$politique->id]) }}" class="btn btn-sm btn-warning">Voir</a> |
+                                                <a href="{{ route('politiques.edit', [$politique->id]) }}" class="btn btn-sm btn-success">Editer</a> |
                                                 @if ($politique->statut->id == 1)
-                                                    <a href="{{ route('politiques.destroy', [$politique->user->id ?? '', 1]) }}">Activer</a>
+                                                    <a href="{{ route('politiques.destroy', [$politique->user->id ?? '', 1]) }}" class="btn btn-sm btn-warning">Activer</a>
                                                 @elseif ($politique->statut->id == 2)
-                                                    <a href="{{ route('politiques.destroy', [$politique->user->id ?? '', 2]) }}">Réactiver</a>
+                                                    <a href="{{ route('politiques.destroy', [$politique->user->id ?? '', 2]) }}"class="btn btn-sm btn-secondary">Réactiver</a>
                                                 @elseif ($politique->statut->id == 3)
-                                                    <a href="{{ route('politiques.destroy', [$politique->user->id ?? '', 3]) }}">Supprimer</a>
+                                                    <a href="{{ route('politiques.destroy', [$politique->user->id ?? '', 3]) }}"class="btn btn-sm btn-danger">Supprimer</a>
                                                 @endif
                                             </td>
                                         </tr>
