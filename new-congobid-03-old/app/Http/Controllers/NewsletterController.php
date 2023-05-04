@@ -141,7 +141,7 @@ class NewsletterController extends Controller
 
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
+            // dd($th);
             return back()->with('');
         }
     }
@@ -157,7 +157,6 @@ class NewsletterController extends Controller
     {
         try {
             //code...
-            // dd($request);
             $newsletter = Newsletter::find($request->newsletter_id);
             $contenu = [
                 'title' => $newsletter->subject,
@@ -201,10 +200,9 @@ class NewsletterController extends Controller
                 if ($newsletter->destination == null) {
                     # code...
                     $destination = [];
-                    switch ($destination) {
+                    switch ($request->destination) {
                         case '1':
                             $users = User::where('role_id', '>', '3')->get();
-                            dd(1, $users);
                             foreach ($users as $user) {
                                 # code...
                                 // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
@@ -219,8 +217,7 @@ class NewsletterController extends Controller
                             }
                             break;
                         case '2':
-                            $users = User::where('last_login', '>=', now()->startOfDay())->get();
-                            dd(2, $users);
+                            $users = User::where('last_seen', '>=', now()->startOfDay())->get();
                             foreach ($users as $user) {
                                 # code...
                                 // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
@@ -236,7 +233,6 @@ class NewsletterController extends Controller
                             break;
                         case '3':
                             $users = User::whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->get();
-                            dd(3, $users);
                             foreach ($users as $user) {
                                 # code...
                                 // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
@@ -251,8 +247,7 @@ class NewsletterController extends Controller
                             }
                             break;
                         case '4':
-                            $users = User::where('last_login', '<', now()->subMonth())->get();
-                            dd(4, $users);
+                            $users = User::where('last_seen', '<', now()->subMonth())->get();
                             foreach ($users as $user) {
                                 # code...
                                 // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
@@ -276,11 +271,9 @@ class NewsletterController extends Controller
                 } else {
                     # code...
                     $destination = json_decode($newsletter->destination);
-
-                    switch ($destination) {
+                    switch ($request->destination) {
                         case '1':
                             $users = User::where('role_id', '>', '3')->get();
-                            dd(1, $users);
                             foreach ($users as $user) {
                                 # code...
                                 // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
@@ -295,8 +288,7 @@ class NewsletterController extends Controller
                             }
                             break;
                         case '2':
-                            $users = User::where('last_login', '>=', now()->startOfDay())->get();
-                            dd(2, $users);
+                            $users = User::where('last_seen', '>=', now()->startOfDay())->get();
                             foreach ($users as $user) {
                                 # code...
                                 // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
@@ -312,7 +304,6 @@ class NewsletterController extends Controller
                             break;
                         case '3':
                             $users = User::whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->get();
-                            dd(3, $users);
                             foreach ($users as $user) {
                                 # code...
                                 // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
@@ -327,8 +318,7 @@ class NewsletterController extends Controller
                             }
                             break;
                         case '4':
-                            $users = User::where('last_login', '<', now()->subMonth())->get();
-                            dd(4, $users);
+                            $users = User::where('last_seen', '<', now()->subMonth())->get();
                             foreach ($users as $user) {
                                 # code...
                                 // \Mail::to($user->email)->send(new \App\Mail\NewsletterMail($contenu));
@@ -353,7 +343,7 @@ class NewsletterController extends Controller
             }
             return redirect()->route('newsletters.index');
         } catch (\Throwable $th) {
-            dd($th);
+            // dd($th);
             return back()->with('');
             //throw $th;
         }

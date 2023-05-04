@@ -75,6 +75,35 @@
                         </form>
                     </div>
                 </div>
+                @php
+                    $destination = json_decode($newsletter->destination);
+                @endphp
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table id="basic-datatables" class="display table table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Username</th>
+                                    <th>Name</th>
+                                    <th>Statut</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach ($destination as $id)
+                                    @php
+                                        $user = app()->make('App\Models\User')->find($id);
+                                    @endphp
+                                    <tr>
+                                        <td>{{ '@'.$user->username ?? '' }}</td>
+                                        <td>{{ $user->prenom ?? '' }} {{ $user->nom ?? '' }}</td>
+                                        <td class="text-success">Envoyé</td>
+                                    </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
