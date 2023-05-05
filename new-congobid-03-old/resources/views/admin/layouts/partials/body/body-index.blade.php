@@ -30,7 +30,7 @@
 
     <div class="row m-2 align-items-center flex-md-row">
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-            <a href="#" class="btn btn-white btn-border btn-round mr-2"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Ouvrir une enchère</a>
+            <a href="#" class="btn btn-white btn-border btn-round mr-2 h-5"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Ouvrir une enchère</a>
         </div>
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
             <a href="{{route('bids.index')}}" class="btn btn-white btn-border btn-round mr-2">Bids</a>
