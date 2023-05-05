@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bideur;
 use App\Models\BidStatut;
 use App\Models\Chat;
 use App\Models\Envoie;
@@ -38,7 +39,7 @@ class EnvoieController extends Controller
         $bidstatuts = BidStatut::all();
 
         return view('admin.layouts.partials.body.envoie.create', compact('chats', 'users', 'bidstatuts'));
-    
+
     }
 
     /**
@@ -51,19 +52,91 @@ class EnvoieController extends Controller
     {
         try {
             //code...
-            $envoie = Envoie::create([
-                'number' => $request->number,
-                'bid_statut_id' => $request->bid_statut_id,
-                'admin_id' => Auth::user()->id,
-                'user_id' => $request->user_id
-            ]);
+            if ($request->type == "user") {
+                # code...
+                Envoie::create([
+                    'number' => $request->number,
+                    'bid_statut_id' => $request->bid_statut_id,
+                    'admin_id' => Auth::user()->id,
+                    'user_id' => $request->user_id
+                ]);
+            } else {
+                # code...
+                switch ($request->destination) {
+                    case '1':
+                        $users = User::where('role_id', '>', '3')->get();
+                        foreach ($users as $user) {
+                            $bideur = Bideur::where('user_id', $user->id)->first();
+                            if ($bideur != null) {
+                                # code...
+                                Envoie::create([
+                                    'number' => $request->number,
+                                    'bid_statut_id' => $request->bid_statut_id,
+                                    'admin_id' => Auth::user()->id,
+                                    'user_id' => $user->id
+                                ]);
+                            }
+                        }
+                        break;
+                    case '2':
+                        $users = User::where('last_seen', '>=', now()->startOfDay())->get();
+                        foreach ($users as $user) {
+                            $bideur = Bideur::where('user_id', $user->id)->first();
+                            if ($bideur != null) {
+                                # code...
+                                Envoie::create([
+                                    'number' => $request->number,
+                                    'bid_statut_id' => $request->bid_statut_id,
+                                    'admin_id' => Auth::user()->id,
+                                    'user_id' => $user->id
+                                ]);
+                            }
+                        }
+                        break;
+                    case '3':
+                        $users = User::whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->get();
+                        foreach ($users as $user) {
+                            $bideur = Bideur::where('user_id', $user->id)->first();
+                            if ($bideur != null) {
+                                # code...
+                                Envoie::create([
+                                    'number' => $request->number,
+                                    'bid_statut_id' => $request->bid_statut_id,
+                                    'admin_id' => Auth::user()->id,
+                                    'user_id' => $user->id
+                                ]);
+                            }
+                        }
+                        break;
+                    case '4':
+                        $users = User::where('last_seen', '<', now()->subMonth())->get();
+                        foreach ($users as $user) {
+                            $bideur = Bideur::where('user_id', $user->id)->first();
+                            if ($bideur != null) {
+                                # code...
+                                Envoie::create([
+                                    'number' => $request->number,
+                                    'bid_statut_id' => $request->bid_statut_id,
+                                    'admin_id' => Auth::user()->id,
+                                    'user_id' => $user->id
+                                ]);
+                            }
+                        }
+                        break;
+                    default:
+                        return
+                            back()->with('Erreur', 'Aucun Utilisateur trouvé');
+                        # code...
+                        break;
+                }
+            }
 
-            return redirect()->route('envoie.index')->with('success','Bids envoyé');
+
+            return redirect()->route('envoie.index')->with('success', 'Bids envoyé');
 
         } catch (\Throwable $th) {
             //throw $th;
-            dd($th);
-            return back()->with('error','Une erreur est survenue');
+            return back()->with('error', 'Une erreur est survenue');
         }
     }
 
@@ -91,8 +164,8 @@ class EnvoieController extends Controller
         $users = User::where('role_id', '>', '3')->orderBy('username', 'asc')->get();
         $bidstatuts = BidStatut::all();
 
-        return view('admin.layouts.partials.body.envoie.edit', compact('chats', 'users', 'bidstatuts','envoie'));
-    
+        return view('admin.layouts.partials.body.envoie.edit', compact('chats', 'users', 'bidstatuts', 'envoie'));
+
     }
 
     /**
@@ -114,12 +187,12 @@ class EnvoieController extends Controller
                 'user_id' => $request->user_id
             ]);
 
-            return redirect()->route('envoie.index')->with('success','Bids envoyé');
+            return redirect()->route('envoie.index')->with('success', 'Bids envoyé');
 
         } catch (\Throwable $th) {
             //throw $th;
             dd($th);
-            return back()->with('error','Une erreur est survenue');
+            return back()->with('error', 'Une erreur est survenue');
         }
     }
 
@@ -132,13 +205,13 @@ class EnvoieController extends Controller
     public function destroy($id)
     {
         $envoie = Envoie::find($id);
-        
+
         if (Auth::user()->id == $envoie->admin_id || Auth::user()->role_id == 1) {
             # code...
             $envoie->delete();
-            return back()->with('success','Suppression réussie');
+            return back()->with('success', 'Suppression réussie');
         }
-        return back()->with('error','Operation non permise');
-        
+        return back()->with('error', 'Operation non permise');
+
     }
 }

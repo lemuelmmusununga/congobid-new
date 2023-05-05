@@ -337,7 +337,7 @@ class NewsletterController extends Controller
                             break;
                     }
                     $newsletter->update([
-                        ['destination' => json_encode($destination)]
+                        'destination' => json_encode($destination)
                     ]);
                 }
             }

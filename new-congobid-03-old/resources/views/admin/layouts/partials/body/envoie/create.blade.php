@@ -26,16 +26,33 @@
                             <div class="row">
                                 <div class="col-md-3 col-lg-3">
                                     <div class="form-group">
-                                        <label for="smallInput">Username du Client</label>
+                                        <label for="type">Envoyé à </label>
+                                        <select name="type" id="type" class="form-control">
+                                            <option value="user">Un utilisateur</option>
+                                            <option value="group">Un groupe d'utilisateurs</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="user-div" class="col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label for="user_id">Sélectionnez l'utilisateur </label>
                                         <select name="user_id" id="user_id" class="form-control">
                                             <option value="">Selectionnez un utilisateur</option>
                                             @foreach ($users as $user)
-                                                <option value="{{ $user->id }}">
-                                                    {{ $user->username }}
-                                                </option>
+                                                <option value="{{$user->id}}"> {{"@".$user->username}} </option>
                                             @endforeach
                                         </select>
-
+                                    </div>
+                                </div>
+                                <div id="group-div" style="display: none;" class="col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <label for="destination">Sélectionnez un groupe :</label>
+                                        <select name="destination" id="destination" class="form-control">
+                                            <option value="1">Tous les utilisateurs</option>
+                                            <option value="2">Les utilisateurs connectés aujourd'hui</option>
+                                            <option value="3">Les utilisateurs connectés ce mois</option>
+                                            <option value="4">Les utilisateurs inactifs</option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-lg-3">
@@ -65,7 +82,7 @@
                         </div>
                         <div class="card-action">
                             <button class="text-white btn btn-congo float-right px-5 mb-3"
-                                style="border-radius: 20px;">Enregistrer</button>
+                                style="border-radius: 20px;">Envoyer</button>
 
                         </div>
                     </div>
@@ -80,4 +97,20 @@
 @endsection
 
 @section('javascript')
+    <script>
+        document.getElementById('type').addEventListener('change', function() {
+            var userDiv = document.getElementById('user-div');
+            var groupDiv = document.getElementById('group-div');
+
+            if (this.value === 'user') {
+                userDiv.style.display = 'block';
+                groupDiv.style.display = 'none';
+                groupDiv.style.display = 'none';
+            } else if (this.value === 'group') {
+                userDiv.style.display = 'none';
+                groupDiv.style.display = 'block';
+            }
+        });
+    </script>
+
 @endsection

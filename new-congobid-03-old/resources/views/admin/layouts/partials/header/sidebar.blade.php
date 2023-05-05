@@ -130,6 +130,12 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item {{ request()->is('tableau-de-bord/salons') ? 'active' : '' }}">
+                    <a href="{{ route('salons.index') }}">
+                        <i class="fas fa-coins"></i>
+                        <p>Gestion des Salons</p>
+                    </a>
+                </li>
                 <li class="nav-item {{ request()->is('tableau-de-bord/creation/categorie') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/sous-categories') ? 'active' : '' }} ?? {{ request()->is('tableau-de-bord/categories') ? 'active' : '' }} " >
                     <a data-toggle="collapse" href="#categories">
                         <i class="fas fa-layer-group"></i>

@@ -18,6 +18,7 @@
                         <thead>
                             <tr>
                                 <th>#</th>
+                                <th>Type</th>
                                 <th>Article</th>
                                 <th>Prix marché ($)</th>
                                 <th>Prix Congo Bid ($)</th>
@@ -31,6 +32,7 @@
                             @foreach ($salons as $key => $salon)
                                 <tr>
                                     <td> #{{ $key + 1 }} </td>
+                                    <td> {{$salon->state==0 ?'PUBLIC' : 'PRIVE'}} </td>
                                     <td>{{ $salon->article->titre }}</td>
                                     <td>{{ $salon->article->prix_marche }}</td>
                                     <td>{{ $salon->article->prix }}</td>

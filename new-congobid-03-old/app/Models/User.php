@@ -88,14 +88,15 @@ class User extends \TCG\Voyager\Models\User
         return $this->hasMany(Bideur::class, 'admin_id');
     }
 
+
     public function paquets()
     {
         return $this->hasMany(Paquet::class);
     }
 
-    public function bideurs()
+    public function bideur()
     {
-        return $this->hasMany(Bideur::class);
+        return $this->belongsTo(Bideur::class, 'user_id');
     }
 
     public function options()

@@ -22,7 +22,7 @@
                             <div class="job"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> {{ '@'.$bideur->user->username }} </span></span></div>
                             <div class="desc"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> {{ $bideur->user->telephone }} {{ $bideur->user->email == null ? '' : '/ '.$bideur->user->email }} </span></span></div>
                             <div class="desc"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> {{ $bideur->user->date_naissance }} /  {{ $bideur->user->sexe }} </span></span></div>
-                            <div class="desc"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> Ajouté par : <a href="{{ route('agents.show', $bideur->admin_id) }}"> {{ $bideur->admin->nom }} </a> </span></span></div>
+                            <div class="desc"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;"> Ajouté par : <a href="{{ route('agents.show', $bideur->admin_id ) }}"> {{ $bideur->admin->nom }} </a> </span></span></div>
                         <div class="view-profile d-flex justify-content-center px-5">
                             <a href="{{ route('bideurs.edit', [$bideur->id]) }}" class="btn btn-primary  px-5 mx-3 rounded-3"><span style="vertical-align: inherit;"><span style="vertical-align: inherit;">Editer</span></span></a>
                             @if ($bideur->statut->id == 1)
@@ -52,7 +52,7 @@
                         </div>
                     </div>
 
-                   
+
                 </div>
             </div>
         </div>
