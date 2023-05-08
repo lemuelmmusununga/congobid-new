@@ -1,0 +1,186 @@
+.content .card-table .block-progress-circle {
+    width: 60px;
+    height: 60px;
+}
+
+.content .card-table .block-progress-circle .pourcent {
+    font-size: 14px;
+}
+
+.content .card-table .block-progress-circle {
+    width: 80px;
+    height: 80px;
+    margin-top: 20px;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg-circle);
+    border-radius: 100%;
+    position: relative;
+    z-index: 1;
+}
+
+.content .card-table .block-progress-circle::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 20px;
+    background: #93e5ab;
+    opacity: 0.05;
+    transform: scale(1.01) rotate(-45deg);
+    -webkit-transform: scale(1.01) rotate(-45deg);
+    -moz-transform: scale(1.01) rotate(-45deg);
+    -ms-transform: scale(1.01) rotate(-45deg);
+    -o-transform: scale(1.01) rotate(-45deg);
+    animation: spiner 5s linear infinite;
+}
+
+.content .card-table .block-progress-circle::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 20px;
+    background: #93e5ab;
+    opacity: 0.03;
+    transform: scale(1.01) rotate(65deg);
+    -webkit-transform: scale(1.01) rotate(65deg);
+    -moz-transform: scale(1.01) rotate(65deg);
+    -ms-transform: scale(1.01) rotate(65deg);
+    -o-transform: scale(1.01) rotate(65deg);
+    animation: spiner 10s linear infinite reverse;
+}
+
+.content .card-table .block-progress-circle-sm {
+    width: 70px;
+    height: 70px;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    margin-right: auto;
+    margin-left: auto;
+    display: flex;
+    justify-content: center;
+    border-radius: 100%;
+    align-items: center;
+    background: var(--bg-circle-sm);
+    position: relative;
+    z-index: 1;
+}
+
+.content .card-table .block-progress-circle-sm::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 20px;
+    background: #e32817;
+    opacity: 0.05;
+    transform: scale(1.01) rotate(-45deg);
+    -webkit-transform: scale(1.01) rotate(-45deg);
+    -moz-transform: scale(1.01) rotate(-45deg);
+    -ms-transform: scale(1.01) rotate(-45deg);
+    -o-transform: scale(1.01) rotate(-45deg);
+    animation: spiner 5s linear infinite;
+}
+
+.content .card-table .block-progress-circle-sm::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    border-radius: 20px;
+    background: #e32817;
+    opacity: 0.03;
+    transform: scale(1.01) rotate(65deg);
+    -webkit-transform: scale(1.01) rotate(65deg);
+    -moz-transform: scale(1.01) rotate(65deg);
+    -ms-transform: scale(1.01) rotate(65deg);
+    -o-transform: scale(1.01) rotate(65deg);
+    animation: spiner 10s linear infinite reverse;
+}
+
+.content .card-table .block-progress-circle-sm .pourcent {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    color: #e32817;
+}
+
+.content .card-table .block-progress-circle .pourcent {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    color: #93e5ab;
+}
+
+
+.content .card-table .block-progress-circle-sm .pourcent span:nth-child(1) {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.content .card-table .block-progress-circle-sm .pourcent span:nth-child(2) {
+    font-size: 14px;
+}
+
+.content .card-table .block-progress-circle svg path {
+    stroke-linecap: round;
+}
+
+.content .card-table .block-progress-circle-sm svg path {
+    stroke-linecap: round;
+}
+
+.content .block-label .block {
+    font-size: 10px;
+}
+
+.content .block-label .block {
+    font-size: 10px;
+}
+
+.content .block-label .block {
+    font-size: 14px;
+    color: var(--colorParagraph);
+    font-weight: 500;
+}
+
+.content .block-label .block span {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 100%;
+    background: red;
+    margin-right: 5px;
+    flex: 0 0 auto;
+}
+
+.content .block-label .block:first-child span {
+    background: #93e5ab;
+}
+
+.content .block-label .block:last-child span {
+    background: #e32817;
+}
+
+@keyframes floating {
+    0% {
+        transform: translateY(0) translateX(0);
+    }
+
+    50% {
+        transform: translateY(15px) translateX(-15px);
+    }
+
+    100% {
+        transform: translateY(0) translateX(0);
+    }
+}

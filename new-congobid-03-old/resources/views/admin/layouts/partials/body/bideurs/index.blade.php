@@ -4,11 +4,11 @@
         <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
 
                 <div>
-                    <h2 class="text-white pb-2 fw-bold">Liste des bideurs</h2>
+                    <h2 class="text-white pb-2 fw-bold">Liste des utilisateurs</h2>
                 </div>
                 <div class="ml-md-auto py-2 py-md-0">
                     <a href="{{ route('bideurs.create',) }}" class="btn btn-white btn-border btn-round mr-2">Ajouter un
-                        bideur</a>
+                        utilisateur</a>
                 </div>
             </div>
         </div>

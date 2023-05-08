@@ -41,7 +41,6 @@
 
             </div>
 
-            @include('admin.layouts.partials.footer.footer')
 
 
         </div>
@@ -50,5 +49,5 @@
 
     @yield('javascript')
 </body>
-
+    {{-- @include('admin.layouts.partials.footer.footer') --}}
 </html>

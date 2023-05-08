@@ -28,14 +28,172 @@
 </div>
 <div class="page-inner py-2">
 
-    <div class="row m-2 align-items-center flex-md-row">
-        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-            <a href="#" class="btn btn-white btn-border btn-round mr-2 h-5"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Ouvrir une enchère</a>
+    <div class="d-flex justify-content-center">
+        <a href="{{route('encheres.index')}}" class="btn btn-lg btn-success  mx-2 ">ENCHERES</a>
+        <a href="{{route('bids.index')}}" class="btn btn-lg btn-secondary  mx-2">BIDS</a>
+        <a href="{{route('articles.index')}}" class="btn btn-lg btn-primary  mx-2">ARTICLES</a>
+    </div>
+    <div class="d-flex justify-content-center m-4">
+        <div class="h-auto col-lg-6 col-md-6 col-sm-6">
+            <div class="row g-lg-3 h-100 g-2">
+                <div class="col-lg-6 h-100 col-md-6 col-sm-6">
+                    <div class="card card-users card-table h-100 justify-content-center">
+                        <div class="block-band"></div>
+                        <div class="pt-0 header-title">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="no-padding no-margin">UTILISATEURS ({{$users->count()}})
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="block-progress-circle">
+                                <div class="pourcent">
+                                    <span>{{ number_format(($i /$users->count()  * 100)) }}</span>
+                                    <span>%</span>
+                                </div>
+                            </div>
+                            <div class="block-progress-circle-sm">
+                                <div class="pourcent">
+                                    <span>{{ number_format(100 - ($i / $users->count()) * 100) }}</span>
+                                    <span>%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-label d-block ">
+                            <div class="block w-100 d-flex align-items-center justify-content-center">
+                                <span></span> Connectés : {{$i}}
+                            </div>
+                            <div class="block w-100 d-flex align-items-center justify-content-center">
+                                <span></span> Non connectés : {{number_format($users->count() - $i)}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 h-100 col-md-6 col-sm-6">
+                    <div class="card card-users card-table h-100 justify-content-center">
+                        <div class="pt-0 header-title">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="no-padding no-margin">
+                                        ARTICLES ({{$articles->count()}})
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="block-progress-circle">
+                                <div class="pourcent">
+                                    <span>
+                                        0
+                                    </span>
+                                    <span>%</span>
+                                </div>
+                            </div>
+                            <div class="block-progress-circle-sm">
+                                <div class="pourcent">
+                                    <span>0</span>
+                                    <span>%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-label d-block">
+                            <div class="block w-100 d-flex align-items-center justify-content-center">
+                                <span></span> En Vente : 0
+                            </div>
+                            <div class="block w-100 d-flex align-items-center justify-content-center">
+                                <span></span> Tout : 0
+                            </div>
+                        </div>
+                    </div>
+                    <p></p>
+                </div>
+            </div>
         </div>
-        <div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
-            <a href="{{route('bids.index')}}" class="btn btn-white btn-border btn-round mr-2">Bids</a>
+        <div class="h-auto col-lg-6 col-md-6 col-sm-6">
+            <div class="row g-lg-3 h-100 g-2">
+                <div class="col-lg-6 h-100 col-md-6 col-sm-6">
+                    <div class="card card-users card-table h-100 justify-content-center">
+                        <div class="pt-0 header-title">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="no-padding no-margin">
+                                        SALONS (0)
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="block-progress-circle">
+                                <div class="pourcent">
+                                    <span>
+                                        0
+                                    </span>
+                                    <span>%</span>
+                                </div>
+                            </div>
+                            <div class="block-progress-circle-sm">
+                                <div class="pourcent">
+                                    <span>0</span>
+                                    <span>%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-label d-block">
+                            <div class="block w-100 d-flex align-items-center justify-content-center">
+                                <span></span> Privés : 0
+                            </div>
+                            <div class="block w-100 d-flex align-items-center justify-content-center">
+                                <span></span> Publiques : 0
+                            </div>
+                        </div>
+                    </div>
+                    <p></p>
+                </div>
+                <div class="col-lg-6 h-100 col-md-6 col-sm-6">
+                    <div class="card card-users card-table h-100 justify-content-center">
+                        <div class="pt-0 header-title">
+                            <div class="row">
+                                <div class="col-12">
+                                    <h4 class="no-padding no-margin">
+                                        ENCHERES (0)
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-between">
+                            <div class="block-progress-circle">
+                                <div class="pourcent">
+                                    <span>
+                                        0
+                                    </span>
+                                    <span>%</span>
+                                </div>
+                            </div>
+                            <div class="block-progress-circle-sm">
+                                <div class="pourcent">
+                                    <span>0</span>
+                                    <span>%</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="block-label d-block">
+                            <div class="block w-100 d-flex align-items-center justify-content-center">
+                                <span></span> En Cours : 0
+                            </div>
+                            <div class="block w-100 d-flex align-items-center justify-content-center">
+                                <span></span> Terminés : 0
+                            </div>
+                        </div>
+                    </div>
+                    <p></p>
+                </div>
+            </div>
         </div>
     </div>
+
+
 
     <div class="row mt-2">
         <div class="col-md-6" >
@@ -199,7 +357,7 @@
                         <div class="card-header">
                             <div class="card-head-row">
                                 <div class="card-title">Contact</div>
-                                {{-- <div class="card-tools">
+                                 <div class="card-tools">
                                     <ul class="nav nav-pills nav-secondary nav-pills-no-bd nav-sm" id="pills-tab"
                                         role="tablist">
                                         <li class="nav-item">
@@ -215,7 +373,7 @@
                                                 role="tab" aria-selected="false">Month</a>
                                         </li>
                                     </ul>
-                                </div> --}}
+                                </div>
                             </div>
                         </div>
                         <div class="card-body table-size-seconde">
@@ -246,10 +404,10 @@
 
             <div class="row">
 
-                <div class="col-md-12">
+                {{-- <div class="col-md-12">
                     <div class="card table-size-seconde">
                         <div class="card-body ">
-                            {{-- <div class="card-title fw-mediumbold">Encheres encours...</div>
+                             <div class="card-title fw-mediumbold">Encheres encours...</div>
                                 @foreach ($articles as $article)
                                     @php
                                         $enchere_encours = ($article->enchere->munite * 60 + $article->enchere->seconde >= 0 && $article->enchere->state == 0 &&
@@ -269,16 +427,16 @@
                                                     <div class="status">{{ $article->description }}</div>
                                                     <div class="status">{{ date('d-m-Y H:i',strtotime($article->enchere->date_debut)) }} | {{ $article->prix }} $</div>
                                                 </div>
-                                                {{-- <button class="btn btn-icon btn-primary btn-round btn-xs">
+                                                 <button class="btn btn-icon btn-primary btn-round btn-xs">
                                                     <i class="fa fa-plus"></i>
-                                                </button> --}}
-                                            {{-- </div>
+                                                </button>
+                                             </div>
                                         </div>
 
                                     @endif
                                 @endforeach
-                            </div> --}}
-                        {{-- </div>
+                            </div>
+                         </div>
                     </div>
                 </div> --}}
                 {{-- <div class="col-md-12">
@@ -304,27 +462,27 @@
                                                         <div class="status">{{ $article->description }}</div>
                                                         <div class="status">{{ date('d-m-Y H:i',strtotime($article->enchere->date_debut)) }} | {{ $article->prix }} $</div>
                                                     </div>
-                                                    {{-- <button class="btn btn-icon btn-primary btn-round btn-xs">
+                                                     <button class="btn btn-icon btn-primary btn-round btn-xs">
                                                         <i class="fa fa-plus"></i>
-                                                    </button> --}}
-                                                {{-- </div>
+                                                    </button>
+                                                 </div>
                                             </div>
 
                                         @endif
 
 
-                                    @endforeach --}}
-                                    {{-- @if ($enchere_future == null)
+                                    @endforeach
+                                     @if ($enchere_future == null)
                                         <h1 class="text-danger text-center fw-bold my-5">Pas d'enchère future</h1>
-                                    @endif --}}
-                            {{-- </div>
+                                    @endif
+                             </div>
                         </div>
                     </div>
                 </div> --}}
 
             </div>
         </div>
-        {{-- <div class="col-md-12">
+         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                     <div class="card-head-row">
@@ -352,7 +510,7 @@
                     <div id="userChartLegend"></div>
                 </div>
             </div>
-        </div> --}}
+        </div>
 
         <div class="col-md-12">
             <div class="card">
@@ -385,164 +543,7 @@
 
 
     <!-- Modal -->
-    <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" >
-        <div class="modal-dialog modal-dialog-centered" style="border-radius: 24px;">
-            <div  class="modal-content rounded-pill" >
-                <div class="modal-header">
-                <span class="modal-title" id="staticBackdropLabel">Ajouter un article</span>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form action="{{ route('articles.store') }}" method="post" enctype="multipart/form-data">
-                    <div class="modal-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                    @csrf
-                                    <div class="">
-                                        <div class="">
-                                            <div class="row">
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-                                                        <input type="text" name="titre" class="form-control " id="smallInput"placeholder="Entrez le titre" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
 
-                                                        <input type="datetime-local" name="debut_enchere" class="form-control "
-                                                            id="smallInput" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-
-                                                        <input type="number" name="prix_marche" class="form-control "
-                                                            id="smallInput" placeholder="Entrez son prix du marché" required>
-                                                    </div>
-                                                </div>
-                                                {{-- <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-
-                                                        <input type="number" name="credit_enchere_auto" class="form-control "
-                                                            id="smallInput" placeholder="Entrez son crédit d'enchère automatique" value="0">
-                                                    </div>
-                                                </div> --}}
-
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-                                                        <input type="number" name="prix" class="form-control " id="smallInput"
-                                                            placeholder="Entrez son prix Congo Bid" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-
-                                                        <select class="form-control " id="smallSelect" name="statut_id">
-
-                                                            @foreach ($statuts as $statut)
-                                                                <option value="{{ $statut->id }}">{{ $statut->libelle }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-                                                        <input type="text" name="marque" class="form-control " id="smallInput"
-                                                            placeholder="Entrez la marque" required>
-                                                    </div>
-                                                </div>
-                                                {{-- <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-                                                        <input type="number" name="cout_livraison" class="form-control "
-                                                            id="smallInput" placeholder="Entrez son coût de livraison" value="0">
-                                                    </div>
-                                                </div> --}}
-                                                {{-- <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-                                                        <input type="number" name="prix" class="form-control " id="smallInput"
-                                                            placeholder="Entrez la quantité" required>
-                                                    </div>
-                                                </div> --}}
-                                                {{-- <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-                                                        <input type="number" name="limite_enchere_auto" class="form-control "
-                                                            id="smallInput" placeholder="Entrez sa limite d'enchère automatique" value="0">
-                                                    </div>
-                                                </div> --}}
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-
-                                                        <input type="time" name="fin_enchere" class="form-control "
-                                                            id="smallInput" required>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-                                                        <input type="text" name="quantite" class="form-control "
-                                                            id="smallInput" placeholder="Entrez la quantité" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-lg-6">
-
-                                                    <div class="form-group">
-
-                                                        <select class="form-control " id="smallSelect" name="categorie_id">
-                                                            @foreach ($categories as $categorie)
-                                                                <option value="{{ $categorie->id }}">{{ $categorie->libelle }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group">
-
-                                                        <input type="text" name="meta_keywords" class="form-control "
-                                                            id="smallInput" placeholder="Entrez les clés pour les metas données" required>
-                                                    </div>
-                                                </div>
-
-                                                <div class="col-md-12 col-lg-12">
-                                                    <div class="form-group">
-
-                                                        <input type="file" name="image" class="form-control" multiple id="exampleFormControlFile1" required>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-12 col-lg-12">
-                                                    <div class="form-group">
-
-                                                        <textarea class="form-control" name="description" id="comment" rows="5"
-                                                            required></textarea>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group mx-2 float-right">
-                                                        <input class="form-check-input" type="checkbox" name="promouvoir" id="flexCheckDefault">
-                                                    Promouvoir cet article ?
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-6 col-lg-6">
-                                                    <div class="form-group mx-2 float-right">
-                                                        <input class="form-check-input" type="checkbox" name="state" id="flexCheckDefault">
-                                                    Ajouter au salon ?
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                    <button type="button" class="btn btn-info" data-bs-dismiss="modal" style="border-radius: 16px;">Ferme</button>
-                    <button type="submit" class="btn btn-primary " style="border-radius: 16px;">Ajouter</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
     <script>
         window.onload = function() {
             var ctx = document.getElementById('userChart').getContext('2d');

@@ -41,7 +41,7 @@ class AccueilController extends Controller
             ->get();
         $articles = Article::all();
 
-        $encheres = Enchere::all();
+        // $encheres = Enchere::all();
         $contacts = Contact::all();
         $gagnants = Encheregagner::orderby('id', 'DESC')->get();
         $demandes = Demande::orderby('id', 'DESC')->get();
