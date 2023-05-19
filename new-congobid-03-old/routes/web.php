@@ -230,6 +230,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/newtech-rdc/supprimer/profil', [App\Http\Controllers\AccueilController::class, 'destroyProfil'])->name('sup.profil');
         // envoie options
         Route::post('/profil/envoie-des-bids',[EnchersController::class,'sendBid'])->name('send.bid');
+        Route::post('/profil/achat-des-options',[EnchersController::class,'AchatOption'])->name('achat.option');
         Route::post('/profil/envoie-des-options',[EnchersController::class,'sendOption'])->name('send.option');
         Route::get('/profil/tranfert-options',[EnchersController::class,'trans'])->name('trans.options');
         Route::get('/profil/option',[EnchersController::class,'liste'])->name('liste.option');

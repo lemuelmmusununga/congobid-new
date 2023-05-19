@@ -26,7 +26,7 @@
 
 
 
-
+    {{-- @livewire('counterdown') --}}
     @livewire('index')
 @endsection
 

@@ -1,10 +1,8 @@
 
-<div wire:poll.keeplive>
+<div wire:poll.keeplive x-data= "{ counter : {{ $counter }} } ">
     @php
-
-        $pivot = App\Models\PivotBideurEnchere::where('enchere_id', $article_enchere)
-            ->where('user_id', Auth::user()->id)
-            ->first();
+        $pivot = Auth::user()->pivotbideurenchere->where('enchere_id',$this->article_enchere)->first();
+        
         $verify_sanction = App\Models\Sanction::where('enchere_id', $article_enchere)
             ->where('user_id', Auth::user()->id)
             ->first();
@@ -19,520 +17,294 @@
         // dump($first_treve , $enchere->munite ,$second_treve,$tree_treve);
     @endphp
     @include('components.achat-bid-enchere')
-    @if (Auth::user())
-        <div class="row mt-4">
-            <div class="col-8">
-
-                <div class="row card-bid mb-2  mx-0 ">
-                    <div class="col-12">
-                        <div>
-                            <span>{{$tackClicks * ($enchere->munite * 60 + $enchere->seconde)}}</span>
-                        </div>
-                        <span>{{$pc.'/'. ($enchere->munite * 60 + $enchere->seconde) .'*'.$tackClicks .' = '. $i }}</span>
-                        <h6>Prix CongoBid: <span>{{ $pc }}</span></h6>
-                        <h6>Bonus (Bids): <span>{{ $solde_bonus->bonus }}</span></h6>
-                        <h6>Non transferable (Bids): <span>{{ $solde_non_tranferable }}</span></h6>
-                    </div>
-                    <div class="col-12 ">
-                        <h6><strong>Solde (Bids): </strong> <br>
-                        <span style="font-size: 45px;word-break: break-all;">{{ $solde_bid }}</span> </h6>
-                    </div>
-
+    <div id="confetti-container"></div>
+    <div class="block-bid" >
+        <div class="btn-mobile btn-message" id="mobile">
+            <i class="fi fi-rr-comment-alt"></i>
+        </div>
+        <div class="btn-mobile btn-list">
+            <i class="fi fi-rr-list"></i>
+        </div>
+        <div class="container" x-data="{ counter : {{  $counter }} } ">
+            <div class="card card-chatLive mb-2">
+                <div class="all-disc">
+                    @foreach ($messages as $message)
+                        @if ($message->created_at->format('d-m-Y') <= Auth::user()->created_at->format('d-m-Y'))
+                            <div class="user d-flex align-items-start">
+                                <div class="me-1">
+                                    {{ $message->user->username ?? '' }} :
+                                </div>
+                                <div>
+                                    <p>
+                                        {{ $message->libelle }}
+                                    </p>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
                 </div>
-                @if ($this->liste_one != null)
-                    <div class="card card-part mb-1">
-                        <div class="block-content-user ">
-                            <div
-                                class="block-user-info d-flex justify-content-between align-items-center first  {{ Auth::user()->id == $liste_one->user->id ? 'me' : '' }}">
-                                <div class="block-left d-flex align-items-center ">
-
-                                    <div class="num first">1</div>
-                                    <div class="name">
-                                        <div class="avatar-user">
-                                            <img src="{{ asset('images/users/' . ($liste_one->user->avatar == null ? 'default.png' : $liste_one->user->avatar)) }}"
-                                                alt="Image de {{ $liste_one->user->username }}">
+            </div>
+            <div class="block-first card mb-2">
+                <div class="container-fluid">
+                    <div class="row align-items-center g-0">
+                        @if ($this->liste_one != null)
+                            <div class="col-9">
+                                <div class="d-flex align-items-center">
+                                    <div class="position">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16">
+                                            <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/>
+                                        </svg>
+                                        <div class="num">
+                                            1
                                         </div>
-                                        <span>
-                                            @if (($sanction == null &&
-                                                $pivot != null &&
-                                                $enchere->munite * 60 + $enchere->seconde > 0 &&
-                                                $first_treve > $enchere->munite) ||
-                                                $second_treve == $enchere->munite ||
-                                                ($tree_treve == $enchere->munite &&
-                                                    date('d/ m /Y ', strtotime($this->enchere->date_debut)) == now('africa/kinshasa')->format('d/ m /Y ') &&
-                                                    $pivot->where('enchere_id', $enchere->id)->where('user_id', Auth::user()->id)->first() != null &&
-                                                    date('H:i', strtotime($this->enchere->dat_debut)) <= now(' Africa/kinshasa')->format('H:i')))
-                                                <a class="" href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#modalEnchere_{{ $liste_one->user->id ?? '' }}">{{ Str::substr($liste_one->user->username, 0, 7) ?? '' }}</a>
-                                            @else
-                                                <a href="" data-bs-toggle="modal" data-bs-target="#nonenchere">
-                                                    {{ Str::substr($liste_one->user->username, 0, 7) ?? '' }}</a>
+                                    </div>
+                                    <div class="avatar">
+                                        <img src="{{ asset('images/users/' . ($liste_one->user->avatar == null ? 'default.png' : $liste_one->user->avatar)) }}" alt="">
+                                    </div>
+                                    <div class="block-name d-flex justify-content-between align-items-center">
+                                        <div class="name">
+                                            {{ Str::substr($liste_one->user->username, 0, 7) ?? '' }}
+                                        </div>
+                                        <div class="options d-flex justify-content-end align-items-center">
+                                            @if ($pivot)
+                                                @if ($liste_one->roi >= 1)
+                                                    <img src="{{ asset('images/couronne.png') }}" alt="">
+                                                @endif
+                                                @if ($liste_one->foudre >= 1)
+                                                    <img src="{{ asset('images/foudre.png') }}" alt="">
+                                                @endif
+                                                @if ($liste_one->click >= 1)
+                                                    <img src="{{ asset('images/click.png') }}" alt="">
+                                                @endif
+                                                @if ($liste_one->bouclier >= 1)
+                                                    <img src="{{ asset('images/save.png') }}" alt="">
+                                                @endif
                                             @endif
-                                        </span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="block-right d-flex align-items-center">
-                                    <div class="options">
-                                        @if ($pivot)
-                                            @if ($liste_one->roi >= 1)
-                                                <img src="{{ asset('images/couronne.png') }}" alt="">
-                                            @endif
-                                            @if ($liste_one->foudre >= 1)
-                                                <img src="{{ asset('images/foudre.png') }}" alt="">
-                                            @endif
-                                            @if ($liste_one->click >= 1)
-                                                <img src="{{ asset('images/click.png') }}" alt="">
-                                            @endif
-                                            @if ($liste_one->bouclier >= 1)
-                                                <img src="{{ asset('images/bouclier.png') }}" alt="">
-                                            @endif
-                                        @endif
-                                    </div>
-                                    <div class="num-click">{{ $liste_one->valeur ?? '' }}</div>
-                                    {{-- <div class="badge bg-primary ms-2">{{$liste_one->valeur ??''}}</div> --}}
+                            </div>
+                            <div class="col-3 d-flex justify-content-end ps-0">
+                                <div class="block-info-click" x-text="counter">
+                                  
+                                </div>
+                            </div>
+                        @endif
+                    </div>
+                </div>
+            </div>
+            <div class="block-info-enchere mb-2">
+                <div class="d-flex w-100 align-items-center justify-content-center" style="gap: 20px">
+                    <div class="item d-flex flex-column align-items-center justify-content-center text-center">
+                       <span>
+                        $ {{ Str::substr($prix_final, 0, 6) }} 
+                       </span>
+                       <span>
+                        Prix de l'enchère
+                       </span>
+                    </div>
+                    <div class="item d-flex flex-column align-items-center justify-content-center text-center">
+                        <span x-text="counter">
+                           
+                        </span>
+                        <span class="d-none" wire:model="counter" x-text="counter"></span>
+                        <span>
+                            Ton nombre de clics
+                        </span>
+                    </div>
+                    <div class="item d-flex align-items-center justify-content-center">
+                        <span style="margin-right: 2px">
+                            <i class="fi fi-rr-alarm-clock"></i>
+                        </span>
+                        <span style="font-size: 9px">
+                            @livewire('decrematation', ['getart'=>$getart])
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="table-user mb-3">
+                @if(!($liste_one->user->id == Auth::user()->id ))
+                    <div class="header-table">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <div class="left d-flex align-items-center">
+                                <div class="num">
+                                    {{$liste_one->id}}
+                                </div>
+                                <div class="avatar">
+                                    <img src="{{ asset('images/users/' . (Auth::user()->avatar == null ? 'default.png' : Auth::user()->avatar)) }}" alt="">
+                                </div>
+                                <div class="name">
+                                    {{ Str::substr($liste_one->user->username, 0, 7) ?? '' }}
+                                </div>
+                            </div>
+                            <div class="right d-flex align-items-center justify-content-end" x-data="{ counter : {{  $counter }} } ">
+                                <img src="{{asset('images/click.png')}}" alt="">
+                                <div class="num-click"  x-text="counter">
+                                   
                                 </div>
                             </div>
                         </div>
                     </div>
                 @endif
-
                 @if (count($listes) > 0)
-                    <span wire:model="{{ $liste_count }}" class="d-none">{{ count($listes) }} </span>
-
-                    <div class="card card-part">
-                        {{-- <h6 class="text-center mt-1" style="font-size: 14px">Participant</h6> --}}
-                        <div class="block-content-user">
-                            @foreach ($listes as $liste)
-                                <div
-                                    class="block-user-info d-flex justify-content-between align-items-center {{ Auth::user()->id == $liste->user->id ? 'me' : '' }}">
-                                    <div class="block-left d-flex align-items-center">
-                                        <div class="num first">{{ $loop->index + 2 }}</div>
-                                        <div class="name">
-                                            <div class="avatar-user">
-                                                <img src="{{ asset('images/users/' . ($liste->user->avatar == null ? 'default.png' : $liste->user->avatar)) }}"
-                                                    alt="Image de {{ Auth::user()->username }}">
-                                            </div>
-                                            <span>
-                                                @if (($sanction == null &&
-                                                    $pivot != null &&
-                                                    $enchere->munite * 60 + $enchere->seconde > 0 &&
-                                                    $first_treve > $enchere->munite) ||
-                                                    $second_treve == $enchere->munite ||
-                                                    ($tree_treve == $enchere->munite &&
-                                                        date('d/ m /Y ', strtotime($this->enchere->date_debut)) == now('africa/kinshasa')->format('d/ m /Y ') &&
-                                                        $pivot->where('enchere_id', $enchere->id)->where('user_id', Auth::user()->id)->first() != null &&
-                                                        date('H:i', strtotime($this->enchere->dat_debut)) <= now(' Africa/kinshasa')->format('H:i')))
-                                                    <a class="" href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalEnchere_{{ $liste->user->id ?? '' }}">{{ Str::substr($liste->user->username, 0, 7) ?? '' }}</a>
-                                                @else
-                                                    <a href="" data-bs-toggle="modal"
-                                                        data-bs-target="#nonenchere">
-                                                        {{ Str::substr($liste->user->username, 0, 7) ?? '' }}</a>
-                                                @endif
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="block-right d-flex align-items-center">
-                                        <div class="options">
-                                            @if ($pivot)
-                                                @if ($liste->roi >= 1)
-                                                    <img src="{{ asset('images/couronne.png') }}" alt="">
-                                                @endif
-                                                @if ($liste->foudre >= 1)
-                                                    <img src="{{ asset('images/foudre.png') }}" alt="">
-                                                @endif
-                                                @if ($liste->click >= 1)
-                                                    <img src="{{ asset('images/click.png') }}" alt="">
-                                                @endif
-                                                @if ($liste->bouclier >= 1)
-                                                    <img src="{{ asset('images/bouclier.png') }}" alt="">
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <div class="num-click">{{ $liste->valeur ?? '' }}</div>
-                                        {{-- <div class="badge bg-primary ms-2">{{$liste->valeur ??''}}</div> --}}
-                                    </div>
+                    @foreach ($listes as $key=> $liste)
+                    
+                        <div class="all-user d-flex flex-grow-1">
+                            <div class="items">
+                                <div class="num">
+                                    {{ $key + 2 }}
                                 </div>
-                                {{-- ask if Auth is there --}}
-                                @if (Auth::user()->id == $liste->user_id)
-                                   <input wire:model="{{ $isSet }}" type="hidden" value="{{ $isSet +=1  }}" >
-
-                                @else
-                                   <input wire:model="{{ $isSet }}" type="hidden" value="{{ $isSet -=1  }}" >
-
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                @endif
-
-                @if ($pivot && $isSet < 0  && $this->liste_one->user->id != Auth::user()->id )
-                    <div class="card card-part mt-2">
-                        {{-- <h6 class="text-center mt-1" style="font-size: 14px">Participant</h6> --}}
-                        <div class="block-content-user">
-                            {{-- @foreach ($listes_auth as $liste) --}}
-                                <div
-                                    class="block-user-info d-flex justify-content-between align-items-center me">
-                                    <div class="block-left d-flex align-items-center">
-                                        <div class="num first">...</div>
+                                <div class="content-user d-flex align-items-center justify-content-between">
+                                    <div class="left d-flex align-items-center">
+                                        <div class="avatar">
+                                            <img src="{{ asset('images/users/' . ($liste->user?->avatar == null ? 'default.png' : $liste->user?->avatar)) }}" alt="">
+                                        </div>
                                         <div class="name">
-                                            <div class="avatar-user">
-                                                <img src="{{ asset('images/users/' . ($listes_auth->user->avatar == null ? 'default.png' : $listes_auth->user->avatar)) }}"
-                                                    alt="Image de {{ Auth::user()->username }}">
-                                            </div>
-                                            <span>
-                                                @if (($sanction == null &&
-                                                    $pivot != null &&
-                                                    $enchere->munite * 60 + $enchere->seconde > 0 &&
-                                                    $first_treve > $enchere->munite) ||
-                                                    $second_treve == $enchere->munite ||
-                                                    ($tree_treve == $enchere->munite &&
-                                                        date('d/ m /Y ', strtotime($this->enchere->date_debut)) == now('africa/kinshasa')->format('d/ m /Y ') &&
-                                                        $pivot->where('enchere_id', $enchere->id)->where('user_id', Auth::user()->id)->first() != null &&
-                                                        date('H:i', strtotime($this->enchere->dat_debut)) <= now(' Africa/kinshasa')->format('H:i')))
-                                                    <a class="" href="#" data-bs-toggle="modal"
-                                                        data-bs-target="#modalEnchere_{{ $listes_auth->user->id ?? '' }}">{{ Str::substr($listes_auth->user->username, 0, 7) ?? '' }}</a>
-                                                @else
-                                                    <a href="" data-bs-toggle="modal"
-                                                        data-bs-target="#nonenchere">
-                                                        {{ Str::substr($listes_auth->user->username, 0, 7) ?? '' }}</a>
-                                                @endif
-                                            </span>
+                                            {{ Str::substr($liste->user?->username, 0, 7) ?? '' }}
                                         </div>
                                     </div>
-                                    <div class="block-right d-flex align-items-center">
-                                        <div class="options">
-                                            @if ($pivot)
-                                                @if ($listes_auth->roi >= 1)
-                                                    <img src="{{ asset('images/couronne.png') }}" alt="">
-                                                @endif
-                                                @if ($listes_auth->foudre >= 1)
-                                                    <img src="{{ asset('images/foudre.png') }}" alt="">
-                                                @endif
-                                                @if ($listes_auth->click >= 1)
-                                                    <img src="{{ asset('images/click.png') }}" alt="">
-                                                @endif
-                                                @if ($listes_auth->bouclier >= 1)
-                                                    <img src="{{ asset('images/bouclier.png') }}" alt="">
-                                                @endif
-                                            @endif
-                                        </div>
-                                        <div class="num-click">{{ $listes_auth->valeur ?? '' }}</div>
-                                        {{-- <div class="badge bg-primary ms-2">{{$liste->valeur ??''}}</div> --}}
-                                    </div>
-                                </div>
-
-                        </div>
-                    </div>
-               @endif
-
-                <div class="chat-block mt-3" style="overflow-y:auto;background: none;">
-                    <div class="container-fluid">
-                        <div class="chatbox" >
-                            <div class="w-100">
-                                <div class="block-content-chat w-100">
-                                    @foreach ($messages as $message)
-                                        @if ($message->created_at->format('d-m-Y') <= Auth::user()->created_at->format('d-m-Y'))
-                                            <div class="msg-row">
-                                                <div class="avatar-block ">
-                                                    <div class="avatar">
-                                                        <img src="{{ asset('images/users/' . ($message->user->avatar ? $message->user->avatar : 'default.png')) }} "
-                                                            alt="">
-                                                    </div>
-                                                </div>
-                                                <div class="">
-                                                    <span class="name-user"
-                                                        style="font-size: 11px;">{{ $message->user->username ?? '' }}</span>
-                                                    <p style="font-size: 12px;" class="mb-0">{{ $message->libelle }}
-                                                    </p>
-                                                    <div class="date text-end">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                    <div class="right d-flex align-items-center justify-content-end">
+                                        @if ($liste_one->roi >= 1)
+                                            <img src="{{ asset('images/couronne.png') }}" alt="">
                                         @endif
-                                    @endforeach
+                                        @if ($liste_one->foudre >= 1)
+                                            <img src="{{ asset('images/foudre.png') }}" alt="">
+                                        @endif
+                                        @if ($liste_one->click >= 1)
+                                            <img src="{{ asset('images/click.png') }}" alt="">
+                                        @endif
+                                        @if ($liste_one->bouclier >= 1)
+                                            <img src="{{ asset('images/save.png') }}" alt="">
+                                        @endif
+                                        <div class="num-click">
+                                            {{$liste->valeur ??''}}
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div wire:ignore.self class="chat-box">
-                    @livewire('chatbox', ['enchere_id' => $enchere->id])
-                </div>
-                <a class="btn btn-primary rounded-pill btn-chat-float">
-                    <i class="bi bi-chat-dots"></i>
-                </a>
-            </div>
-            {{-- {{ $this }} --}}
-            <div class="col-4">
-                {{-- <div><span class="text-center d-block" id="time">03:00</span></div> --}}
-                @if ($pivot != null)
-                    @if ($enchere->munite * 60 + $enchere->seconde > 0 &&
-                        date('d/ m /Y ', strtotime($this->enchere->date_debut)) == now('africa/kinshasa')->format('d/ m /Y ') &&
-                        $pivot->where('enchere_id', $enchere->id)->where('user_id', Auth::user()->id)->first() != null &&
-                        date('H:i', strtotime($this->enchere->date_debut)) <= now(' Africa/kinshasa')->format('H:i'))
-                        @livewire('decrematation', ['getart' => $this->enchere->id])
-                        <div class="text-center">
-                            <hr class="my-1">
-                            <h6>Prix de l'enchere </h6>
-
-                            <h5 class="fw-bold text-success"> $ {{ Str::substr($prix_final, 0, 6) }} </h5>
-                            <hr class="my-1">
-                        </div>
-                        @if ($sanction == null)
-
-                            <div class="d-flex justify-content-between align-items-center"
-                                x-data="{ counter : {{  $counter }} } " style="flex-direction: column">
-                                {{-- <span class="num-clic text-center mb-3"><strong x-text>{{$counter??'0'}}</strong></span> --}}
-                                @if (Auth::user()->pivotbideurenchere->where('enchere_id',$this->enchere->id)->first()->temps_bid_auto >= 1)
-                                    <div class="d-inline">
-                                        <h4 class="num-clic text-center mb-3">{{ Auth::user()->pivotbideurenchere->where('enchere_id',$this->enchere->id)->first()->valeur }}</h4>
-                                    </div>
-                                @else
-                                    <div class="d-inline">
-                                        <h4 class="num-clic text-center mb-3" x-text="counter"></h4>
-                                    </div>
-                                    <h1 class="d-none" wire:model="counter" x-text="counter"></h1>
-                                @endif
-
-                                <button class="btn w-100 btn-bid" @click="counter++" wire:click.prevent="update()">
-                                    Bider
-                                </button>
-                            </div>
-                        @else
-                            <div class="d-flex justify-content-between align-items-center"
-                                style="flex-direction: column">
-                                <span class="num-clic text-center mb-3"><strong>{{ $counter ?? '0' }}</strong></span>
-                                <button class="btn w-100 btn-bid" data-bs-toggle="modal"
-                                    data-bs-target="#debloque_user_{{ $sanction->id }}">
-                                    Vous avez été bloqué par {{ '@ ' . $sanction->sanction->username }}
-                                </button>
-                                <style>
-                                    .btn-bid {
-                                        background: #c70303 !important;
-                                    }
-                                </style>
-                            </div>
-                        @endif
-                    @elseif ($enchere->munite * 60 + $enchere->seconde == 0 &&
-                        date('d/ m /Y ', strtotime($this->enchere->date_debut)) == now('africa/kinshasa')->format('d/ m /Y ') &&
-                        $pivot->where('enchere_id', $enchere->id)->where('user_id', Auth::user()->id)->first() != null &&
-                        date('H:i', strtotime($this->enchere->dat_debut)) < now(' Africa/kinshasa')->format('H:i'))
-                        {{-- <span class="d-block text-center">Date du débudvt</span> --}}
-                        <p class="fw-bold d-block text-center text-danger fs-4">Enchére terminé !</p>
-                        @livewire('decrematation', ['getart' => $this->enchere->id, 'incrementation_prix' => $incrementation])
-                        <div class="text-center">
-                            <hr class="my-1">
-                            <h6>Prix de l'enchere</h6>
-                            <h5 class="fw-bold text-success"> $ {{ Str::substr($prix_final, 0, 7) }} </h5>
-                            <hr class="my-1">
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
-                <span class="num-clic text-center mb-3"><strong>{{ $counter ?? '0' }}</strong></span>
-                            <button class="btn w-100 btn-bid" data-bs-toggle="modal" data-bs-target="">
-                                Bider
-                            </button>
-                            <style>
-                                .btn-bid {
-                                    background: #a7a7a7 !important;
-                                }
-                            </style>
-                        </div>
-                    @else
-                        <span class="d-block text-center">Date du début</span>
-                        <h5 class="fw-bold d-block text-center">{{ date('d/ m /Y', strtotime($enchere->date_debut)) }}
-                            à {{ date('H : i ', strtotime($enchere->date_debut)) }}</h5>
-                        <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
-                            <span class="num-clic text-center mb-3"><strong>{{ $counter ?? '0' }}</strong></span>
-                            <button class="btn w-100 btn-bid" data-bs-toggle="modal" data-bs-target="">
-                                Bider
-                            </button>
-                            <style>
-                                .btn-bid {
-                                    background: #a7a7a7 !important;
-                                    height: 120px;
-                                }
-                            </style>
-                        </div>
-                    @endif
-                @else
-
-                    @if ($enchere->munite * 60 + $enchere->seconde < 1)
-                        <p class="fw-bold text-danger fw-bold  d-block text-center fs-4">Enchére terminé !</p>
-                    @endif
-
-                    <div class="d-flex justify-content-between align-items-center" style="flex-direction: column">
-                        <span class="num-clic text-center mb-3"><strong>{{ $counter ?? '0' }}</strong></span>
-                        <button class="btn w-100 btn-bid" data-bs-toggle="modal"
-                            data-bs-target="#modalEnchere_{{ $article }}">
-                            Participer
-                        </button>
-                    </div>
-
+                    @endforeach
                 @endif
-
-                <div class="mt-3">
-
-                    @if ($enchere->munite * 60 + $enchere->seconde > 0 &&
-                        date('d/ m /Y ', strtotime($this->enchere->date_debut)) == now('africa/kinshasa')->format('d/ m /Y ') &&
-                        date('d/ m /Y H:i', strtotime($this->enchere->dat_debut)) <= now(' Africa/kinshasa')->format('d/ m /Y H:i'))
-                        @include('components.outils-detailenchere')
-                    @else
-                        @include('components.outils-detailenchere-future')
-                    @endif
-
-                </div>
-
             </div>
-
-        </div>
-    @else
-        <div class="d-flex justify-content-between align-items-center">
-            <a href="{{ route('login') }}" class="btn w-100">
-                Bider
-            </a>
-        </div>
-    @endif
-    @if ($pivot != null && Auth::user())
-        <div wire:ignore.self class="modal fade" id="modalliste" tabindex="-1" aria-labelledby="exampleModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-body">
-
-                        <div class="text-center">
-                            {{-- <div class='row justify-content-end'>
-                                <input type="text" wire:model="search" class="form-control rounded-pill w-50" placeholder="Rechereche...">
-                            </div> --}}
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>#</th>
-                                        <th>Pseudo</th>
-                                        <th></th>
-                                        <th>Nbr. click</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    @foreach ($listes_sentance as $liste)
-                                        {{-- lister les bideurs de l'enchere --}}
-                                        <tr>
-                                            <td>{{ $loop->index + 1 }}</td>
-                                            {{-- <td><a href="" data-bs-toggle="modal" data-bs-dismiss="modal" data-bs-target="#modalEnchere_{{ $liste->user->id }}">{{$liste->user->nom ??''}}</a></td> --}}
-                                            @if (Auth::user()->pivotbideurenchere->where('enchere_id', $liste->enchere->id)->first()->foudre == 0)
-                                                <td><a
-                                                        href="{{ route('sanction', ['id' => $liste->user->id, 'enchere' => $pivot->enchere_id, 'sanction' => 'foudre', 'name' => $liste->user->nom, 'bid_cut' => $foudre->bid_prix]) }}">
-                                                        {{ $liste->user->username ?? '' }}</a></td>
-                                            @elseif (Auth::user()->pivotbideurenchere->where('enchere_id', $liste->enchere->id)->first()->foudre >= 1)
-                                                <td><a
-                                                        href="{{ route('sanction', ['id' => $liste->user->id, 'enchere' => $pivot->enchere_id, 'sanction' => 'foudre', 'name' => $liste->user->nom, 'bid_cut' => 0]) }}">
-                                                        {{ $liste->user->username  ?? '' }}</a></td>
-                                            @endif
-                                            <td>
-                                                {{-- <span>
-                                                        <span class="iconify" data-icon="clarity:crown-solid"></span>
-                                                    </span>
-                                                    <span>
-                                                        <span class="iconify" data-icon="pepicons:electricity"></span>
-                                                    </span> --}}
-                                            </td>
-                                            <td>
-                                                <span
-                                                    class="badge bg-primary count-bib">{{ $liste->valeur ?? '' }}</span>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-
-                            </table>
-                            <button type="button" class="btn btn-ok" data-bs-dismiss="modal">Annuler</button>
+            <div class="block-actions-bids mb-4">
+                <div class="row align-items-center g-4">
+                    <div class="col-7 pe-0">
+                        <div class="block-options-bid">
+                            <div class="text-center">
+                                <h5>Options</h5>
+                            </div>
+                            <div class="d-flex btns align-items-center flex-wrap">
+                                <button class="btn btn-rounded">
+                                    <img src="{{asset('images/crown.png')}}" alt="">
+                                    <span>{{$paquet->roi}}</span>
+                                </button>
+                                <button class="btn btn-rounded">
+                                    <img src="{{asset('images/tunder.png')}}" alt="">
+                                    <span>{{$paquet->foudre}}</span>
+                                </button>
+                                <button class="btn btn-rounded">
+                                    <img src="{{asset('images/save.png')}}" alt="">
+                                    <span>{{$paquet->bouclier}}</span>
+                                </button>
+                                <button class="btn btn-rounded">
+                                    <img src="{{asset('images/click.png')}}" alt="">
+                                    <span>{{$paquet->click}}</span>
+                                </button>
+                                <button class="btn btn-achat">
+                                    Acheter de clics
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    @endif
-
-    <div wire:ignore.self class="modal fade" id="achat_use_{{ $article_enchere }}" tabindex="-1"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="icon">
-                        <span class="iconify" data-icon="ant-design:info-outlined"></span>
-                    </div>
-                    @php
-                        $prix_click = App\Models\Click_auto::where('paquet_id', $article_paquet)->first()->bid_prix;
-                    @endphp
-
-                    <div class="text-center">
-                        <h6> Voulez-vous utiliser la mode du clique automatique ?</h6>
-                        @if (Auth::user() && $pivot != null)
-                            @if ($enchere->munite * 60 + $enchere->seconde > 0)
-                                {{-- <a type="button" href="{{ route('bid.auto', ['name' => Auth::user()->nom]) }}"
-                                    class="btn btn-ok w-50">Oui</a> --}}
-                            <a href="{{ route('Active.click',['name' => Auth::user()->nom,'enchere' =>$enchere->id]) }}" type="button"
-                                    class="btn btn-ok w-50 ">Oui</a>
+                    
+                    @if ($pivot != null)
+                        @if ($enchere->munite*60+$enchere->seconde>0  && $pivot->where('enchere_id',$enchere->id)->where('user_id', Auth::user()->id)->first() != null && date('H:i', strtotime($this->enchere->date_debut)) <= now(' Africa/kinshasa')->format('H:i'))
+                        @if ($sanction == null)
+                                <div class="col-5">
+                                    <button class="btn btn-bid" @click="counter++" wire:click.prevent="update()">
+                                        <i class="fi fi-rr-fingerprint"></i>
+                                    </button>
+                                </div>
                             @else
-                            <a type="button" href="{{ route('achat.bid.enchere',['enchere_id'=>$enchere->id,'enchere_titre'=>$enchere->article->titre]) }}"
-                            class="btn btn-ok w-50 ">Oui</a>
-
+                                <div class="col-5">
+                                    <button class="btn btn-bid"  data-bs-toggle="modal" data-bs-target="#debloque_user_{{$sanction->id}}">
+                                        Clique ici pour  vous debloquer
+                                    </button>
+                                </div>
                             @endif
+                        @elseif ($enchere->munite*60+$enchere->seconde == 0  && $pivot->where('enchere_id',$enchere->id)->where('user_id', Auth::user()->id)->first() != null && date('H:i', strtotime($this->enchere->date_debut)) > now(' Africa/kinshasa')->format('H:i'))
+                            <div class="col-5">
+                                <button class="btn btn-bid"  >
+                                    <i class="fi fi-rr-fingerprint"></i>1
+                                </button>
+                            </div>
                         @else
-                            @if (Auth::user())
-                                <a type="button" href="#" data-bs-dismiss="modal" data-bs-toggle="modal"
-                                    aria-label="close" data-bs-target="#modalEnchere_{{ $article }}"
-                                    class="btn btn-ok w-50 ">Participer a l'enchere</a>
-                            @else
-                                <a type="button" href="/login" data-bs-dismiss="modal" aria-label="close"
-                                    class="btn btn-ok w-50 ">Participer a l'enchere</a>
-                            @endif
+                            <div class="col-5">
+                                <button class="btn btn-bid"  >
+                                    <i class="fi fi-rr-fingerprint"></i>2
+                                </button>
+                            </div>
                         @endif
-                    </div>
-                </div>
-                <div class="modal-footer d-flex justify-content-center align-items-center">
-                    <button type="button" class="btn btn-non" data-bs-dismiss="modal"
-                        aria-label="close">Annuler</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- modal participer --}}
-    <div wire:ignore.self class="modal fade" id="modalEnchere_{{ $article }}" tabindex="-1"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="icon">
-                        <span class="iconify" data-icon="ant-design:info-outlined"></span>
-                    </div>
-                    <div class="text-center">
-
-                        <h5>Voulez-vous participer à cette enchère ?</h5>
-                        {{-- @if (Auth::user()) --}}
-                        <p> Pour y participer, veuillez souscrire à la catégorie "{{ $enchere->paquet->libelle }}" en
-                            payent {{ $enchere->paquet->prix }} bids.</p>
-                        {{-- @endif --}}
-                    </div>
-                </div>
-
-                <div class="modal-footer d-flex justify-content-between align-items-center">
-                    <button type="button" class="btn btn-non" data-bs-dismiss="modal"
-                        aria-label="close">Annuler</button>
-                    @if (Auth::user() && Auth::user()->bideurs->first()->balance < $enchere->paquet->prix)
-                        <a type="button" href="{{ route('achat.bid.enchere',['enchere_id'=>$enchere->id,'enchere_titre'=>$enchere->article->titre]) }}" class="btn btn-ok">Participer</a>
-                    @elseif (Auth::user() && Auth::user()->bideurs->first()->balance >= $enchere->paquet->prix)
-                        <a type="button" href="{{ route('detail.article', ['id' => $article, 'name' => $article_titre]) }}"
-                            class="btn btn-ok">Participer</a>
                     @else
-                        <a type="button" href="/login" class="btn btn-ok">Participer</a>
+                        <div class="col-5">
+                            <button class="btn btn-bid"  data-bs-toggle="modal" data-bs-target="#debloque_user_{{$sanction->id}}">
+                                <i class="fi fi-rr-fingerprint"></i>3
+                            </button>
+                        </div>
                     @endif
                 </div>
             </div>
+            @if ($enchere->munite * 60 + $enchere->seconde > 0 &&
+                date('d/ m /Y ', strtotime($this->enchere->date_debut)) == now('africa/kinshasa')->format('d/ m /Y ') &&
+                date('d/ m /Y H:i', strtotime($this->enchere->dat_debut)) <= now(' Africa/kinshasa')->format('d/ m /Y H:i'))
+                @include('components.outils-detailenchere')
+            @else
+                @include('components.outils-detailenchere-future')
+            @endif
+            <div class="block-progress d-flex align-items-center justify-content-cente">
+                <div class="content-progress">
+                    <div class="content-flag d-flex align-items-center">
+                        <i class="fi fi-sr-flag-alt"></i>
+                        <i class="fi fi-sr-flag-alt"></i>
+                        <i class="fi fi-sr-flag-alt"></i>
+                        <i class="fi fi-sr-flag-alt"></i>
+                        <i class="fi fi-sr-flag-alt"></i>
+                        <i class="fi fi-sr-flag-alt"></i>
+                        <i class="fi fi-sr-flag-alt"></i>
+                        <i class="fi fi-sr-flag-alt"></i>
+                    </div>
+                    <div class="content-char d-flex align-items-center">
+                       <img src="{{asset('images/tank.png')}}" alt="">
+                       <img src="{{asset('images/tank.png')}}" alt="">
+                       <img src="{{asset('images/tank.png')}}" alt="">
+                    </div>
+                    <div class="move"></div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+    <div class="block-bid-info fixed-bottom">
+        <div class="content-bid-info d-flex align-items-center justify-content-between">
+            <div class="item d-flex flex-column align-items-center justify-content-center">
+                <div class="num">{{$solde_non_tranferable}}</div>
+                <div class="info">
+                    Bids non-transférable
+                </div>
+            </div>
+            <div class="item d-flex flex-column align-items-center justify-content-center">
+                <div class="num">{{$solde_bid}}</div>
+                <div class="info">
+                    Bids
+                </div>
+            </div>
+            <div class="item d-flex flex-column align-items-center justify-content-center">
+                <div class="num">{{$solde_bonus->bonus}}</div>
+                <div class="info">
+                    Bids bonus
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 

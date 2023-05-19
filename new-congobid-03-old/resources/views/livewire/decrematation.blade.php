@@ -13,28 +13,11 @@
             @endif
         </div>
     </div> --}}
-    
+
     <div wire:ignore.self class="text-center">
-        
-        <span style="margin-right: 2px">
-            <i class="fi fi-rr-alarm-clock"></i>
-        </span>
         <span style="font-size: 9px">
             {{Str::length(Str::before((intval($munite) /60), '.')) == 1 ? '0'. Str::before((intval($munite) /60), '.'):Str::before((intval($munite) /60), '.') }}:{{ Str::length( (intval($munite) % 60)) == 1 ? ('0'.intval($munite) % 60) : (intval($munite) % 60)  }}:{{ Str::length( $times) == 1 ? '0'. $times :  $times}}  
         </span>
-        
     </div>
-    <script>
-        Livewire.on('start-countdown', ({ interval }) => {
-            setInterval(() => {
-                Livewire.emit('countdown');
-            }, interval);
-        });
     
-        Livewire.on('countdown', ({ secondsRemaining }) => {
-            window.requestAnimationFrame(() => {
-                Livewire.redraw();
-            });
-        });
-    </script>
 </div>

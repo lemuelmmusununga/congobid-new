@@ -35,27 +35,7 @@
     <body>
         {{-- @include('components.side-menu') --}}
         {{-- @include('components.side-filter') --}}
-        <div id="page-load">
-            <div class="backdrop fade"></div>
-            <div class="parent-modal">
-                <div class="dialog dialog-centered">
-                    <div class="content-modal">
-                        <div class="body">
-                            <div class="d-flex align-items-center">
-                                <div class="load-spiner">
-                                </div>
-                                <div class="text-star">
-                                    <h6 class="mb-0" style="color:var(--colorTitre)!important;">
-                                        Veuillez patienter Svp ...
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-        </div>
 
         @include('components.navbar-page')
         <div class="overplay"></div>
@@ -170,7 +150,6 @@
           })
         </script>
         <!-- Scripts -->
-        <script src="{{ asset('js/jquery.simple.timer.js') }}"></script>
         <script src="{{asset('js/jquery.min.js')}}"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
         <script src="{{asset('js/jquery.countdown.min.js')}}"></script> <!-- The Final Countdown plugin for jQuery -->
         <script src="{{asset('js/scripts.js')}}"></script> <!-- Custom scripts -->

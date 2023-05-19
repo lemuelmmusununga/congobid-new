@@ -22,7 +22,6 @@ use App\Models\Chat_enchere;
 use App\Models\Click_auto;
 use App\Models\Clicks;
 use App\Models\Message;
-use App\Models\Option;
 use Illuminate\Support\Facades\Session;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -32,7 +31,7 @@ class Counterbid extends Component
     public $client = '';
     public $user,$article,$autobid=0,$update=[''],$time_click,$liste_count,$clicks,$first_treve,$listes_one;
     public $click ='';
-    public $bid,$first ,$all;
+    public $bid;
     public $ids,$solde_bid,$liste_one,$i,$solde_bonus,$search='',$bids, $listes_auth,$prix,$bonus,$solde_non_tranferable,$enchere,$temps_restant_total;
     // public $listes=[];
     public $getSalons=[],$paquet_enchere,$sec =0,$sommeClick,$time_bouclier;
@@ -40,7 +39,7 @@ class Counterbid extends Component
     // recuperation de l'article cliquer
     public $getart,$user_id,$isSet = true,$etat,$temps_total_heure,$click_paye,$save=[] ;
     // santion
-    public $message='',$send_message , $pourcentage_foudre, $pourcentage_bouclier,$paquet;
+    public $message='',$send_message , $pourcentage_foudre, $pourcentage_bouclier;
     public function send(){
         $this->user = auth()->user()->id;
         if (Str::length($this->message) > 0) {
@@ -100,7 +99,9 @@ class Counterbid extends Component
        ]);
     }
     public function update(){
-         try {
+
+        
+        try {
             $this->user = auth()->user()->id;
             $this->update_bonus = Bideur::where('user_id',Auth::user()->id)->first();
             if ($this->counter % 320 == 0) {
@@ -110,16 +111,17 @@ class Counterbid extends Component
                 ]);
             }
             $this->update = PivotBideurEnchere::where('user_id',$this->user)->where('enchere_id',$this->article_enchere)->first();
-            
             $this->counter =$this->update->valeur + 1;
             Session::put('counter', $this->counter);
+            
             $this->update->update([
                 'valeur'=>$this->counter,
                 'click_seconde' => $this->update->click_seconde + 1
             ]);
-         } catch (\Throwable $th) {
-             return back();
-         }
+            
+        } catch (\Throwable $th) {
+            return back();
+        }
 
     }
     public function addclick($add){
@@ -157,7 +159,6 @@ class Counterbid extends Component
         $this->prix_final = $this->enchere->prix_enchere;
         if (Auth::user()->pivotbideurenchere->where('enchere_id',$this->article_enchere)->first()) {
             # code...
-            $this->paquet = Option::where('user_id',Auth::user()->id)->where('paquet_id',$this->enchere?->paquet->id)->first();
             $echeance = Auth::user()->pivotbideurenchere->where('enchere_id',$this->article_enchere)->first()->time_bouclier;
             $this->time_bouclier = now('africa/kinshasa')->format('i')-date('i',strtotime($echeance));
             $duree =date('i',strtotime($this->bouclier->temps_blocage));
@@ -239,7 +240,6 @@ class Counterbid extends Component
             # code...
             $this->solde_bonus = 0;
         }
-
         //  dd($this->munite*60+$this->times);
         // calcule du temps
         $this->temps_restant_total=$this->temps_restant_total+1;
