@@ -53,7 +53,7 @@
                             </button>
                         @endif
 
-                        <button class="btn btn-achat">
+                        <button class="btn btn-achat" data-bs-toggle="modal" data-bs-target="#achat_click_new">
                             Acheter de clics
                         </button>
                     </div>
@@ -64,17 +64,14 @@
                 @if ($sanction == null)
                     <div class="col-5">
                         <button class="btn btn-bid disabled" @click="counter++" wire:click.prevent="update()">
-                            <i class="fi fi-rr-fingerprint"></i>
-                        </button>
+                        <button class="btn btn-bid" @click="counter++" wire:click.prevent="update()">
                     </div>
-                @else
                     <div class="col-5">
                         <button class="btn btn-bid disabled" data-bs-toggle="modal"
                             data-bs-target="#debloque_user_{{ $sanction->id }}">
                             <span>
                                 Vous avez été bloqué par {{ '@ ' . $sanction->sanction?->username }}
                             </span>
-
                         </button>
                     </div>
                 @endif
@@ -291,6 +288,7 @@
         </div>
     </div>
 </div>
+
 @include('components.achat-options')
 
 {{-- @if (Auth::user() && $enchere->munite * 60 + $enchere->seconde > 0 && $pivot != null) --}}

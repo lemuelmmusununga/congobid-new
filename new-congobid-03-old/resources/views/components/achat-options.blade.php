@@ -163,6 +163,48 @@
             </div>
         </div>
     </div>
+
+    {{-- achat clique --}}
+    <div wire:ignore.self class="modal fade" id="achat_click_new" tabindex="-1" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <form method="POST" class="mb-5">
+                        @csrf
+                        <div class="form-group row g-3">
+                            <div class="col-12">
+                                <div class="text-center">
+                                    <h4 class="title-form mb-0">Achat des cliques</h4>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <label for="">Nombre des cliques</label>
+                                <input type="number" class="form-control" placeholder="Nombre de clicks" wire:model="nombreClick">
+                            </div>
+                            <div class="col-12 text-center">
+                                <span class="text-center">Vous devez payer {{$montantClick}} bids</span>
+                                {{-- <input type="text" class="form-control" name="montant" wire:model="montantClick"> --}}
+                            </div>
+                            <div class="col-12 d-flex justify-content-between mb-4 mt-4">
+                                <a href="#" class="btn btn btn-3d-rounded-sm" data-bs-dismiss="modal">Annuler</a>
+                                @if (Auth::user()->bideurs->first()->balance >= $montantClick)
+                                    {{-- <a type="button" href="{{route('click',['enchere'=>$article_enchere,'paquet'=>$prix_click,'name'=>Auth::user()->nom])}}" wire:click.prevent ="achatRoi({{ $article_enchere }} , {{ $prix_click }})" class="btn btn-ok w-50">Acheter</a> wire:click.prevent ="achatRoi({{ $article_enchere }} , {{ $prix_click }})" --}}
+                                    <button class="btn-3d-rounded-sm" data-bs-dismiss="modal" wire:click.prevent ="Buyclick({{$nombreClick}})">Valider</button>
+                                @else
+                                    <a type="button"
+                                        href="{{ route('achat.bid.enchere', ['enchere_id' => $enchere->id, 'enchere_titre' => $enchere->article->titre]) }}"
+                                        class="btn btn-ok w-50 ">Acheter</a>
+                                @endif
+
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
     {{-- click achat_use --}}
     <div wire:ignore.self class="modal fade" id="use_click" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
@@ -329,4 +371,5 @@
                 </div>
             </div>
         @endif
-@endif
+    @endif
+

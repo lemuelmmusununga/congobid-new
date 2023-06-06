@@ -214,7 +214,7 @@ class DetailEnchereController extends Controller
             ]);
         }
         $auto->update([
-            'temps_bid_auto' => 60,
+            'temps_bid_auto' => $auto->temps_bid_auto + 60,
             'automatique' => 1,
             'clicks' => $auto->clicks - 1,
         ]);
@@ -234,10 +234,12 @@ class DetailEnchereController extends Controller
         $option->update([
             'bouclier' => $option->bouclier - 1
         ]);
+
         $auto->update([
-            'time_bouclier' => 180,
+            'time_bouclier' =>  $auto->time_bouclier +180,
         ]);
-        return redirect()->back();
+
+        return back();
     }
     public function sanction($id, $enchere, $sanctance, $name, $bid_cut)
     {

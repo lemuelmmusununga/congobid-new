@@ -155,10 +155,7 @@ class Counterdown extends Component
                     $option->update([
                         'time_bouclier' => $decremention
                     ]);
-
                 }
-
-
                 $this->progresse = (($this->enchere->munite * 60 + ($this->enchere->seconde )) /($this->enchere->paquet->duree * 60) ) *100  ;
 
         }else{
@@ -174,7 +171,6 @@ class Counterdown extends Component
         $this->solde_bonus = Bideur::where('user_id',Auth::user()->id)->first();
         $echeance_bid_auto = Auth::user()->pivotbideurenchere->where('enchere_id',$this->enchere->id)->first()->time_bid_auto ?? '';
        }
-
         return view('livewire.counterdown');
     }
 }
