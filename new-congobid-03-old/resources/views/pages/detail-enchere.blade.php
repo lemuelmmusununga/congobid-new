@@ -3,7 +3,7 @@
     {{-- <script>
         setTimeout(() => {
             document.location.reload();
-        }, 30000);
+        }, 50000);
     </script> --}}
     <header>
         <nav class="navbar navbar-expand-lg sticky-top nav-bid">
@@ -87,8 +87,8 @@
                     </div>
                   </a>
                 </li>
-    
-    
+
+
               </ul>
             </div> -->
         </div>

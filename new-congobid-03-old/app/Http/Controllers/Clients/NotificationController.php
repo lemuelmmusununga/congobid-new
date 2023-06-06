@@ -19,11 +19,14 @@ class NotificationController extends Controller
         $publics = Notification::where('public',1)->get();
         if(Auth::user()){
             $notifications  = Notification::where('notification_id',Auth::user()->id)->get();
+        }else{
+            $notifications  = null;
         }
         $paquets = Paquet::where('statut_id', '3')->get();
         $page = 3;
 
-        return view('pages.notification', compact('paquets','notifications','publics', 'page'));
+        // return view('pages.notification', compact('paquets','notifications','publics', 'page'));
+        return view('pages.message', compact('paquets','notifications','publics', 'page'));
     }
 
     /**

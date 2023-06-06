@@ -1,6 +1,6 @@
-<div wire:ignore>
+<div wire:ignore wire:pool.keep-alive>
     <div class="banner-home">
-        <div class="con♠ent-banner">
+        <div class="content-banner">
             <div class="container">
                 <div class="row g-1">
                     <div class="col-12 mb-3">
@@ -118,7 +118,7 @@
                                 }
                                 $prix_roi = '';
                             @endphp
-                            
+
                             @if (
                                 $article->enchere?->munite * 60 + $article->enchere?->seconde > 0 &&
                                     $article->enchere?->state == 0 &&
@@ -141,12 +141,12 @@
                                                 <div class="time-block text-center">
                                                     <h6 class="title mb-0"><i class="fi fi-rr-alarm-clock"></i> Enchère
                                                         en cours</h6>
-                                                    <div>
-                                                        @livewire('countdown' )
-                                                    </div>
                                                     <div class="time">
-                                                        @livewire('decrematation', ['getart' => $article->id])
+                                                         @livewire('counterdown', ['getart' => $article->enchere?->id] )
                                                     </div>
+                                                    {{-- <div class="time">
+                                                        @livewire('decrematation', ['getart' => $article->id])
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                             <div class="col-5">
@@ -178,9 +178,12 @@
                                             <div class="col-12 text-center">
                                                 @if (Auth::user())
                                                     @if (Auth::user()->pivotBideurEnchere->where('enchere_id', $article->enchere->id)->first() == null)
-                                                        <a href="#" class="btn btn-3d-rounded-sm" data-toggle="modal" data-target="#exampleModalCenter{{$key}}">
-                                                            <i class="fi fi-rr-plus"></i> Participer à l'enchère 
-                                                        </a>                                                    
+                                                        {{-- <a href="#" class="btn btn-3d-rounded-sm" data-toggle="modal" data-target="#exampleModalCenter{{$key}}">
+                                                            <i class="fi fi-rr-plus"></i> Participer à l'enchère
+                                                        </a> --}}
+                                                        <a href="{{ route('detail.article', ['id' => $article->id, 'name' => $article->titre]) }}" class="btn btn-3d-rounded-sm">
+                                                            <i class="fi fi-rr-plus"></i> Participer à l'enchère
+                                                        </a>
                                                     @else
                                                         <a href="{{ route('show.detail', ['id' => $article->id,'name'=>$article->titre]) }}" class="btn btn-3d-rounded-sm">
                                                             <i class="fi fi-rr-plus"></i> Ouvrir l'enchere
@@ -189,7 +192,7 @@
                                                 @else
                                                     <a href="{{ route('register') }}" class="btn btn-3d-rounded-sm">
                                                         <i class="fi fi-rr-plus"></i> Participer à
-                                                        l'enchère 
+                                                        l'enchère
                                                     </a>
                                                 @endif
                                             </div>
@@ -197,7 +200,7 @@
                                     </div>
                                 </div>
                             @endif
-                            
+
                         @endforeach
                     </div>
                 </div>
@@ -210,7 +213,7 @@
             <div class="container">
                 <div id="slider-produit-2" class="owl-carousel carousel-car">
                     <div class="item">
-                        @foreach ($articles as $article)
+                        @foreach ($articles as $key=> $article)
                             @php
                                 $test = $article->enchere?->date_debut > now('Africa/Kinshasa')->format('Y-m-d H:i:s');
                             @endphp
@@ -274,6 +277,7 @@
                                                     class="link">Voir plus</a>
                                             </div>
                                             @include('components.boutons-future')
+
                                             {{-- <div class="col-12 text-center">
                                                 <a href="#" class="btn btn-3d-rounded-sm">
                                                     <i class="fi fi-rr-plus"></i> Participer à
@@ -284,6 +288,7 @@
                                     </div>
                                 </div>
                             @endif
+
                         @endforeach
                     </div>
                 </div>
@@ -391,7 +396,7 @@
             </div>
         </div>
         @include('components.modal-index')
-        
+
     </div>
 
     <div class="block-all-bids">
@@ -438,12 +443,12 @@
                     <div class="col justify-content-center ">
                         {{-- <h3> Nos Articles </h3> --}}
                         <div class="row m-2">
-                            <a href="{{ route('show.articles') }}" class="btn btn-3d-rounded-sm btn-article">
+                            <a href="{{ route('show.articles') }}" class="btn btn-3d-rounded-sm btn-article mb-3">
                                 Categories
                             </a>
                         </div>
                         <div class="row m-2">
-                            <a href="{{ route('show.enchers') }}" class="btn btn-3d-rounded-sm btn-article">
+                            <a href="{{ route('show.enchers.globale') }}" class="btn btn-3d-rounded-sm btn-article">
                                 Enchères
                             </a>
                         </div>
@@ -453,6 +458,6 @@
         </div>
     </div>
 
-    
-    
+
+
 </div>

@@ -74,7 +74,8 @@ class DetailEnchereController extends Controller
         $article = Article::where('id', $id)->where('statut_id', '3')->first();
         $paquets = Paquet::where('statut_id', '3')->get();
         $block = 0;
-        $sanction = Sanction::where('enchere_id', $article->enchere?->id)->where('user_id', Auth::user()->id)->first();
+        try {
+            $sanction = Sanction::where('enchere_id', $article->enchere?->id)->where('user_id', Auth::user()->id)->first();
 
         if (Auth::user()) {
             # code...
@@ -89,6 +90,10 @@ class DetailEnchereController extends Controller
             $block = 1;
             return view('pages.detail-enchere', compact('article', 'paquets', 'block', 'sanction'));
         }
+        } catch (\Throwable $th) {
+           return back();
+        }
+
     }
     public function achatBid($id, $valeur, $enchere_id, $enchere_name)
     {
@@ -164,9 +169,20 @@ class DetailEnchereController extends Controller
         $cutbid = Auth::user()->bideurs->first()->balance - $prix;
         $enchere = Enchere::where('id', $enchere)->first();
         $option = Option::where('user_id', Auth::user()->id)->where('paquet_id', $enchere->paquet_id)->first();
-        $option->update([
-            'click' => $option->click + 1
-        ]);
+        if($option == null){
+            $option= Option::create([
+                'roi' => 0,
+                'foudre' => 0,
+                'click' => 1,
+                'bouclier' => 0,
+                'paquet_id'=>$enchere->paquet_id,
+                'user_id' => Auth::user()->id,
+            ]);
+        }else{
+            $option->update([
+                'click' => $option->click + 1
+            ]);
+        }
         // $auto -> update([
         //     'clicks'=> Auth::user()->pivotbideurenchere->where('enchere_id',$enchere)->first()->clicks + 1,
         // ]);
@@ -179,18 +195,36 @@ class DetailEnchereController extends Controller
     }
     public function activeBidAuto($name, $enchere)
     {
+        try{
         $auto =  Auth::user()->pivotbideurenchere->where('enchere_id', $enchere)->first();
         $enchere = Enchere::where('id', $enchere)->first();
         $option = Option::where('user_id', Auth::user()->id)->where('paquet_id', $enchere->paquet_id)->first();
-        $option->update([
-            'click' => $option->click - 1
-        ]);
+        if($option == null){
+            $option= Option::create([
+                'roi' => 0,
+                'foudre' => 0,
+                'click' => 1,
+                'bouclier' => 0,
+                'paquet_id'=>$enchere->paquet_id,
+                'user_id' => Auth::user()->id,
+            ]);
+        }else{
+            $option->update([
+                'click' => $option->click - 1
+            ]);
+        }
         $auto->update([
-            'temps_bid_auto' => 60,
+            'temps_bid_auto' => $auto->temps_bid_auto + 60,
             'automatique' => 1,
             'clicks' => $auto->clicks - 1,
         ]);
         return redirect()->back();
+
+    } catch (\Throwable $th) {
+        return back();
+     }
+
+
     }
     public function activeBouclier($name, $enchere)
     {
@@ -200,13 +234,16 @@ class DetailEnchereController extends Controller
         $option->update([
             'bouclier' => $option->bouclier - 1
         ]);
+
         $auto->update([
-            'time_bouclier' => 180,
+            'time_bouclier' =>  $auto->time_bouclier +180,
         ]);
-        return redirect()->back();
+
+        return back();
     }
     public function sanction($id, $enchere, $sanctance, $name, $bid_cut)
     {
+        try{
         $bideur = PivotBideurEnchere::where('user_id', $id)->where('enchere_id', $enchere)->first();
 
         $bid_soustraction = Bideur::where('user_id', Auth::user()->id)->first();
@@ -286,9 +323,13 @@ class DetailEnchereController extends Controller
             return redirect()->back()->with('success', 'le bideur est sanctionner');
             // session()->flash('success','le bideur est sanctionner');
         }
+        } catch (\Throwable $th) {
+            return back();
+        }
     }
     public function debloquer($enchere, $sanctance, $name, $bid_cut, $id)
     {
+        try{
         $bideur = PivotBideurEnchere::where('user_id', $id)->where('enchere_id', $enchere)->first();
         $bid_soustraction = Bideur::where('user_id', Auth::user()->id)->first();
 
@@ -302,17 +343,32 @@ class DetailEnchereController extends Controller
             'deleted_at' => now('africa/kinshasa')
         ]);
         return redirect()->back()->with('success', 'Vous étes debloqué');
+    } catch (\Throwable $th) {
+        return back();
+     }
     }
     public function bouclier($enchere, $paquet, $name)
     {
+        try{
         $bideur = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $enchere)->first();
         $bid_soustraction = Bideur::where('user_id', Auth::user()->id)->first();
         $bouclier_benefice = Bouclier::where('paquet_id', $bideur->enchere->paquet->id)->first()->benefice;
         $enchere = Enchere::where('id', $enchere)->first();
         $option = Option::where('user_id', Auth::user()->id)->where('paquet_id', $enchere->paquet_id)->first();
-        $option->update([
-            'bouclier' => $option->bouclier + 1
-        ]);
+        if($option == null){
+            $option= Option::create([
+                'roi' => 0,
+                'foudre' => 0,
+                'click' => 0,
+                'bouclier' => 1,
+                'paquet_id'=>$enchere->paquet_id,
+                'user_id' => Auth::user()->id,
+            ]);
+        }else{
+            $option->update([
+                'bouclier' => $option->bouclier + 1
+            ]);
+        }
         $bideur->update([
             'bouclier' => $bideur->bouclier + 1,
             'valeur' => $bideur->valeur + $bouclier_benefice,
@@ -322,21 +378,36 @@ class DetailEnchereController extends Controller
             'balance' => Auth::user()->bideurs->first()->balance - $paquet
         ]);
         return redirect()->back()->with('success', 'Achat du bouclier effectué avec success');
+    } catch (\Throwable $th) {
+        return back();
+     }
     }
     // achat roi
 
-    public function roi($enchere, $paquet, $name)
+    public function roi($enchere, $paquet,$name)
     {
+        try{
         // dd($enchere,$paquet,$name);
         $bideur = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $enchere)->first();
         $bid_soustraction = Bideur::where('user_id', Auth::user()->id)->first();
         $roi_benefice = Roi::where('paquet_id', $bideur->enchere->paquet->id)->first()->benefice;
         $enchere = Enchere::where('id', $enchere)->first();
         $option = Option::where('user_id', Auth::user()->id)->where('paquet_id', $enchere->paquet_id)->first();
-        $option->update([
-            'roi' => $option->roi + 1
-        ]);
-     
+        if($option == null){
+            $option= Option::create([
+                'roi' => 1,
+                'foudre' => 0,
+                'click' => 0,
+                'bouclier' => 0,
+                'paquet_id'=>$enchere->paquet_id,
+                'user_id' => Auth::user()->id,
+            ]);
+        }else{
+            $option->update([
+                'roi' => $option->roi + 1
+            ]);
+        }
+
         $bideur->update([
             'roi' => $bideur->roi + 1,
             'valeur' => $bideur->valeur + $roi_benefice,
@@ -352,6 +423,9 @@ class DetailEnchereController extends Controller
             'balance' => Auth::user()->bideurs->first()->balance - $paquet,
         ]);
         return redirect()->back()->with('success', 'Achat du roi effectué avec success');
+    } catch (\Throwable $th) {
+        return back();
+     }
     }
     // achat clique
     public function AchatClickAuto($enchere, $paquet, $name)
@@ -361,9 +435,20 @@ class DetailEnchereController extends Controller
         $click_benefice = Click::where('paquet_id', $bideur->enchere->paquet->id)->first()->benefice;
         $enchere = Enchere::where('id', $enchere)->first();
         $option = Option::where('user_id', Auth::user()->id)->where('paquet_id', $enchere->paquet_id)->first();
-        $option->update([
-            'click' => $option->click + 1
-        ]);
+        if($option == null){
+            $option= Option::create([
+                'roi' => 0,
+                'foudre' => 0,
+                'click' => 1,
+                'bouclier' => 0,
+                'paquet_id'=>$enchere->paquet_id,
+                'user_id' => Auth::user()->id,
+            ]);
+        }else{
+            $option->update([
+                'click' => $option->click + 1
+            ]);
+        }
         $bideur->update([
             'clicks' => $bideur->clicks + 1,
             'valeur' => $bideur->valeur + $click_benefice,
@@ -391,7 +476,7 @@ class DetailEnchereController extends Controller
             //     'paquet_id',
             //     $paquet
             // )->first();
-         
+
             foreach ($bideurs as $bideur) {
                 $bloquer_enchere = Sanction::create([
                     'paquet_id' => $paquet,
@@ -425,9 +510,20 @@ class DetailEnchereController extends Controller
         $foudre_benefice = Foudre::where('paquet_id', $bideur->enchere->paquet->id)->first()->benefice;
         $enchere = Enchere::where('id', $enchere)->first();
         $option = Option::where('user_id', Auth::user()->id)->where('paquet_id', $enchere->paquet_id)->first();
-        $option->update([
-            'foudre' => $option->foudre + 1
-        ]);
+        if($option == null){
+            $option = Option::create([
+                'roi' => 0,
+                'foudre' => 1,
+                'click' => 0,
+                'bouclier' => 0,
+                'paquet_id'=>$enchere->paquet_id,
+                'user_id' => Auth::user()->id,
+            ]);
+        }else{
+            $option->update([
+                'foudre' => $option->foudre + 1
+            ]);
+        }
 
         $bideur->update([
             'foudre' => Auth::user()->pivotBideurEnchere->first()->foudre + 1,

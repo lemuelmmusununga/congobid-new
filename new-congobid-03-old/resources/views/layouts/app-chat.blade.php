@@ -32,6 +32,7 @@
             <div class="overplay"></div>
         </div>
         @include('components.nav-chat')
+        @include('components.menu-sm')
         @stack('modals')
         <script>
             // Get the input field

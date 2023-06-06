@@ -18,19 +18,19 @@
                             </div>
                             <div class="row g-1 mt-3">
                                 @foreach ($priceSimbas as $key => $simba)
-                                    @if (Auth::user()->options->where('paquet_id', 1)->first()->roi ??
-                                            0 == 0)
+                                    @if (Auth::user()->options->where('paquet_id', 1)->first()->roi == 0)
                                         <div class="col-6" data-bs-toggle="modal"
-                                            data-bs-target="#modalAchat_{{ $key }}">
-                                        @else
-                                            <div class="col-6" data-bs-toggle="modal"
-                                                data-bs-target="#modalTransBid_{{ $key }}">
+                                            data-bs-target="#modalAchat_{{$key}}">
+                                    @else
+                                        <div class="col-6" data-bs-toggle="modal"
+                                            data-bs-target="#modalTransBid_{{$key}}">
                                     @endif
                                     <div class="card-option-sm">
                                         <div class="block-option">
                                             <div class="header-bid">
                                                 <img src="{{ asset('images/piece.png') }}" alt="">
-                                                <span>{{ $simba->prix }}
+
+                                                <span>{{ $simba->rois?->first()->bid_prix }}
                                                 </span>
                                             </div>
                                             <div class="img-option">
@@ -41,77 +41,74 @@
                                             <p>{{ Auth::user()->options->where('paquet_id', 1)->first()->roi ?? 0 }}</p>
                                         </div>
                                     </div>
-
-                            </div>
-                            @if (Auth::user()->options->where('paquet_id', 1)->first()->foudre ??
-                                    0 == 0)
-                                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
+                                </div>
+                                @if (Auth::user()->options->where('paquet_id', 1)->first()->foudre == 0)
+                                    <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
                                 @else
                                     <div class="col-6" data-bs-toggle="modal"
-                                        data-bs-target="#modalTransBid_{{ $key }}">
+                                            data-bs-target="#modalTransBid_{{$key}}">
+                                @endif
+                                <div class="card-option-sm">
+                                    <div class="block-option">
+                                        <div class="header-bid">
+                                            <img src="{{ asset('images/piece.png') }}" alt="">
+                                            <span>{{ $simba->foudres?->first()->bid_prix }}</span>
+                                        </div>
+                                        <div class="img-option">
+                                            <img src="{{ asset('images/tunder.png') }}" alt="">
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <p>{{ Auth::user()->options->where('paquet_id', 1)->first()->foudre ?? 0 }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @if (Auth::user()->options->where('paquet_id', 1)->first()->click
+                                == 0)
+                            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
+                            @else
+                                <div class="col-6" data-bs-toggle="modal"
+                                        data-bs-target="#modalTransBid_{{$key}}">
                             @endif
                             <div class="card-option-sm">
                                 <div class="block-option">
                                     <div class="header-bid">
                                         <img src="{{ asset('images/piece.png') }}" alt="">
-                                        <span>{{ $simba->prix }}</span>
+                                        <span>{{ $simba->clicks?->first()->prix_bid }}</span>
                                     </div>
                                     <div class="img-option">
-                                        <img src="{{ asset('images/tunder.png') }}" alt="">
+                                        <img src="{{ asset('images/click.png') }}" alt="">
                                     </div>
                                 </div>
                                 <div class="text-center">
-                                    <p>{{ Auth::user()->options->where('paquet_id', 1)->first()->foudre ?? 0 }}</p>
+                                    <p>{{ Auth::user()->options->where('paquet_id', 1)->first()->click ?? 0 }}</p>
                                 </div>
                             </div>
 
                         </div>
-                        @if (Auth::user()->options->where('paquet_id', 1)->first()->click ??
-                                0 == 0)
-                            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
+                        @if (Auth::user()->options->where('paquet_id', 1)->first()->roi  == 0)
+                            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
                             @else
-                                <div class="col-6" data-bs-toggle="modal"
-                                    data-bs-target="#modalTransBid_{{ $key }}">
+                                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{$key}}">
                         @endif
                         <div class="card-option-sm">
                             <div class="block-option">
                                 <div class="header-bid">
                                     <img src="{{ asset('images/piece.png') }}" alt="">
-                                    <span>{{ $simba->prix }}</span>
+                                    <span>{{ $simba->boucliers?->first()->bid_prix }}</span>
                                 </div>
                                 <div class="img-option">
-                                    <img src="{{ asset('images/click.png') }}" alt="">
+                                    <img src="{{ asset('images/save.png') }}" alt="">
                                 </div>
                             </div>
                             <div class="text-center">
-                                <p>{{ Auth::user()->options->where('paquet_id', 1)->first()->click ?? 0 }}</p>
+                                <p>{{ Auth::user()->options->where('paquet_id', 1)->first()->bouclier ?? 0 }}</p>
                             </div>
-                        </div>
-
-                    </div>
-                    @if (Auth::user()->options->where('paquet_id', 1)->first()->roi ??
-                            0 == 0)
-                        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
-                        @else
-                            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{ $key }}">
-                    @endif
-                    <div class="card-option-sm">
-                        <div class="block-option">
-                            <div class="header-bid">
-                                <img src="{{ asset('images/piece.png') }}" alt="">
-                                <span>{{ $simba->prix }}</span>
-                            </div>
-                            <div class="img-option">
-                                <img src="{{ asset('images/save.png') }}" alt="">
-                            </div>
-                        </div>
-                        <div class="text-center">
-                            <p>{{ Auth::user()->options->where('paquet_id', 1)->first()->bouclier ?? 0 }}</p>
                         </div>
                     </div>
-
-                </div>
+                    {{-- @include('components.achat-option') --}}
                 @endforeach
+                
             </div>
         </div>
     </div>
@@ -124,15 +121,15 @@
                 @foreach ($pricebendas as $key => $benda)
                     @if (Auth::user()->options->where('paquet_id', 2)->first()->roi ??
                             0 == 0)
-                        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
+                        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
                         @else
-                            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{ $key }}">
+                            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{$key}}">
                     @endif
                     <div class="card-option-sm">
                         <div class="block-option">
                             <div class="header-bid">
                                 <img src="{{ asset('images/piece.png') }}" alt="">
-                                <span>{{ $benda->prix }}
+                                <span>{{ $benda->rois?->first()->bid_prix }}
                                 </span>
                             </div>
                             <div class="img-option">
@@ -147,15 +144,15 @@
             </div>
             @if (Auth::user()->options->where('paquet_id', 2)->first()->foudre ??
                     0 == 0)
-                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
+                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
                 @else
-                    <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{ $key }}">
+                    <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{$key}}">
             @endif
             <div class="card-option-sm">
                 <div class="block-option">
                     <div class="header-bid">
                         <img src="{{ asset('images/piece.png') }}" alt="">
-                        <span>{{ $benda->prix }}</span>
+                        <span>{{ $benda->boucliers?->first()->bid_prix }}</span>
                     </div>
                     <div class="img-option">
                         <img src="{{ asset('images/tunder.png') }}" alt="">
@@ -169,15 +166,15 @@
         </div>
         @if (Auth::user()->options->where('paquet_id', 3)->first()->click ??
                 0 == 0)
-            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
+            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
             @else
-                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{ $key }}">
+                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{$key}}">
         @endif
         <div class="card-option-sm">
             <div class="block-option">
                 <div class="header-bid">
                     <img src="{{ asset('images/piece.png') }}" alt="">
-                    <span>{{ $benda->prix }}</span>
+                    <span>{{ $benda->clicks?->first()->prix_bid }}</span>
                 </div>
                 <div class="img-option">
                     <img src="{{ asset('images/click.png') }}" alt="">
@@ -191,15 +188,15 @@
     </div>
     @if (Auth::user()->options->where('paquet_id', 2)->first()->bouclier ??
             0 == 0)
-        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
+        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
         @else
-            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{ $key }}">
+            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{$key}}">
     @endif
     <div class="card-option-sm">
         <div class="block-option">
             <div class="header-bid">
                 <img src="{{ asset('images/piece.png') }}" alt="">
-                <span>{{ $benda->prix }}</span>
+                <span>{{ $benda->boucliers?->first()->bid_prix }}</span>
             </div>
             <div class="img-option">
                 <img src="{{ asset('images/save.png') }}" alt="">
@@ -224,16 +221,16 @@
                 @foreach ($priceturbos as $key => $turbo)
                     @if (Auth::user()->options->where('paquet_id', 3)->first()->roi ??
                             0 == 0)
-                        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
+                        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
                         @else
                             <div class="col-6" data-bs-toggle="modal"
-                                data-bs-target="#modalTransBid_{{ $key }}">
+                                data-bs-target="#modalTransBid_{{$key}}">
                     @endif
                     <div class="card-option-sm">
                         <div class="block-option">
                             <div class="header-bid">
                                 <img src="{{ asset('images/piece.png') }}" alt="">
-                                <span>{{ $turbo->prix }}
+                                <span>{{ $turbo->rois?->first()->bid_prix }}
                                 </span>
                             </div>
                             <div class="img-option">
@@ -248,15 +245,15 @@
             </div>
             @if (Auth::user()->options->where('paquet_id', 3)->first()->foudre ??
                     0 == 0)
-                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
+                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
                 @else
-                    <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{ $key }}">
+                    <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{$key}}">
             @endif
             <div class="card-option-sm">
                 <div class="block-option">
                     <div class="header-bid">
                         <img src="{{ asset('images/piece.png') }}" alt="">
-                        <span>{{ $turbo->prix }}</span>
+                        <span>{{ $turbo->foudres?->first()->bid_prix }}</span>
                     </div>
                     <div class="img-option">
                         <img src="{{ asset('images/tunder.png') }}" alt="">
@@ -270,15 +267,15 @@
         </div>
         @if (Auth::user()->options->where('paquet_id', 3)->first()->click ??
                 0 == 0)
-            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
+            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
             @else
-                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{ $key }}">
+                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{$key}}">
         @endif
         <div class="card-option-sm">
             <div class="block-option">
                 <div class="header-bid">
                     <img src="{{ asset('images/piece.png') }}" alt="">
-                    <span>{{ $turbo->prix }}</span>
+                    <span>{{ $turbo->clicks?->first()->prix_bid }}</span>
                 </div>
                 <div class="img-option">
                     <img src="{{ asset('images/click.png') }}" alt="">
@@ -292,15 +289,15 @@
     </div>
     @if (Auth::user()->options->where('paquet_id', 3)->first()->bouclier ??
             0 == 0)
-        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{ $key }}">
+        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchat_{{$key}}">
         @else
-            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{ $key }}">
+            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBid_{{$key}}">
     @endif
     <div class="card-option-sm">
         <div class="block-option">
             <div class="header-bid">
                 <img src="{{ asset('images/piece.png') }}" alt="">
-                <span>{{ $turbo->prix }}</span>
+                <span>{{ $turbo->boucliers?->first()->bid_prix }}</span>
             </div>
             <div class="img-option">
                 <img src="{{ asset('images/save.png') }}" alt="">
@@ -322,13 +319,13 @@
                                 Béton
                             </div>
                             <div class="row g-1 mt-3">
-                                @foreach ($pricebetons as $key => $beton) 
+                                @foreach ($pricebetons as $key => $beton)
                                     @if (Auth::user()->options->where('paquet_id', 1)->first()->roi ??
     0 == 0)
                                     <div class="col-6" data-bs-toggle="modal"  data-bs-target="#modalAchat_{{$key}}">
                                 @else
                                 <div class="col-6" data-bs-toggle="modal"  data-bs-target="#modalTransBid_{{$key}}">
-                                    
+
                                 @endif                                    <div class="card-option-sm">
                                             <div class="block-option">
                                                 <div class="header-bid">
@@ -351,7 +348,7 @@
                                     <div class="col-6" data-bs-toggle="modal"  data-bs-target="#modalAchat_{{$key}}">
                                 @else
                                 <div class="col-6" data-bs-toggle="modal"  data-bs-target="#modalTransBid_{{$key}}">
-                                    
+
                                 @endif                                    <div class="card-option-sm">
                                             <div class="block-option">
                                                 <div class="header-bid">
@@ -373,7 +370,7 @@
                                     <div class="col-6" data-bs-toggle="modal"  data-bs-target="#modalAchat_{{$key}}">
                                 @else
                                 <div class="col-6" data-bs-toggle="modal"  data-bs-target="#modalTransBid_{{$key}}">
-                                    
+
                                 @endif                                    <div class="card-option-sm">
                                             <div class="block-option">
                                                 <div class="header-bid">
@@ -395,7 +392,7 @@
                                     <div class="col-6" data-bs-toggle="modal"  data-bs-target="#modalAchat_{{$key}}">
                                 @else
                                 <div class="col-6" data-bs-toggle="modal"  data-bs-target="#modalTransBid_{{$key}}">
-                                    
+
                                 @endif                                    <div class="card-option-sm">
                                             <div class="block-option">
                                                 <div class="header-bid">
@@ -425,16 +422,17 @@
                 @foreach ($pricesukisas as $key => $sukisa)
                     @if (Auth::user()->options->where('paquet_id', 6)->first()->roi ??
                             0 == 0)
-                        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatsukisas_{{ $key }}">
+                        <div class="col-6" data-bs-toggle="modal"
+                            data-bs-target="#modalAchatsukisas_{{$key}}">
                         @else
                             <div class="col-6" data-bs-toggle="modal"
-                                data-bs-target="#modalTransBidsukisas_{{ $key }}">
+                                data-bs-target="#modalTransBidsukisas_{{$key}}">
                     @endif
                     <div class="card-option-sm">
                         <div class="block-option">
                             <div class="header-bid">
                                 <img src="{{ asset('images/piece.png') }}" alt="">
-                                <span>{{ $sukisa->prix }}
+                                <span>{{ $sukisa->rois?->first()->bid_prix }}
                                 </span>
                             </div>
                             <div class="img-option">
@@ -449,15 +447,16 @@
             </div>
             @if (Auth::user()->options->where('paquet_id', 6)->first()->foudre ??
                     0 == 0)
-                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatsukisas_{{ $key }}">
+                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatsukisas_{{$key}}">
                 @else
-                    <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBidsukisas_{{ $key }}">
+                    <div class="col-6" data-bs-toggle="modal"
+                        data-bs-target="#modalTransBidsukisas_{{$key}}">
             @endif
             <div class="card-option-sm">
                 <div class="block-option">
                     <div class="header-bid">
                         <img src="{{ asset('images/piece.png') }}" alt="">
-                        <span>{{ $sukisa->prix }}</span>
+                        <span>{{ $sukisa->foudres?->first()->bid_prix }}</span>
                     </div>
                     <div class="img-option">
                         <img src="{{ asset('images/tunder.png') }}" alt="">
@@ -469,48 +468,50 @@
             </div>
 
         </div>
-        @if (Auth::user()->options->where('paquet_id', 6)->first()->click ??0 == 0)
-            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatsukisas_{{ $key }}">
-        @else
-            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBidsukisas_{{ $key }}">
+        @if (Auth::user()->options->where('paquet_id', 6)->first()->click ??
+                0 == 0)
+            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatsukisas_{{$key}}">
+            @else
+                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBidsukisas_{{$key}}">
         @endif
-            <div class="card-option-sm">
-                <div class="block-option">
-                    <div class="header-bid">
-                        <img src="{{ asset('images/piece.png') }}" alt="">
-                        <span>{{ $sukisa->prix }}</span>
-                    </div>
-                    <div class="img-option">
-                        <img src="{{ asset('images/click.png') }}" alt="">
-                    </div>
+        <div class="card-option-sm">
+            <div class="block-option">
+                <div class="header-bid">
+                    <img src="{{ asset('images/piece.png') }}" alt="">
+                    <span>{{ $sukisa->clicks?->first()->prix_bid }}</span>
                 </div>
-                <div class="text-center">
-                    <p>{{ Auth::user()->options->where('paquet_id', 6)->first()->click ?? 0 }}</p>
+                <div class="img-option">
+                    <img src="{{ asset('images/click.png') }}" alt="">
                 </div>
+            </div>
+            <div class="text-center">
+                <p>{{ Auth::user()->options->where('paquet_id', 6)->first()->click ?? 0 }}</p>
             </div>
         </div>
-        @if (Auth::user()->options->where('paquet_id', 6)->first()->bouclier ??0 == 0)
-            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatsukisas_{{ $key }}">
+    </div>
+    @if (Auth::user()->options->where('paquet_id', 6)->first()->bouclier ??
+            0 == 0)
+        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatsukisas_{{$key}}">
         @else
-            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBidsukisas_{{ $key }}">
-        @endif
-                <div class="card-option-sm">
-                    <div class="block-option">
-                        <div class="header-bid">
-                            <img src="{{ asset('images/piece.png') }}" alt="">
-                            <span>{{ $sukisa->prix }}</span>
-                        </div>
-                        <div class="img-option">
-                            <img src="{{ asset('images/save.png') }}" alt="">
-                        </div>
-                    </div>
-                    <div class="text-center">
-                        <p>{{ Auth::user()->options->where('paquet_id', 6)->first()->bouclier ?? 0 }}</p>
-                    </div>
-                </div>
-
+            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBidsukisas_{{$key}}">
+    @endif
+    <div class="card-option-sm">
+        <div class="block-option">
+            <div class="header-bid">
+                <img src="{{ asset('images/piece.png') }}" alt="">
+                <span>{{ $sukisa->boucliers?->first()->bid_prix }}</span>
             </div>
-        @endforeach
+            <div class="img-option">
+                <img src="{{ asset('images/save.png') }}" alt="">
+            </div>
+        </div>
+        <div class="text-center">
+            <p>{{ Auth::user()->options->where('paquet_id', 6)->first()->bouclier ?? 0 }}</p>
+        </div>
+    </div>
+
+    </div>
+    @endforeach
     </div>
     </div>
     </div>
@@ -523,16 +524,17 @@
                 @foreach ($pricebulldozers as $key => $bulldozer)
                     @if (Auth::user()->options->where('paquet_id', 5)->first()->roi ??
                             0 == 0)
-                        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatbulldozers_{{ $key }}">
+                        <div class="col-6" data-bs-toggle="modal"
+                            data-bs-target="#modalAchatbulldozers_{{$key}}">
                         @else
                             <div class="col-6" data-bs-toggle="modal"
-                                data-bs-target="#modalTransBidbulldozers_{{ $key }}">
+                                data-bs-target="#modalTransBidbulldozers_{{$key}}">
                     @endif
                     <div class="card-option-sm">
                         <div class="block-option">
                             <div class="header-bid">
                                 <img src="{{ asset('images/piece.png') }}" alt="">
-                                <span>{{ $bulldozer->prix }}
+                                <span>{{ $bulldozer->rois?->first()->bid_prix }}
                                 </span>
                             </div>
                             <div class="img-option">
@@ -547,15 +549,16 @@
             </div>
             @if (Auth::user()->options->where('paquet_id', 5)->first()->foudre ??
                     0 == 0)
-                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatbulldozers_{{ $key }}">
+                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatbulldozers_{{$key}}">
                 @else
-                    <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBidbulldozers_{{ $key }}">
+                    <div class="col-6" data-bs-toggle="modal"
+                        data-bs-target="#modalTransBidbulldozers_{{$key}}">
             @endif
             <div class="card-option-sm">
                 <div class="block-option">
                     <div class="header-bid">
                         <img src="{{ asset('images/piece.png') }}" alt="">
-                        <span>{{ $bulldozer->prix }}</span>
+                        <span>{{ $bulldozer->foudres?->first()->bid_prix }} </span>
                     </div>
                     <div class="img-option">
                         <img src="{{ asset('images/tunder.png') }}" alt="">
@@ -569,15 +572,16 @@
         </div>
         @if (Auth::user()->options->where('paquet_id', 5)->first()->click ??
                 0 == 0)
-            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatbulldozers_{{ $key }}">
+            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatbulldozers_{{$key}}">
             @else
-                <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBidbulldozers_{{ $key }}">
+                <div class="col-6" data-bs-toggle="modal"
+                    data-bs-target="#modalTransBidbulldozers_{{$key}}">
         @endif
         <div class="card-option-sm">
             <div class="block-option">
                 <div class="header-bid">
                     <img src="{{ asset('images/piece.png') }}" alt="">
-                    <span>{{ $bulldozer->prix }}</span>
+                    <span>{{ $bulldozer->clicks?->first()->prix_bid }}</span>
                 </div>
                 <div class="img-option">
                     <img src="{{ asset('images/click.png') }}" alt="">
@@ -591,15 +595,15 @@
     </div>
     @if (Auth::user()->options->where('paquet_id', 5)->first()->bouclier ??
             0 == 0)
-        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatbulldozers_{{ $key }}">
+        <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalAchatbulldozers_{{$key}}">
         @else
-            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBidbulldozers_{{ $key }}">
+            <div class="col-6" data-bs-toggle="modal" data-bs-target="#modalTransBidbulldozers_{{$key}}">
     @endif
     <div class="card-option-sm">
         <div class="block-option">
             <div class="header-bid">
                 <img src="{{ asset('images/piece.png') }}" alt="">
-                <span>{{ $bulldozer->prix }}</span>
+                <span>{{ $bulldozer->boucliers?->first()->bid_prix }}</span>
             </div>
             <div class="img-option">
                 <img src="{{ asset('images/save.png') }}" alt="">
@@ -625,5 +629,5 @@
     </div>
     </div>
     </div>
-    @include('components.achat-option')
+
 @endsection

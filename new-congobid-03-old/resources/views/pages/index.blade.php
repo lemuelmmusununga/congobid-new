@@ -23,10 +23,6 @@
             </div>
         </div>
       </div>
-
-
-
-    {{-- @livewire('counterdown') --}}
     @livewire('index')
 @endsection
 

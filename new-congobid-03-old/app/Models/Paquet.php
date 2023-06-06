@@ -9,8 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class Paquet extends Model
 {
     use HasFactory;
-
-
     protected $guarded = [];
 
     public function user()
@@ -32,7 +30,24 @@ class Paquet extends Model
     {
         return $this->HasMany(Article::class);
     }
+    public function foudres()
+    {
+        return $this->HasMany(Foudre::class);
+    }
 
+    public function rois()
+    {
+        return $this->HasMany(Roi::class);
+    }
+
+    public function boucliers()
+    {
+        return $this->HasMany(Bouclier::class);
+    }
+    public function clicks()
+    {
+        return $this->HasMany(Click::class);
+    }
     public function pivotbideurpaquet()
     {
         return $this->hasMany(PivotBideurPaquet::class);
@@ -43,5 +58,5 @@ class Paquet extends Model
     *
     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
     */
-  
+
 }

@@ -38,8 +38,9 @@
 
 
         @include('components.navbar-page')
+        @include('components.menu-sm')
         <div class="overplay"></div>
-        {{-- @include('components.header-index') --}}
+
         <div class="global-div">
             <div class="wrapper">
                 <div class="bg-linear">
@@ -100,7 +101,7 @@
                 </div>
             @endif
         </div>
-        @include('components.menu-sm')
+
         <div class="back-drop-menu"></div>
         <div id="blueimp-gallery" class="blueimp-gallery">
             <div class="slides"></div>
@@ -109,9 +110,6 @@
             <a class="next">›</a>
             <a class="close">×</a>
         </div>
-        {{-- @include('components.footer-page') --}}
-        {{-- @include('components.menu-chat-select') --}}
-        {{-- @stack('modals') --}}
         <script>
             $(document).ready(function() {
                 @if (Auth::guest())

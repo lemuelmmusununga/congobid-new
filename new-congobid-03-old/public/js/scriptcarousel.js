@@ -2,7 +2,7 @@ $(document).ready(function() {
   var owl = $('#slider-produit');
   owl.owlCarousel({
       items: 4,
-      loop: false,
+      loop: true,
       margin: 20,
       autoplay: true,
       pagination: true,

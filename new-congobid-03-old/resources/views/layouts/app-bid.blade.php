@@ -22,10 +22,9 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 
     @livewireStyles
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <script src="{{ asset('js/slowNumber.js') }}"></script> 
+
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script> 
+    {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
@@ -121,6 +120,8 @@
     </script>
     <script src="{{ asset('js/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('js/scriptcarousel.js') }}"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="{{ asset('js/slowNumber.js') }}"></script>
     <script>
         $(document).ready(function() {
 
@@ -138,102 +139,131 @@
                 $('.menu-sm').removeClass('show');
             })
             // Crée un tableau de confettis
-// const confetti = [];
+            // const confetti = [];
 
-// // Défini le nombre de confettis à utiliser
-// const numberOfConfetti = 100;
+            // // Défini le nombre de confettis à utiliser
+            // const numberOfConfetti = 100;
 
-// // Récupère le conteneur
-// const container1 = document.getElementById('confetti-container');
+            // // Récupère le conteneur
+            // const container1 = document.getElementById('confetti-container');
 
-// // Crée des confettis et les ajoute au tableau
-// for (let i = 0; i < numberOfConfetti; i++) {
-//   const c = document.createElement('div');
-//   c.className = 'confetti';
-//   confetti.push(c);
-//   container1.appendChild(c);
-// }
+            // // Crée des confettis et les ajoute au tableau
+            // for (let i = 0; i < numberOfConfetti; i++) {
+            //   const c = document.createElement('div');
+            //   c.className = 'confetti';
+            //   confetti.push(c);
+            //   container1.appendChild(c);
+            // }
 
-// // Anime les confettis
-// function animateConfetti() {
-//   confetti.forEach(c => {
-//     c.style.transform = `translate(${c.translationX}px, ${c.translationY}px) rotate(${c.rotation}deg)`;
-//     c.translationY += c.speed;
-//     c.rotation += c.rotationSpeed;
-//     if (c.translationY >= window.innerHeight) {
-//       c.translationX = Math.random() * window.innerWidth;
-//       c.translationY = -10 - Math.random() * 100;
-//     }
-//   });
-//   requestAnimationFrame(animateConfetti);
-// }
+            // // Anime les confettis
+            // function animateConfetti() {
+            //   confetti.forEach(c => {
+            //     c.style.transform = `translate(${c.translationX}px, ${c.translationY}px) rotate(${c.rotation}deg)`;
+            //     c.translationY += c.speed;
+            //     c.rotation += c.rotationSpeed;
+            //     if (c.translationY >= window.innerHeight) {
+            //       c.translationX = Math.random() * window.innerWidth;
+            //       c.translationY = -10 - Math.random() * 100;
+            //     }
+            //   });
+            //   requestAnimationFrame(animateConfetti);
+            // }
 
-// // Initialise les propriétés de chaque confetti
-// confetti.forEach(c => {
-//   c.translationX = Math.random() * window.innerWidth;
-//   c.translationY = Math.random() * window.innerHeight;
-//   c.speed = Math.random() * 5 + 5;
-//   c.rotation = Math.random() * 360;
-//   c.rotationSpeed = Math.random() * 5;
-// });
+            // // Initialise les propriétés de chaque confetti
+            // confetti.forEach(c => {
+            //   c.translationX = Math.random() * window.innerWidth;
+            //   c.translationY = Math.random() * window.innerHeight;
+            //   c.speed = Math.random() * 5 + 5;
+            //   c.rotation = Math.random() * 360;
+            //   c.rotationSpeed = Math.random() * 5;
+            // });
 
-// // Lance l'animation
-// animateConfetti();
-            var button = document.querySelectorAll('.btn-mobile');
+            // // Lance l'animation
+            // animateConfetti();
+            var buttons = document.querySelectorAll('.btn-mobile');
             var container = document.querySelector('body');
-            var startX, startY, deltaX, deltaY, newLeft, newTop;
+            var startX, startY, lastX, lastY, deltaX, deltaY, newLeft, newTop;
+            var isClicking = false;
+            let fromClick = true;
 
-            // button.addEventListener('touchstart', function(event) {
-            //   event.preventDefault();
-            //   startX = event.touches[0].pageX;
-            //   startY = event.touches[0].pageY;
-            //   lastX = startX;
-            //   lastY = startY;
-            // });
-
-            // button.addEventListener('touchmove', function(event) {
-            //   event.preventDefault();
-            //   deltaX = event.touches[0].pageX - lastX;
-            //   deltaY = event.touches[0].pageY - lastY;
-            //   lastX = event.touches[0].pageX;
-            //   lastY = event.touches[0].pageY;
-            //   newLeft = button.offsetLeft + deltaX;
-            //   newTop = button.offsetTop + deltaY;
-            //   if (newLeft > 0 && newLeft + button.offsetWidth < container.offsetWidth) {
-            //     button.style.left = newLeft + 'px';
-            //   }
-            //   if (newTop > 0 && newTop + button.offsetHeight < container.offsetHeight) {
-            //     button.style.top = newTop + 'px';
-            //   }
-            // });
-            button.forEach(btn_mobile => {
+            buttons.forEach(function(btn_mobile) {
                 btn_mobile.addEventListener('touchstart', function(event) {
                     event.preventDefault();
                     startX = event.touches[0].pageX;
                     startY = event.touches[0].pageY;
                     lastX = startX;
                     lastY = startY;
+                    isClicking = true; // Marque le début d'un clic
+                    event.stopPropagation();
+
                 });
-            })
-            button.forEach(btn_mobile => {
+
                 btn_mobile.addEventListener('touchmove', function(event) {
-                event.preventDefault();
-                deltaX = event.touches[0].pageX - lastX;
-                deltaY = event.touches[0].pageY - lastY;
-                lastX = event.touches[0].pageX;
-                lastY = event.touches[0].pageY;
-                newLeft = btn_mobile.offsetLeft + deltaX;
-                newTop = btn_mobile.offsetTop + deltaY;
-                if (newLeft > 0 && newLeft + btn_mobile.offsetWidth < container.offsetWidth) {
-                    btn_mobile.style.left = newLeft + 'px';
-                }
-                if (newTop > 0 && newTop + btn_mobile.offsetHeight < container.offsetHeight) {
-                    btn_mobile.style.top = newTop + 'px';
-                }
-                if (newTop + btn_mobile.offsetHeight > container.offsetHeight) {
-                    btn_mobile.style.top = (container.offsetHeight - btn_mobile.offsetHeight) + 'px';
-                }
+                    event.preventDefault();
+                    deltaX = event.touches[0].pageX - lastX;
+                    deltaY = event.touches[0].pageY - lastY;
+                    lastX = event.touches[0].pageX;
+                    lastY = event.touches[0].pageY;
+                    var oldLeft = btn_mobile.offsetLeft;
+                    var oldTop = btn_mobile.offsetTop;
+                    newLeft = btn_mobile.offsetLeft + deltaX;
+                    newTop = btn_mobile.offsetTop + deltaY;
+                    if (newLeft > 0 && newLeft + btn_mobile.offsetWidth < container.offsetWidth) {
+                        btn_mobile.style.left = newLeft + 'px';
+                    }
+                    if (newTop > 0 && newTop + btn_mobile.offsetHeight < container.offsetHeight) {
+                        btn_mobile.style.top = newTop + 'px';
+                    }
+                    if (newTop + btn_mobile.offsetHeight > container.offsetHeight) {
+                        btn_mobile.style.top = (container.offsetHeight - btn_mobile.offsetHeight) +
+                            'px';
+                    }
+                    if (oldLeft != newLeft || oldTop != newTop) {
+                        fromClick = false;
+                    }
+                });
+
+                btn_mobile.addEventListener('touchend', function(event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+
+                    if (fromClick) {
+                        // Empêche la propagation de l'événement
+                        handleClick(this); // Appelle la fonction de gestion du clic
+                    }
+                    isClicking = false; // Réinitialise l'état du clic
+                    fromClick = true; // Réinitialise l'état du clic
+                });
+
+                // btn_mobile.addEventListener('click', function(event) {
+                //     event.preventDefault();
+                //     alert('click');
+                //     // if (isClicking) {
+                //         handleClick(); // Appelle la fonction de gestion du clic
+                //     // }
+                // });
             });
+
+            const myModal = new bootstrap.Modal('#bloqueliste', {
+                keyboard: false
+            });
+
+            function handleClick(element) {
+                if ($(element).hasClass('btn-message')) {
+                    // Ajoute ton code ici pour gérer le clic
+                    $('.writing-block-chat').toggleClass('hidden');
+                } else {
+                    myModal.show()
+
+                }
+            }
+
+            var btnCloseModal = document.querySelector('.btn-ok[data-dismiss="modal"]')
+
+            btnCloseModal.addEventListener('touchend', function(event) {
+                event.preventDefault();
+                event.stopPropagation();
+                myModal.hide()
             })
 
 
@@ -267,6 +297,8 @@
         //     })
         // });
     </script>
+    @yield('livewire-script')
+    @yield('javascript')
 </body>
 
 </html>

@@ -56,9 +56,9 @@ Route::get('/detail-article', function () {
 Route::get('/tarif', function () {
     return view('pages.tarif');
 });
-Route::get('/message', function () {
-    return view('pages.message');
-});
+// Route::get('/message', function () {
+//     return view('pages.message');
+// });
 Route::get('/mon_compte', function () {
     return view('pages.profil-user');
 });
@@ -96,6 +96,7 @@ Route::get('/envoyer/bid', function () {
 Route::get('/famille', function () {
     return view('pages.famille');
 });
+// Route::get('/notification', [NotificationController::class, 'index'])->name('notifications.index');
 Route::get('/notification', [NotificationController::class, 'index'])->name('notifications.index');
 
 Route::get('/checkout', function () {
@@ -131,6 +132,7 @@ Route::get('/contact', [indexController::class, 'contact'])->name('contact');
 Route::post('/contact/requette/', [indexController::class, 'sendContact'])->name('contact.requette');
 
 Route::get('/nos-gagnants', [GagnantController::class, 'index'])->name('clients.gagnants.index');
+Route::get('/encheres-globale', [EnchersController::class, 'enchere'])->name('show.enchers.globale');
 
 Route::middleware(['clients'])->group(function () {
     # Socialite URLs
@@ -177,7 +179,7 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::get('/articles/categorie/{id}', [ArticlesController::class, 'ArticlesCategorie'])->name('sous-categorie');
         Route::get('/articles/voir_detail/produit/{id}/{name}', [ArticlesController::class, 'detailArticle'])->name('show.detail.article');
 
-        Route::get('/historique',[ProfileController::class,'ListeBloked'])->name('liste.bloque');
+        Route::get('/profile/historique',[ProfileController::class,'ListeBloked'])->name('liste.bloque');
         Route::get('/encheres-gagnees', [EnchersController::class, 'gagne'])->name('show.enchers-gagne');
         Route::get('/encheres-fermees', [EnchersController::class, 'ferme'])->name('show.enchers-ferme');
 

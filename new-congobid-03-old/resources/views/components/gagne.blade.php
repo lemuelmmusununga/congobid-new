@@ -248,16 +248,16 @@
             <div style="text-align:center; position: relative;z-index: 200;display: flex;align-items:center;justify-content: center;flex-direction: column;">
                 <h1 style="    font-size: calc(2.375rem + 1.5vw);
                 font-weight: bold;">Felicitation!</h1>
-                @if (Auth::user()->id == $this->gagnant->user->id )
-                    <p>{{$this->gagnant->user->username }} vous etes le gagnant du <strong class="fs-4 fw-bold " style="color: #fd7e14"> {{ $this->gagnant->enchere->article->titre }}  </strong> </p>
+                @if (Auth::user()->id == $this->gagnant?->user?->id )
+                    <p>{{$this->gagnant?->user->username }} vous etes le gagnant du <strong class="fs-4 fw-bold " style="color: #fd7e14"> {{ $this->gagnant?->enchere->article->titre }}  </strong> </p>
                     <div class="mb-4">
                         <span class="fs-4 fw-bold text-muted">
                             Rendez - vous dans l'un de nos bureaux le plus proche de chez vous , muni de votre carte d'identité et du code du gagnant qui est le <br>
-                            <span style="color: #fd7e14">{{ $this->gagnant->enchere->article->code_produit }}</span>
+                            <span style="color: #fd7e14">{{ $this->gagnant?->enchere->article->code_produit }}</span>
                         </span>
                     </div>
                 @else
-                    <p>{{$this->gagnant->user->username }} est le gagnant de cette enchere</p>
+                    <p>{{$this->gagnant?->user->username }} est le gagnant de cette enchere</p>
                 @endif
 
                 <a href="/" class="submit-btn py-2 rounded-3" type="submit" >Retour a la page d'accueil </a>

@@ -38,7 +38,7 @@
 </head>
 
 <body>
-    <div id="page-load">
+    {{-- <div id="page-load">
         <div class="backdrop fade"></div>
         <div class="parent-modal">
             <div class="dialog dialog-centered">
@@ -58,7 +58,7 @@
 
             </div>
         </div>
-    </div>
+    </div> --}}
     {{-- @include('components.side-menu') --}}
     {{-- @include('components.side-filter') --}}
     @include('components.navbar-home')

@@ -2,7 +2,7 @@
     <div class="col-12 text-center">
         @if (Auth::user())
             @if (Auth::user()->pivotBideurEnchere->where('enchere_id', $article->enchere->id)->first() == null)
-                <a href="#" data-toggle="modal" data-target="#modalEnchere_{{$key}}" class="btn btn-3d-rounded-sm">
+                <a href="#" data-toggle="modal" data-target="#exampleModalCenter{{$key}}" class="btn btn-3d-rounded-sm">
                     <i class="fi fi-rr-plus"></i> Participer à l'enchère
                 </a>
             @else

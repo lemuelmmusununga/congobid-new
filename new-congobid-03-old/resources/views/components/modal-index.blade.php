@@ -224,6 +224,39 @@
                 </div>
             </div>
         </div>
+
+        <div wire:igniore.self class="modal fade" id="future{{$key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="icon">
+                            <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                        </div>
+                        <div class="text-center">
+
+                            <h5>Voulez-vous participer à cette enchère ?</h5>
+                            {{-- @if (Auth::user()) --}}
+                            <p> Pour y participer, veuillez souscrire à la catégorie
+                                "{{ $article->paquet->libelle }}" en
+                                payent {{ $article->paquet->prix }} bids.</p>
+                            {{-- @endif --}}
+                        </div>
+                    </div>
+
+                    <div class="modal-footer d-flex justify-content-between align-items-center">
+                        <button type="button" class="btn btn-non" data-bs-dismiss="modal"
+                            aria-label="close">Annuler</button>
+                        @if (Auth::user())
+                            <a type="button"
+                                href="{{ route('detail.article', ['id' => $article->id, 'name' => $article->titre]) }}"
+                                class="btn btn-ok">Accepter</a>
+                        @else
+                            <a type="button" href="/login" class="btn btn-ok">Accepter</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
     @endforeach
     @foreach ($salons as $key => $salon)
         {{-- modal participer --}}

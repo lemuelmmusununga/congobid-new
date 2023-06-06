@@ -31,16 +31,17 @@
                 </div>
                 <div class="col-3 d-flex justify-content-end">
                     <div class="block-tools d-flex align-items-center">
-                        <a href="/message">
+                        <a href="{{route('notifications.index')}}">
                             <i class="fi fi-rr-envelope"></i>
                         </a>
-                        <a href="#" class="btn-menu">
+                        <a href="#" class="btn-menu" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                             <i class="fi fi-rr-menu-burger"></i>
                         </a>
                     </div>
                 </div>
             </div>
 
+          
         </div>
     </nav>
 </header>

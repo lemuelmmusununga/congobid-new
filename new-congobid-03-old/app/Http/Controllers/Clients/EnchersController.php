@@ -21,6 +21,9 @@ class EnchersController extends Controller
     public function index(){
         return view('pages.encheres');
     }
+    public function enchere(){
+        return view('pages.encheres-globale');
+    }
     public function future(){
         return view('pages.encheres-future');
     }
@@ -77,12 +80,12 @@ class EnchersController extends Controller
         $numero = $request->get('telephone');
         $user  = Bideur::where('user_id',Auth::user()->id)->first();
         $verify_num = User::where('telephone',$numero)->first();
-        
+
             if (Auth::user()->telephone == $numero) {
                 return back()->with('success','Envoie Effectué avec succes chez vous meme ! ');
             }
             if ($verify_num) {
-                
+
                 $sendBid  = User::where('telephone',$numero)->first();
                 $takusers = Option::where('user_id',$verify_num->id)->get();
                 // Auth::user()->options->first()->update([
@@ -100,8 +103,8 @@ class EnchersController extends Controller
                     unset($request['tapeFoudreSimba']);
                     unset($request['tapeClickSimba']);
                     unset($request['tapeBouclierSimba']);
-                   
-                   
+
+
                     $second = $takuser->where('paquet_id',2)->where('user_id',$verify_num->id)->first();
                     $second->update([
                         'roi'=>$second->roi + $request->get('taperoiBenda'),
@@ -155,7 +158,7 @@ class EnchersController extends Controller
                     unset($request['tapeClickSukisa']);
                     unset($request['tapeBouclierSukisa']);
                 }
-                
+
                 Notification::create([
                     'message'=>Auth::user()->username.' vous a envoyé de(s) option() ',
                     'user_id'=>Auth::user()->id,
@@ -165,14 +168,14 @@ class EnchersController extends Controller
             } else {
                 return back()->with('danger','Veillez bien verifier le numero ! ');
             }
-       
+
     }
     public function trans(Request $request){
        return view('pages.transfertbid');
     }
 
     public function liste(){
-   
+
         // $userFoudre  = PivotBideurEnchere::where('user_id',Auth::user()->id)->get()->sum('foudre');
         // $userRoi  = PivotBideurEnchere::where('user_id',Auth::user()->id)->get()->sum('roi');
         // $userClick  = PivotBideurEnchere::where('user_id',Auth::user()->id)->get()->sum('click_seconde');
@@ -181,7 +184,7 @@ class EnchersController extends Controller
         //     'roi'=>$userRoi,
         //     'clicks'=>$userClick,
         //     'bouclier'=>$userBouclier,
-        //     'foudre'=>$userFoudre 
+        //     'foudre'=>$userFoudre
         // ]);
         $priceSimbas =Paquet::where('id',1)->get();
         $pricebendas = Paquet::where('id',2)->get();
