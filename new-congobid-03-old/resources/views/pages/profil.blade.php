@@ -8,10 +8,10 @@
                     <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="">
                 @else
                     <img src="{{ asset('images/users/default.png') }}" alt="">
-                @endif            
+                @endif
             </div>
             <div class="name">
-               {{Auth::user()->pseudo}} 
+               {{Auth::user()->pseudo}}
             </div>
         </div>
         </div>
@@ -81,12 +81,12 @@
                 </a>
             </div>
             <div class="col-11">
-                <a href="/historique" class="btn btn-3d-rounded-sm w-100">
+                <a href="{{route('liste.bloque')}}" class="btn btn-3d-rounded-sm w-100">
                 <i class="fi fi-rr-clipboard-list-check"></i> Historiques
                 </a>
             </div>
             <div class="col-11">
-                <a href="#" class="btn btn-3d-rounded-sm w-100">
+                <a href="{{route('show.enchers-gagne')}}" class="btn btn-3d-rounded-sm w-100">
                 <i class="fi fi-rr-trophy"></i> Enchères gagnées
                 </a>
             </div>

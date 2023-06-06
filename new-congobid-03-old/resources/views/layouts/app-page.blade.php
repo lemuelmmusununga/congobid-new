@@ -35,31 +35,12 @@
     <body>
         {{-- @include('components.side-menu') --}}
         {{-- @include('components.side-filter') --}}
-        <div id="page-load">
-            <div class="backdrop fade"></div>
-            <div class="parent-modal">
-                <div class="dialog dialog-centered">
-                    <div class="content-modal">
-                        <div class="body">
-                            <div class="d-flex align-items-center">
-                                <div class="load-spiner">
-                                </div>
-                                <div class="text-star">
-                                    <h6 class="mb-0" style="color:var(--colorTitre)!important;">
-                                        Veuillez patienter Svp ...
-                                    </h6>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
 
-                </div>
-            </div>
-        </div>
 
         @include('components.navbar-page')
+        @include('components.menu-sm')
         <div class="overplay"></div>
-        {{-- @include('components.header-index') --}}
+
         <div class="global-div">
             <div class="wrapper">
                 <div class="bg-linear">
@@ -120,7 +101,7 @@
                 </div>
             @endif
         </div>
-        @include('components.menu-sm')
+
         <div class="back-drop-menu"></div>
         <div id="blueimp-gallery" class="blueimp-gallery">
             <div class="slides"></div>
@@ -129,9 +110,6 @@
             <a class="next">›</a>
             <a class="close">×</a>
         </div>
-        {{-- @include('components.footer-page') --}}
-        {{-- @include('components.menu-chat-select') --}}
-        {{-- @stack('modals') --}}
         <script>
             $(document).ready(function() {
                 @if (Auth::guest())
@@ -170,7 +148,6 @@
           })
         </script>
         <!-- Scripts -->
-        <script src="{{ asset('js/jquery.simple.timer.js') }}"></script>
         <script src="{{asset('js/jquery.min.js')}}"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
         <script src="{{asset('js/jquery.countdown.min.js')}}"></script> <!-- The Final Countdown plugin for jQuery -->
         <script src="{{asset('js/scripts.js')}}"></script> <!-- Custom scripts -->

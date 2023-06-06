@@ -26,6 +26,10 @@ class PivotBideurEnchere extends Model
     {
         return $this->belongsTo(Enchere::class);
     }
+    public function options()
+    {
+        return $this->belongsTo(Option::class,'option_id');
+    }
     public function paquet()
     {
         return $this->belongsTo(Paquet::class,'paquet_id');

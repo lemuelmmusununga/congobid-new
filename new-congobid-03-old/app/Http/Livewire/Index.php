@@ -31,10 +31,17 @@ use WithPagination;
     public $article = '';
     public $participer ='',$roi,$foudre,$bouclier,$addbid;
     public $incrementation=0,$v,$cutbid,$iids,$like=0,$counter_like,$munite,$times=0,$favori_enchere,$favori_user,$favori_favori,$pivot,$boucliers;
-
+    public $idmodal,$selectedArticleId;
     public $artis='',$favoris_salon;
     public $getEnchere=[],$salons;
+    public $sendId,$showDetailModal;
 
+    protected $listeners = ['showModal' => 'showModal'];
+
+    public function showModal($id)
+    {
+        $this->sendId = $id;
+    }
     public function mount(){
         // dd(Auth::user()->pivotbideurenchere->first()->roi ?? '');
         // $this->article = Article::all();
@@ -69,14 +76,14 @@ use WithPagination;
         }
         $this->getEnchere = Enchere::all();
     //    $l= $this->getEnchere->pivotbideurenchere->where('user_id',Auth::user()->id)->first();
-
-
     }
+    
     public function edit($id){
         // envoyer id vers le modal
-        $idmodal = Article::where('id', $id)->first();
-        $this->participer = $idmodal->id;
-       }
+        $this->participer =Article::where('id', $id)->first() ;
+        $this->idmodal = $id;
+      
+    }
 
     public function likeSalon($id,$rec,$salon)
     {
@@ -166,7 +173,7 @@ use WithPagination;
     }
     public function cutbid($id){
 
-// cette consiste a couper les bid
+        // cette consiste a couper les bid
         $find = Bideur::where('user_id', auth()->user()->id)->first();
         // dd($find);
         if ($find->paquet_id == 2 && $find->balance > 20) {
@@ -193,6 +200,7 @@ use WithPagination;
     public function render()
     {
         $this->v = $this->iids;
+        $this->sendId ;
         $communique = Communique::where('statut_id', '3')->get()->first();
         // $communique == null ? null : $communique->message;
         $promotions = Article::where('statut_id', '3')->where('promouvoir', '1')->get();
@@ -214,7 +222,12 @@ use WithPagination;
         $paquets = Paquet::where('statut_id', '3')->get();
         $communique = $communique->message ?? null;
         $user = Pivotbideurenchere::all();
-      
+        $this->article =  Article::where('id', $this->idmodal)->first();
+        if ($this->article) {
+            $this->pivot =$this->article->enchere?->pivotbideurenchere->where('enchere_id', $this->article->enchere?->id)->where('user_id', Auth::user()->id)->first() ?? '';                                    
+        }
+        $this->showDetailModal = Article::where('id', $this->sendId)->first();
+        $this->sendId;
         $Categories = Article::where('titre','like',"%{$this->search}%")->orwhere('marque',"%{$this->search}%")->get();
         return view('livewire.index', compact('promotions', 'articles', 'paquets', 'communique', 'Categories','user'));
     }

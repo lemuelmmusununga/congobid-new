@@ -1,7 +1,6 @@
 @extends('layouts.app-bid')
 @section('content')
-        <div id="confetti-container"></div>
-
+    <div id="confetti-container"></div>
     <div class="block-bid">
         <div class="btn-mobile btn-message" id="mobile">
             <i class="fi fi-rr-comment-alt"></i>

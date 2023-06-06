@@ -41,6 +41,7 @@
             </div>
         </div>
         @include('components.header-detail')
+        @include('components.menu-sm')
         <div class="global-div">
             @yield('content')
             <div class="overplay"></div>
@@ -117,8 +118,7 @@
                     video.currentTime = 0;
                 })
 
-
-                 $(document).ready(function(){
+                $(document).ready(function(){
                     @if (session()->has('success'))
                         $('.modal-success').addClass('show')
                     @endif

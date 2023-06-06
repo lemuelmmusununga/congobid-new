@@ -74,48 +74,7 @@
 
                 </div>
 
-                <div class="offcanvas offcanvas-end d-md-none" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel" style="    width: 250px;
-                    border-radius: 40px 0px 0px 40px;">
-                    <div class="offcanvas-header">
-                        <h5 id="offcanvasRightLabel">Menu</h5>
-                        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                    </div>
-                    <div class="offcanvas-body pt-0">
-                        <div class="d-block">
-                            <div class="link-menu">
-                                <a href="/tarif" class="fw-bold fs-3 text-black-50 text-black-50"> Tarifs</a>
-                            </div>
-                            {{-- <div class="link-menu">
-                                <a href="#" class="fw-bold fs-3 text-black-50 text-black-50">Notifications</a>
-                            </div> --}}
-                            <div class="link-menu">
-                                <a href="/favoris" class="fw-bold fs-3 text-black-50 text-black-50">Favoris</a>
-                            </div>
-                            <div class="link-menu">
-                                <a href="{{route('clients.achat.bid')}}" class="fw-bold fs-3 text-black-50">Acheter des bids</a>
-                            </div>
-                            <div class="link-menu">
-                                <a href="{{route('show.enchers-gagne')}}" class="fw-bold fs-3 text-black-50">Enchères gagnées</a>
-                            </div>
-                            <div class="link-menu">
-                                <a href="{{route('show.enchers-ferme')}}" class="fw-bold fs-3 text-black-50">Enchères fermées</a>
-                            </div>
-                            <div class="link-menu">
-                                <a href="/profil" class="fw-bold fs-3 text-black-50">Profile</a>
-
-                            </div>
-                            <div class="link-menu">
-                                <a href="/chat" class="fw-bold fs-3 text-black-50">Chat</a>
-                            </div>
-                            <div class="link-menu">
-                                <a href="{{ route('clients.instructions.index') }}" class="fw-bold fs-3 text-black-50">Comment ça marche</a>
-                            </div>
-                            <div class="link-menu">
-                                <a href="/contact" class="fw-bold fs-3 text-black-50">Nous contactez</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+             
         </div>
     </nav>
 </header>

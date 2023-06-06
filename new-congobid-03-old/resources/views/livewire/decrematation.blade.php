@@ -1,5 +1,5 @@
-<div>
-    <div wire:ignore.self class="progress my-3 shadow-lg position-relative {{ Request::is('/') ? 'd-none' : ''   }}  " style="height: 20px;background:#fff;">
+<div >
+    {{-- <div wire:ignore.self class="progress my-3 shadow-lg position-relative {{ Request::is('/') ? 'd-none' : ''   }}  " style="height: 20px;background:#fff;">
 
         <div class="progress-bar " role="progressbar" aria-label="progresse" style="width: {{$progresse}}px;background:#ffad75;" aria-valuenow="{{ Str::before($progresse, '.') }}" aria-valuemin="0" aria-valuemax="100">
             @if (Str::before($progresse, '.') > 50 )
@@ -12,23 +12,13 @@
                 </div>
             @endif
         </div>
-    </div>
+    </div> --}}
+
     <div wire:ignore.self class="text-center">
-        <div wire:poll.1s>
-            <h4 class="text-success">{{   Str::length(Str::before(($munite /60), '.')) == 1 ? '0'. Str::before(($munite /60), '.'):Str::before(($munite /60), '.') }}:{{ Str::length( ($munite % 60)) == 1 ? ('0'.$munite % 60) : ($munite % 60)  }}:{{ Str::length( $times) == 1 ? '0'. $times :  $times}}  </h4></h4>
-        </div>
+        <span style="font-size: 9px">
+            {{Str::length(Str::before((intval($munite) /60), '.')) == 1 ? '0'. Str::before((intval($munite) /60), '.'):Str::before((intval($munite) /60), '.') }}:{{ Str::length( (intval($munite) % 60)) == 1 ? ('0'.intval($munite) % 60) : (intval($munite) % 60)  }}:{{ Str::length( $times) == 1 ? '0'. $times :  $times}}
+        </span>
     </div>
-    <script>
-        Livewire.on('start-countdown', ({ interval }) => {
-            setInterval(() => {
-                Livewire.emit('countdown');
-            }, interval);
-        });
-    
-        Livewire.on('countdown', ({ secondsRemaining }) => {
-            window.requestAnimationFrame(() => {
-                Livewire.redraw();
-            });
-        });
-    </script>
+
 </div>
+

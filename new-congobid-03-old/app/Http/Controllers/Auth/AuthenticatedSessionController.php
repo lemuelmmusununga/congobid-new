@@ -32,20 +32,23 @@ class AuthenticatedSessionController extends Controller
     {
         // dd($request);
         $verify_user = User::where('telephone', $request->telephone)->first();
-
+        try {
+            //code...
+            Auth::login($verify_user);
+            // $request->authenticate();
+            $request->session()->regenerate();
+            DB::table('sessions')->where('id','!=',Session::getId())->where('user_id',Auth::user()->id)->delete();
+            Session::put('success' ,'Bienvenu(e) chez CongoBid');
+            return redirect()->intended(RouteServiceProvider::HOME);
+        } catch (\Throwable $th) {
+            return back();
+        }
         // $request->logout();
-        Auth::login($verify_user);
-        // $request->authenticate();
-        $request->session()->regenerate();
-        DB::table('sessions')->where('id','!=',Session::getId())->where('user_id',Auth::user()->id)->delete();
-        Session::put('success' ,'Bienvenu(e) chez CongoBid');
-
-        return redirect()->intended(RouteServiceProvider::HOME);
 
 
     }
 
-   
+
     public function Destroys(Request $request)
     {
         $addbid = User::where('id',Auth::user()->id)->first();

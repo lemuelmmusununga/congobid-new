@@ -25,14 +25,15 @@
             <div class="content-message">
               @if ($users->count() > 0)
               @foreach ($users as $user)
-                    
+
                 <a href="#" class="link-message">
                   <div class="card-message">
                     <div class="row align-items-center">
                       <div class="col-8">
                         <div class="block-info-message d-flex align-items-center">
                           <div class="avatar">
-                            <img src="images/bg2.jpg" alt="">
+                            <img src="{{ asset('images/users/' . ($user->user?->avatar == null ? 'default.png' : $user->user?->avatar)) }}"
+                                        alt="">
                           </div>
                           <div class="text">
                             <h6>{{$user->user?->username}}</h6>
@@ -52,8 +53,8 @@
                 <h4 class="text-center title">Pas d'historique pour ce moi</h4>
 
               @endif
-             
-              
+
+
 
             </div>
           </div>

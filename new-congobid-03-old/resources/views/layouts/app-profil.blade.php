@@ -44,6 +44,7 @@
             </div>
         </div>
         @include('components.header-profil')
+        @include('components.menu-sm')
         <div class="global-div">
             @yield('content')
             <div class="overplay"></div>
@@ -201,5 +202,6 @@
 
             })
         </script>
+        @yield('livewire-script')
     </body>
 </html>

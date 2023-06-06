@@ -1,5 +1,5 @@
    
-    <div wire:ignore.self class="modal fade" id="option_roi_{{$article->enchere->pivotbideurenchere->first()->enchere_id ?? ''}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="option_roi_{{$article->enchere?->pivotbideurenchere?->first()->enchere_id ?? ''}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
@@ -39,7 +39,7 @@
         </div>
     </div>
     {{-- modale_foudre --}}
-    <div wire:ignore.self class="modal fade" id="option_foudre_{{$article->enchere->pivotbideurenchere->first()->enchere_id ?? ''}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="option_foudre_{{$article->enchere?->pivotbideurenchere?->first()->enchere_id ?? ''}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
@@ -80,7 +80,7 @@
 
 
     {{-- modale_click --}}
-    <div wire:ignore.self class="modal fade" id="option_click_{{$article->enchere->pivotbideurenchere->first()->enchere_id ?? ''}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="option_click_{{$article->enchere?->pivotbideurenchere?->first()->enchere_id ?? ''}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
@@ -121,7 +121,7 @@
 
 
     {{-- modale_bouclier --}}
-    <div wire:ignore.self class="modal fade" id="option_bouclier_{{$article->enchere->pivotbideurenchere->first()->enchere_id ?? ''}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="option_bouclier_{{$article->enchere?->pivotbideurenchere?->first()->enchere_id ?? ''}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-body">
@@ -190,3 +190,139 @@
             </div>
         </div>
     </div>
+    
+    @foreach ($articles as $key=> $article)
+        <div wire:igniore.self class="modal fade" id="exampleModalCenter{{$key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="icon">
+                            <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                        </div>
+                        <div class="text-center">
+
+                            <h5>Voulez-vous participer à cette enchère ?</h5>
+                            {{-- @if (Auth::user()) --}}
+                            <p> Pour y participer, veuillez souscrire à la catégorie
+                                "{{ $article->paquet->libelle }}" en
+                                payent {{ $article->paquet->prix }} bids.</p>
+                            {{-- @endif --}}
+                        </div>
+                    </div>
+
+                    <div class="modal-footer d-flex justify-content-between align-items-center">
+                        <button type="button" class="btn btn-non" data-bs-dismiss="modal"
+                            aria-label="close">Annuler</button>
+                        @if (Auth::user())
+                            <a type="button"
+                                href="{{ route('detail.article', ['id' => $article->id, 'name' => $article->titre]) }}"
+                                class="btn btn-ok">Accepter</a>
+                        @else
+                            <a type="button" href="/login" class="btn btn-ok">Accepter</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div wire:igniore.self class="modal fade" id="future{{$key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="icon">
+                            <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                        </div>
+                        <div class="text-center">
+
+                            <h5>Voulez-vous participer à cette enchère ?</h5>
+                            {{-- @if (Auth::user()) --}}
+                            <p> Pour y participer, veuillez souscrire à la catégorie
+                                "{{ $article->paquet->libelle }}" en
+                                payent {{ $article->paquet->prix }} bids.</p>
+                            {{-- @endif --}}
+                        </div>
+                    </div>
+
+                    <div class="modal-footer d-flex justify-content-between align-items-center">
+                        <button type="button" class="btn btn-non" data-bs-dismiss="modal"
+                            aria-label="close">Annuler</button>
+                        @if (Auth::user())
+                            <a type="button"
+                                href="{{ route('detail.article', ['id' => $article->id, 'name' => $article->titre]) }}"
+                                class="btn btn-ok">Accepter</a>
+                        @else
+                            <a type="button" href="/login" class="btn btn-ok">Accepter</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+    @foreach ($salons as $key => $salon)
+        {{-- modal participer --}}
+        <div wire:ignore.self class="modal fade" id="modalEnchereSalon_{{ $key }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="icon">
+                            <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                        </div>
+                        <div class="text-center">
+                            <h5>Voulez-vous participer au Salon ?</h5>
+                            {{-- @if (Auth::user()) --}}
+                            <p> Pour y participer, veuillez souscrire à la catégorie
+                                {{-- "{{ $salon->article->paquet->libelle }}"  --}}
+                                en payent {{ $salon->montant }} bids.</p>
+                            {{-- @endif --}}
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-between align-items-center">
+                        <button type="button" class="btn btn-non" data-bs-dismiss="modal"
+                            aria-label="close">Annuler</button>
+
+                        @if (Auth::user() && Auth::user()->bideurs->first()->balance >= $salon->montant)
+                            <a type="button"
+                                href="{{ route('detail.article.salon', ['articleid' => $salon->article->id, 'salonid' => $salon->id, 'enchereid' => $salon->article->enchere->id, 'paquet' => $salon->article->paquet->id, 'name' => Str::slug($salon->article->titre)]) }}"
+                                class="btn btn-ok">Accepter</a>
+                        @elseif (Auth::user() && Auth::user()->bideurs->first()->balance < $salon->montant)
+                            <a type="button" href="{{ route('clients.achat.bid') }}"
+                                class="btn btn-ok">Accepter</a>
+                        @else
+                            <a type="button" href="/login" class="btn btn-ok">Accepter</a>
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- modale annuler salon --}}
+        <div wire:ignore.self class="modal fade" id="modalEnchereAnnuler_{{ $key }}" tabindex="-1"
+            aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="icon">
+                            <span class="iconify" data-icon="ant-design:info-outlined"></span>
+                        </div>
+
+                        <div class="text-center">
+                            <h5>
+                                Voulez vous vraiment annuler votre participation ?
+                            </h5>
+
+                            <a type="button"
+                                href="{{ route('annuler.salon', ['articleid' => $salon->id, 'enchereid' => $salon->article->enchere?->id, 'salon' => $salon->montant, 'name' => $salon->article?->titre]) }}"
+                                class="btn btn-ok w-50 my-3 ">Oui</a>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer d-flex justify-content-center align-items-center">
+                        <button type="button" class="btn btn-non" data-bs-dismiss="modal"
+                            aria-label="close">Annuler</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    @endforeach
+

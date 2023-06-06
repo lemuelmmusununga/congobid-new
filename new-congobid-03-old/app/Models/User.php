@@ -110,12 +110,12 @@ class User extends \TCG\Voyager\Models\User
 
     public function politiques()
     {
-        return $this->hasMany(Gagnant::class);
+        return $this->hasMany(Politique::class);
     }
 
     public function faqs()
     {
-        return $this->hasMany(Gagnant::class);
+        return $this->hasMany(Faq::class);
     }
 
     public function historiques()

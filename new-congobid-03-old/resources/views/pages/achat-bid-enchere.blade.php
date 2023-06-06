@@ -1,4 +1,4 @@
-@extends('layouts.app-profil')
+@extends('layouts.app-page')
 @section('content')
 <div class="banner-sm">
 
@@ -7,6 +7,7 @@
 
             <div class="col-12 text-center">
                 <h1>Achats bids</h1>
+                <p>Vous n'avez pas bid pour acheter cette option veillez acheter les bids qui vous permettra acheter l'option voulu.</p>
             </div>
         </div>
     </div>
@@ -35,7 +36,7 @@
                         </div>
                     </div>
                 @endforeach --}}
-                @foreach ($bids as $bid)
+                @foreach ($bids as $key => $bid)
                     <div class="col-6 col-md-3 col-sm-3">
                         <div class="card tarif junior">
                             <div class="ammount">
@@ -47,11 +48,11 @@
                                         <h5>{{$bid->quantite}}<span> Bids</span></h5>
                                     </li>
                                 </ul>
-                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbid_{{ $bid->id }}">Acheter</a>
+                                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalbid_{{$key}}">Acheter</a>
                             </div>
                         </div>
                     </div>
-                    <div wire:ignore.self class="modal fade" id="modalbid_{{ $bid->id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div wire:ignore.self class="modal fade" id="modalbid_{{$key}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered">
                             <div class="modal-content">
                                 <div class="modal-body">
@@ -72,46 +73,7 @@
                         </div>
                     </div>
                 @endforeach
-                <div class="col-lg-3 col-6">
-                    <div class="card tarif justify-content-center align-items-center py-4">
-                        <img src="{{asset('images/logo-visa.png')}}" alt="" class="w-50">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="card tarif justify-content-center align-items-center py-4">
-                        <img src="{{asset('images/MasterCard_Logo.png')}}" alt="" class="w-50">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="card tarif justify-content-center align-items-center py-4">
-                        <img src="{{asset('images/Paypal-logo.png')}}" alt="" class="w-50">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="card tarif justify-content-center align-items-center py-4">
-                        <img src="{{asset('images/logo-equity.jpg')}}" alt="" class="w-50">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="card tarif justify-content-center align-items-center py-4">
-                        <img src="{{asset('images/logo-orange-money.jpg')}}" alt="" class="w-50">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="card tarif justify-content-center align-items-center py-4">
-                        <img src="{{asset('images/logo-mpesa.jpg')}}" alt="" class="w-50">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="card tarif justify-content-center align-items-center py-4">
-                        <img src="{{asset('images/logo-airtel.jpg')}}" alt="" class="w-50">
-                    </div>
-                </div>
-                <div class="col-lg-3 col-6">
-                    <div class="card tarif justify-content-center align-items-center py-4">
-                        <img src="{{asset('images/logo-afrimoney.png')}}" alt="" class="w-50">
-                    </div>
-                </div>
+
             </div>
 
         </div>
