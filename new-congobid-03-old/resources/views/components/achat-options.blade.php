@@ -1,5 +1,4 @@
 @if (Auth::user() && Auth::user()->role_id == 5 && $pivot != null)
-
     {{-- achat bouclier && $first_treve > $enchere->munite --}}
     <div wire:ignore.self class="modal fade" id="achat_bouclier" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
