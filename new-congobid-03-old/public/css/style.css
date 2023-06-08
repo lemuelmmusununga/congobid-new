@@ -1198,7 +1198,7 @@ i::before {
 }
 
 .block-bid .table-user {
-  height: 30vh;
+  height: 40vh;
   background: #c62c2c;
   overflow: hidden;
   border-radius: 18px;
@@ -1654,6 +1654,37 @@ i::before {
   height: 100%;
   border-radius: 50px;
   background: #f9a871;
+}
+
+.block-video-fond {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  z-index: -1;
+  left: 0;
+}
+
+.block-video-fond video {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  -webkit-transition: 6s;
+  transition: 6s;
+}
+
+.block-video-fond video:nth-child(2) {
+  opacity: 0;
+}
+
+.block-video-fond.war video:nth-child(1) {
+  opacity: 0;
+}
+
+.block-video-fond.war video:nth-child(2) {
+  opacity: 1;
 }
 
 .btn-mobile {
@@ -2518,10 +2549,6 @@ footer .bundel-bottom p {
   color: var(--blackColor);
   margin-bottom: 0;
   font-weight: 700;
-}
-
-.block-bid-info {
-  background: #ffffffe5;
 }
 
 .block-bid-info .content-bid-info {

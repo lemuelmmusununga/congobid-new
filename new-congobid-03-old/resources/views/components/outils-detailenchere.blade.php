@@ -8,6 +8,7 @@
                     </div>
                     <div class="d-flex btns align-items-center flex-wrap">
 
+                        {{-- @dump(($enchere->munite*60+$enchere->seconde<=$four_treve && $enchere->munite*60+$enchere->seconde>=$tree_geurre)|| ($enchere->munite*60+$enchere->seconde<=$four_treve && $enchere->munite*60+$enchere->seconde>=$tree_geurre)) --}}
                         @if ($paquet?->roi > 0)
                             <button class="btn btn-rounded" data-bs-toggle="modal" data-bs-target="#roi_bloque">
                                 <img src="{{ asset('images/crown.png') }}" alt="">
@@ -63,9 +64,11 @@
             @if ($pivot != null)
                 @if ($sanction == null)
                     <div class="col-5">
-                        <button class="btn btn-bid disabled" @click="counter++" wire:click.prevent="update()">
                         <button class="btn btn-bid" @click="counter++" wire:click.prevent="update()">
+                            <i class="fi fi-rr-fingerprint"></i>
+                        </button>
                     </div>
+                @else
                     <div class="col-5">
                         <button class="btn btn-bid disabled" data-bs-toggle="modal"
                             data-bs-target="#debloque_user_{{ $sanction->id }}">

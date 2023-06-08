@@ -74,7 +74,18 @@ class Counterbid extends Component
         $this->prix = $this->enchere->article->prix . ' $';
         $duree =($this->enchere->munite * 60 ) + $this->enchere->seconde ;
         $treve =$this->enchere->paquet->treve ;
-        // $first_treve = (($duree -  )- $treve);
+        $this->first_treve =((($this->enchere->really_time*60) * 7.5 )/100);
+        $this->first_geurre =((($this->enchere->really_time*60) * 17.5 )/100)+$this->first_treve;
+        // second guerre
+        $this->second_treve =$this->first_geurre +((($this->enchere->really_time*60) * 7.5 )/100);
+        $this->second_geurre =((($this->enchere->really_time*60) * 17.5 )/100)+$this->second_treve;
+        // troisieme guerre
+        $this->tree_treve =$this->second_geurre +((($this->enchere->really_time*60) * 7.5 )/100);
+        $this->tree_geurre =((($this->enchere->really_time*60) * 17.5 )/100)+$this->tree_treve;
+        // quatre guerre
+        $this->four_treve =$this->tree_geurre +((($this->enchere->really_time*60) * 7.5 )/100);
+        $this->four_geurre =((($this->enchere->really_time*60) * 17.5 )/100)+$this->four_treve;
+        // dd($this->first_treve.'treve',$this->first_geurre,$this->second_treve.'treve2',$this->second_geurre,$this->tree_treve.'treve3',$this->tree_geurre ,$this->four_treve.'treve4',$this->four_geurre);
         if (Auth::user()) {
             # code...
             $soldebid = Bideur::where('user_id',Auth::user()->id)->first();
@@ -98,27 +109,26 @@ class Counterbid extends Component
        ]);
     }
     public function update(){
-         try {
-            $this->user = auth()->user()->id;
-            $this->update_bonus = Bideur::where('user_id',Auth::user()->id)->first();
-            if ($this->counter % 320 == 0) {
-                $this->bonus = $this->update_bonus->bonus;
-                $this->update_bonus->update([
-                    'bonus'=>$this->bonus+1
-                ]);
-            }
-            $this->update = PivotBideurEnchere::where('user_id',$this->user)->where('enchere_id',$this->article_enchere)->first();
-
-            $this->counter =$this->update->valeur + 1;
-            Session::put('counter', $this->counter);
-            $this->update->update([
-                'valeur'=>$this->counter,
-                'click_seconde' => $this->update->click_seconde + 1
+        try {
+        $this->user = auth()->user()->id;
+        $this->update_bonus = Bideur::where('user_id',Auth::user()->id)->first();
+        if ($this->counter % 320 == 0) {
+            $this->bonus = $this->update_bonus->bonus;
+            $this->update_bonus->update([
+                'bonus'=>$this->bonus+1
             ]);
-         } catch (\Throwable $th) {
-             return back();
-         }
+        }
+        $this->update = PivotBideurEnchere::where('user_id',$this->user)->where('enchere_id',$this->article_enchere)->first();
 
+        $this->counter =$this->update->valeur + 1;
+        Session::put('counter', $this->counter);
+        $this->update->update([
+            'valeur'=>$this->counter,
+            'click_seconde' => $this->update->click_seconde + 1
+        ]);
+        } catch (\Throwable $th) {
+            return back();
+        }
     }
     public function addclick($add){
         if ($add > 0  ) {
