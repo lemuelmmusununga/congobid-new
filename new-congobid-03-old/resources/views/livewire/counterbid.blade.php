@@ -51,23 +51,27 @@
                 <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
             </div>
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
+                <img src="{{asset('images/nuages/NUAGE2.png')}}" alt="">
             </div>
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
+                <img src="{{asset('images/nuages/NUAGE3.png')}}" alt="">
             </div>
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
+                <img src="{{asset('images/nuages/NUAGE4.png')}}" alt="">
             </div>
         </div>
         <div class="cloud-content">
             <div class="cloud">
+                <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
             </div>
             <div class="cloud">
+                <img src="{{asset('images/nuages/NUAGE2.png')}}" alt="">
             </div>
             <div class="cloud">
+                <img src="{{asset('images/nuages/NUAGE3.png')}}" alt="">
             </div>
             <div class="cloud">
+                <img src="{{asset('images/nuages/NUAGE4.png')}}" alt="">
             </div>
         </div>
     </div>
@@ -107,6 +111,9 @@
                 </div>
             @endif
             <div class="block-first card mb-2 protected">
+                <div class="block-foudre">
+                    <img src="{{asset('images/e.png')}}" alt="">
+                </div>
                 @if ($liste_one->user->sanctions?->where('enchere_id',$enchere->id)->where('santance','roi')->where('deleted_at',null)->first()?->santance == 'roi')
                     <div class="block-chaine">
                         <div>
@@ -273,6 +280,9 @@
                 @if (!($liste_one->user?->id == Auth::user()->id))
                     <div class="header-table protected" data-bs-toggle="modal"
                         data-bs-target="#modalEnchere_{{ $liste_one->user->id ?? '' }}">
+                        <div class="block-foudre">
+                            <img src="{{asset('images/e.png')}}" alt="">
+                        </div>
                         <div class="d-flex align-items-center justify-content-between header-content">
                                 @if (Auth::user()->sanctions?->where('enchere_id',$enchere->id)->where('santance','roi')->where('deleted_at',null)->first()?->santance == 'roi')
                                     <div class="block-chaine">
@@ -340,8 +350,11 @@
                 <div class="all-user d-flex flex-grow-1">
                     @if ($listes->count() > 0)
                         @foreach ($listes as $key => $liste)
-                            <div class="items protected" data-bs-toggle="modal"
+                            <div class="items foudre" data-bs-toggle="modal"
                                 data-bs-target="#modalEnchere_{{ $liste->user->id ?? '' }}">
+                                <div class="block-foudre">
+                                    <img src="{{asset('images/e.png')}}" alt="">
+                                </div>
                                 <div class="num">
                                     {{ $key + 2 }}
                                 </div>

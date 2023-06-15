@@ -841,6 +841,20 @@ i{
         border-radius: 12px;
         padding: 2px 5px;
         position: relative;
+        .block-foudre{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            display: block;
+
+            img{
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
+        }
         .block-chaine{
             position: absolute;
             width: 100%;
@@ -937,6 +951,11 @@ i{
             font-weight: 700;
         }
     }
+    .block-first.fourdre{
+        .block-foudre{
+            display: block;
+        }
+    }
     .block-first.protected{
         svg{
             path{
@@ -996,6 +1015,20 @@ i{
         .header-table{
             background: #f2b815;
             border-bottom: 1px solid var(--blackColor);
+            position: relative;
+            .block-foudre{
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                top: 0;
+                left: 0;
+                display: block;
+                img{
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                }
+            }
             .header-content{
                 position: relative;
                 padding: 7px 10px;
@@ -1082,6 +1115,11 @@ i{
                 }
             }
         }
+        .header-table.foudre{
+            .block-foudre{
+                display: block;
+            }
+        }
         .header-table.protected{
             background: linear-gradient(to bottom, #84f2CC, #fcffaf);
             .num{
@@ -1108,6 +1146,21 @@ i{
                 width: 100%;
                 display: flex;
                 align-items: center;
+                position: relative;
+                .block-foudre{
+                    position: absolute;
+                    width: 100%;
+                    height: 100%;
+                    top: 0;
+                    left: 0;
+                    display: none;
+                    z-index: 1;
+                    img{
+                        width: 100%;
+                        height: 100%;
+                        object-fit: cover;
+                    }
+                }
                 .img-green{
                     display: none;
                 }
@@ -1203,6 +1256,11 @@ i{
                             box-shadow: 15px 15px 18px 0px rgba(0, 0, 0, 0.1), inset -0px -0px 3px 0px rgba(0, 0, 0, 0.2), inset 0px 7px 10px 0px rgb(255, 255, 255);
                         }
                     }
+                }
+            }
+            .items.foudre{
+                .block-foudre{
+                    display: block;
                 }
             }
             .items.protected{
