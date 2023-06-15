@@ -28,11 +28,48 @@
         <span>{{ Session::get('danger') }}</span>
     @endif
     @include('components.achat-bid-enchere')
+    <div class="message">
+        <div class="text-center">
+            <h5>
+                Attendez le moment de guerre
+                <img src="{{asset('images/tank.png')}}" alt="">
+             </h5>
+             <p class="mb-0">
+                Vous ne pouvez mener <br> cette action. 
 
+             </p>
+        </div>
+    </div>
     <div id="confetti-container"></div>
-    <div class="block-video-fond" wire:ignore>
+    {{-- <div class="block-video-fond" wire:ignore>
         <video src="{{asset('videos/nuages/NUAGE_1.mp4')}}" muted loop autoplay playsinline></video>
         <video src="{{asset('videos/nuages/NUAGE_2.mp4')}}" muted loop autoplay playsinline></video>
+    </div> --}}
+    <div class="block-cloud">
+        <div class="cloud-content">
+            <div class="cloud">
+                <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
+            </div>
+            <div class="cloud">
+                <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
+            </div>
+            <div class="cloud">
+                <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
+            </div>
+            <div class="cloud">
+                <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
+            </div>
+        </div>
+        <div class="cloud-content">
+            <div class="cloud">
+            </div>
+            <div class="cloud">
+            </div>
+            <div class="cloud">
+            </div>
+            <div class="cloud">
+            </div>
+        </div>
     </div>
     <div class="block-bid">
         <div class="btn-mobile btn-message" wire:ignore>
@@ -69,7 +106,7 @@
                     </div>
                 </div>
             @endif
-            <div class="block-first card mb-2">
+            <div class="block-first card mb-2 protected">
                 @if ($liste_one->user->sanctions?->where('enchere_id',$enchere->id)->where('santance','roi')->where('deleted_at',null)->first()?->santance == 'roi')
                     <div class="block-chaine">
                         <div>
@@ -122,16 +159,20 @@
                                         <div class="options d-flex justify-content-end align-items-center">
                                             @if ($pivot)
                                                 @if ($first->roi > 0)
-                                                    <img src="{{ asset('images/crown.png') }}" alt="">
+                                                    <img src="{{ asset('images/crown.png') }}" alt="" class="img-normal">
+                                                    <img src="{{ asset('images/cv.png') }}" alt="" class="img-green">
                                                 @endif
                                                 @if ($first->foudre > 0)
-                                                    <img src="{{ asset('images/tunder.png') }}" alt="">
+                                                    <img src="{{ asset('images/tunder.png') }}" alt="" class="img-normal">
+                                                    <img src="{{ asset('images/ev.png') }}" alt="" class="img-green">
                                                 @endif
                                                 @if ($first->click > 0)
-                                                    <img src="{{ asset('images/click.png') }}" alt="">
+                                                    <img src="{{ asset('images/click.png') }}" alt="" class="img-normal">
+                                                    <img src="{{ asset('images/dv.png') }}" alt="" class="img-green">
                                                 @endif
                                                 @if ($first->bouclier > 0)
-                                                    <img src="{{ asset('images/save.png') }}" alt="">
+                                                    <img src="{{ asset('images/save.png') }}" alt="" class="img-normal">
+                                                    <img src="{{ asset('images/bv.png') }}" alt="" class="img-green">
                                                 @endif
                                             @endif
                                         </div>
@@ -230,7 +271,7 @@
             </div>
             <div class="table-user mb-3">
                 @if (!($liste_one->user?->id == Auth::user()->id))
-                    <div class="header-table" data-bs-toggle="modal"
+                    <div class="header-table protected" data-bs-toggle="modal"
                         data-bs-target="#modalEnchere_{{ $liste_one->user->id ?? '' }}">
                         <div class="d-flex align-items-center justify-content-between header-content">
                                 @if (Auth::user()->sanctions?->where('enchere_id',$enchere->id)->where('santance','roi')->where('deleted_at',null)->first()?->santance == 'roi')
@@ -299,7 +340,7 @@
                 <div class="all-user d-flex flex-grow-1">
                     @if ($listes->count() > 0)
                         @foreach ($listes as $key => $liste)
-                            <div class="items" data-bs-toggle="modal"
+                            <div class="items protected" data-bs-toggle="modal"
                                 data-bs-target="#modalEnchere_{{ $liste->user->id ?? '' }}">
                                 <div class="num">
                                     {{ $key + 2 }}
@@ -363,16 +404,20 @@
                                         <div class="right d-flex align-items-center justify-content-end">
 
                                             @if ($liste->user?->options?->where('paquet_id', $paquet_enchere->id)->first()?->roi > 0)
-                                                <img src="{{ asset('images/crown.png') }}" alt="">
+                                                <img src="{{ asset('images/crown.png') }}" alt="" class="img-normal">
+                                                <img src="{{ asset('images/cv.png') }}" alt="" class="img-green">
                                             @endif
                                             @if ($liste->user->options->where('paquet_id', $paquet_enchere->id)->first()?->foudre > 0)
-                                                <img src="{{ asset('images/tunder.png') }}" alt="">
+                                                <img src="{{ asset('images/tunder.png') }}" alt="" class="img-normal">
+                                                <img src="{{ asset('images/ev.png') }}" alt="" class="img-green">
                                             @endif
                                             @if ($liste->user->options->where('paquet_id', $paquet_enchere->id)->first()?->click > 0)
-                                                <img src="{{ asset('images/click.png') }}" alt="">
+                                                <img src="{{ asset('images/click.png') }}" alt="" class="img-normal">
+                                                <img src="{{ asset('images/cv.png') }}" alt="" class="img-green">
                                             @endif
                                             @if ($liste->user->options->where('paquet_id', $paquet_enchere->id)->first()?->bouclier > 0)
-                                                <img src="{{ asset('images/save.png') }}" alt="">
+                                                <img src="{{ asset('images/save.png') }}" alt="" class="img-normal">
+                                                <img src="{{ asset('images/bv.png') }}" alt="" class="img-green">
                                             @endif
                                             <div class="num-click">
                                                 {{ $liste->valeur ?? '' }}

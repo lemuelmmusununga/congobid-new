@@ -66,6 +66,19 @@
                     <div class="col-5">
                         <button class="btn btn-bid" @click="counter++" wire:click.prevent="update()">
                             <i class="fi fi-rr-fingerprint"></i>
+                            {{-- <div class="block-info-action">
+                                <div class="text-center">
+                                    <h5>ALex</h5>
+                                    <p>vient de te bloquer</p>
+                                    <div class="bock-img">
+                                        <img src="{{asset('images/tunder.png')}}" alt="">
+                                    </div>
+                                    <div class="block-time">
+                                        <span>Pendant</span>
+                                        <span>04:36</span>
+                                    </div>
+                                </div>
+                            </div> --}}
                         </button>
                     </div>
                 @else
