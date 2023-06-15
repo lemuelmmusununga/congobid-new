@@ -1044,7 +1044,7 @@ i::before {
   height: 100%;
   top: 0;
   left: 0;
-  display: block;
+  display: none;
 }
 
 .block-bid .block-first .block-foudre img {
