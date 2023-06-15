@@ -847,7 +847,7 @@ i{
             height: 100%;
             top: 0;
             left: 0;
-            display: block;
+            display: none;
 
             img{
                 width: 100%;
@@ -936,6 +936,9 @@ i{
                 img{
                     width: 16px;
                 }
+                .img-green{
+                    display: none;
+                }
             }
         }
         .block-info-click{
@@ -980,7 +983,7 @@ i{
             color: #198754;
             background: linear-gradient(to bottom, #84f2CC, #fcffaf);
         }
-        
+
     }
     .block-info-enchere{
         .item{
@@ -1291,7 +1294,7 @@ i{
                         }
                     }
                 }
-                
+
             }
         }
     }

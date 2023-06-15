@@ -35,7 +35,7 @@
                 <img src="{{asset('images/tank.png')}}" alt="">
              </h5>
              <p class="mb-0">
-                Vous ne pouvez mener <br> cette action. 
+                Vous ne pouvez mener <br> cette action.
 
              </p>
         </div>
