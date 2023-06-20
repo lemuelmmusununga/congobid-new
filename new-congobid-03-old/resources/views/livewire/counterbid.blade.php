@@ -50,6 +50,28 @@
         </div>
     </div>
     <div id="confetti-container"></div>
+    <div class="block-cloud">
+        <div class="cloud-content">
+            <div class="cloud">
+            </div>
+            <div class="cloud">
+            </div>
+            <div class="cloud">
+            </div>
+            <div class="cloud">
+            </div>
+        </div>
+        <div class="cloud-content">
+            <div class="cloud">
+            </div>
+            <div class="cloud">
+            </div>
+            <div class="cloud">
+            </div>
+            <div class="cloud">
+            </div>
+        </div>
+    </div>
     @if (
         ($enchere->munite * 60 + $enchere->seconde <= $four_treve &&
             $enchere->munite * 60 + $enchere->seconde >= $tree_geurre) ||
