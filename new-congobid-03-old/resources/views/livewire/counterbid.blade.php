@@ -50,7 +50,38 @@
         </div>
     </div>
     <div id="confetti-container"></div>
-    <div class="block-cloud">
+
+    @if (
+        ($enchere->munite * 60 + $enchere->seconde <= $four_treve &&
+            $enchere->munite * 60 + $enchere->seconde >= $tree_geurre) ||
+            ($enchere->munite * 60 + $enchere->seconde <= $tree_treve &&
+                $enchere->munite * 60 + $enchere->seconde >= $second_geurre) ||
+            ($enchere->munite * 60 + $enchere->seconde <= $second_treve &&
+                $enchere->munite * 60 + $enchere->seconde >= $first_geurre))
+        <div class="block-cloud">
+            <div class="cloud-content">
+                <div class="cloud">
+                </div>
+                <div class="cloud">
+                </div>
+                <div class="cloud">
+                </div>
+                <div class="cloud">
+                </div>
+            </div>
+            <div class="cloud-content">
+                <div class="cloud">
+                </div>
+                <div class="cloud">
+                </div>
+                <div class="cloud">
+                </div>
+                <div class="cloud">
+                </div>
+            </div>
+        </div>
+    @else
+    <div class="block-cloud war">
         <div class="cloud-content">
             <div class="cloud">
             </div>
@@ -72,22 +103,6 @@
             </div>
         </div>
     </div>
-    @if (
-        ($enchere->munite * 60 + $enchere->seconde <= $four_treve &&
-            $enchere->munite * 60 + $enchere->seconde >= $tree_geurre) ||
-            ($enchere->munite * 60 + $enchere->seconde <= $tree_treve &&
-                $enchere->munite * 60 + $enchere->seconde >= $second_geurre) ||
-            ($enchere->munite * 60 + $enchere->seconde <= $second_treve &&
-                $enchere->munite * 60 + $enchere->seconde >= $first_geurre))
-        <div class="block-video-fond ">
-            <video src="{{ asset('videos/nuages/NUAGE_1.mp4') }}" muted loop autoplay playsinline></video>
-            <video src="{{ asset('videos/nuages/NUAGE_2.mp4') }}" muted loop autoplay playsinline></video>
-        </div>
-    @else
-        <div class="block-video-fond war">
-            <video src="{{ asset('videos/nuages/NUAGE_1.mp4') }}" muted loop autoplay playsinline></video>
-            <video src="{{ asset('videos/nuages/NUAGE_2.mp4') }}" muted loop autoplay playsinline></video>
-        </div>
     @endif
 
     <div class="block-bid">
