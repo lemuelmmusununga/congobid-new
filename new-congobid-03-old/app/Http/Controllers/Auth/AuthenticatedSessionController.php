@@ -37,8 +37,8 @@ class AuthenticatedSessionController extends Controller
             Auth::login($verify_user);
             // $request->authenticate();
             $request->session()->regenerate();
-            DB::table('sessions')->where('id','!=',Session::getId())->where('user_id',Auth::user()->id)->delete();
-            Session::put('success' ,'Bienvenu(e) chez CongoBid');
+            DB::table('sessions')->where('id','!=', Session::getId())->where('user_id',Auth::user()->id)->delete();
+            session()->flash('success' ,'Bienvenu(e) chez CongoBid');
             return redirect()->intended(RouteServiceProvider::HOME);
         } catch (\Throwable $th) {
             return back();
@@ -63,7 +63,7 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
-        Session::put('success' ,'Déconnexion réussie !');
+        // session()->flash('success' ,'Déconnexion réussie !');
 
         return redirect('/');
     }
