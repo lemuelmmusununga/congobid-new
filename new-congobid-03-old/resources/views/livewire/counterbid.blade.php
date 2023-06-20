@@ -139,7 +139,8 @@
                     </div>
                 </div>
             @endif
-            <div class="block-first card mb-2">
+            <div class="block-first card mb-2 {{$liste_one->user->sanctions
+                ?->where('enchere_id', $enchere->id)->where('santance', 'roi')->where('deleted_at', null)->first()?->santance == 'foudre' ? 'foudre' : '' }}">
                 <div class="block-foudre">
                     <img src="{{asset('images/e.png')}}" alt="">
                 </div>
