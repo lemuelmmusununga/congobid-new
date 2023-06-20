@@ -266,8 +266,8 @@ class DetailEnchereController extends Controller
                     }
                     $insert = Sanction::create([
                         'enchere_id' => $enchere->id,
-                        'paquet_id' => $bideur->enchere->paquet->id,
-                        'duree' => $bideur->enchere->paquet->foudre,
+                        'paquet_id' => $bideur->enchere->paquet?->id,
+                        'duree' => $bideur->enchere->paquet?->foudre,
                         'statut' => 1,
                         'suspendu_by' => Auth::user()->id,
                         'user_id' => $id,
@@ -287,7 +287,7 @@ class DetailEnchereController extends Controller
                     # code...
                     $bideur->update([
                         'foudre' => $bideur->foudre - 1,
-                        'time_bouclier' => 0
+                        // 'time_bouclier' => 0
                     ]);
                 }
                 $option->update([
@@ -299,7 +299,7 @@ class DetailEnchereController extends Controller
             return redirect()->back()->with('danger', 'le bideur est deja sous sanction');
         } elseif ($sanction->enchere_id == $enchere && $sanction->statut == 0) {
             $sanction->update([
-                'duree' => $bideur->enchere->paquet->roi,
+                'duree' => $bideur->enchere->paquet?->roi,
                 'statut' => 1,
                 'suspendu_by' => Auth::user()->id,
             ]);
@@ -308,8 +308,8 @@ class DetailEnchereController extends Controller
         } else {
             $insert = Sanction::create([
                 'enchere_id' => $enchere,
-                'paquet_id' => $bideur->enchere->paquet->id,
-                'duree' => $bideur->enchere->paquet->roi,
+                'paquet_id' => $bideur->enchere->paquet?->id,
+                'duree' => $bideur->enchere->paquet?->roi,
                 'statut' => 1,
                 'suspendu_by' => Auth::user()->id,
                 'user_id' => $id,
@@ -352,7 +352,7 @@ class DetailEnchereController extends Controller
         try{
         $bideur = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $enchere)->first();
         $bid_soustraction = Bideur::where('user_id', Auth::user()->id)->first();
-        $bouclier_benefice = Bouclier::where('paquet_id', $bideur->enchere->paquet->id)->first()->benefice;
+        $bouclier_benefice = Bouclier::where('paquet_id', $bideur->enchere->paquet?->id)->first()?->benefice;
         $enchere = Enchere::where('id', $enchere)->first();
         $option = Option::where('user_id', Auth::user()->id)->where('paquet_id', $enchere->paquet_id)->first();
         if($option == null){
@@ -390,7 +390,7 @@ class DetailEnchereController extends Controller
         // dd($enchere,$paquet,$name);
         $bideur = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $enchere)->first();
         $bid_soustraction = Bideur::where('user_id', Auth::user()->id)->first();
-        $roi_benefice = Roi::where('paquet_id', $bideur->enchere->paquet->id)->first()->benefice;
+        $roi_benefice = Roi::where('paquet_id', $bideur->enchere->paquet?->id)->first()?->benefice;
         $enchere = Enchere::where('id', $enchere)->first();
         $option = Option::where('user_id', Auth::user()->id)->where('paquet_id', $enchere->paquet_id)->first();
         if($option == null){
@@ -432,7 +432,7 @@ class DetailEnchereController extends Controller
     {
         $bideur = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $enchere)->first();
         $bid_soustraction = Bideur::where('user_id', Auth::user()->id)->first();
-        $click_benefice = Click::where('paquet_id', $bideur->enchere->paquet->id)->first()->benefice;
+        $click_benefice = Click::where('paquet_id', $bideur->enchere->paquet?->id)->first()?->benefice;
         $enchere = Enchere::where('id', $enchere)->first();
         $option = Option::where('user_id', Auth::user()->id)->where('paquet_id', $enchere->paquet_id)->first();
         if($option == null){
@@ -507,7 +507,7 @@ class DetailEnchereController extends Controller
     {
         $bideur = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $enchere)->first();
         $bid_soustraction = Bideur::where('user_id', Auth::user()->id)->first();
-        $foudre_benefice = Foudre::where('paquet_id', $bideur->enchere->paquet->id)->first()->benefice;
+        $foudre_benefice = Foudre::where('paquet_id', $bideur->enchere->paquet?->id)->first()?->benefice;
         $enchere = Enchere::where('id', $enchere)->first();
         $option = Option::where('user_id', Auth::user()->id)->where('paquet_id', $enchere->paquet_id)->first();
         if($option == null){

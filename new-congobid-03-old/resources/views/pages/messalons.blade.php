@@ -33,14 +33,14 @@
                         {{-- @dd($salons) --}}
                         @if ($salons->count() > 0)
                             @foreach ($salons as $key=> $salon)
-                                    
+
                                 <div class="col-12 col-md-6 col-lg-4">
                                     <div class="card card-product {{$salon->pivotclientsalon?->where('user_id',Auth::user()->id)->first() == null ?'card-salon':'card-salon-me'}}">
                                         <div class="container-fluid px-0">
                                             <div class="row g-2 justify-content-center align-items-center">
                                                 <div class="col-4 d-flex">
                                                     <div class="item-badge">
-                                                        Lot n°32 {{Auth::user()->pivotclientsalon}}
+                                                        Lot n°{{$salon->id}}
                                                     </div>
                                                 </div>
                                                 <div class="col-3 d-flex justify-content-center">
@@ -58,7 +58,7 @@
                                                         <div class="num">1</div>
                                                         <img src="{{asset('images/articles/'.$salon->article->images[0]->lien) }}" alt="">
                                                     </div>
-                                                    
+
                                                 </div>
                                                 <div class="col-8">
                                                     <div class="row">
@@ -78,7 +78,7 @@
                                                             <div class="detail">
                                                                 L'enchère de cette article débutera dans
                                                                 <div class="time-block d-inline-flex">
-                                                                    <div class="time">03:08:04</div>
+                                                                    <div class="time">{{ $salon->debut_enchere->format('d-m-y h:i:s')}} </div>
                                                                 </div>
                                                                 à condition que le quota {{$salon->limite}} Participants soit
                                                                 atteint.
@@ -86,15 +86,15 @@
                                                             @if ($salon->pivotclientsalon?->where('user_id',Auth::user()->id)->first() === null)
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#modalEnchereSalon_{{$key}}" class="btn btn-3d-rounded-sm">
                                                                     <i class="fi fi-rr-plus"></i> Demander l'accès au
-                                                                    salon 
+                                                                    salon
                                                                 </a>
                                                             @else
                                                             <a href="#" data-bs-toggle="modal" data-bs-target="#modalEnchereAnnuler_{{$key}}" class="btn btn-3d-rounded-sm">
                                                                 <i class="fi fi-rr-plus"></i> Decliener l'accès au
-                                                                salon 
-                                                            </a> 
-                                                                
-                                                                
+                                                                salon
+                                                            </a>
+
+
                                                             @endif
                                                         </div>
                                                     </div>
@@ -109,8 +109,8 @@
                         @else
                             <h1 class="text-center">Vous n'avez pas des salon pour l'instant !</h1>
                         @endif
-                        
-                    
+
+
                     </div>
                 </div>
             </div>
@@ -118,7 +118,7 @@
 
     </div>
     @foreach ($salons as $key=> $salon)
-        
+
         {{-- modal participer --}}
         <div wire:ignore.self class="modal fade" id="modalEnchereSalon_{{$key}}"
             tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

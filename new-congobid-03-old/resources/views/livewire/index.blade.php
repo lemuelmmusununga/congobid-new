@@ -164,7 +164,7 @@
                                             </div>
                                             <div class="col-7">
                                                 <div class="card-img">
-                                                    <img src="{{ asset('images/articles/' . ($article->images->first()->lien == null ? '' : $article->images->first()->lien)) }}"
+                                                    <img src="{{ asset('images/articles/' . ($article->images->first()?->lien == null ? '' : $article->images->first()->lien)) }}"
                                                         alt="{{$article->titre}}">
                                                 </div>
                                             </div>
@@ -265,7 +265,7 @@
                                             </div>
                                             <div class="col-7">
                                                 <div class="card-img">
-                                                    <img src="{{ asset('images/articles/' . ($article->images->first()->lien == null ? '' : $article->images->first()->lien)) }}"
+                                                    <img src="{{ asset('images/articles/' . ($article->images->first()?->lien == null ? '' : $article->images->first()->lien)) }}"
                                                         alt="">
                                                 </div>
                                             </div>
@@ -309,7 +309,7 @@
                                     <div class="row g-2 justify-content-center align-items-center">
                                         <div class="col-4 d-flex">
                                             <div class="item-badge">
-                                                Lot n°{{ $salon->article->id }}
+                                                Lot n°{{ $loop->index +1 }}
                                             </div>
                                         </div>
                                         <div class="col-3 d-flex justify-content-center">
@@ -350,36 +350,39 @@
                                                         L'enchère de cette article débutera dans
                                                         <div class="time-block d-inline-flex">
                                                             <div class="time">
-                                                                {{ date('d/ m /Y', strtotime($salon->enchere->date_debut ?? '')) ?? '' }}
+                                                                {{ date('d/ m /Y', strtotime($salon->debut_enchere ?? '')) ?? '' }}
                                                                 à
-                                                                {{ date('H : i ', strtotime($salon->enchere->dat_debut ?? '')) ?? '' }}
+                                                                {{ date('H : i ', strtotime($salon->debut_enchere ?? '')) ?? '' }}
                                                             </div>
                                                         </div>
                                                         à condition que le quota {{ $salon->limite }} Participants soit
                                                         atteint.
                                                     </div>
-                                                    @if (Auth::user())
-                                                        @if ($salon->pivotclientsalon?->where('user_id', Auth::user()->id)->first() === null)
+                                                    @if ($salon->pivotclientsalon->count() != $salon->limite)
+                                                        @if (Auth::user())
+                                                            @if ($salon->pivotclientsalon?->where('user_id', Auth::user()->id)->first() === null)
+                                                                <a href="#" data-bs-toggle="modal"
+                                                                    data-bs-target="#modalEnchereSalon_{{ $key }}"
+                                                                    class="btn btn-3d-rounded-sm">
+                                                                    <i class="fi fi-rr-plus"></i> Demander l'accès au
+                                                                    salon
+                                                                </a>
+                                                            @else
+                                                                <a href="#" data-bs-toggle="modal"
+                                                                    data-bs-target="#modalEnchereAnnuler_{{ $key }}"
+                                                                    class="btn btn-3d-rounded-sm">
+                                                                    <i class="fi fi-rr-plus"></i> Decliener l'accès au
+                                                                    salon
+                                                                </a>
+                                                            @endif
+                                                        @else
                                                             <a href="#" data-bs-toggle="modal"
                                                                 data-bs-target="#modalEnchereSalon_{{ $key }}"
                                                                 class="btn btn-3d-rounded-sm">
                                                                 <i class="fi fi-rr-plus"></i> Demander l'accès au
                                                                 salon
                                                             </a>
-                                                        @else
-                                                            <a href="#" data-bs-toggle="modal"
-                                                                data-bs-target="#modalEnchereAnnuler_{{ $key }}"
-                                                                class="btn btn-3d-rounded-sm">
-                                                                <i class="fi fi-rr-plus"></i> Decliener l'accès au
-                                                                salon
-                                                            </a>
                                                         @endif
-                                                    @else
-                                                        <a href="/login" data-bs-toggle="modal"
-                                                            class="btn btn-3d-rounded-sm">
-                                                            <i class="fi fi-rr-plus"></i> Decliener l'accès au
-                                                            salon
-                                                        </a>
                                                     @endif
 
                                                 </div>
@@ -457,7 +460,4 @@
             </div>
         </div>
     </div>
-
-
-
 </div>

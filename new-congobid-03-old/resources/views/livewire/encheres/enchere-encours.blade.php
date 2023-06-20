@@ -51,7 +51,7 @@
                                                 </div>
                                                 <div class="col-7">
                                                     {{-- <img src="{{ asset('images/articles/'.($article->images == null ? null : $article->images[0]->lien) ) }}" alt="{{ $article->titre }}"> --}}
-                                                    <img src="{{ asset('images/articles/' . $article->images->first()->lien ?? '') }}"
+                                                    <img src="{{ asset('images/articles/' . $article->images->first()?->lien ?? '') }}"
                                                         alt="img" class="w-100">
                                                 </div>
                                             </div>
@@ -84,7 +84,7 @@
                         </div> --}}
                     </div>
                 </div>
-               
+
             </div>
         </div>
     </div>

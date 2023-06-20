@@ -54,14 +54,7 @@ class Decrematation extends Component
         $this->date_enchere = $this->enchere->date_debut ?? '' ;
         $this->heure_enchere = $this->enchere->heure_debut  ?? '' ;
 
-        if (Auth::user() ) {
 
-            $this->click_live =
-            Pivotbideurenchere::where('enchere_id', $this->enchere->id)
-            ->get();
-
-
-        }
         $this->munites = $this->enchere->munite ?? '';
         $this->interval = 1000;
         // intval($this->times) = $this->enchere->seconde;
@@ -105,7 +98,11 @@ class Decrematation extends Component
                 $this->enchere->update([
                     'seconde'=>intval($this->times),
                 ]);
-
+                if (Auth::user() ) {
+                    $this->click_live =
+                    Pivotbideurenchere::where('enchere_id', $this->enchere->id ?? '')
+                    ->get();
+                }
                 if ($this->click_live != null) {
                     # code...
                     foreach ($this->click_live as $key => $click) {
@@ -157,7 +154,7 @@ class Decrematation extends Component
                     }
                 }
             }
-            $this->progresse = (($this->enchere->munite * 60 + ($this->enchere->seconde )) /($this->enchere->paquet->duree * 60) ) *100  ;
+            // $this->progresse = (($this->enchere->munite * 60 + ($this->enchere->seconde )) /($this->enchere->paquet?->duree * 60) ) *100  ;
 
         }else{
 

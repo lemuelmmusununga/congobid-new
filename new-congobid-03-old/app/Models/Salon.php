@@ -9,9 +9,13 @@ use Illuminate\Database\Eloquent\Model;
 class Salon extends Model
 {
     use HasFactory;
-    
+
 
     protected $guarded = [];
+
+    protected $dates = [
+        'debut_enchere'
+    ];
 
     public function statut()
     {

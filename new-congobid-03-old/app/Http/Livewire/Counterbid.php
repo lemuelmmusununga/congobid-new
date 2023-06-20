@@ -41,23 +41,8 @@ class Counterbid extends Component
     // recuperation de l'article cliquer
     public $getart,$user_id,$isSet = true,$etat,$temps_total_heure,$click_paye,$save=[] ;
     // santion
-    public $message='',$send_message,$myself_num,$sentanceBloques,$pourcentage_foudre, $pourcentage_bouclier,$paquet;
-    public function new(){
-        dd($this->message);
-    }
-    public function send(){
-        dd($this->message);
-        $this->user = auth()->user()->id;
-        if (Str::length($this->message) > 0) {
-            # code...
-            $this->send_message= Chat_enchere::create([
-                'user_id' => $this->user,
-                'libelle'=>$this->message,
-                'enchere_id'=>$this->enchere->id,
-            ]);
-            $this->message ='';
-        }
-    }
+    public $message='',$send_message,$listesAuth,$myself_num,$sentanceBloques,$pourcentage_foudre, $pourcentage_bouclier,$paquet;
+
     public function mount($article,$article_paquet,$article_titre,$article_enchere,$temps_total_heure){
         $this->bids = Bid::where('statut_id', '3')->get();
         $this->article_paquet = $article_paquet;
@@ -73,7 +58,7 @@ class Counterbid extends Component
         $this->temps_total_heure = $temps_total_heure;
         $this->prix = $this->enchere->article->prix . ' $';
         $duree =($this->enchere->munite * 60 ) + $this->enchere->seconde ;
-        $treve =$this->enchere->paquet->treve ;
+        $treve =0;
         $this->first_treve =((($this->enchere->really_time*60) * 7.5 )/100);
         $this->first_geurre =((($this->enchere->really_time*60) * 17.5 )/100)+$this->first_treve;
         // second guerre
@@ -97,6 +82,19 @@ class Counterbid extends Component
             $this->solde_bonus = 0;
             $this->solde_bid=0;
             $this->solde_non_tranferable = 0;
+        }
+    }
+    // message
+    public function send(){
+        $this->user = auth()->user()->id;
+        if (Str::length($this->message) > 0) {
+            # code...
+            $this->send_message= Chat_enchere::create([
+                'user_id' => $this->user,
+                'libelle'=>$this->message,
+                'enchere_id'=>$this->enchere->id,
+            ]);
+            $this->message ='';
         }
     }
     // temps bid auto
@@ -178,7 +176,7 @@ class Counterbid extends Component
         $this->prix_final = $this->enchere->prix_enchere;
         if (Auth::user()->pivotbideurenchere->where('enchere_id',$this->article_enchere)->first()) {
             # code... bouclier temps
-            $this->paquet = Option::where('user_id',Auth::user()->id)->where('paquet_id',$this->enchere?->paquet->id)->first();
+            $this->paquet = Option::where('user_id',Auth::user()->id)->where('paquet_id',$this->enchere?->paquet?->id)->first();
             $echeance = Auth::user()->pivotbideurenchere->where('enchere_id',$this->article_enchere)->first()->time_bouclier;
             // $this->time_bouclier = now('africa/kinshasa')->format('i')-date('i',strtotime($echeance));
             $duree =date('i',strtotime($this->bouclier->temps_blocage));
@@ -272,17 +270,33 @@ class Counterbid extends Component
         // $this->sec =date('s',strtotime($this->temps_total_heure))  ;
         $this->click_achat;
         $this->click_paye = Clicks::where('id',$this->click_achat)->first();
-        $this->sentanceBloques=Bloque::where('user_blocked',Auth::user()->id)->where('enchere_id', $this->article_enchere)->orderby('id','DESC')->get();
+        $this->sentanceBloques = User::whereHas('sanctions',function($query){
+            $query->where('enchere_id',$this->enchere->id);
+        })->withCount('sanctions')->orderby('sanctions_count','DESC')->get();
+        // formule achat click
         $this->montantClick= intval($this->nombreClick ?? 0 )*6;
         $this->incrementation;
+        $this->listesAuth = PivotBideurEnchere::where('enchere_id', $this->article_enchere)->where('valeur','<=', $this->liste_one->valeur ?? 0)->where('user_id','!=', $this->liste_one->user_id ?? '')->orderby('valeur','DESC')->first();
+        if($this->listesAuth && $this->listesAuth->user_id == Auth::user()->id){
+            $listes = PivotBideurEnchere::where('enchere_id', $this->article_enchere)->where('valeur','<', $this->listesAuth->valeur ?? 0)->where('valeur','<=', $this->liste_one->valeur ?? 0)->where('user_id','!=', $this->liste_one->user_id ?? '')->orderby('valeur','DESC')->get();
 
-        $listes = PivotBideurEnchere::where('enchere_id', $this->article_enchere)->where('valeur','<=', $this->liste_one->valeur ?? 0)->where('user_id','!=', $this->liste_one->user_id ?? '')->orderby('valeur','DESC')->get();
-        foreach ($listes as $key => $liste)
-        {
-            if ($liste->user_id == Auth::user()->id){
-                $this->myself_num = $key + 2;
+                if ($this->listesAuth->user_id == Auth::user()->id){
+                    $this->myself_num = 2;
+                }
+            // dump($this->myself_num );
+        }else{
+            $listes = PivotBideurEnchere::where('enchere_id', $this->article_enchere)->where('valeur','<=', $this->liste_one->valeur ?? 0)->where('user_id','!=', $this->liste_one->user_id ?? '')->orderby('valeur','DESC')->get();
+
+            foreach ($listes->where('user_id', Auth::user()->id) as $key => $liste)
+            {
+
+                if ($liste->user_id == Auth::user()->id){
+                    $this->myself_num = $key+2;
+                }
             }
         }
+        $this->progresse = (($this->enchere->munite * 60 + ($this->enchere->seconde )) /($this->enchere->really_time * 60) ) *100  ;
+
         return view('livewire.counterbid',[
             'listes' => $listes,
             'listes_trois'=> PivotBideurEnchere::where('enchere_id', $this->article_enchere)->where('valeur','<', $this->liste_one->valeur)->orderby('valeur','DESC')->get(),

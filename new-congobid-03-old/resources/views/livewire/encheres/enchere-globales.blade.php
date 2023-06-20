@@ -1,6 +1,6 @@
 <div wire:ignore wire:pool.keep-alive>
     <div class="banner-home">
-        <div class="con♠ent-banner">
+        {{-- <div class="content-banner">
             <div class="container">
                 <div class="row g-1">
                     <div class="col-12 mb-3">
@@ -77,8 +77,8 @@
         </div>
         <div class="bundel">
             <h5>Bienvenu chez CongoBid !</h5>
-        </div>
-        <div class="block-btns pt-1">
+        </div> --}}
+        {{-- <div class="block-btns pt-1">
             <div class="container">
                 <div class="row g-3">
                     <div class="col-6">
@@ -97,7 +97,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
     <div class="block-all-enchere">
         <div class="block-enchere-in-progress">
@@ -164,7 +164,7 @@
                                             </div>
                                             <div class="col-7">
                                                 <div class="card-img">
-                                                    <img src="{{ asset('images/articles/' . ($article->images->first()->lien == null ? '' : $article->images->first()->lien)) }}"
+                                                    <img src="{{ asset('images/articles/' . ($article->images->first()?->lien == null ? '' : $article->images->first()->lien)) }}"
                                                         alt="{{$article->titre}}">
                                                 </div>
                                             </div>
@@ -265,7 +265,7 @@
                                             </div>
                                             <div class="col-7">
                                                 <div class="card-img">
-                                                    <img src="{{ asset('images/articles/' . ($article->images->first()->lien == null ? '' : $article->images->first()->lien)) }}"
+                                                    <img src="{{ asset('images/articles/' . ($article->images->first()?->lien == null ? '' : $article->images->first()->lien)) }}"
                                                         alt="">
                                                 </div>
                                             </div>

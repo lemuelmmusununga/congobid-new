@@ -28,6 +28,7 @@
     <div class="block-enchere-in-progress">
       <div class="container">
         <div class="row g-3">
+
             @if ($articles->count() <= 0)
                 <p class="text-center">Pas d'article pour l'instans.</p>
             @else
@@ -52,9 +53,9 @@
                                   date('d-m-Y', strtotime($article->enchere?->date_debut)) == now()->format('d-m-Y') &&
                                   date('d-m-Y H:i',strtotime($article->enchere?->date_debut)) <= now(' Africa/kinshasa')->format('d-m-Y H:i'))
                                   <h6 class="title mb-0">Enchère en cours</h6>
-                                  <div class="time">
+                                  {{-- <div class="time">
                                       @livewire('decrematation', ['getart'=>$article->enchere?->id])
-                                  </div>
+                                  </div> --}}
                                 @else
                                   <h6 class="title mb-0">l'enchère débute </h6>
                                   <div class="time">
@@ -78,7 +79,7 @@
                           </div>
                           <div class="col-7">
                               <a  href="{{route('show.article', $article->id)}}" class="card-img" target="_blank">
-                                  <img src="{{ asset('images/articles/' . ($article->images->first()->lien == null ? '' : $article->images->first()->lien) ) }}" alt="">
+                                  <img src="{{ asset('images/articles/' . ($article->images->first()?->lien == null ? '' : $article->images->first()->lien) ) }}" alt="">
                               </a>
                           </div>
                           <div class="col-12 text-center">
@@ -90,8 +91,8 @@
                           <div class="col-4 text-center">
 
                               @if ($article->enchere?->pivotclientsSalon->where('user_id',Auth::user()->id)->count() == 1)
-                                <a href="#" class="btn btn-3d-rounded-sm w-100 h-100 card-salon-me text-black" data-bs-toggle="modal" data-bs-target="#modalsalonpers{{$key}}">
-                                    Annuler votre salon
+                                <a href="{{route('clients.messalons',['id'=>Auth::user()->id,'name'=>Auth::user()->nom,])}}" class="btn btn-3d-rounded-sm w-100 h-100 card-salon-me text-black" >
+                                    Voir le salon
                                 </a>
                               @else
                                 <a href="#" class="btn btn-3d-rounded-sm w-100 h-100" data-bs-toggle="modal" data-bs-target="#modalsalonpers{{$key}}">
@@ -100,34 +101,34 @@
                               @endif
 
                           </div>
-                          <div class="col-4 text-center">
-                            @if (Auth::user())
-                                <?php
-                                  $favori_enchere =App\Models\Favoris::where('enchere_id', $article->enchere?->id)->where('user_id', Auth::user()->id)->first() ?? null;
-                                ?>
-                                @if ($favori_enchere != null )
-                                  @if ($favori_enchere == null )
-                                    <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
-                                      <i class="fi fi-rr-plus"></i> Ajouter aux favories
-                                    </a>
+                            {{-- <div class="col-4 text-center">
+                                @if (Auth::user())
+                                    <?php
+                                    $favori_enchere =App\Models\Favoris::where('enchere_id', $article->enchere?->id)->where('user_id', Auth::user()->id)->first() ?? null;
+
+                                    ?>
+                                    @if ($favori_enchere != null )
+                                    @if ($favori_enchere == null )
+                                        <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
+                                        <i class="fi fi-rr-plus"></i> Ajouter aux favories
+                                        </a>
+                                        @else
+                                        <a href="{{route('delete.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100 text-black {{ $favori_enchere == null ?'card-salon':'card-salon-me'}}">
+                                            <i class="fi fi-rr-plus"></i> Favorie
+                                        </a>
+
+                                    @endif
                                     @else
-                                    <a href="{{route('delete.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100 text-black {{ $favori_enchere == null ?'card-salon':'card-salon-me'}}">
-                                        <i class="fi fi-rr-plus"></i> Favorie
+                                    <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
+                                        <i class="fi fi-rr-plus"></i> Ajouter aux favories
                                     </a>
-
-                                  @endif
+                                    @endif
                                 @else
-                                  <a href="{{route('add.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100">
-                                      <i class="fi fi-rr-plus"></i> Ajouter aux favories
-                                  </a>
+                                    <a href="/register" class="btn btn-3d-rounded-sm w-100 h-100">
+                                        <i class="fi fi-rr-plus"></i> Ajouter aux favories
+                                    </a>
                                 @endif
-                            @else
-                                <a href="/register" class="btn btn-3d-rounded-sm w-100 h-100">
-                                    <i class="fi fi-rr-plus"></i> Ajouter aux favories
-                                </a>
-                            @endif
-
-                          </div>
+                            </div> --}}
                             <div class="col-4 text-center">
                               <a href="#" class="btn btn-3d-rounded-sm w-100 h-100 ">
                                   Voter pour la prochaine enchère

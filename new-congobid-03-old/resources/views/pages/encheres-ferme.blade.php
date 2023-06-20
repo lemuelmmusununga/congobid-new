@@ -1,5 +1,5 @@
 
-@extends('layouts.app-profil')
+@extends('layouts.app-page')
 @section('content')
 
 <div class="content-block">
@@ -26,7 +26,7 @@
                     @else
 
                     @foreach ($encheres as $enchere)
-                        @if ((($enchere->munite * 60) + $enchere->seconde) < 1 )
+                        @if (times($enchere->munite, $enchere->seconde) < 1 )
 
                             <div class="col-12 col-lg-4 col-md-6 col-sm-6" id="{{ $enchere->article->titre }} ">
                                 <div class="card p-3 shadow-lg" id="">

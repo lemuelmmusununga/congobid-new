@@ -9,10 +9,9 @@ use Illuminate\Database\Eloquent\Model;
 class PivotClientsSalon extends Model
 {
     use HasFactory;
-    
+
 
     protected $guarded = [];
-
 
     public function user()
     {
@@ -24,9 +23,9 @@ class PivotClientsSalon extends Model
         return $this->belongsTo(Statut::class);
     }
 
-    public function salon()
+    public function salons()
     {
-        return $this->belongsTo(Salon::class);
+        return $this->belongsTo(Salon::class,'salon_id');
     }
 
 

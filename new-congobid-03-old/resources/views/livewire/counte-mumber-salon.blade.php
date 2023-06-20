@@ -24,7 +24,7 @@
                 <input type="hidden" class="form-control" name="nombre" wire:model="count">
                 <input type="hidden"  wire:model="prises" value="{{$article->prix}}">
                 <input type="hidden" class="form-control" name="articleid" value="{{$article->id}}">
-                <input type="hidden" class="form-control" name="enchereid" value="{{$article->enchere->id}}">
+                <input type="hidden" class="form-control" name="enchereid" value="{{$article->enchere?->id}}">
             </div>
             @if ($salon_type == "2")
                 <div class="col-12" >

@@ -66,15 +66,15 @@ class Counterbid extends Component
         $this->paquet_enchere = Paquet::where('id',$article_paquet)->first();
         $this->temps_total_heure = $temps_total_heure;
         $this->prix = $this->enchere->article->prix . ' $';
-        $duree =$this->enchere->paquet->duree ;
-        $treve =$this->enchere->paquet->treve ;
-        $guerre = $this->enchere->paquet->guerre;
+        $duree =$this->enchere->paquet?->duree ;
+        $treve =$this->enchere->paquet?->treve ;
+        $guerre = $this->enchere->paquet?->guerre;
         $this->duree_enchere = $this->enchere->munite;
         $this->seconde_enchere = $this->enchere->seconde;
         $this->prix_enchere = $this->enchere->article?->prix_precedent;
         $this->first_treve = $duree - $treve ;
-        $this->second_treve = $this->first_treve - $this->enchere->paquet->guerre;
-        $this->tree_treve = $this->second_treve - $this->enchere->paquet->guerre;
+        $this->second_treve = $this->first_treve - $this->enchere->paquet?->guerre;
+        $this->tree_treve = $this->second_treve - $this->enchere->paquet?->guerre;
         // $first_treve = (($duree -  )- $treve);
         if (Auth::user()) {
             # code...
@@ -100,7 +100,7 @@ class Counterbid extends Component
     }
     public function update(){
 
-        
+
         try {
             $this->user = auth()->user()->id;
             $this->update_bonus = Bideur::where('user_id',Auth::user()->id)->first();
@@ -113,12 +113,12 @@ class Counterbid extends Component
             $this->update = PivotBideurEnchere::where('user_id',$this->user)->where('enchere_id',$this->article_enchere)->first();
             $this->counter =$this->update->valeur + 1;
             Session::put('counter', $this->counter);
-            
+
             $this->update->update([
                 'valeur'=>$this->counter,
                 'click_seconde' => $this->update->click_seconde + 1
             ]);
-            
+
         } catch (\Throwable $th) {
             return back();
         }
@@ -252,7 +252,7 @@ class Counterbid extends Component
         $this->click_achat;
         $this->click_paye = Clicks::where('id',$this->click_achat)->first();
         $this->incrementation;
-       
+
         return view('livewire.counterbid',[
             'listes'=> PivotBideurEnchere::where('enchere_id', $this->article_enchere)->where('valeur','<=', $this->liste_one->valeur ?? 0)->where('user_id','!=', $this->liste_one->user_id ?? '')->orderby('valeur','DESC')->get(),
             'listes_trois'=> PivotBideurEnchere::where('enchere_id', $this->article_enchere)->where('valeur','<', $this->liste_one->valeur)->orderby('valeur','DESC')->get(),

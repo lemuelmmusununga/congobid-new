@@ -1,4 +1,4 @@
-   
+
     <div wire:ignore.self class="modal fade" id="option_roi_{{$article->enchere?->pivotbideurenchere?->first()->enchere_id ?? ''}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -10,7 +10,7 @@
 
                         @if (Auth::user())
                             {{-- @if ($article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi == 0 && $article->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre == 0 )
-                                <h5> Pour bloquer  "{{ $article->user->nom  }}" <br> il vous faut {{$article->enchere->paquet->prix}} bids Pour acheter les options</h5>
+                                <h5> Pour bloquer  "{{ $article->user->nom  }}" <br> il vous faut {{$article->enchere->paquet?->prix}} bids Pour acheter les options</h5>
                                 <button type="button" class="btn btn-no" data-bs-dismiss="modal" wire:click.prevent()="option({{10}})"> Acheter</button>
                             @else --}}
                                 <h5>Voulez vous acheter le "roi" pour cette enchere  <br> il vous faudra  bids  </h5>
@@ -50,7 +50,7 @@
 
                         @if (Auth::user())
                             {{-- @if ($liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi == 0 && $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre == 0 )
-                                <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet->prix}} bids Pour acheter les options</h5>
+                                <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet?->prix}} bids Pour acheter les options</h5>
                                 <button type="button" class="btn btn-no" data-bs-dismiss="modal" wire:click.prevent()="option({{10}})"> Acheter</button>
                             @else --}}
                                 <h5> Quel sentence voulez vous pour "foudre" <br> il vous faudra  bids</h5>
@@ -91,7 +91,7 @@
 
                         @if (Auth::user())
                             {{-- @if ($liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi == 0 && $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre == 0 )
-                                <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet->prix}} bids Pour acheter les options</h5>
+                                <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet?->prix}} bids Pour acheter les options</h5>
                                 <button type="button" class="btn btn-no" data-bs-dismiss="modal" wire:click.prevent()="option({{10}})"> Acheter</button>
                             @else --}}
                                 <h5> Quel sentence voulez vous pour "click" <br> il vous faudra  bids</h5>
@@ -132,7 +132,7 @@
 
                         @if (Auth::user())
                             {{-- @if ($liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi == 0 && $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre == 0 )
-                                <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet->prix}} bids Pour acheter les options</h5>
+                                <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet?->prix}} bids Pour acheter les options</h5>
                                 <button type="button" class="btn btn-no" data-bs-dismiss="modal" wire:click.prevent()="option({{10}})"> Acheter</button>
                             @else --}}
                                 <h5> Quel sentence voulez vous pour "bouclier " <br> il vous faudra  bids</h5>
@@ -172,7 +172,7 @@
                     <div class="text-center">
                         @if (Auth::user())
                             {{-- @if ($liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->roi == 0 && $liste->enchere->pivotbideurenchere->where('user_id', Auth::user()->id)->first()->foundre == 0 )
-                                <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet->prix}} bids Pour acheter les options</h5>
+                                <h5> Pour bloquer  "{{ $liste->user->nom  }}" <br> il vous faut {{$liste->enchere->paquet?->prix}} bids Pour acheter les options</h5>
                                 <button type="button" class="btn btn-no" data-bs-dismiss="modal" wire:click.prevent()="option({{10}})"> Acheter</button>
                             @else --}}
                             <h5> Voulez-vous Acheter a cette enchere "{{$article->titre}} " <br> il vous faudra {{$article->paquet->prix}} bids </h5>
@@ -190,7 +190,7 @@
             </div>
         </div>
     </div>
-    
+
     @foreach ($articles as $key=> $article)
         <div wire:igniore.self class="modal fade" id="exampleModalCenter{{$key}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -283,7 +283,7 @@
 
                         @if (Auth::user() && Auth::user()->bideurs->first()->balance >= $salon->montant)
                             <a type="button"
-                                href="{{ route('detail.article.salon', ['articleid' => $salon->article->id, 'salonid' => $salon->id, 'enchereid' => $salon->article->enchere->id, 'paquet' => $salon->article->paquet->id, 'name' => Str::slug($salon->article->titre)]) }}"
+                                href="{{ route('detail.article.salon', ['articleid' => $salon->article->id, 'salonid' => $salon->id, 'enchereid' => $salon->enchere_id, 'paquet' => $salon->article->paquet->id, 'name' => Str::slug($salon->article->titre)]) }}"
                                 class="btn btn-ok">Accepter</a>
                         @elseif (Auth::user() && Auth::user()->bideurs->first()->balance < $salon->montant)
                             <a type="button" href="{{ route('clients.achat.bid') }}"
@@ -312,7 +312,7 @@
                             </h5>
 
                             <a type="button"
-                                href="{{ route('annuler.salon', ['articleid' => $salon->id, 'enchereid' => $salon->article->enchere?->id, 'salon' => $salon->montant, 'name' => $salon->article?->titre]) }}"
+                                href="{{ route('annuler.salon', ['articleid' => $salon->id, 'enchereid' => $salon->enchere_id, 'salon' => $salon->montant, 'name' => $salon->article?->titre]) }}"
                                 class="btn btn-ok w-50 my-3 ">Oui</a>
 
                         </div>
@@ -325,4 +325,6 @@
             </div>
         </div>
     @endforeach
+
+
 

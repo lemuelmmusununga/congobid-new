@@ -811,6 +811,7 @@ i{
     }
 }
 .block-bid{
+    min-height: 100vh;
     padding-bottom: 80px;
     .card-chatLive{
         background: #1b31ff;
@@ -959,7 +960,7 @@ i{
         }
     }
     .table-user{
-        height: 40vh;
+        height: 30vh;
         background: #c62c2c;
         overflow: hidden;
         border-radius: 18px;
@@ -1301,34 +1302,6 @@ i{
         }
     }
 }
-.block-video-fond{
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    z-index: -1;
-    left: 0;
-    video{
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: 6s;
-        &:nth-child(2){
-            opacity: 0;
-        }
-    }
-}
-.block-video-fond.war{
-    video{
-        &:nth-child(1){
-            opacity: 0;
-        }
-        &:nth-child(2){
-            opacity: 1;
-        }
-    }
-}
 .btn-mobile{
     position: fixed;
     display: flex;
@@ -1603,7 +1576,7 @@ footer{
             }
         }
     }
-
+    
     .title{
         color: var(--orangeColor);
         text-transform: uppercase;
@@ -2024,7 +1997,7 @@ footer{
     }
 }
 .block-bid-info{
-    // background: #ffffffe5;
+    background: #ffffffe5;
     .content-bid-info{
         padding: 10px 10px;
         .item{

@@ -8,7 +8,7 @@
             </div>
             <div class="col-12">
                 <div class="col-12">
-                    <img src="{{ asset('images/articles/' . ($article->images->first()->lien == null ? '' : $article->images->first()->lien) ) }}" alt="">
+                    <img src="{{ asset('images/articles/' . ($article->images->first()?->lien == null ? '' : $article->images->first()->lien) ) }}" alt="">
                 </div>
                 <div class="col-8 text-center">
                     <h2 class="text-center"> Details de l'article</h2>

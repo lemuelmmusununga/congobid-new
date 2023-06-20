@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Sanction;
 use App\Models\Notification;
 use App\Models\Mesalon;
+use Illuminate\Support\Str;
 
 class SalonController extends Controller
 {
@@ -60,8 +61,6 @@ class SalonController extends Controller
         // $verifyDateSalon = Salon::where('created_at','>',now()->subDays(3))->get();
         $page = 2;
         return view('pages.salon', compact('articles', 'notifications', 'publics', 'page', 'paquets', 'salons'));
-
-
     }
     public function mesSalons($id, $name)
     {
@@ -104,7 +103,7 @@ class SalonController extends Controller
         // $creator = PivotClientsSalon::where('user_id', Auth::user()->id)->where('enchere_id', $enchereid)->first();
         $pivots = PivotClientsSalon::where('user_id', Auth::user()->id)->where('enchere_id', $enchereid)->first();
         $users = PivotClientsSalon::where('enchere_id', $enchereid)->get();
-        $pivotsEnchere = PivotBideurEnchere::where('user_id', Auth::user()->id)->where('enchere_id', $enchereid)->first();
+        $pivotsEnchere = PivotBideurEnchere::where('enchere_id', $enchereid)->first();
         // dd(Auth::user()->bideurs->first() ,Auth::user()->bideurs->first()->balance +  $pivots->first()->montant);
 
         Auth::user()->bideurs->first()->update([
@@ -219,25 +218,40 @@ class SalonController extends Controller
     }
     public function salonCreate(Request $request)
     {
-       
+
         // $bideur = PivotClientsSalon::where('user_id',Auth::user()->id)->where('enchere_id',$id)->first();
         // $article = Article::where('id', $articleid)->where('statut_id', '3')->first();
         // $paquets = Paquet::where('id',$paquet)->where('statut_id', '3')->get();
         $pivots = PivotClientsSalon::where('user_id', Auth::user()->id)->where('enchere_id', $request->enchereid)->first();
-
-
         // verification du balance
-        // dd( $request->nombre);
         if ($pivots == null) {
             if (Auth::user()->bideurs->first() && Auth::user()->bideurs->first()->balance >= $request->nombre) {
                 Auth::user()->bideurs->first()->update([
                     'balance' => Auth::user()->bideurs->first()->balance - $request->nombre,
                 ]);
+
+
+                Enchere::create([
+                    'date_debut' => null,
+                    'munite' => $request->munite,
+                    'really_time' => $request->munite,
+                    'seconde' => 0 ,
+                    'state' => 0,
+                    'favoris' => 0,
+                    'statut_id'=> 0,
+                    'article_id' =>$request->articleid,
+                    'paquet_id'=>0,
+                    'favori_salon'=>0,
+
+                ]);
+                $enchere = Enchere::all()->last();
                 Salon::create([
                     'libelle' => 'Salon #' . $request->articleid,
                     'statut_id' => '3',
                     'article_id' => $request->articleid,
                     'state' => 1,
+                    'debut_enchere'=> $request->date.''.$request->heure,
+                    'enchere_id'=> $enchere->id,
                     'user_id' => Auth::user()->id,
                     'limite' => $request->participant,
                     'montant' => $request->nombre,
@@ -249,7 +263,7 @@ class SalonController extends Controller
                     'statut_id' => '3',
                     'user_id' => Auth::user()->id,
                     'salon_id' => $salon->id,
-                    'enchere_id' => $request->enchereid,
+                    'enchere_id' => $enchere->id,
                     'valeur' => 0,
                     'montant' => $request->nombre,
                     'creator' => 1
@@ -258,33 +272,35 @@ class SalonController extends Controller
                     'valeur' => '0',
                     'statut_id' => '3',
                     'user_id' => Auth::user()->id,
-                    'enchere_id' => $request->enchereid,
+                    'enchere_id' => $enchere->id,
                 ]);
 
-                $conte = PivotClientsSalon::where('enchere_id', $request->enchereid)->get();
-                $salon = Salon::where('article_id', $request->articleid)->first();
-                $enchere = Enchere::where('article_id', $request->articleid)->first();
-                $getdate = $request->date;
-                $gethours = $request->heure;
-                $getmunite = $request->munite;
-                $enchere->update([
-                    'participant' => $request->participant,
-                    'date_debut' => $getdate.'-'.$gethours,
-                    'munite'=>$getmunite,
-                ]);
+                $conte = PivotClientsSalon::where('enchere_id', $enchere->id)->get();
+                // $salon = Salon::where('article_id', $request->articleid)->first();
+                // $enchere = Enchere::where('article_id', $request->articleid)->first();
+                // $getdate = $request->date;
+                // $gethours = $request->heure;
+                // $getmunite = $request->munite;
+                // $enchere->update([
+                //     'participant' => $request->participant,
+                //     'date_debut' => $getdate.'-'.$gethours,
+                //     'munite'=>$getmunite,
+                // ]);
                 Notification::create([
                     'message' => Auth::user()->username . ' Participation  au salon ' . $request->name . ' effectuer',
                     'user_id' => null,
                     'notification_id' => Auth::user()->id,
                 ]);
+
                 if ($conte->count() == $salon->limite) {
                     $salon->update([
                         'state'=>1
                     ]);
-                    // $enchere->update([
-                    //     'date_debut' => $getdate.'-'.$gethours.' '.$getmunite
-                    // ]);
+                    $enchere->update([
+                        'date_debut' =>$request->date.''.$request->heure,
+                    ]);
                 }
+
                 return back()->with('success', 'Création effectué avec succès');
             } else {
                 return back()->with('danger', 'Votre compte est insuffisant');
@@ -302,9 +318,8 @@ class SalonController extends Controller
         $article = Article::where('id', $articleid)->where('statut_id', '3')->first();
         $paquets = Paquet::where('id', $paquet)->where('statut_id', '3')->get();
         $pivots = PivotClientsSalon::where('user_id', Auth::user()->id)->where('enchere_id', $enchereid)->where('salon_id', $salonid)->first();
-
         // verification du balance
-        if ($pivots == null) {
+        if ($pivots == null && now()->format('y-m-d h:i:s') >= $salon->debut_enchere) {
 
             if (Auth::user()->bideurs->first()->balance >= $salon->montant) {
                 Auth::user()->bideurs->first()->update([
@@ -327,10 +342,13 @@ class SalonController extends Controller
                     'enchere_id' => $enchereid,
                 ]);
                 $conte = PivotClientsSalon::where('enchere_id', $enchereid)->get();
-                $salon = Salon::where('article_id', $articleid)->first();
-                $enchere = Enchere::where('article_id', $articleid)->first();
+                $salon = Salon::where('enchere_id',$enchereid)->first();
+                $enchere = Enchere::where('id', $enchereid)->first();
+                $getarticle = Article::where('id', $salon->article_id)->first();
+
+                // dd($enchere,$salon->debut_enchere->format('y-m-d h:i:s'),  $salon);
                 $getdate = now('Africa/kinshasa')->format('Y-m');
-                $gethours = now('Africa/kinshasa')->format('d') + 1;
+                $gethours = now('Africa/kinshasa')->format('d') ;
                 $getmunite = now('Africa/kinshasa')->format('m');
                 Notification::create([
                     'message' => Auth::user()->username . ' Participation  au salon ' . $name . ' effectuer',
@@ -338,17 +356,43 @@ class SalonController extends Controller
                     'notification_id' => Auth::user()->id,
                 ]);
                 if ($conte->count() == $salon->limite) {
-                    try {
-                        //code...
-                        $salon->update([
-                            'state' => 1
-                        ]);
-                        $enchere->update([
-                            'date_debut' => $getdate . '-' . $gethours . ' ' . $getmunite
-                        ]);
-                    } catch (\Throwable $th) {
-                        return back()->with('danger', 'Veillez actualiser la page puis reessayer');
-                    }
+
+                    Article::create([
+                        'titre' =>  $getarticle->titre,
+                        // 'image' => ($image == 'true') ?  $getarticle->titre . '.webp' : null,
+                        'marque' =>  $getarticle->marque,
+                        'promouvoir' =>  $getarticle->promouvoir == "on" ? 1 : 0,
+                        'code_produit' =>  $getarticle->code_produit.''.Str::random(10),
+                        'description' =>  $getarticle->description,
+                        'prix' =>  $getarticle->prix,
+                        'prix_marche' =>  $getarticle->prix_marche,
+                        'prix_precedent' =>  $getarticle->prix,
+                        'prix_min' =>  $getarticle->prix_marche / 3,
+                        'prix_max' =>  $getarticle->prix_marche / 2,
+                        'cout_livraison' =>  $getarticle->cout_livraison,
+                        'infos_livraison' =>  $getarticle->infos_livraison,
+                        'meta_description' =>  $getarticle->meta_description,
+                        'meta_keywords' =>  $getarticle->meta_keywords,
+                        'limite_enchere_auto' =>  $getarticle->limite_enchere_auto,
+                        'credit_enchere_auto' =>  $getarticle->credit_enchere_auto,
+                        'quantite' =>  $getarticle->quantite,
+                        'categorie_id' =>  $getarticle->categorie_id,
+                        // 'categorie_id' =>  $getarticle->categorie_id,
+                        'statut_id' =>  $getarticle->statut_id,
+                        'user_id' => Auth::user()->id,
+                        'paquet_id' => $getarticle->paquet_id,
+                        'salon'=> $getarticle->state === 'on' ? 0 :1,
+                    ]);
+                    $getLastarticle = Article::all()->last();
+                    $enchere->update([
+                        'date_debut' =>date('y-m-d h:i:s', strtotime($salon->debut_enchere)),
+                        'article_id' =>$getLastarticle->id,
+                        'prix'=>$getarticle->prix,
+                        'paquet_id'=>$getarticle->paquet_id,
+                    ]);
+                    $salon->update([
+                        'state' => 1
+                    ]);
                 }
                 return back()->with('success', 'Enregistrement effectué avec succès');
             } else {
@@ -364,7 +408,7 @@ class SalonController extends Controller
         $article = Article::where('id', $id)->where('statut_id', '3')->first();
         $paquets = Paquet::where('statut_id', '3')->get();
         $pivots = PivotClientsSalon::where('user_id', Auth::user()->id)->first();
-
+        dd(   $article );
         // couper les nombres de bids
         if (Auth::user()) {
             // verification du balance

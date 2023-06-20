@@ -36,8 +36,12 @@
         {{-- @include('components.side-menu') --}}
         {{-- @include('components.side-filter') --}}
 
+        @if (request()->is('login') ||  request()->is('register'))
 
+        @else
         @include('components.navbar-page')
+
+        @endif
         @include('components.menu-sm')
         <div class="overplay"></div>
 

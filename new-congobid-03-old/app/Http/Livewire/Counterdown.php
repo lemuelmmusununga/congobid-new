@@ -156,7 +156,7 @@ class Counterdown extends Component
                         'time_bouclier' => $decremention
                     ]);
                 }
-                $this->progresse = (($this->enchere->munite * 60 + ($this->enchere->seconde )) /($this->enchere->paquet->duree * 60) ) *100  ;
+                // $this->progresse = (($this->enchere->munite * 60 + ($this->enchere->seconde )) /($this->enchere->really_time * 60) ) *100  ;
 
         }else{
             $this->enchere->update([

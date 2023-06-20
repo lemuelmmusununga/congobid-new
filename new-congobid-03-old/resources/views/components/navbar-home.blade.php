@@ -8,10 +8,8 @@
                             <a href="/profil">
                                 @if (Auth::user()->avatar != null)
                                     <img src="{{ asset('images/users/' . Auth::user()->avatar) }}" alt="">
-
                                 @else
-
-                                <img src="{{ asset('images/users/default.png') }}" alt="">
+                                    <img src="{{ asset('images/users/default.png') }}" alt="">
                                 @endif
                             </a>
                         @else
@@ -41,7 +39,7 @@
                 </div>
             </div>
 
-          
+
         </div>
     </nav>
 </header>

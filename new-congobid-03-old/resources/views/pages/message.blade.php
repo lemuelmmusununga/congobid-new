@@ -16,14 +16,14 @@
                         <a href="#" class="link-message">
                             <div class="card-message">
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-12">
                                 <div class="block-info-message d-flex align-items-center">
-                                    <div class="avatar">
+                                    {{-- <div class="avatar">
                                     <img src="images/bg2.jpg" alt="">
-                                    </div>
+                                    </div> --}}
                                     <div class="text">
                                     <h6>{{$notification->user?->username}}</h6>
-                                    <p>{{$notification->content}}</p>
+                                    <p>{{$notification->message}}</p>
                                     </div>
                                 </div>
                                 </div>

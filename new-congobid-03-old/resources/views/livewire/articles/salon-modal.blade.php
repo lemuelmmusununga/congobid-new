@@ -10,7 +10,7 @@
 
                     <div >
                         <h5 class="text-center">
-                             Pour Ouvrir le salon vous devez {{ Str::before($prix, '.') }} Bids
+                             Pour ouvrir le salon vous devez {{ Str::before($prix, '.') }} Bids
                         </h5>
                         <form  method="post">
                             <div class="row justify-content-center">

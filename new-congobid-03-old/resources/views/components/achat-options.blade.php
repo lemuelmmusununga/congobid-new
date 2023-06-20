@@ -189,7 +189,7 @@
                                 <a href="#" class="btn btn btn-3d-rounded-sm" data-bs-dismiss="modal">Annuler</a>
                                 @if (Auth::user()->bideurs->first()->balance >= $montantClick)
                                     {{-- <a type="button" href="{{route('click',['enchere'=>$article_enchere,'paquet'=>$prix_click,'name'=>Auth::user()->nom])}}" wire:click.prevent ="achatRoi({{ $article_enchere }} , {{ $prix_click }})" class="btn btn-ok w-50">Acheter</a> wire:click.prevent ="achatRoi({{ $article_enchere }} , {{ $prix_click }})" --}}
-                                    <button class="btn-3d-rounded-sm" data-bs-dismiss="modal" wire:click.prevent ="Buyclick({{$nombreClick}})">Valider</button>
+                                    <button class="btn-3d-rounded-sm" data-bs-dismiss="modal" wire:click.prevent ="Buyclick({{$nombreClick}})" onClick="window.location.reaload();">Valider</button>
                                 @else
                                     <a type="button"
                                         href="{{ route('achat.bid.enchere', ['enchere_id' => $enchere->id, 'enchere_titre' => $enchere->article->titre]) }}"

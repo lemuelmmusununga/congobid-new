@@ -1,3 +1,4 @@
+
 @extends('layouts.app-bid')
 @section('content')
     {{-- <script>
@@ -5,6 +6,7 @@
             document.location.reload();
         }, 50000);
     </script> --}}
+  
     <header>
         <nav class="navbar navbar-expand-lg sticky-top nav-bid">
           <div class="container-fluid px-lg-3 px-xl-3 px-xxl-5 px-1">
