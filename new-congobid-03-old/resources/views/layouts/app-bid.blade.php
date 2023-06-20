@@ -100,6 +100,10 @@
             </div>
         @endif
     </div>
+    <script>
+
+    </script>
+
     @include('components.menu-sm')
     <div class="back-drop-menu"></div>
     <div id="blueimp-gallery" class="blueimp-gallery">
@@ -124,7 +128,7 @@
     <script src="{{ asset('js/slowNumber.js') }}"></script>
     <script>
         $(document).ready(function() {
-
+            
             $('.btn-menu').click(function(e) {
                 e.preventDefault();
                 $('.menu-sm').addClass('show');

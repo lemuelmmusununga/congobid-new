@@ -127,6 +127,44 @@
     </div>
     @include('components.menu-sm')
     <div class="back-drop-menu"></div>
+    <div class="modal fade" id="modalSuccess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content content-success">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="icon-info mb-3">
+                        <i class="fi fi-rr-check"></i>
+                    </div>
+                    <div class="message-info mb-3">
+                        Recharhe effectué avec succès
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content content-danger">
+            <div class="modal-header">
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="text-center">
+                    <div class="icon-info mb-3">
+                        <i class="fi fi-rr-cross"></i>
+                    </div>
+                    <div class="message-info mb-3">
+                        Recharhe effectué avec succès
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
     <div id="blueimp-gallery" class="blueimp-gallery">
         <div class="slides"></div>
         <h3 class="title"></h3>
@@ -151,7 +189,17 @@
     </script>
     <script>
         $(document).ready(function() {
-
+            const ModalSuccess = new bootstrap.Modal('#modalSuccess', {
+                keyboard: false
+            });
+            // ModalSuccess.show()
+            const ModalError = new bootstrap.Modal('#modalError', {
+                keyboard: false
+            });
+            ModalSuccess.show()
+            setInterval(() => {
+                ModalSuccess.hide()
+            }, 5000);
             $('.btn-menu').click(function(e) {
                 e.preventDefault();
                 $('.menu-sm').addClass('show');

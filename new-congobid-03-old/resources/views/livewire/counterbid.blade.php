@@ -35,7 +35,7 @@
                 <img src="{{asset('images/tank.png')}}" alt="">
              </h5>
              <p class="mb-0">
-                Vous ne pouvez mener <br> cette action. 
+                Vous ne pouvez mener <br> cette action.
 
              </p>
         </div>
@@ -48,30 +48,22 @@
     <div class="block-cloud">
         <div class="cloud-content">
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
             </div>
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE2.png')}}" alt="">
             </div>
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE3.png')}}" alt="">
             </div>
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE4.png')}}" alt="">
             </div>
         </div>
         <div class="cloud-content">
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE1.png')}}" alt="">
             </div>
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE2.png')}}" alt="">
             </div>
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE3.png')}}" alt="">
             </div>
             <div class="cloud">
-                <img src="{{asset('images/nuages/NUAGE4.png')}}" alt="">
             </div>
         </div>
     </div>
@@ -229,7 +221,7 @@
                                                     <a
                                                         href="{{ route('sanction', ['id' => $liste_one->user->id, 'enchere' => $pivot->enchere_id, 'sanction' => 'foudre', 'name' => $liste_one->user->nom, 'bid_cut' => 0]) }}">Bloquer</a>
                                                 @else
-                                                    <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                                    <a href="#" class="btn btn-3d-rounded-sm" data-bs-dismiss="modal" data-bs-toggle="modal"
                                                         data-bs-target="#achat_foudre">Veillez acheter l'option</a>
                                                 @endif
 
@@ -449,7 +441,7 @@
                                                 </div>
                                                 <div class="text-center">
                                                     @if (Auth::user() && $pivot != null)
-                                                        <h5> Voulez-vous bloquer {{ $liste->user->username }} ?</h5>
+                                                        <h5> Voulez-vous bloquer <br> <strong>{{ $liste->user->username }}</strong> ?</h5>
                                                     @else
                                                         <h5> Veillez pentientez l'enchere n'a pas encore commencée !</h5>
                                                     @endif
@@ -457,14 +449,14 @@
                                                 </div>
                                             </div>
 
-                                            <div class="modal-footer d-flex justify-content-center align-items-center">
-                                                <button type="button" class="btn btn-no"
-                                                    data-bs-dismiss="modal">Annuler</button>
+                                            <div class="modal-footer d-flex justify-content-between align-items-center pt-0 mb-3" style="border: none">
+                                                <button type="button" class="btn-no btn-3d-rounded-sm btn"
+                                                    data-bs-dismiss="modal" >Annuler</button>
                                                 @if ($paquet?->foudre > 0)
                                                     <a
-                                                        href="{{ route('sanction', ['id' => $liste->user->id, 'enchere' => $pivot->enchere_id, 'sanction' => 'foudre', 'name' => $liste->user->nom, 'bid_cut' => 0]) }}">Bloquer1</a>
+                                                        href="{{ route('sanction', ['id' => $liste->user->id, 'enchere' => $pivot->enchere_id, 'sanction' => 'foudre', 'name' => $liste->user->nom, 'bid_cut' => 0]) }}" class="btn-3d-rounded-sm btn">Bloquer</a>
                                                 @else
-                                                    <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal"
+                                                    <a href="#" class="btn-3d-rounded-sm btn" data-bs-dismiss="modal" data-bs-toggle="modal"
                                                         data-bs-target="#achat_foudre">Acheter l'option</a>
                                                 @endif
 
@@ -630,4 +622,8 @@
         @this.myself_num = $('.all-user .me').data('myself');
     })
 </script> --}}
+<!-- Button trigger modal -->
+
+  <!-- Modal -->
+ 
         @endsection

@@ -235,7 +235,7 @@ a{
     width: 100%;
     min-height: 100vh;
     // overflow-x: hidden;
-    position: relative;
+    // position: relative;
     background: var(--linearBg);
 }
 .global-div.no-linear{
@@ -245,7 +245,7 @@ a{
     width: 100%;
     height: 100%;
     // overflow: hidden;
-    position: relative;
+    // position: relative;
 }
 .navbar{
     padding: 14px 0;
@@ -980,9 +980,10 @@ i{
             color: #198754;
             background: linear-gradient(to bottom, #84f2CC, #fcffaf);
         }
-        
+
     }
     .block-info-enchere{
+        position: relative;
         .item{
             background: #83df63;
             border: 1px solid var(--blackColor);
@@ -1012,6 +1013,7 @@ i{
         flex-direction: column;
         width: 100%;
         border: 1px solid var(--blackColor);
+        position: relative;
         .header-table{
             background: #f2b815;
             border-bottom: 1px solid var(--blackColor);
@@ -1291,12 +1293,13 @@ i{
                         }
                     }
                 }
-                
+
             }
         }
     }
     .block-actions-bids{
         .block-options-bid{
+            position: relative;
             .btns{
                 gap: 10px;
                 width: 100%;
@@ -1403,6 +1406,19 @@ i{
             &:active{
                 box-shadow: none;
                 transform: scale(.95);
+            }
+        }
+        .btn-bid.autoClic{
+            pointer-events: none;
+            animation: autoClic .5s linear infinite alternate;
+            @keyframes autoClic {
+                0%, 100%{
+                    box-shadow: 0 10px 0px #8f938d, 0 11px 0px var(--blackColor);
+                }
+                50%{
+                    transform: scale(.98);
+                    box-shadow: 0 5px 0px #8f938d, 0 6px 0px var(--blackColor);
+                }
             }
         }
         .btn-bid.disabled{
@@ -1514,43 +1530,50 @@ i{
     position: fixed;
     width: 100%;
     height: 100%;
-    z-index: -1;
+    z-index: 0;
     background: #12c5fd;
     top: 0;
     left: 0;
     display: flex;
+    transition: 6s;
     .cloud-content{
         flex: 0 0 auto;
         display: flex;
-
+        animation: cloud 70s linear infinite;
         @keyframes cloud {
             0%{
                 transform: translateX(0);
             }
             100%{
-                transform: translateX(-100vw);
+                transform: translateX(-100%);
             }
         }
         .cloud{
             flex: 0 0 auto;
             width: 100vw;
             height: 100%;
-            animation: cloud 10s linear infinite;
+            background-size: 500px;
+            // transform: scale(1.2);
+            // filter: blur(2px);
+            // opacity: .8;
             &:nth-child(1){
-                background-image: url('images/nuages/NUAGE1.png');
+                background-image: url('../images/nuages/NUAGE1.png');
             }
             &:nth-child(2){
-                background-image: url('images/nuages/NUAGE2.png');
+                background-image: url('../images/nuages/NUAGE2.png');
             }
             &:nth-child(3){
-                background-image: url('images/nuages/NUAGE3.png');
+                background-image: url('../images/nuages/NUAGE3.png');
             }
             &:nth-child(4){
-                background-image: url('images/nuages/NUAGE4.png');
+                background-image: url('../images/nuages/NUAGE4.png');
             }
         }
     }
 
+}
+.block-cloud.war{
+    background: #0b0826;
 }
 .block-video-fond.war{
     video{
@@ -1785,6 +1808,38 @@ footer{
     }
 }
 .block-page{
+    .card-achat-bid{
+        border-radius: 12px;
+        padding: 10px;
+        box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
+        background: #e8cb87;
+        .header{
+            border-radius: 12px;
+            background: #ffdb8b;
+            padding: 5px 10px;
+            color: var(--colorGold);
+            border: 1px solid var(--colorGold);
+            margin-bottom: 10px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        .block-pay{
+            height: 23vw;
+            background: var(--colorWhite);
+            border: 1px solid #707070;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 8px 0px #707070, 0 9px 0px #707070;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img{
+                width: 80%;
+                height: 80%;
+                object-fit: contain;
+            }
+        }
+    }
     .content-chatbox{
         min-height: 100vh;
         padding-top: 10px;
@@ -2292,6 +2347,21 @@ footer{
         border-radius: 12px;
         border: 3px solid var(--colorGold);
         padding: 0 10px;
+        .icon-info{
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 100%;
+            margin: 0 auto;
+            font-size: 30px;
+        }
+        .message-info{
+            color: var(--colorGold);
+            font-weight: 600;
+            font-size: 18px;
+        }
         .title-form{
             font-size: 14px;
             color: var(--orangeColor);
@@ -2320,7 +2390,41 @@ footer{
                     opacity: .6;
                 }
             }
+            .form-floating{
+                label{
+                    opacity: .7;
+                    font-size: 14px;
+                }
+                .form-control{
+                    padding: .375rem .75rem;
+                    height: 45px;
+                }
+            }
+            .form-floating > .form-control:focus ~ label, .form-floating > .form-control:not(:placeholder-shown) ~ label, .form-floating > .form-select ~ label{
+                transform: scale(.85) translateY(-2.3rem) translateX(.15rem);
+            }
 
+        }
+    }
+
+    .modal-content.content-success{
+        background: linear-gradient(to bottom, #fbffa7, #5ec877);
+        width: 90%;
+        margin: 0 auto;
+        border: none;
+        .icon-info{
+            background: #1db942;
+            color: var(--colorWhite);
+        }
+    }
+    .modal-content.content-danger{
+        width: 90%;
+        margin: 0 auto;
+        background: linear-gradient(to bottom, #fbffa7, #ff5151);
+        border: none;
+        .icon-info{
+            background: #ff5151;
+            color: var(--colorWhite);
         }
     }
 }

@@ -1,5 +1,5 @@
 <header class="sticky-top">
-    <nav class="navbar navbar-expand-lg sticky-top nav-page">
+    <nav class="navbar navbar-expand-lg nav-page">
       <div class="container-fluid px-lg-3 px-xl-3 px-xxl-5 px-1">
         <div class="row w-100 ms-0 align-items-center">
           <div class="col-6">

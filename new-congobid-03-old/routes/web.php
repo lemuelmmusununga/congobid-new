@@ -62,6 +62,9 @@ Route::get('/tarif', function () {
 Route::get('/mon_compte', function () {
     return view('pages.profil-user');
 });
+Route::get('/achat_bids', function () {
+    return view('pages.achat-bids');
+});
 // Route::get('/option', function () {
 //     return view('pages.options');
 // });
