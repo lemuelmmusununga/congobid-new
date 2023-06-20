@@ -22,9 +22,7 @@
         <script src="{{ asset('js/app.js') }}" defer></script>
 
     </head>
-    <body class="font-sans antialiased">
-
-
+    <body class="font-sans antialiased" style="z-index:-1;">
         @include('components.side-menu')
         @include('components.header-chat')
         <div class="global-div">

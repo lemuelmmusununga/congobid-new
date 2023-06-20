@@ -15,7 +15,7 @@ class ArticlesController extends Controller
     //
     public function index(){
 
-        $articles = Article::OrderBy('id','DESC')->get();
+        $articles = Article::where('salon',0)->OrderBy('id','DESC')->get();
         $publics = Notification::where('public',1)->get();
         if(Auth::user()){
             $notifications  = Notification::where('notification_id',Auth::user()->id)->get();
@@ -28,7 +28,7 @@ class ArticlesController extends Controller
     public function articles(){
         $categories = Categorie::all();
         $paquets = Paquet::all();
-        $articles= Article::OrderBy('id','DESC')->paginate(1);
+        $articles= Article::where('salon',0)->OrderBy('id','DESC')->paginate(1);
         return view('pages.articles',compact('articles','categories','paquets'));
     }
     public function article($id){
@@ -55,13 +55,13 @@ class ArticlesController extends Controller
     public function liste($id,$id_paquet,$nom){
 
         // $articles  = Article::where('salon',1)->get();
-        $articles  = Article::where('categorie_id',$id)->where('paquet_id',$id_paquet)->orderby('id','DESC')->get();
+        $articles  = Article::where('salon',0)->where('categorie_id',$id)->where('paquet_id',$id_paquet)->orderby('id','DESC')->get();
         return view('pages.article-categories',compact('articles','nom'));
     }
     //detail article0
     public function detailArticle($id,$name){
         // $article = Article::where('id',$id)->first();
-        $article = Article::where('id',$id)->first();
+        $article = Article::where('salon',0)->where('id',$id)->first();
         return view('pages.detail-article',compact('article'));
     }
     public function detailArticleSalon($id,$name){
@@ -72,7 +72,7 @@ class ArticlesController extends Controller
         }else{
             $notifications = '';
         }
-        $article = Article::where('id',$id)->first();
+        $article = Article::where('salon',0)->where('id',$id)->first();
 
         return view('pages.detail-article',compact('article', 'notifications','publics'));
     }

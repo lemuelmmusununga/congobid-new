@@ -14,11 +14,13 @@ class SalonModal extends Component
         if ($this->salon->prix > 0 && $this->nombre > 0) {
             # code...
             $div =$this->salon->prix / $this->nombre;
-            $this->prix = $div * 10;
+            $this->prix = $div * 2;
+            dump( $this->prix );
         } else {
             # code...
             $div = 1;
-            $this->prix = $this->salon->prix *10 ;
+            $this->prix = $this->salon->prix *2 ;
+            dump( $this->prix );
         }
         return view('livewire.articles.salon-modal');
     }

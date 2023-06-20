@@ -64,15 +64,15 @@ class Salonbid extends Component
         $this->paquet_enchere = Paquet::where('id',$article_paquet)->first();
         $this->temps_total_heure = $temps_total_heure;
         $this->prix = $this->enchere->article->prix . ' $';
-        $duree =$this->enchere->paquet->duree ;
-        $treve =$this->enchere->paquet->treve ;
-        $guerre = $this->enchere->paquet->guerre;
+        $duree =$this->enchere->paquet?->duree ;
+        $treve =$this->enchere->paquet?->treve ;
+        $guerre = $this->enchere->paquet?->guerre;
         $this->duree_enchere = $this->enchere->munite;
         $this->seconde_enchere = $this->enchere->seconde;
         $this->prix_enchere = $this->enchere->article->prix;
         $this->first_treve = $duree - $treve ;
-        $this->second_treve = $this->first_treve - $this->enchere->paquet->guerre;
-        $this->tree_treve = $this->second_treve - $this->enchere->paquet->guerre;
+        $this->second_treve = $this->first_treve - $this->enchere->paquet?->guerre;
+        $this->tree_treve = $this->second_treve - $this->enchere->paquet?->guerre;
         // $first_treve = (($duree -  )- $treve);
         if (Auth::user()) {
             # code...

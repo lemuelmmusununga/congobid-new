@@ -38,6 +38,58 @@
 </head>
 
 <body>
+    @if (Session::has('success'))
+    <div class="modal-success show">
+        <div class="over">
+
+        </div>
+        <div class="content-modal">
+            <div class="close-modal-sm">
+
+            </div>
+            <div class="header">
+                <div class="icon">
+                    <div class="content-icon">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="text-center">
+                    <h6>CongoBid</h6>
+                    <p>{{ Session::pull('success') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+@elseif (Session::has('danger'))
+    <div class="modal-success show">
+        <div class="over">
+
+        </div>
+        <div class="content-modal">
+            <div class="close-modal-sm">
+
+            </div>
+            <div class="header" style="background: red;">
+                <div class="icon">
+                    <div class="content-icon">
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+            <div class="body">
+                <div class="text-center">
+                    <h6>CongoBid</h6>
+                    <p>{{ Session::pull('danger') }}</p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+@endif
     {{-- <div id="page-load">
         <div class="backdrop fade"></div>
         <div class="parent-modal">
@@ -68,62 +120,15 @@
         <div class="wrapper">
             <div class="bg-linear">
                 @yield('content')
-                @include('components.footer-home')
+                @if (request()->is('encheres-globale'))
+
+                @else
+                    @include('components.footer-home')
+                @endif
             </div>
         </div>
 
-        @if (Session::has('success'))
-            <div class="modal-success show">
-                <div class="over">
 
-                </div>
-                <div class="content-modal">
-                    <div class="close-modal-sm">
-
-                    </div>
-                    <div class="header">
-                        <div class="icon">
-                            <div class="content-icon">
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="body">
-                        <div class="text-center">
-                            <h6>CongoBid</h6>
-                            <p>{{ Session::pull('success') }}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @elseif (Session::has('danger'))
-            <div class="modal-success show">
-                <div class="over">
-
-                </div>
-                <div class="content-modal">
-                    <div class="close-modal-sm">
-
-                    </div>
-                    <div class="header" style="background: red;">
-                        <div class="icon">
-                            <div class="content-icon">
-                                <span></span>
-                                <span></span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="body">
-                        <div class="text-center">
-                            <h6>CongoBid</h6>
-                            <p>{{ Session::pull('danger') }}</p>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
     </div>
     @include('components.menu-sm')
     <div class="back-drop-menu"></div>

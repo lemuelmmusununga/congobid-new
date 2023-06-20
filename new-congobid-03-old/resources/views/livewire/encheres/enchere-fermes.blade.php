@@ -26,7 +26,7 @@
                                                     <div class="col-5">
                                                         <div class="block-price">
                                                             <h6>Catégorie :
-                                                                <span>{{ $article->enchere->paquet->libelle ?? '' }}</span></h6>
+                                                                <span>{{ $article->enchere->paquet?->libelle ?? '' }}</span></h6>
                                                         </div>
                                                         <div class="block-price">
                                                             <h6>Prix CongoBid : <span>{{ $article->enchere->prix_enchere }}$</span></h6>

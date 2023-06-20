@@ -42,7 +42,7 @@
     {{-- @include('components.navbar-bid') --}}
     <div class="overplay"></div>
     {{-- @include('components.header-index') --}}
-    <div class="global-div no-linear" style="z-index:1">
+    <div class="global-div no-linear" style="z-index: 1;">
         <div class="wrapper">
             @yield('content')
         </div>

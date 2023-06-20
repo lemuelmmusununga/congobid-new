@@ -12,7 +12,9 @@ class Enchere extends Model
 
 
     protected $guarded = [];
-
+    protected $dates = [
+        'date_debut'
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -54,7 +56,7 @@ class Enchere extends Model
     {
         return $this->belongsTo(Article::class, 'article_id');
     }
-    
+
     public function pivotclientsSalon()
     {
         return $this->hasMany(PivotClientsSalon::class);

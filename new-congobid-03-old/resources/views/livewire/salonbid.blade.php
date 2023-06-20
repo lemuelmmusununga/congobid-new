@@ -210,7 +210,7 @@
 
                 @if ($pivot != null)
                     @if ($enchere->munite*60+$enchere->seconde>0  && date('d: m :Y ', strtotime($this->enchere->date_debut)) == now('africa/kinshasa')->format('d: m :Y ') && $pivot->where('enchere_id',$enchere->id)->where('user_id', Auth::user()->id)->first() != null && date('H:i', strtotime($this->enchere->date_debut)) <= now(' Africa/kinshasa')->format('H:i'))
-                        @livewire('decrematation', ['getart'=>$getart])
+                    @livewire('counterdown', ['getart' => $enchere?->id] )
                         <div class="text-center">
                             <hr>
                                 <h6>Prix de l'enchere </h6>
@@ -247,7 +247,7 @@
 
                         {{-- <span class="d-block text-center">Date du débudvt</span> --}}
                         <h5 class="fw-bold d-block text-center text-danger">Enchére terminé !</h5>
-                            @livewire('decrematation', ['getart'=>$getart,'incrementation_prix'=>$incrementation])
+                        @livewire('counterdown', ['getart' => $enchere?->id] )
                             <div class="text-center">
                                 <hr>
                                     <h6>Prix de l'enchere</h6>
@@ -483,8 +483,8 @@
 
                             <h5>Voulez-vous participer à cette enchère ?</h5>
                             {{-- @if (Auth::user()) --}}
-                                <p> Pour y participer, veuillez souscrire à la catégorie "{{$enchere->paquet->libelle}}" en
-                                    payent {{$enchere->paquet->prix}} bids.</p>
+                                <p> Pour y participer, veuillez souscrire à la catégorie "{{$enchere->paquet?->libelle}}" en
+                                    payent {{$enchere->paquet?->prix}} bids.</p>
                             {{-- @endif --}}
                         </div>
                     </div>

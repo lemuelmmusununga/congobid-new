@@ -73,7 +73,6 @@ class ArticleController extends Controller
                     $paquet_id = $paquet->id;
                 }
             }
-
             $article = Article::create([
                 'titre' => $request->titre,
                 // 'image' => ($image == 'true') ? $request->titre . '.webp' : null,
@@ -112,7 +111,7 @@ class ArticleController extends Controller
                     'article_id' => $article->id,
                 ]);
 
-                $request->file('image')->move(public_path('images/articles/'), $request->titre. '.webp');
+                $request->file('image')->move(public_path('../images/articles/'), $request->titre. '.webp');
 
             }
             if ($request->state === 'on') {
@@ -155,7 +154,6 @@ class ArticleController extends Controller
                     'prix'=>$request->prix
                 ]);
             }
-
 
             Historique::create([
                 'action' => 'Enregistrement d\'un article',

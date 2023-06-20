@@ -17,7 +17,8 @@ class CounteMumberSalon extends Component
 
     public function render()
     {
-        $this->count = ceil((100 * (($this->prises) * 5 / ($this->getcount >= 1 ? $this->getcount : 1))));
+        // $this->count = ceil((100 * (($this->prises) * 5 / ($this->getcount >= 1 ? $this->getcount : 1))));
+        $this->count = ceil(((($this->prises) * 1 / ($this->getcount >= 1 ? $this->getcount : 1))));
 
         return view('livewire.counte-mumber-salon');
     }
