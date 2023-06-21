@@ -118,9 +118,9 @@
                     <div class="col-5">
                         <button class="btn btn-bid disabled" data-bs-toggle="modal"
                             data-bs-target="#debloque_user_{{ $sanction->id }}">
-                            <span>
+
                                 Vous avez été bloqué par {{ '@ ' . $sanction->sanction?->username }}
-                            </span>
+                        
                         </button>
                     </div>
                 @endif

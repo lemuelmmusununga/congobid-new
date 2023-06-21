@@ -139,7 +139,7 @@
                     </div>
                 </div>
             @endif
-            <div class="block-first card mb-2 foudre">
+            <div class="block-first card mb-2 {{$liste_one->user->sanction?->where('enchere_id', $enchere->id)->where('santance', 'foudre')->where('deleted_at', null)->first()?->santance == 'foudre' ? 'foudre' : ''}}">
                 <div class="block-foudre">
                     <img src="{{asset('images/e.png')}}" alt="">
                 </div>
@@ -305,8 +305,11 @@
             </div>
             <div class="table-user mb-3">
                 @if (!($liste_one->user?->id == Auth::user()->id))
-                    <div class="header-table" data-bs-toggle="modal"
+                    <div class="header-table {{Auth::user()?->sanction?->where('enchere_id', $enchere->id)->where('santance', 'foudre')->where('deleted_at', null)->first()?->santance == 'foudre' ? 'foudre' : ''}}" data-bs-toggle="modal"
                         data-bs-target="#modalEnchere_{{ $liste_one->user->id ?? '' }}">
+                        <div class="block-foudre">
+                            <img src="{{asset('images/e.png')}}" alt="">
+                        </div>
                         <div class="d-flex align-items-center justify-content-between header-content">
                             @if (Auth::user()->sanctions?->where('enchere_id', $enchere->id)->where('santance', 'roi')->where('deleted_at', null)->first()?->santance == 'roi')
                                 <div class="block-chaine">
@@ -369,13 +372,13 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 @endif
                 <div class="all-user d-flex flex-grow-1">
+
                     @if ($listes->count() > 0)
                         @foreach ($listes as $key => $liste)
-                            <div class="items" data-bs-toggle="modal"
+                            <div class="items {{$liste->user?->sanction?->where('enchere_id', $enchere->id)->where('santance', 'foudre')->where('deleted_at', null)->first()?->santance == 'foudre' ? 'foudre' : ''}}" data-bs-toggle="modal"
                                 data-bs-target="#modalEnchere_{{ $liste->user->id ?? '' }}">
                                 <div class="num">
                                     @if( $myself_num == 2 )
@@ -383,6 +386,9 @@
                                     @else
                                         {{ $key + 2 }}
                                     @endif
+                                </div>
+                                <div class="block-foudre">
+                                    <img src="{{asset('images/e.png')}}" alt="">
                                 </div>
                                 <div class="content-user d-flex align-items-center justify-content-between">
                                     @if (

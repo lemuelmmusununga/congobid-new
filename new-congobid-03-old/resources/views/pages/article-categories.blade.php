@@ -90,7 +90,7 @@
                           </div>
                           <div class="col-4 text-center">
 
-                              @if ($article->enchere?->pivotclientsSalon->where('user_id',Auth::user()->id)->count() == 1)
+                              @if (Auth::user() && $article->enchere?->pivotclientsSalon->where('user_id',Auth::user()->id)->count() == 1)
                                 <a href="{{route('clients.messalons',['id'=>Auth::user()->id,'name'=>Auth::user()->nom,])}}" class="btn btn-3d-rounded-sm w-100 h-100 card-salon-me text-black" >
                                     Voir le salon
                                 </a>
@@ -101,7 +101,7 @@
                               @endif
 
                           </div>
-                            {{-- <div class="col-4 text-center">
+                            <div class="col-4 text-center">
                                 @if (Auth::user())
                                     <?php
                                     $favori_enchere =App\Models\Favoris::where('enchere_id', $article->enchere?->id)->where('user_id', Auth::user()->id)->first() ?? null;
@@ -114,7 +114,7 @@
                                         </a>
                                         @else
                                         <a href="{{route('delete.favoris',['id'=>$article->enchere->id,'name'=>Auth::user()->id])}}" class="btn btn-3d-rounded-sm w-100 h-100 text-black {{ $favori_enchere == null ?'card-salon':'card-salon-me'}}">
-                                            <i class="fi fi-rr-plus"></i> Favorie
+                                            <i class="fi fi-rr-plus"></i> 
                                         </a>
 
                                     @endif
@@ -128,7 +128,7 @@
                                         <i class="fi fi-rr-plus"></i> Ajouter aux favories
                                     </a>
                                 @endif
-                            </div> --}}
+                            </div>
                             <div class="col-4 text-center">
                               <a href="#" class="btn btn-3d-rounded-sm w-100 h-100 ">
                                   Voter pour la prochaine enchère

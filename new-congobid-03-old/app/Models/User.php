@@ -157,7 +157,10 @@ class User extends \TCG\Voyager\Models\User
     {
         return $this->hasMany(Sanction::class, 'suspendu_by');
     }
-
+    public function sanction()
+    {
+        return $this->hasMany(Sanction::class, 'user_id');
+    }
     public function chats()
     {
         return $this->hasMany(Chat::class);

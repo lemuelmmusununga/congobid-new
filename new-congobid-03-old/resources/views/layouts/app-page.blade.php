@@ -52,58 +52,7 @@
                 </div>
             </div>
             @livewireScripts
-            @if (Session::has('success'))
-                <div class="modal-success show">
-                    <div class="over">
 
-                    </div>
-                    <div class="content-modal">
-                        <div class="close-modal-sm">
-
-                        </div>
-                        <div class="header">
-                            <div class="icon">
-                                <div class="content-icon">
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="body">
-                            <div class="text-center">
-                                <h6>CongoBid</h6>
-                                <p>{{ Session::pull('success') }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                @elseif (Session::has('danger'))
-                <div class="modal-success show">
-                    <div class="over">
-
-                    </div>
-                    <div class="content-modal">
-                        <div class="close-modal-sm">
-
-                        </div>
-                        <div class="header" style="background: red;">
-                            <div class="icon">
-                                <div class="content-icon">
-                                    <span></span>
-                                    <span></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="body">
-                            <div class="text-center">
-                                <h6>CongoBid</h6>
-                                <p>{{ Session::pull('danger') }}</p>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            @endif
         </div>
 
         <div class="back-drop-menu"></div>
@@ -114,34 +63,48 @@
             <a class="next">›</a>
             <a class="close">×</a>
         </div>
-        <script>
-            $(document).ready(function() {
-                @if (Auth::guest())
-                    $('#welcome-modal').addClass('show');
-                @endif
-            });
-            $('#page-load').addClass('d-none');
-        </script>
-        <script>
-            var video= document.querySelector(".video")
-
-                $(".modal .btn-close").click(function(){
-                    video.pause();
-                    video.currentTime = 0;
-                })
-
-
-                 $(document).ready(function(){
-                    @if (session()->has('success'))
-                        $('.modal-success').addClass('show')
-                    @endif
-
-                    $('.close-modal-sm').click(function(){
-                        $('.modal-success').removeClass('show')
-                    })
-                });
-        </script>
-        <script>
+        <div class="modal fade" id="modalSuccess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content content-success">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <div class="icon-info mb-3">
+                                <i class="fi fi-rr-check"></i>
+                            </div>
+                            <div class="message-info mb-3">
+                                {{ Session::get('success') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            {{-- @endif --}}
+        {{-- @elseif (Session::has('danger')) --}}
+        <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content content-danger">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <div class="icon-info mb-3">
+                                <i class="fi fi-rr-cross"></i>
+                            </div>
+                            <div class="message-info mb-3">
+                                {{ Session::get('danger') }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{-- @endif --}}
+        {{-- <script>
             $(function(){
             $('.timer').startTimer({
               onComplete: function(element){
@@ -150,7 +113,7 @@
               }
             }).click(function(){ location.reload() });
           })
-        </script>
+        </script> --}}
         <!-- Scripts -->
         <script src="{{asset('js/jquery.min.js')}}"></script> <!-- jQuery for Bootstrap's JavaScript plugins -->
         <script src="{{asset('js/jquery.countdown.min.js')}}"></script> <!-- The Final Countdown plugin for jQuery -->
@@ -163,6 +126,45 @@
         <script src="{{asset('js/main.js')}}"></script>
         {{-- <script src="{{asset('js/counterdown.js')}}"></script> --}}
         <script>
+            $(document).ready(function() {
+                @if (Session::has('success'))
+                    const ModalSuccess = new bootstrap.Modal('#modalSuccess', {
+                        keyboard: false
+                    });
+                    ModalSuccess.show()
+                    const ModalError = new bootstrap.Modal('#modalError', {
+                        keyboard: false
+                    });
+                @endif
+
+                // @if (Session::has('success'))
+                    ModalSuccess.show()
+                    setInterval(() => {
+                        ModalSuccess.hide()
+                    }, 5000);
+                // @endif
+
+                // @if (Session::has('danger'))
+                    ModalError.show()
+                    setInterval(() => {
+                        ModalError.hide()
+                    }, 5000);
+                // @endif
+
+                $('.btn-menu').click(function(e) {
+                    e.preventDefault();
+                    $('.menu-sm').addClass('show');
+                    $('.back-drop-menu').addClass('show');
+                })
+                $('.back-drop-menu').click(function() {
+                    $(this).removeClass('show');
+                    $('.menu-sm').removeClass('show');
+                })
+                $('.btn-close-menu').click(function() {
+                    $('.back-drop-menu').removeClass('show');
+                    $('.menu-sm').removeClass('show');
+                })
+            })
             var video= document.querySelector(".video")
 
                 $(".modal .btn-close").click(function(){

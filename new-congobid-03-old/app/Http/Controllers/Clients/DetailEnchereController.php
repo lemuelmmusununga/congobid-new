@@ -253,7 +253,7 @@ class DetailEnchereController extends Controller
 
         if ($sanction == null) {
 
-            if ($bideur->time_bouclier == 0) {
+            if ($bideur->time_bouclier == 0 || $sanctance == "foudre") {
                 if ($sanctance == "foudre" && $option->foudre > 0) {
                     $option->update([
                         'foudre' => $option->foudre - 1
@@ -282,19 +282,20 @@ class DetailEnchereController extends Controller
                 } else {
                     return redirect()->back()->with('danger', 'Veillez acheter le foudre');
                 }
-            } else {
-                if ($bideur->foudre > 0) {
-                    # code...
-                    $bideur->update([
-                        'foudre' => $bideur->foudre - 1,
-                        // 'time_bouclier' => 0
-                    ]);
-                }
-                $option->update([
-                    'foudre' => $option->foudre - 1
-                ]);
-                return redirect()->back()->with('danger', 'le bideur est protegé veillez reessayer');
             }
+            // else {
+            //     if ($bideur->foudre > 0) {
+            //         # code...
+            //         $bideur->update([
+            //             'foudre' => $bideur->foudre - 1,
+            //             // 'time_bouclier' => 0
+            //         ]);
+            //     }
+            //     $option->update([
+            //         'foudre' => $option->foudre - 1
+            //     ]);
+            //     return redirect()->back()->with('danger', 'le bideur est protegé veillez reessayer');
+            // }
         } elseif ($sanction->enchere_id == $enchere->id && $sanction->statut == 1) {
             return redirect()->back()->with('danger', 'le bideur est deja sous sanction');
         } elseif ($sanction->enchere_id == $enchere && $sanction->statut == 0) {
@@ -477,7 +478,7 @@ class DetailEnchereController extends Controller
             //     $paquet
             // )->first();
 
-            foreach ($bideurs as $bideur) {
+            foreach ($bideurs->where('time_bouclier', null) as $bideur) {
                 $bloquer_enchere = Sanction::create([
                     'paquet_id' => $paquet,
                     'enchere_id' => $takeenchere->id,
