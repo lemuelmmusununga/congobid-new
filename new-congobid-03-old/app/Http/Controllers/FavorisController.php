@@ -42,7 +42,6 @@ class FavorisController extends Controller
             ]);
         }
         return redirect()->back()->with('success','Favori ajouter avec succes');
-
     }
     public function delete($id,$name){
         $favoris=Favoris::where('enchere_id',$id)->where('user_id',Auth::user()->id)->first();

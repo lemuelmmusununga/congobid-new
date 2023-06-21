@@ -2,6 +2,7 @@
     <nav class="navbar navbar-expand-lg sticky-top">
         <div class="container-fluid px-lg-3 px-xl-3 px-xxl-5 px-1">
             <div class="row w-100 ms-0">
+                @if (Auth::user())
                 <div class="col-3">
                     <div class="block-avatar">
                         @if (Auth::user())
@@ -12,10 +13,7 @@
                                     <img src="{{ asset('images/users/default.png') }}" alt="">
                                 @endif
                             </a>
-                        @else
-                            <a href="/login">
-                                  <img src="{{ asset('images/users/default.png') }}" alt="">
-                            </a>
+
                         @endif
                     </div>
                 </div>
@@ -27,6 +25,19 @@
                     </div>
 
                 </div>
+                @endif
+
+                @if (!(Auth::user()))
+                <div class="col-3 d-flex justify-content-center">
+                    <div class="logo-site d-flex align-items-center">
+                        <a href="/" class="block-logo d-flex">
+                            <img src="{{asset('images/logo.png')}}" alt="">
+                        </a>
+                    </div>
+
+                </div>
+                    <div class="col-6"></div>
+                @endif
                 <div class="col-3 d-flex justify-content-end">
                     <div class="block-tools d-flex align-items-center">
                         <a href="{{route('notifications.index')}}">

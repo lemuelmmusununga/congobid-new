@@ -59,9 +59,9 @@
             </div>
         </div>
     </form>
-    <script>
+    {{-- <script>
         $(document).ready(function() {
             $('#participants').multiselect();
         });
-    </script>
+    </script> --}}
 </div>

@@ -114,47 +114,47 @@
         {{-- @dump(Session::has('success')) --}}
         {{-- @if (Session::get('success')) --}}
 
-    <div class="modal fade" id="modalSuccess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content content-success">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="text-center">
-                        <div class="icon-info mb-3">
-                            <i class="fi fi-rr-check"></i>
-                        </div>
-                        <div class="message-info mb-3">
-                            {{ Session::has('success') ? Session::get('success') : '' }}
+        <div class="modal fade" id="modalSuccess" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content content-success">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <div class="icon-info mb-3">
+                                <i class="fi fi-rr-check"></i>
+                            </div>
+                            <div class="message-info mb-3">
+                                {{ Session::has('success') ? Session::get('success') : '' }}
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+            {{-- @endif --}}
+        {{-- @elseif (Session::has('danger')) --}}
+        <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content content-danger">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="text-center">
+                            <div class="icon-info mb-3">
+                                <i class="fi fi-rr-cross"></i>
+                            </div>
+                            <div class="message-info mb-3">
+                                Recharhe effectué avec succès
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         {{-- @endif --}}
-    {{-- @elseif (Session::has('danger')) --}}
-    <div class="modal fade" id="modalError" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content content-danger">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="text-center">
-                        <div class="icon-info mb-3">
-                            <i class="fi fi-rr-cross"></i>
-                        </div>
-                        <div class="message-info mb-3">
-                            Recharhe effectué avec succès
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    {{-- @endif --}}
 
     <div id="blueimp-gallery" class="blueimp-gallery">
         <div class="slides"></div>
@@ -188,13 +188,13 @@
                 keyboard: false
             });
 
-            @if (Session::get('success'))
+            @if (Session::has('success'))
                 ModalSuccess.show()
                 setInterval(() => {
                     ModalSuccess.hide()
                 }, 5000);
             @endif
-            @if (Session::get('danger'))
+            @if (Session::has('danger'))
                 ModalError.show()
                 setInterval(() => {
                     ModalError.hide()

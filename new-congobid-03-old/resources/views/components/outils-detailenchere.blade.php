@@ -154,6 +154,9 @@
                             {{-- <span>
                                 Vous avez été bloqué par {{ '@ ' . $sanction->sanction?->username }}
                             </span> --}}
+
+                                Vous avez été bloqué par {{ '@ ' . $sanction->sanction?->username }}
+                        
                         </button>
                     </div>
                 @endif

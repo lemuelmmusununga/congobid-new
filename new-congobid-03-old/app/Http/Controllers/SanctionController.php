@@ -19,7 +19,6 @@ class SanctionController extends Controller
     {
         $sanctions = Sanction::orderBy('duree', 'asc')->get();
         $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
-
         return view('admin.sanctions', compact('sanctions', 'chats'));
     }
 
