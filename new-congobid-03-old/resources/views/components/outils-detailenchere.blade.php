@@ -112,15 +112,48 @@
                     <div class="col-5">
                         <button class="btn btn-bid" @click="counter++" wire:click.prevent="update()">
                             <i class="fi fi-rr-fingerprint"></i>
+                            
                         </button>
                     </div>
                 @else
                     <div class="col-5">
-                        <button class="btn btn-bid disabled" data-bs-toggle="modal"
+                        <button class="btn btn-bid gray" data-bs-toggle="modal"
                             data-bs-target="#debloque_user_{{ $sanction->id }}">
-                            <span>
+                            <div class="row g-1">
+                                <div class="col-12">
+                                    <div class="block-info-action">
+                                        <div class="text-center">
+                                            <h5>ALex</h5>
+                                            <p>vient de te bloquer</p>
+                                            <div class="bock-img">
+                                                <img src="{{asset('images/tunder.png')}}" alt="">
+                                            </div>
+                                            <div class="block-time">
+                                                <span>Pendant</span>
+                                                <span>04:36</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{-- <div class="col-6">
+                                    <div class="block-info-action">
+                                        <div class="text-center">
+                                            <h5>ALex</h5>
+                                            <p>vient de te bloquer</p>
+                                            <div class="bock-img">
+                                                <img src="{{asset('images/tunder.png')}}" alt="">
+                                            </div>
+                                            <div class="block-time">
+                                                <span>Pendant</span>
+                                                <span>04:36</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> --}}
+                            </div>
+                            {{-- <span>
                                 Vous avez été bloqué par {{ '@ ' . $sanction->sanction?->username }}
-                            </span>
+                            </span> --}}
                         </button>
                     </div>
                 @endif
@@ -129,13 +162,14 @@
                     <button class="btn btn-bid" data-bs-toggle="modal"
                         data-bs-target="#debloque_user_{{ $sanction->id }}">
                         <i class="fi fi-rr-fingerprint"></i>
+                        
                     </button>
                 </div>
             @endif
         </div>
     </div>
 
-    <div wire:ignore.self class="progress my-3 shadow-lg position-relative {{ Request::is('/') ? 'd-none' : ''   }}  " style="height: 20px;background:#fff;">
+    {{-- <div wire:ignore.self class="progress my-3 shadow-lg position-relative {{ Request::is('/') ? 'd-none' : ''   }}  " style="height: 20px;background:#fff;">
 
         <div class="progress-bar " role="progressbar" aria-label="progresse" style="width: {{$progresse}}px;background:#ffad75;" aria-valuenow="{{ Str::before($progresse, '.') }}" aria-valuemin="0" aria-valuemax="100">
             @if (Str::before($progresse, '.') > 50 )
@@ -148,27 +182,41 @@
                 </div>
             @endif
         </div>
-    </div>
-    {{-- <div class="block-progress d-flex align-items-center justify-content-cente">
-        <div class="content-progress"> --}}
-            {{-- <div class="content-flag d-flex align-items-center">
-                <i class="fi fi-sr-flag-alt"></i>
-                <i class="fi fi-sr-flag-alt"></i>
-                <i class="fi fi-sr-flag-alt"></i>
-                <i class="fi fi-sr-flag-alt"></i>
-                <i class="fi fi-sr-flag-alt"></i>
-                <i class="fi fi-sr-flag-alt"></i>
-                <i class="fi fi-sr-flag-alt"></i>
-                <i class="fi fi-sr-flag-alt"></i>
-            </div> --}}
-            {{-- <div class="content-char d-flex align-items-center">
-                <img src="{{ asset('images/tank.png') }}" alt="">
-                <img src="{{ asset('images/tank.png') }}" alt="">
-                <img src="{{ asset('images/tank.png') }}" alt="">
-            </div>
-            <div class="move"></div> --}}
-        {{-- </div>
     </div> --}}
+    <div class="block-progress d-flex align-items-center justify-content-center flex-column">
+        <div class="block-imgs position-relative w-100">
+            <div class="content-flag d-flex align-items-center ">
+                <i class="fi fi-sr-flag-alt"></i>
+                <i class="fi fi-sr-flag-alt"></i>
+                <i class="fi fi-sr-flag-alt"></i>
+                <i class="fi fi-sr-flag-alt"></i>
+                <i class="fi fi-sr-flag-alt"></i>
+                <i class="fi fi-sr-flag-alt"></i>
+                <i class="fi fi-sr-flag-alt"></i>
+                <i class="fi fi-sr-flag-alt"></i>
+                <i class="fi fi-sr-flag-alt"></i>
+            </div>
+            <div class="content-char d-flex align-items-center">
+                <div class="block">
+                    <img src="{{ asset('images/tank.png') }}" alt="">
+                </div>
+                <div class="block">
+                    <img src="{{ asset('images/tank.png') }}" alt="">
+                </div>
+                <div class="block">
+                    <img src="{{ asset('images/tank.png') }}" alt="">
+                </div>
+                <div class="block">
+                    <img src="{{ asset('images/tank.png') }}" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="content-progress">
+            <div class="move">
+                25%
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 <div class="block-bid-info fixed-bottom">

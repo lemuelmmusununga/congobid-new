@@ -81,7 +81,7 @@
             </div>
         </div>
     @else
-    <div class="block-cloud war">
+    <div class="block-cloud">
         <div class="cloud-content">
             <div class="cloud">
             </div>

@@ -1024,7 +1024,7 @@ i{
                 height: 100%;
                 top: 0;
                 left: 0;
-                display: block;
+                display: none;
                 img{
                     width: 100%;
                     height: 100%;
@@ -1355,12 +1355,14 @@ i{
             transition: .3s;
             position: relative;
             .block-info-action{
+                // display: none;
+                position: relative;
                 h5{
                     font-size: 22px;
                     font-weight: 700;
                     color: var(--blackColor);
                     margin-bottom: 0;
-                    margin-top: -40px;
+                    // margin-top: -40px;
                 }
                 p{
                     font-size: 13px;
@@ -1384,13 +1386,13 @@ i{
                     }
                 }
                 .block-time{
-                    position: absolute;
+                    // position: absolute;
                     width: 100%;
                     display: flex;
                     flex-direction: column;
                     align-items: center;
                     justify-content: center;
-                    bottom: 10px;
+                    bottom: -10px;
                     left: 0;
                     span{
                         font-size: 12px;
@@ -1407,6 +1409,9 @@ i{
                 box-shadow: none;
                 transform: scale(.95);
             }
+        }
+        .btn-bid.gray{
+            filter: grayscale(1);
         }
         .btn-bid.autoClic{
             pointer-events: none;
@@ -1432,77 +1437,103 @@ i{
     }
     .block-progress{
         margin-top: 40px;
+        .content-char{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            // justify-content: space-around;
+            .block{
+                width: calc(100% / 4);
+                // background: red;
+                display: flex;
+                justify-content: end;
+                &:nth-child(2){
+                   img{
+                    margin-right: 2.8vw;
+                   }
+                }
+                &:nth-child(3){
+                    img{
+                     margin-right: 3.8vw;
+                    }
+                }
+                &:nth-child(4){
+                    img{
+                     margin-right: 4.8vw;
+                    }
+                }
+                
+            }
+            img{
+                // position: absolute;
+                width: 16px;
+                margin-right: 1.8vw;
+                transform: rotateY(-180deg);
+                &:first-child{
+                    left: 16vw;
+                }
+                &:nth-child(2){
+                    left: 41vw;
+                }
+                &:nth-child(3){
+                    left: 66vw;
+                }
+            }
+        }
+        .content-flag{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            bottom: 0;
+            justify-content: space-between;
+            i{
+                font-size: 16px;
+                transform-origin: top;
+                transform: rotate(-25deg);
+                &:nth-child(2){
+                    left: 6vw;
+                }
+                &:nth-child(3){
+                    left: 25vw;
+                }
+                &:nth-child(4){
+                    left: 31vw;
+                }
+                &:nth-child(5){
+                    left: 50vw;
+                }
+                &:nth-child(6){
+                    left: 56vw;
+                }
+                &:nth-child(7){
+                    left: 75vw;
+                }
+                &:nth-child(8){
+                    left: 82vw;
+                }
+
+            }
+        }
         .content-progress{
             width: 100%;
-            height: 10px;
+            height: 14px;
             background: #d4d4d4;
             border-radius: 50px;
             border: 1px solid var(--blackColor);
             position: relative;
-            .content-flag{
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                left: 0;
-                top: 0;
-                i{
-                    font-size: 16px;
-                    position: absolute;
-                    bottom: 3px;
-                    transform-origin: top;
-                    transform: rotate(-25deg);
-                    &:nth-child(2){
-                        left: 6vw;
-                    }
-                    &:nth-child(3){
-                        left: 25vw;
-                    }
-                    &:nth-child(4){
-                        left: 31vw;
-                    }
-                    &:nth-child(5){
-                        left: 50vw;
-                    }
-                    &:nth-child(6){
-                        left: 56vw;
-                    }
-                    &:nth-child(7){
-                        left: 75vw;
-                    }
-                    &:nth-child(8){
-                        left: 82vw;
-                    }
-
-                }
-            }
-            .content-char{
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                top: 0;
-                left: 0;
-                img{
-                    position: absolute;
-                    width: 18px;
-                    bottom: 7px;
-                    transform: rotateY(-180deg);
-                    &:first-child{
-                        left: 16vw;
-                    }
-                    &:nth-child(2){
-                        left: 41vw;
-                    }
-                    &:nth-child(3){
-                        left: 66vw;
-                    }
-                }
-            }
+            
             .move{
                 position: absolute;
                 width: 25%;
                 height: 100%;
                 border-radius: 50px;
                 background: #f9a871;
+                justify-content: center;
+                display: flex;
+                align-items: center;
+                font-size: 10px;
+                color: var(--blackColor);
             }
 
         }

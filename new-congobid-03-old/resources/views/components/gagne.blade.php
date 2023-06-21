@@ -47,12 +47,12 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 11;
+      z-index: 1111111;
   }
   .container{
       width: 80%;
       height: 550px;
-      background: #fff;
+      background: linear-gradient(to bottom, #fbffa7, #5ec877);
       border-radius: 12px;
       display: flex;
       align-items: center;
@@ -62,7 +62,7 @@
       margin-right: auto;
       margin-left: auto;
       margin-top: 40px;
-      z-index: 1111;
+      z-index: 11111111;
   }
 
   .confetti-container {
@@ -247,11 +247,11 @@
         <div class="js-container container" style="top:0px !important;">
             <div style="text-align:center; position: relative;z-index: 200;display: flex;align-items:center;justify-content: center;flex-direction: column;">
                 <h1 style="    font-size: calc(2.375rem + 1.5vw);
-                font-weight: bold;">Felicitation!</h1>
+                font-weight: bold;">Felicitation <br> <span>{{$this->gagnant?->user->username }} !</span></h1>
                 @if (Auth::user()->id == $this->gagnant?->user?->id )
-                    <p>{{$this->gagnant?->user->username }} vous etes le gagnant du <strong class="fs-4 fw-bold " style="color: #fd7e14"> {{ $this->gagnant?->enchere->article->titre }}  </strong> </p>
+                    <p>vous etes le gagnant du <strong class="fs-4 fw-bold " style="color: #fd7e14"> {{ $this->gagnant?->enchere->article->titre }}  </strong> </p>
                     <div class="mb-4">
-                        <span class="fs-4 fw-bold text-muted">
+                        <span class="fw-bold">
                             Rendez - vous dans l'un de nos bureaux le plus proche de chez vous , muni de votre carte d'identité et du code du gagnant qui est le <br>
                             <span style="color: #fd7e14">{{ $this->gagnant?->enchere->article->code_produit }}</span>
                         </span>
@@ -260,7 +260,7 @@
                     <p>{{$this->gagnant?->user->username }} est le gagnant de cette enchere</p>
                 @endif
 
-                <a href="/" class="submit-btn py-2 rounded-3" type="submit" >Retour a la page d'accueil </a>
+                <a href="/" class="btn btn-3d-rounded-sm" type="submit" >Retour a la page d'accueil </a>
             </div>
 
         </div>
