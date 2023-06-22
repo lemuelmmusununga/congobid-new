@@ -247,6 +247,9 @@ Route::middleware(['auth:sanctum', 'verified'])->group(function () {
         Route::post('/tableau-de-bord/sauvegarder/agents', [App\Http\Controllers\AdministrateurController::class, 'update'])->name('agents.update');
         Route::get('/tableau-de-bord/supprimer/agent/{id}/{state}', [App\Http\Controllers\AdministrateurController::class, 'destroy'])->name('agents.destroy');
 
+        Route::get('/tableau-de-bord/stats/', [App\Http\Controllers\StatController::class, 'index'])->name('stats.index');
+        Route::post('/tableau-de-bord/stats/search/', [App\Http\Controllers\StatController::class, 'getUsersByDate'])->name('stats.search');
+        
         Route::get('/tableau-de-bord/demande/bid', [App\Http\Controllers\BideurController::class, 'demande'])->name('demande.index');
         Route::post('/tableau-de-bord/demande/bid', [App\Http\Controllers\BideurController::class, 'storeDemande'])->name('demande.store');
 

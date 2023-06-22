@@ -28,166 +28,194 @@
 </div>
 <div class="page-inner py-2">
 
-    <div class="d-flex justify-content-center">
-        <a href="{{route('encheres.index')}}" class="btn btn-lg btn-success  mx-2 ">ENCHERES</a>
-        <a href="{{route('bids.index')}}" class="btn btn-lg btn-secondary  mx-2">BIDS</a>
-        <a href="{{route('articles.index')}}" class="btn btn-lg btn-primary  mx-2">ARTICLES</a>
-    </div>
+    {{-- <div class="row g-3 g-lg-4">
+        <a href="{{route('encheres.index')}}" class="col-lg-3 btn btn-lg btn-success py-4 " style="font-size:24px;">ENCHERES</a>
+        <a href="{{route('bids.index')}}" class="col-lg-4 btn btn-lg btn-secondary py-4 mx-2" style="font-size:24px;">BIDS</a>
+        <a href="{{route('articles.index')}}" class="col-lg-3 btn btn-lg btn-primary  py-4" style="font-size:24px;">ARTICLES</a>
+    </div> --}}
+
+
+
     <div class="d-flex justify-content-center m-4">
-        <div class="h-auto col-lg-6 col-md-6 col-sm-6">
-            <div class="row g-lg-3 h-100 g-2">
-                <div class="col-lg-6 h-100 col-md-6 col-sm-6">
-                    <div class="card card-users card-table h-100 justify-content-center">
+        <div class="col-lg-12 col-md-12 col-sm-12">
+            <div class="row g-lg-3 g-2 g-lg-5 justify-content-center">
+                <div class="col-lg-3 h-100 col-md-4 col-sm-4" >
+                    <div class="card card-users card-table h-100 justify-content-center" style="background: rgba(153, 102, 255, .4); border: 1px solid rgba(111, 74, 186, 0.4);">
                         <div class="block-band"></div>
                         <div class="pt-0 header-title">
                             <div class="row">
-                                <div class="col-12">
-                                    <h4 class="no-padding no-margin">UTILISATEURS ({{$users->count()}})
+                                <a href="{{route('encheres.index')}}" class="col-12 text-center" style="text-decoration: none; color: #000">
+                                    <h4 class="no-padding no-margin" style="font-size: 24px;">ENCHERES
                                     </h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div class="block-progress-circle">
-                                <div class="pourcent">
-                                    <span>{{ number_format(($i /$users->count()  * 100)) }}</span>
-                                    <span>%</span>
-                                </div>
-                            </div>
-                            <div class="block-progress-circle-sm">
-                                <div class="pourcent">
-                                    <span>{{ number_format(100 - ($i / $users->count()) * 100) }}</span>
-                                    <span>%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="block-label d-block ">
-                            <div class="block w-100 d-flex align-items-center justify-content-center">
-                                <span></span> Connectés : {{$i}}
-                            </div>
-                            <div class="block w-100 d-flex align-items-center justify-content-center">
-                                <span></span> Non connectés : {{number_format($users->count() - $i)}}
+                                </a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-6 h-100 col-md-6 col-sm-6">
-                    <div class="card card-users card-table h-100 justify-content-center">
+                <div class="col-lg-3 h-100 col-md-4 col-sm-4">
+                    <div class="card card-users card-table h-100 justify-content-center" style="background: rgba(255, 159, 64, 0.4); border: 1px solid rgba(111, 74, 186, 0.4);">
+                        <div class="block-band"></div>
                         <div class="pt-0 header-title">
                             <div class="row">
-                                <div class="col-12">
-                                    <h4 class="no-padding no-margin">
-                                        ARTICLES ({{$articles->count()}})
+                                <a href="{{route('bids.index')}}" class="col-12 text-center" style="text-decoration: none;color: #000">
+                                    <h4 class="no-padding no-margin" style="font-size: 24px;">BIDS
                                     </h4>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <div class="block-progress-circle">
-                                <div class="pourcent">
-                                    <span>
-                                        0
-                                    </span>
-                                    <span>%</span>
-                                </div>
-                            </div>
-                            <div class="block-progress-circle-sm">
-                                <div class="pourcent">
-                                    <span>0</span>
-                                    <span>%</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="block-label d-block">
-                            <div class="block w-100 d-flex align-items-center justify-content-center">
-                                <span></span> En Vente : 0
-                            </div>
-                            <div class="block w-100 d-flex align-items-center justify-content-center">
-                                <span></span> Tout : 0
+                                </a>
                             </div>
                         </div>
                     </div>
-                    <p></p>
+                </div>
+                <div class="col-lg-3 h-100 col-md-4 col-sm-4">
+                    <div class="card card-users card-table h-100 justify-content-center" style="background: rgba(153, 102, 255, .4); border: 1px solid rgba(111, 74, 186, 0.4);">
+                        <div class="block-band"></div>
+                        <div class="pt-0 header-title">
+                            <div class="row">
+                                <a href="{{route('articles.index')}}" class="col-12 text-center" style="text-decoration: none;color: #000">
+                                <h4 class="no-padding no-margin" style="font-size: 24px;">ARTICLES
+                                    </h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="h-auto col-lg-6 col-md-6 col-sm-6">
-            <div class="row g-lg-3 h-100 g-2">
-                <div class="col-lg-6 h-100 col-md-6 col-sm-6">
-                    <div class="card card-users card-table h-100 justify-content-center">
-                        <div class="pt-0 header-title">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h4 class="no-padding no-margin">
-                                        SALONS (0)
-                                    </h4>
-                                </div>
+    </div>
+    <div class="row g-lg-3 g-2">
+        <div class="col-lg-3 h-100 col-md-6 col-sm-6">
+            <div class="card card-users card-table h-100 justify-content-center">
+                <div class="block-band"></div>
+                <div class="pt-0 header-title">
+                    <div class="row g-3">
+                        <div class="col-12 d-flex justify-content-between">
+                            <h4 class="no-padding no-margin">UTILISATEURS ({{$users->count()}})
+                            </h4>
+                            <div class="icon-card">
+                                <i class="fi fi-rr-users-alt"></i>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <div class="block-progress-circle">
-                                <div class="pourcent">
-                                    <span>
-                                        0
-                                    </span>
-                                    <span>%</span>
-                                </div>
-                            </div>
-                            <div class="block-progress-circle-sm">
-                                <div class="pourcent">
-                                    <span>0</span>
-                                    <span>%</span>
-                                </div>
+                        <div class="col-12">
+                            <h5>Total</h5>
+                            <div class="num-lg">
+                                1000000
                             </div>
                         </div>
-                        <div class="block-label d-block">
-                            <div class="block w-100 d-flex align-items-center justify-content-center">
-                                <span></span> Privés : 0
+                        <div class="col-6">
+                            <h6>Connectés</h6>
+                            <div class="num-sm">
+                                1000000
                             </div>
-                            <div class="block w-100 d-flex align-items-center justify-content-center">
-                                <span></span> Publiques : 0
+                        </div>
+                        <div class="col-6">
+                            <h6>Nouveaux</h6>
+                            <div class="num-sm">
+                                1000000
                             </div>
                         </div>
                     </div>
-                    <p></p>
                 </div>
-                <div class="col-lg-6 h-100 col-md-6 col-sm-6">
-                    <div class="card card-users card-table h-100 justify-content-center">
-                        <div class="pt-0 header-title">
-                            <div class="row">
-                                <div class="col-12">
-                                    <h4 class="no-padding no-margin">
-                                        ENCHERES (0)
-                                    </h4>
-                                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 h-100 col-md-6 col-sm-6">
+            <div class="card card-users card-table h-100 justify-content-center">
+                <div class="block-band"></div>
+                <div class="pt-0 header-title">
+                    <div class="row g-3">
+                        <div class="col-12 d-flex justify-content-between">
+                            <h4 class="no-padding no-margin">ARTICLES ({{$articles->count()}})
+                            </h4>
+                            <div class="icon-card">
+                                <i class="fi fi-rr-puzzle"></i>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between">
-                            <div class="block-progress-circle">
-                                <div class="pourcent">
-                                    <span>
-                                        0
-                                    </span>
-                                    <span>%</span>
-                                </div>
-                            </div>
-                            <div class="block-progress-circle-sm">
-                                <div class="pourcent">
-                                    <span>0</span>
-                                    <span>%</span>
-                                </div>
+                        <div class="col-12">
+                            <h5>Total</h5>
+                            <div class="num-lg">
+                                ({{$articles->count()}})
                             </div>
                         </div>
-                        <div class="block-label d-block">
-                            <div class="block w-100 d-flex align-items-center justify-content-center">
-                                <span></span> En Cours : 0
+                        <div class="col-6">
+                            <h6>En ligne</h6>
+                            <div class="num-sm">
+                                20
                             </div>
-                            <div class="block w-100 d-flex align-items-center justify-content-center">
-                                <span></span> Terminés : 0
+                        </div>
+                        <div class="col-6">
+                            <h6>Nouveaux</h6>
+                            <div class="num-sm">
+                                2
                             </div>
                         </div>
                     </div>
-                    <p></p>
+                </div>
+            </div>
+            <p></p>
+        </div>
+        <div class="col-lg-3 h-100 col-md-6 col-sm-6">
+            <div class="card card-users card-table h-100 justify-content-center">
+                <div class="block-band"></div>
+                <div class="pt-0 header-title">
+                <div class="row g-3">
+                    <div class="col-12 d-flex justify-content-between">
+                        <h4 class="no-padding no-margin">SALONS ({{$articles->count()}})
+                        </h4>
+                        <div class="icon-card">
+                            <i class="fi fi-rr-puzzle"></i>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <h5>Total</h5>
+                        <div class="num-lg">
+                            2
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h6>En Cours</h6>
+                        <div class="num-sm">
+                            1
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <h6>Terminés</h6>
+                        <div class="num-sm">
+                            221
+                        </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 h-100 col-md-6 col-sm-6">
+            <div class="card card-users card-table h-100 justify-content-center">
+                <div class="block-band"></div>
+                <div class="pt-0 header-title">
+                    <div class="row g-3">
+                        <div class="col-12 d-flex justify-content-between">
+                            <h4 class="no-padding no-margin"> ENCHERES (0) ({{$articles->count()}})
+                            </h4>
+                            <div class="icon-card">
+                                <i class="fi fi-rr-puzzle"></i>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <h5>Total</h5>
+                            <div class="num-lg">
+                                2
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h6>En Cours</h6>
+                            <div class="num-sm">
+                                1
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <h6>Terminés</h6>
+                            <div class="num-sm">
+                                221
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -201,6 +229,7 @@
                 <div class="card-body">
                     <canvas id="userChart" width="400" height="400"></canvas>
                 </div>
+                <a href="{{ route('stats.index')}}" class="btn btn-sm btn-secondary">Stats</a>
             </div>
         </div>
         <div class="col-md-6" >
