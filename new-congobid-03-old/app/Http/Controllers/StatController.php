@@ -13,15 +13,8 @@ class StatController extends Controller
     {
         $selectedDate = date('Y-m-d');
         $chats = Chat::where('statut_id', '3')->orderBy('id', 'desc')->get();
-        $users = User::whereBetween('user_connected_at', [$selectedDate . ' 00:00:00', $selectedDate . ' 23:59:59'])
-            ->get()
-            ->groupBy(function ($user) {
-                return Carbon::parse($user->user_connected_at)->format('H');
-            })
-            ->map(function ($users) {
-                return count($users);
-            })
-            ->toArray();
+        $users = User::where('role_id', '!=', 1)->get();
+                    
         return view('admin.stats', compact('users', 'selectedDate', 'chats'));
     }
 

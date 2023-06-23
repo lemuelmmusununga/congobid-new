@@ -38,7 +38,7 @@ class AuthenticatedSessionController extends Controller
         // $request->authenticate();
         $request->session()->regenerate();
         DB::table('sessions')->where('id','!=',Session::getId())->where('user_id',Auth::user()->id)->delete();
-        Session::put('success' ,'Bienvenu(e) chez CongoBid');
+        Session::flash('success' ,'Bienvenu(e) chez CongoBid');
 
         return redirect()->intended(RouteServiceProvider::HOME);
 

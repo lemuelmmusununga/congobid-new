@@ -126,7 +126,6 @@ class RegisteredUserController extends Controller
                     'telephone' => $request->telephone,
                     'sexe' => $request->sexe??'',
                     'avatar' => $request->avatar ??'',
-                    'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'statut_id' => 3,
                 ]);
@@ -164,7 +163,7 @@ class RegisteredUserController extends Controller
 
                 Auth::login($user);
 
-                Session::put('success' ,'Bienvenu(e) chez CongoBid');
+                Session::flash('success' ,'Bienvenu(e) chez CongoBid');
 
                 return redirect(RouteServiceProvider::HOME);
             }
